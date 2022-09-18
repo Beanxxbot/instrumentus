@@ -1,0 +1,65 @@
+{
+  "item.instrumentus.wooden_shears": "Wooden Shears",
+  "item.instrumentus.stone_shears": "Stone Shears",
+  "item.instrumentus.golden_shears": "Golden Shears",
+  "item.instrumentus.diamond_shears": "Diamond Shears",
+  "item.instrumentus.netherite_shears": "Netherite Shears",
+  "item.instrumentus.energy_shears": "Energized Di-Emerald Shears",
+
+  "item.instrumentus.wooden_sickle": "Wooden Sickle",
+  "item.instrumentus.stone_sickle": "Stone Sickle",
+  "item.instrumentus.iron_sickle": "Iron Sickle",
+  "item.instrumentus.golden_sickle": "Golden Sickle",
+  "item.instrumentus.diamond_sickle": "Diamond Sickle",
+  "item.instrumentus.netherite_sickle": "Netherite Sickle",
+  "item.instrumentus.energy_sickle": "Energized Di-Emerald Sickle",
+
+  "item.instrumentus.wooden_paxel": "Wooden Paxel",
+  "item.instrumentus.stone_paxel": "Stone Paxel",
+  "item.instrumentus.iron_paxel": "Iron Paxel",
+  "item.instrumentus.golden_paxel": "Golden Paxel",
+  "item.instrumentus.diamond_paxel": "Diamond Paxel",
+  "item.instrumentus.netherite_paxel": "Netherite Paxel",
+  "item.instrumentus.energy_paxel": "Energized Di-Emerald Paxel",
+
+  "item.instrumentus.wooden_hammer": "Wooden Hammer",
+  "item.instrumentus.stone_hammer": "Stone Hammer",
+  "item.instrumentus.iron_hammer": "Iron Hammer",
+  "item.instrumentus.golden_hammer": "Golden Hammer",
+  "item.instrumentus.diamond_hammer": "Diamond Hammer",
+  "item.instrumentus.netherite_hammer": "Netherite Hammer",
+  "item.instrumentus.energy_hammer": "Energized Di-Emerald Hammer",
+
+  "item.instrumentus.energy_pickaxe": "Energized Di-Emerald Pickaxe",
+  "item.instrumentus.energy_axe": "Energized Di-Emerald Axe",
+  "item.instrumentus.energy_shovel": "Energized Di-Emerald Shovel",
+
+  "item.instrumentus.illuminate_pickaxe": "Soul-Infused Pickaxe",
+
+  "item.instrumentus.solar_helmet": "Blazing Helmet",
+  "item.instrumentus.solar_chestplate": "Blazing Chestplate",
+  "item.instrumentus.solar_leggings": "Blazing Leggings",
+  "item.instrumentus.solar_boots": "Blazing Boots",
+  "item.instrumentus.warped_helmet": "Warped Helmet",
+  "item.instrumentus.warped_chestplate": "Warped Chestplate",
+  "item.instrumentus.warped_leggings": "Warped Leggings",
+  "item.instrumentus.warped_boots": "Warped Boots",
+
+  "item.instrumentus.energy_ingot": "Energized Di-Emerald Ingot",
+  "item.instrumentus.illuminate_ingot": "Soul-Infused Ingot",
+  "item.instrumentus.carbon_rod": "Carbon Rod",
+
+  "block.instrumentus.energy_block": "Energized Di-Emerald Block",
+
+  "instrumentus.lore.no_energy": "No Energy",
+  "instrumentus.lore.energy": "%d FE/%d FE",
+  "instrumentus.lore.solar_armor.line1": "SET BONUS: Permanent Fire Resistance",
+  "instrumentus.lore.warped_armor.line1": "SET BONUS: Press Sneak + V to Teleport",
+  "instrumentus.tooltip.energy":"",
+
+  "itemGroup.instrumentus": "Instrumentus",
+
+  "instrumentus.text.warped_teleport": "Warped Armor Teleport",
+  "instrumentus.key.categories.main": "Instrumentus",
+  "instrumentus.key.warpedTeleport": "Warped Armor Teleport"
+}

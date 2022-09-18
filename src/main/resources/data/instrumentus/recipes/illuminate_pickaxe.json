@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "III",
+    " S ",
+    " S "
+  ],
+  "key": {
+    "S": {
+      "item": "minecraft:stick"
+    },
+    "I": {
+      "item": "instrumentus:illuminate_ingot"
+    }
+  },
+  "result": {
+    "item": "instrumentus:illuminate_pickaxe"
+  }
+}

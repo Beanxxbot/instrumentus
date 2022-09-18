@@ -1,0 +1,5 @@
+{
+  "variants": {
+    "": { "model": "instrumentus:block/energy_block" }
+  }
+}

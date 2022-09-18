@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "PWP",
+    "PHP",
+    "PWP"
+  ],
+  "key": {
+    "P": {
+      "item": "minecraft:ender_pearl"
+    },
+    "W": {
+      "item": "minecraft:warped_wart_block"
+    },
+    "H": {
+      "item": "minecraft:netherite_leggings"
+    }
+  },
+  "result": {
+    "item": "instrumentus:warped_leggings"
+  }
+}
