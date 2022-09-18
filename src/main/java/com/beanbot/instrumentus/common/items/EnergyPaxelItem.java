@@ -1,17 +1,27 @@
 package com.beanbot.instrumentus.common.items;
 
 import com.beanbot.instrumentus.common.capability.EnergyStorageItem;
+import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TextComponent;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.*;
+import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.CampfireBlock;
+import net.minecraft.world.level.block.LevelEvent;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraftforge.common.ToolActions;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.common.util.LazyOptional;
@@ -79,61 +89,68 @@ public class EnergyPaxelItem extends PaxelItem {
         return true;
     }
 
-//    @Override
-//    public ActionResultType onItemUse(ItemUseContext context) {
-//        World world = context.getWorld();
-//        BlockPos blockpos = context.getPos();
-//        BlockState blockstate = world.getBlockState(blockpos);
-//        Block block = BLOCK_STRIPPING_MAP.get(blockstate.getBlock());
-//        if (block != null) {
-//            PlayerEntity playerentity = context.getPlayer();
-//            ItemStack stack = context.getItem();
-//            world.playSound(playerentity, blockpos, SoundEvents.ITEM_AXE_STRIP, SoundCategory.BLOCKS, 1.0F, 1.0F);
-//            if (!world.isRemote) {
-//                world.setBlockState(blockpos, block.getDefaultState().with(RotatedPillarBlock.AXIS, blockstate.get(RotatedPillarBlock.AXIS)), 11);
-//                if (playerentity != null) {
-//                    LazyOptional<IEnergyStorage> lazy = stack.getCapability(CapabilityEnergy.ENERGY);
-//                    if(lazy.isPresent()){
-//                        IEnergyStorage storage = lazy.orElseThrow(AssertionError::new);
-//                        storage.extractEnergy(EnergyToolCommon.MAX_TRANSFER - 24, false);
-//                    }
-//                }
-//            }
-//
-//            return ActionResultType.SUCCESS;
-//        } else if (context.getFace() == Direction.DOWN) {
-//            return ActionResultType.PASS;
-//        } else {
-//            PlayerEntity playerentity = context.getPlayer();
-//            BlockState blockstate1 = SHOVEL_LOOKUP.get(blockstate.getBlock());
-//            BlockState blockstate2 = null;
-//            ItemStack stack = context.getItem();
-//            if (blockstate1 != null && world.isAirBlock(blockpos.up())) {
-//                world.playSound(playerentity, blockpos, SoundEvents.ITEM_SHOVEL_FLATTEN, SoundCategory.BLOCKS, 1.0F, 1.0F);
-//                blockstate2 = blockstate1;
-//            } else if (blockstate.getBlock() instanceof CampfireBlock && blockstate.get(CampfireBlock.LIT)) {
-//                world.playEvent((PlayerEntity) null, 1009, blockpos, 0);
-//                blockstate2 = blockstate.with(CampfireBlock.LIT, Boolean.valueOf(false));
-//            }
-//
-//            if (blockstate2 != null) {
-//                if (!world.isRemote) {
-//                    world.setBlockState(blockpos, blockstate2, 11);
-//                    if (playerentity != null) {
-//                        LazyOptional<IEnergyStorage> lazy = stack.getCapability(CapabilityEnergy.ENERGY);
-//                        if(lazy.isPresent()){
-//                            IEnergyStorage storage = lazy.orElseThrow(AssertionError::new);
-//                            storage.extractEnergy(EnergyToolCommon.MAX_TRANSFER - 24, false);
-//                        }
-//                    }
-//                }
-//
-//                return ActionResultType.SUCCESS;
-//            } else {
-//                return ActionResultType.PASS;
-//            }
-//        }
-//    }
+    @Nonnull
+    @Override
+    public InteractionResult useOn(UseOnContext context) {
+        Level world = context.getLevel();
+        BlockPos blockpos = context.getClickedPos();
+        BlockState blockstate = world.getBlockState(blockpos);
+        BlockState resultToSet = useAsAxe(blockstate, context);
+        Player player = context.getPlayer();
+        if (resultToSet == null){
+            if (context.getClickedFace() == Direction.DOWN){
+                return InteractionResult.PASS;
+            }
+            BlockState foundResult = blockstate.getToolModifiedState(context, ToolActions.SHOVEL_FLATTEN, false);
+            if (foundResult != null && world.isEmptyBlock(blockpos.above())){
+                world.playSound(player, blockpos, SoundEvents.SHOVEL_FLATTEN, SoundSource.BLOCKS, 1.0F, 1.0F);
+                resultToSet = foundResult;
+            } else if (blockstate.getBlock() instanceof CampfireBlock && blockstate.getValue(CampfireBlock.LIT)) {
+                if (!world.isClientSide) {
+                    world.levelEvent(null, LevelEvent.SOUND_EXTINGUISH_FIRE, blockpos, 0);
+                }
+                CampfireBlock.dowse(player, world, blockpos, blockstate);
+                resultToSet = blockstate.setValue(CampfireBlock.LIT, false);
+            }
+            if (resultToSet == null) {
+                return InteractionResult.PASS;
+            }
+        }
+        if (!world.isClientSide) {
+            ItemStack stack = context.getItemInHand();
+            if (player instanceof ServerPlayer serverPlayer) {
+                CriteriaTriggers.ITEM_USED_ON_BLOCK.trigger(serverPlayer, blockpos, stack);
+            }
+            world.setBlock(blockpos, resultToSet, Block.UPDATE_ALL_IMMEDIATE);
+            if (player != null) {
+                stack.hurtAndBreak(1, player, onBroken -> onBroken.broadcastBreakEvent(context.getHand()));
+            }
+        }
+        return InteractionResult.sidedSuccess(world.isClientSide);
+    }
+
+    @Nullable
+    private BlockState useAsAxe(BlockState blockstate, UseOnContext context) {
+        Level world = context.getLevel();
+        BlockPos blockpos = context.getClickedPos();
+        Player player = context.getPlayer();
+        BlockState resultToSet = blockstate.getToolModifiedState(context, ToolActions.AXE_STRIP, false);
+        if (resultToSet != null){
+            world.playSound(player, blockpos, SoundEvents.AXE_STRIP, SoundSource.BLOCKS, 1.0f, 1.0f);
+            return resultToSet;
+        }
+        resultToSet = blockstate.getToolModifiedState(context, ToolActions.AXE_SCRAPE, false);
+        if (resultToSet != null){
+            world.playSound(player, blockpos, SoundEvents.AXE_SCRAPE, SoundSource.BLOCKS, 1.0f, 1.0f);
+            return resultToSet;
+        }
+        resultToSet = blockstate.getToolModifiedState(context, ToolActions.AXE_WAX_OFF, false);
+        if (resultToSet != null){
+            world.playSound(player, blockpos, SoundEvents.AXE_WAX_OFF, SoundSource.BLOCKS, 1.0f, 1.0f);
+            return resultToSet;
+        }
+        return null;
+    }
 
     @Override
     public void appendHoverText(ItemStack stack, @Nullable Level worldIn, List<Component> tooltip, TooltipFlag flagIn){
