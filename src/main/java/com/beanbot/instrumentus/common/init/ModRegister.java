@@ -63,12 +63,12 @@ public final class ModRegister {
         }
         if (ItemConfig.enable_energized.get()) {
             event.getRegistry().registerAll(
-//                    setup(new EnergyPickaxeItem(Tiers.DIAMOND, 1, -2.8f), "energy_pickaxe"),
-//                    setup(new EnergyShovelItem(Tiers.DIAMOND, 1, -2.8f), "energy_shovel"),
-//                    setup(new EnergyAxeItem(Tiers.DIAMOND, 1, -2.8f), "energy_axe"),
-//                    setup(new EnergyHammerItem(Tiers.DIAMOND, 1, -2.8f), "energy_hammer"),
-//                    setup(new EnergySickleItem(Tiers.DIAMOND), "energy_sickle"),
-//                    setup(new EnergyShearsItem(Tiers.DIAMOND), "energy_shears"),
+                    setup(new EnergyPickaxeItem(Tiers.DIAMOND, 1, -2.8f), "energy_pickaxe"),
+                    setup(new EnergyShovelItem(Tiers.DIAMOND, 1, -2.8f), "energy_shovel"),
+                    setup(new EnergyAxeItem(Tiers.DIAMOND, 1, -2.8f), "energy_axe"),
+                    setup(new EnergyHammerItem(Tiers.DIAMOND, 1, -2.8f), "energy_hammer"),
+                    setup(new EnergySickleItem(Tiers.DIAMOND), "energy_sickle"),
+                    setup(new EnergyShearsItem(Tiers.DIAMOND), "energy_shears"),
                     setup(new Item(new Item.Properties().tab(ModItemGroups.MOD_ITEM_GROUP)), "energy_ingot"),
                     setup(new Item(new Item.Properties().tab(ModItemGroups.MOD_ITEM_GROUP)), "carbon_rod")//,
 //                    setup(new BlockItem(ModBlocks.ENERGY_BLOCK.getBlock(), new Item.Properties().maxStackSize(64).group(ModItemGroups.MOD_ITEM_GROUP)), "energy_block"),

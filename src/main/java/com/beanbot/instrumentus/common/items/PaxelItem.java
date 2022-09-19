@@ -1,13 +1,14 @@
 package com.beanbot.instrumentus.common.items;
 
+import com.beanbot.instrumentus.common.data.ModTags;
 import com.beanbot.instrumentus.common.init.ModItemGroups;
-import com.beanbot.instrumentus.common.util.ToolTags;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.tags.BlockTags;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.*;
@@ -16,29 +17,37 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Material;
+import net.minecraftforge.common.ToolAction;
 import net.minecraftforge.common.ToolActions;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import java.util.Set;
+
+import static net.minecraftforge.common.ToolActions.*;
 
 public class PaxelItem extends DiggerItem {
 
     protected Tier material;
 
+    public static final Set<ToolAction> DEFAULT_PAXEL_ACTIONS = Set.of(
+            AXE_DIG, AXE_STRIP, AXE_SCRAPE, AXE_WAX_OFF,
+            SHOVEL_DIG, SHOVEL_FLATTEN,
+            PICKAXE_DIG);
+
     public PaxelItem(Tier material, int attackDamageIn, float attackSpeedIn) {
-        super(attackDamageIn, attackSpeedIn, material, ToolTags.Blocks.MINEABLE_WITH_PAXEL, new Item.Properties().stacksTo(1).tab(ModItemGroups.MOD_ITEM_GROUP).durability(material.getUses()));
+        super(attackDamageIn, attackSpeedIn, material, ModTags.Blocks.MINEABLE_WITH_PAXEL, new Item.Properties().stacksTo(1).tab(ModItemGroups.MOD_ITEM_GROUP).durability(material.getUses()));
         this.material = material;
     }
 
     @Override
     public boolean canPerformAction(ItemStack stack, net.minecraftforge.common.ToolAction toolAction){
-        return net.minecraftforge.common.ToolActions.DEFAULT_PICKAXE_ACTIONS.contains(toolAction) || ToolActions.DEFAULT_SHOVEL_ACTIONS.contains(toolAction) || ToolActions.DEFAULT_AXE_ACTIONS.contains(toolAction);
+        return DEFAULT_PAXEL_ACTIONS.contains(toolAction);
     }
 
     @Override
     public float getDestroySpeed(@Nonnull ItemStack stack, @Nonnull BlockState state) {
-        Material material = state.getMaterial();
-        return material != Material.METAL && material != Material.STONE && material != Material.WOOD && material != Material.PLANT && material != Material.BAMBOO && material != Material.DIRT && material != Material.AMETHYST && material != Material.CLAY && material != Material.GRASS && material != Material.ICE && material != Material.TOP_SNOW && material != Material.HEAVY_METAL && material != Material.ICE_SOLID && material != Material.MOSS && material != Material.NETHER_WOOD && material != Material.PISTON && material != Material.SAND && material != Material.SNOW && material != Material.SHULKER_SHELL? super.getDestroySpeed(stack, state) : this.speed;
+        return state.is(ModTags.Blocks.MINEABLE_WITH_PAXEL) ? super.getDestroySpeed(stack, state) : this.speed;
     }
 
     @Nonnull
