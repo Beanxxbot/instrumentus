@@ -1,9 +1,0 @@
--Paxels can mine stone and wood (why?) but not dirt - FIXED (Jank)
--Stripping DID NOT work at all lmao (FIXED)
--Paxel not dropping drops...
--HammerItem (DONE)
--Illuminate Block
--Illuminate pickaxe
--Energy Tools
--Armors (maybe full rewrite?)
--Tool Effectiveness rewrite?
