@@ -75,11 +75,12 @@ public final class ModRegister {
 //                    setup(new EnergyPaxelItem(ItemTier.DIAMOND, 1, -2.8f), "energy_paxel")
                     );
         }
+        //https://github.com/Direwolf20-MC/MiningGadgets/blob/1.18/src/main/java/com/direwolf20/mininggadgets/common/blocks/ModBlocks.java
         if (ItemConfig.enable_util.get()) {
             event.getRegistry().registerAll(
                     setup(new Item(new Item.Properties().tab(ModItemGroups.MOD_ITEM_GROUP)), "illuminate_ingot"),
-                    setup(new BlockItem(ModBlocks.ILLUMINATE_LIGHT, new Item.Properties().stacksTo(1)), "illuminate_light")//,
-//                    setup(new IlluminatePickaxeItem(Tiers.DIAMOND, 1, -2.8f), "illuminate_pickaxe")
+                    setup(new BlockItem(ModBlocks.ILLUMINATE_LIGHT, new Item.Properties().stacksTo(1)), "illuminate_light"),
+                    setup(new IlluminatePickaxeItem(Tiers.DIAMOND, 1, -2.8f), "illuminate_pickaxe")
                     );
         }
         if (ItemConfig.enable_armor.get()) {
