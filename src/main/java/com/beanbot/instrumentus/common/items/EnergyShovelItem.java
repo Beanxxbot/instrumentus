@@ -1,7 +1,7 @@
 package com.beanbot.instrumentus.common.items;
 
+import com.beanbot.instrumentus.common.Instrumentus;
 import com.beanbot.instrumentus.common.capability.EnergyStorageItem;
-import com.beanbot.instrumentus.common.init.ModItemGroups;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.NonNullList;
@@ -32,7 +32,7 @@ import java.util.List;
 
 public class EnergyShovelItem extends DiggerItem {
     public EnergyShovelItem(Tier tier, float attackDamageIn, float attackSpeedIn) {
-        super( attackDamageIn, attackSpeedIn, tier, BlockTags.MINEABLE_WITH_SHOVEL, new Item.Properties().durability(0).stacksTo(1).tab(ModItemGroups.MOD_ITEM_GROUP));
+        super( attackDamageIn, attackSpeedIn, tier, BlockTags.MINEABLE_WITH_SHOVEL, new Item.Properties().durability(0).stacksTo(1).tab(Instrumentus.MOD_ITEM_GROUP));
     }
 
     @Override

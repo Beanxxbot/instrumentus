@@ -8,16 +8,23 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.forge.event.lifecycle.GatherDataEvent;
 
 @Mod.EventBusSubscriber(modid = Instrumentus.MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
-public class DataHandler {
-
+public class Generator {
     @SubscribeEvent
-    public static void gatherData(GatherDataEvent event){
-        DataGenerator generator = event.getGenerator();
+    public static void gatherData(GatherDataEvent event) {
+        if( event.includeServer() )
+            registerServerProviders(event.getGenerator());
+
+        if( event.includeClient() )
+            registerClientProviders(event.getGenerator(), event);
+    }
+
+    private static void registerServerProviders(DataGenerator generator) {
+    }
+
+    private static void registerClientProviders(DataGenerator generator, GatherDataEvent event) {
         ExistingFileHelper helper = event.getExistingFileHelper();
 
-        if(event.includeServer()){
-            ModTags.Blocks blockTagsProvider = new ModTags.Blocks(generator, helper);
-            generator.addProvider(blockTagsProvider);
-        }
+        generator.addProvider(new GeneratorBlockTags(generator, helper));
     }
+
 }

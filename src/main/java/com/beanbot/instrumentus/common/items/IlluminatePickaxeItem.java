@@ -1,7 +1,8 @@
 package com.beanbot.instrumentus.common.items;
 
+import com.beanbot.instrumentus.common.Instrumentus;
 import com.beanbot.instrumentus.common.blocks.IlluminateLight;
-import com.beanbot.instrumentus.common.init.ModItemGroups;
+import com.beanbot.instrumentus.common.blocks.ModBlocks;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.tags.BlockTags;
@@ -20,7 +21,7 @@ public class IlluminatePickaxeItem extends DiggerItem {
     protected Tier material;
 
     public IlluminatePickaxeItem(Tier material, int attackDamageIn, float attackSpeedIn) {
-        super(1, -2.8f, material, BlockTags.MINEABLE_WITH_PICKAXE, new Item.Properties().tab(ModItemGroups.MOD_ITEM_GROUP).stacksTo(1).durability(material.getUses()));
+        super(1, -2.8f, material, BlockTags.MINEABLE_WITH_PICKAXE, new Item.Properties().tab(Instrumentus.MOD_ITEM_GROUP).stacksTo(1).durability(material.getUses()));
         this.material = material;
     }
 
@@ -31,22 +32,22 @@ public class IlluminatePickaxeItem extends DiggerItem {
         Player player = context.getPlayer();
 
         if(context.getClickedFace() == Direction.WEST && worldIn.isEmptyBlock(pos.west())) {
-            worldIn.setBlockAndUpdate(new BlockPos(pos.getX() - 1, pos.getY(), pos.getZ()), new IlluminateLight().defaultBlockState());
+            worldIn.setBlockAndUpdate(new BlockPos(pos.getX() - 1, pos.getY(), pos.getZ()), ModBlocks.ILLUMINATE_LIGHT.get().defaultBlockState());
             context.getItemInHand().hurtAndBreak(1, player, (e) -> { e.broadcastBreakEvent(context.getHand());});
         } else if(context.getClickedFace() == Direction.EAST && worldIn.isEmptyBlock(pos.east())) {
-            worldIn.setBlockAndUpdate(new BlockPos(pos.getX() + 1, pos.getY(), pos.getZ()), new IlluminateLight().defaultBlockState());
+            worldIn.setBlockAndUpdate(new BlockPos(pos.getX() + 1, pos.getY(), pos.getZ()), ModBlocks.ILLUMINATE_LIGHT.get().defaultBlockState());
             context.getItemInHand().hurtAndBreak(1, player, (e) -> { e.broadcastBreakEvent(context.getHand());});
         } else if(context.getClickedFace() == Direction.NORTH && worldIn.isEmptyBlock(pos.north())){
-            worldIn.setBlockAndUpdate(new BlockPos(pos.getX(), pos.getY(), pos.getZ() - 1), new IlluminateLight().defaultBlockState());
+            worldIn.setBlockAndUpdate(new BlockPos(pos.getX(), pos.getY(), pos.getZ() - 1), ModBlocks.ILLUMINATE_LIGHT.get().defaultBlockState());
             context.getItemInHand().hurtAndBreak(1, player, (e) -> { e.broadcastBreakEvent(context.getHand());});
         } else if(context.getClickedFace() == Direction.SOUTH && worldIn.isEmptyBlock(pos.south())){
-            worldIn.setBlockAndUpdate(new BlockPos(pos.getX(), pos.getY(), pos.getZ() + 1), new IlluminateLight().defaultBlockState());
+            worldIn.setBlockAndUpdate(new BlockPos(pos.getX(), pos.getY(), pos.getZ() + 1), ModBlocks.ILLUMINATE_LIGHT.get().defaultBlockState());
             context.getItemInHand().hurtAndBreak(1, player, (e) -> { e.broadcastBreakEvent(context.getHand());});
         } else if(context.getClickedFace() == Direction.DOWN && worldIn.isEmptyBlock(pos.below())){
-            worldIn.setBlockAndUpdate(new BlockPos(pos.getX(), pos.getY() - 1, pos.getZ()), new IlluminateLight().defaultBlockState());
+            worldIn.setBlockAndUpdate(new BlockPos(pos.getX(), pos.getY() - 1, pos.getZ()), ModBlocks.ILLUMINATE_LIGHT.get().defaultBlockState());
             context.getItemInHand().hurtAndBreak(1, player, (e) -> { e.broadcastBreakEvent(context.getHand());});
         } else if(context.getClickedFace() == Direction.UP && worldIn.isEmptyBlock(pos.above())){
-            worldIn.setBlockAndUpdate(new BlockPos(pos.getX(), pos.getY() + 1, pos.getZ()), new IlluminateLight().defaultBlockState());
+            worldIn.setBlockAndUpdate(new BlockPos(pos.getX(), pos.getY() + 1, pos.getZ()), ModBlocks.ILLUMINATE_LIGHT.get().defaultBlockState());
             context.getItemInHand().hurtAndBreak(1, player, (e) -> { e.broadcastBreakEvent(context.getHand());});
         } else {
             return InteractionResult.FAIL;

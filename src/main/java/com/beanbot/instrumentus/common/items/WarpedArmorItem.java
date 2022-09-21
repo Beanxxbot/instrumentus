@@ -7,7 +7,10 @@ import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.network.protocol.game.ClientboundPlayerPositionPacket;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.util.Mth;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
@@ -24,24 +27,43 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.IItemRenderProperties;
 import net.minecraftforge.client.RenderProperties;
+import software.bernie.geckolib3.core.IAnimatable;
+import software.bernie.geckolib3.core.PlayState;
+import software.bernie.geckolib3.core.builder.AnimationBuilder;
+import software.bernie.geckolib3.core.controller.AnimationController;
+import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
+import software.bernie.geckolib3.core.manager.AnimationData;
+import software.bernie.geckolib3.core.manager.AnimationFactory;
+import software.bernie.geckolib3.item.GeoArmorItem;
 
 import javax.annotation.Nullable;
+import java.util.EnumSet;
 import java.util.List;
 import java.util.Random;
 
-public class WarpedArmorItem extends ArmorItem implements IItemRenderProperties {
+public class WarpedArmorItem extends GeoArmorItem implements IAnimatable {
     protected final Random rand = new Random();
+
+    private AnimationFactory factory = new AnimationFactory(this);
 
     public WarpedArmorItem(ArmorMaterial materialIn, EquipmentSlot slot, Properties builderIn) {
         super(materialIn, slot, builderIn);
     }
 
-//    @OnlyIn(Dist.CLIENT)
-//    @Override
-//    public <A extends HumanoidModel<?>> A getArmorModel(LivingEntity entityLiving, ItemStack stack, EquipmentSlot armorSlot, A _default) {
-//        A model = RenderProperties.get(stack).getArmorModel(entityLiving, stack, armorSlot, _default);
-//        return Instrumentus.SIDED_SYSTEM.getWarpedArmorMaterial(armorSlot);
-//    }
+    @Override
+    public void registerControllers(AnimationData data) {
+        data.addAnimationController(new AnimationController<WarpedArmorItem>(this, "controller", 20, this::predicate));
+    }
+
+    private <P extends IAnimatable> PlayState predicate(AnimationEvent<P> event){
+        event.getController().setAnimation(new AnimationBuilder().addAnimation("idle", true));
+        return PlayState.CONTINUE;
+    }
+
+    @Override
+    public AnimationFactory getFactory() {
+        return this.factory;
+    }
 
     @Override
     public void onArmorTick(ItemStack stack, Level world, Player player) {
@@ -50,15 +72,20 @@ public class WarpedArmorItem extends ArmorItem implements IItemRenderProperties 
         ItemStack playerChest = player.getItemBySlot(EquipmentSlot.CHEST);
         ItemStack playerHelm = player.getItemBySlot(EquipmentSlot.HEAD);
 
-        if (playerBoots.getItem() == ModItems.WARPED_BOOTS.asItem() && playerLegs.getItem() == ModItems.WARPED_LEGGINGS.asItem() && playerChest.getItem() == ModItems.WARPED_CHESTPLATE.asItem() && playerHelm.getItem() == ModItems.WARPED_HELMET.asItem()) {
+        if (playerBoots.getItem() == ModItems.WARPED_BOOTS.get() && playerLegs.getItem() == ModItems.WARPED_LEGGINGS.get() && playerChest.getItem() == ModItems.WARPED_CHESTPLATE.get() && playerHelm.getItem() == ModItems.WARPED_HELMET.get()) {
             world.addParticle(ParticleTypes.PORTAL, player.getRandomX(0.5D), player.getRandomY() - 0.25D, player.getRandomZ(0.5D), (this.rand.nextDouble() - 0.5D) * 2.0D, -this.rand.nextDouble(), (this.rand.nextDouble() - 0.5D) * 2.0D);
-            if (ClientReference.warpedTeleportBinding.isDown() && player.isCrouching()) {
+            if (ClientReference.warpedTeleportBinding.consumeClick() && player.isCrouching()) {
                 HitResult lookingAt = player.pick(20.0D, 0.0F, false);
+                Instrumentus.LOGGER.debug(lookingAt.getType());
                 if (lookingAt.getType().equals(HitResult.Type.BLOCK)) {
                     double x = lookingAt.getLocation().x + 0.5d;
                     double y = lookingAt.getLocation().y + 1.0d;
                     double z = lookingAt.getLocation().z + 0.5d;
-                    player.setPos(x, y, z);
+                    if(!world.isClientSide){
+                        ((ServerPlayer) player).connection.teleport(x, y, z, Mth.wrapDegrees(player.getYRot()), Mth.wrapDegrees(player.getXRot()));
+                    } else {
+                        player.teleportTo(x,y,z);
+                    }
                     player.playSound(SoundEvents.ENDERMAN_TELEPORT, 0.5f, 1.0f);
 
                     playerBoots.getItem().setDamage(playerBoots, playerBoots.getDamageValue() + 1);
@@ -76,6 +103,7 @@ public class WarpedArmorItem extends ArmorItem implements IItemRenderProperties 
                     playerHelm.getItem().setDamage(playerHelm, playerHelm.getDamageValue() + 1);
                     if (playerHelm.getItem().getDamage(playerHelm) >= playerHelm.getMaxDamage()) {
                         player.setItemSlot(EquipmentSlot.HEAD, ItemStack.EMPTY);
+
                     }
                 }
             }

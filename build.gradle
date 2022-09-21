@@ -98,9 +98,10 @@ repositories {
     // Put repositories for dependencies here
     // ForgeGradle automatically adds the Forge maven and Maven Central for you
 
-    maven { // JEI
-        url "https://dvs1.progwml6.com/files/maven"
-    }
+    // JEI
+    maven { url "https://dvs1.progwml6.com/files/maven" }
+    //GekoLib
+    maven { url "https://dl.cloudsmith.io/public/geckolib3/geckolib/maven/" }
 }
 
 dependencies {
@@ -109,6 +110,7 @@ dependencies {
     // The userdev artifact is a special name and will get all sorts of transformations applied to it.
     minecraft 'net.minecraftforge:forge:1.18.2-40.1.80'
 
+    implementation fg.deobf('software.bernie.geckolib:geckolib-forge-1.18:3.0.39')
     implementation fg.deobf("mezz.jei:jei-${jei_version}")
 }
 

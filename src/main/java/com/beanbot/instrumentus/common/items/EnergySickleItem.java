@@ -7,18 +7,23 @@ import net.minecraft.core.NonNullList;
 import net.minecraft.core.Vec3i;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.*;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Material;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.energy.IEnergyStorage;
+import net.minecraftforge.event.world.BlockEvent;
 import org.apache.commons.lang3.tuple.Pair;
 
 import javax.annotation.Nonnull;
@@ -101,7 +106,7 @@ public class EnergySickleItem extends SickleItem {
                     if(dx == 0 && dy == 0 && dz == 0 || cutCorners && (Math.abs(dz) >= 2*radius))
                         continue;
 
-                    if(trimType.trimAtPos(world, pos.subtract(new Vec3i(dx,dy,dz).multiply(-1)), fortune))
+                    if(trimType.trimAtPos(world, pos.subtract(new Vec3i(dx,dy,dz).multiply(-1)), entity, stack))
                     {
                         numberTrimmed++;
                         LazyOptional<IEnergyStorage> lazy = stack.getCapability(CapabilityEnergy.ENERGY);
@@ -203,16 +208,22 @@ public class EnergySickleItem extends SickleItem {
     {
         TRIM_GRASS_AND_FLOWERS, TRIM_LEAVES;
 
-        public boolean trimAtPos(Level world, BlockPos pos, int fortune)
+        public boolean trimAtPos(Level world, BlockPos pos, LivingEntity entity, ItemStack item)
         {
             BlockState state = world.getBlockState(pos);
+            BlockEntity blockEntity = world.getBlockEntity(pos);
+
+            BlockEvent.BreakEvent event = new BlockEvent.BreakEvent(world, pos, state, (Player) entity);
+            MinecraftForge.EVENT_BUS.post(event);
 
             switch (this)
             {
                 case TRIM_LEAVES:
                     if(state.getMaterial() == Material.LEAVES)
                     {
-                        world.destroyBlock(pos, true);
+                        state.getBlock().playerDestroy(world, (Player) entity, pos, state,  blockEntity, item);
+                        state.getBlock().popExperience((ServerLevel) world, pos, event.getExpToDrop());
+                        world.removeBlock(pos, false);
                         return true;
                     }
                     return false;
@@ -220,7 +231,9 @@ public class EnergySickleItem extends SickleItem {
                 case TRIM_GRASS_AND_FLOWERS:default:
                 if(state.getMaterial() == Material.REPLACEABLE_PLANT || state.getMaterial() == Material.PLANT)
                 {
-                    world.destroyBlock(pos, true);
+                    state.getBlock().playerDestroy(world, (Player) entity, pos, state,  blockEntity, item);
+                    state.getBlock().popExperience((ServerLevel) world, pos, event.getExpToDrop());
+                    world.removeBlock(pos, false);
                     return true;
                 }
                 return false;

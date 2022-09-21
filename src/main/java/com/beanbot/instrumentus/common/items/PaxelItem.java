@@ -1,14 +1,13 @@
 package com.beanbot.instrumentus.common.items;
-
-import com.beanbot.instrumentus.common.data.ModTags;
-import com.beanbot.instrumentus.common.init.ModItemGroups;
+import com.beanbot.instrumentus.common.Instrumentus;
+import com.beanbot.instrumentus.common.data.GeneratorBlockTags;
+//import com.beanbot.instrumentus.common.data.ToolTagsBackup;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
-import net.minecraft.tags.BlockTags;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.*;
@@ -16,7 +15,6 @@ import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.material.Material;
 import net.minecraftforge.common.ToolAction;
 import net.minecraftforge.common.ToolActions;
 
@@ -28,6 +26,8 @@ import static net.minecraftforge.common.ToolActions.*;
 
 public class PaxelItem extends DiggerItem {
 
+    private static final ToolAction PAXEL_DIG = ToolAction.get("paxel_dig");
+
     protected Tier material;
 
     public static final Set<ToolAction> DEFAULT_PAXEL_ACTIONS = Set.of(
@@ -36,18 +36,18 @@ public class PaxelItem extends DiggerItem {
             PICKAXE_DIG);
 
     public PaxelItem(Tier material, int attackDamageIn, float attackSpeedIn) {
-        super(attackDamageIn, attackSpeedIn, material, ModTags.Blocks.MINEABLE_WITH_PAXEL, new Item.Properties().stacksTo(1).tab(ModItemGroups.MOD_ITEM_GROUP).durability(material.getUses()));
+        super(attackDamageIn, attackSpeedIn, material, GeneratorBlockTags.MINEABLE_WITH_PAXEL, new Item.Properties().stacksTo(1).tab(Instrumentus.MOD_ITEM_GROUP).durability(material.getUses()));
         this.material = material;
     }
 
     @Override
     public boolean canPerformAction(ItemStack stack, net.minecraftforge.common.ToolAction toolAction){
-        return DEFAULT_PAXEL_ACTIONS.contains(toolAction);
+        return DEFAULT_PAXEL_ACTIONS.contains(toolAction) || toolAction == PAXEL_DIG;
     }
 
     @Override
     public float getDestroySpeed(@Nonnull ItemStack stack, @Nonnull BlockState state) {
-        return state.is(ModTags.Blocks.MINEABLE_WITH_PAXEL) ? super.getDestroySpeed(stack, state) : this.speed;
+        return super.getDestroySpeed(stack, state) == 1 ? 1 : material.getSpeed();
     }
 
     @Nonnull

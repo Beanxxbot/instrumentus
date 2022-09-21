@@ -1,19 +1,24 @@
 package com.beanbot.instrumentus.common.items;
 
-import com.beanbot.instrumentus.common.init.ModItemGroups;
+import com.beanbot.instrumentus.common.Instrumentus;
 import com.google.common.collect.ImmutableSet;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Vec3i;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.Tag;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.*;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Material;
+import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.event.world.BlockEvent;
 
 import java.util.Set;
 
@@ -22,7 +27,7 @@ public class SickleItem extends DiggerItem
     protected Tier material;
 
     public SickleItem(Tier material) {
-        super(material.getAttackDamageBonus(), 1, material, BlockTags.LEAVES, new Item.Properties().stacksTo(1).tab(ModItemGroups.MOD_ITEM_GROUP).durability(material.getUses()));
+        super(material.getAttackDamageBonus(), 1, material, BlockTags.LEAVES, new Item.Properties().stacksTo(1).tab(Instrumentus.MOD_ITEM_GROUP).durability(material.getUses()));
         this.material = material;
 
     }
@@ -89,7 +94,7 @@ public class SickleItem extends DiggerItem
                     if(dx == 0 && dy == 0 && dz == 0 || cutCorners && (Math.abs(dz) >= 2*radius))
                         continue;
 
-                    if(trimType.trimAtPos(world, pos.subtract(new Vec3i(dx,dy,dz).multiply(-1)), fortune))
+                    if(trimType.trimAtPos(world, pos.subtract(new Vec3i(dx,dy,dz).multiply(-1)), entity, stack))
                     {
                         numberTrimmed++;
                         if(world.random.nextInt(100) < damagePercentChance)
@@ -107,16 +112,22 @@ public class SickleItem extends DiggerItem
     {
         TRIM_GRASS_AND_FLOWERS, TRIM_LEAVES;
 
-        public boolean trimAtPos(Level world, BlockPos pos, int fortune)
+        public boolean trimAtPos(Level world, BlockPos pos, LivingEntity entity, ItemStack item)
         {
             BlockState state = world.getBlockState(pos);
+            BlockEntity blockEntity = world.getBlockEntity(pos);
+
+            BlockEvent.BreakEvent event = new BlockEvent.BreakEvent(world, pos, state, (Player) entity);
+            MinecraftForge.EVENT_BUS.post(event);
 
             switch (this)
             {
                 case TRIM_LEAVES:
                     if(state.getMaterial() == Material.LEAVES)
                     {
-                        world.destroyBlock(pos, true);
+                        state.getBlock().playerDestroy(world, (Player) entity, pos, state,  blockEntity, item);
+                        state.getBlock().popExperience((ServerLevel) world, pos, event.getExpToDrop());
+                        world.removeBlock(pos, false);
                         return true;
                     }
                     return false;
@@ -124,7 +135,9 @@ public class SickleItem extends DiggerItem
                 case TRIM_GRASS_AND_FLOWERS:default:
                 if(state.getMaterial() == Material.REPLACEABLE_PLANT || state.getMaterial() == Material.PLANT)
                 {
-                    world.destroyBlock(pos, true);
+                    state.getBlock().playerDestroy(world, (Player) entity, pos, state,  blockEntity, item);
+                    state.getBlock().popExperience((ServerLevel) world, pos, event.getExpToDrop());
+                    world.removeBlock(pos, false);
                     return true;
                 }
                 return false;

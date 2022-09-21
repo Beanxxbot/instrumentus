@@ -1,18 +1,23 @@
 package com.beanbot.instrumentus.common.items;
 
-import com.beanbot.instrumentus.common.init.ModItemGroups;
+import com.beanbot.instrumentus.common.Instrumentus;
 import net.minecraft.core.BlockPos;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.*;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Material;
 import net.minecraft.world.phys.Vec3;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.ToolAction;
 import net.minecraftforge.common.ToolActions;
+import net.minecraftforge.event.world.BlockEvent;
 
 
 public class HammerItem extends DiggerItem {
@@ -20,7 +25,7 @@ public class HammerItem extends DiggerItem {
     protected Tier material;
 
     public HammerItem(Tier material, float attackDamageIn, float attackSpeedIn){
-        super(attackDamageIn, attackSpeedIn, material, BlockTags.MINEABLE_WITH_PICKAXE, new Item.Properties().stacksTo(1).tab(ModItemGroups.MOD_ITEM_GROUP).durability(material.getUses()));
+        super(attackDamageIn, attackSpeedIn, material, BlockTags.MINEABLE_WITH_PICKAXE, new Item.Properties().stacksTo(1).tab(Instrumentus.MOD_ITEM_GROUP).durability(material.getUses()));
         this.material = material;
     }
     @Override
@@ -34,8 +39,7 @@ public class HammerItem extends DiggerItem {
             return false;
 
         boolean isStone;
-        isStone = state.getMaterial() == Material.STONE || state.getMaterial() == Material.METAL;
-
+        isStone = state.is(BlockTags.MINEABLE_WITH_PICKAXE);
         int r = isStone ? 0 : 2;
 
         if(material == Tiers.WOOD || material == Tiers.STONE || material == Tiers.IRON || material == Tiers.GOLD || material == Tiers.DIAMOND || material == Tiers.NETHERITE){
@@ -63,7 +67,7 @@ public class HammerItem extends DiggerItem {
                 for (int dy = -r; dy <= r; dy++) {
                     if (dy == 0 && dz == 0)
                         continue;
-                    if (trimType.trimAtPos(world, pos.offset(0, dy, dz), fortune)) {
+                    if (trimType.trimAtPos(world, pos.offset(0, dy, dz), entity, stack)) {
                         numberTrimmed++;
                         stack.hurtAndBreak(1, entity, e -> e.broadcastBreakEvent(EquipmentSlot.MAINHAND));
                     }
@@ -74,7 +78,7 @@ public class HammerItem extends DiggerItem {
                 for (int dy = -r; dy <= r; dy++) {
                     if (dy == 0 && dx == 0)
                         continue;
-                    if (trimType.trimAtPos(world, pos.offset(dx, dy, 0), fortune)) {
+                    if (trimType.trimAtPos(world, pos.offset(dx, dy, 0), entity, stack)) {
                         numberTrimmed++;
                         stack.hurtAndBreak(1, entity, e -> e.broadcastBreakEvent(EquipmentSlot.MAINHAND));
                     }
@@ -85,7 +89,7 @@ public class HammerItem extends DiggerItem {
                 for (int dz = -r; dz <= r; dz++) {
                     if (dz == 0 && dx == 0)
                         continue;
-                    if (trimType.trimAtPos(world, pos.offset(dx, 0, dz), fortune)) {
+                    if (trimType.trimAtPos(world, pos.offset(dx, 0, dz), entity, stack)) {
                         numberTrimmed++;
                         stack.hurtAndBreak(1, entity, e -> e.broadcastBreakEvent(EquipmentSlot.MAINHAND));
                     }
@@ -98,14 +102,20 @@ public class HammerItem extends DiggerItem {
     public enum TrimType{
         TRIM_ROCK;
 
-        public boolean trimAtPos(Level world, BlockPos pos, int fortune)
+        public boolean trimAtPos(Level world, BlockPos pos, LivingEntity entity, ItemStack item)
         {
             BlockState state = world.getBlockState(pos);
+            BlockEntity blockEntity = world.getBlockEntity(pos);
+
+            BlockEvent.BreakEvent event = new BlockEvent.BreakEvent(world, pos, state, (Player) entity);
+            MinecraftForge.EVENT_BUS.post(event);
 
             switch (this){
                 case TRIM_ROCK:default:
-                    if(state.getMaterial() == Material.STONE || state.getMaterial() == Material.METAL){
-                        world.destroyBlock(pos, true);
+                    if(state.is(BlockTags.MINEABLE_WITH_PICKAXE) && state.canHarvestBlock(world, pos, (Player)entity)){
+                        state.getBlock().playerDestroy(world, (Player) entity, pos, state,  blockEntity, item);
+                        state.getBlock().popExperience((ServerLevel) world, pos, event.getExpToDrop());
+                        world.removeBlock(pos, false);
                         return true;
                     }
                     return false;

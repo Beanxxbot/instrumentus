@@ -1,7 +1,7 @@
 package com.beanbot.instrumentus.common.items;
 
+import com.beanbot.instrumentus.common.Instrumentus;
 import com.beanbot.instrumentus.common.capability.EnergyStorageItem;
-import com.beanbot.instrumentus.common.init.ModItemGroups;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.NonNullList;
@@ -27,7 +27,7 @@ import java.util.List;
 
 public class EnergyPickaxeItem extends DiggerItem {
     public EnergyPickaxeItem(Tier tier, int attackDamageIn, float attackSpeedIn) {
-        super(attackDamageIn, attackSpeedIn, tier,  BlockTags.MINEABLE_WITH_PICKAXE, new Item.Properties().durability(0).stacksTo(1).tab(ModItemGroups.MOD_ITEM_GROUP));
+        super(attackDamageIn, attackSpeedIn, tier,  BlockTags.MINEABLE_WITH_PICKAXE, new Item.Properties().durability(0).stacksTo(1).tab(Instrumentus.MOD_ITEM_GROUP));
     }
 
     @Override

@@ -7,6 +7,8 @@ import net.minecraft.core.Direction;
 import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.tags.BlockTags;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
@@ -14,14 +16,17 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.*;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Material;
 import net.minecraft.world.phys.Vec3;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.energy.IEnergyStorage;
+import net.minecraftforge.event.world.BlockEvent;
 import org.apache.commons.lang3.tuple.Pair;
 
 import javax.annotation.Nonnull;
@@ -73,7 +78,7 @@ public class EnergyHammerItem extends HammerItem {
                 for (int dy = -r; dy <= r; dy++) {
                     if (dy == 0 && dz == 0)
                         continue;
-                    if (trimType.trimAtPos(world, pos.offset(0, dy, dz), fortune)) {
+                    if (trimType.trimAtPos(world, pos.offset(0, dy, dz), entity, stack)) {
                         numberTrimmed++;
                             LazyOptional<IEnergyStorage> lazy = stack.getCapability(CapabilityEnergy.ENERGY);
                             if(lazy.isPresent()){
@@ -90,7 +95,7 @@ public class EnergyHammerItem extends HammerItem {
                 for (int dy = -r; dy <= r; dy++) {
                     if (dy == 0 && dx == 0)
                         continue;
-                    if (trimType.trimAtPos(world, pos.offset(dx, dy, 0), fortune)) {
+                    if (trimType.trimAtPos(world, pos.offset(dx, dy, 0), entity, stack)) {
                         numberTrimmed++;
                         LazyOptional<IEnergyStorage> lazy = stack.getCapability(CapabilityEnergy.ENERGY);
                         if(lazy.isPresent()){
@@ -107,7 +112,7 @@ public class EnergyHammerItem extends HammerItem {
                 for (int dz = -r; dz <= r; dz++) {
                     if (dz == 0 && dx == 0)
                         continue;
-                    if (trimType.trimAtPos(world, pos.offset(dx, 0, dz), fortune)) {
+                    if (trimType.trimAtPos(world, pos.offset(dx, 0, dz), entity, stack)) {
                         numberTrimmed++;
                         LazyOptional<IEnergyStorage> lazy = stack.getCapability(CapabilityEnergy.ENERGY);
                         if(lazy.isPresent()){
@@ -209,14 +214,20 @@ public class EnergyHammerItem extends HammerItem {
     public enum TrimType{
         TRIM_ROCK;
 
-        public boolean trimAtPos(Level world, BlockPos pos, int fortune)
+        public boolean trimAtPos(Level world, BlockPos pos, LivingEntity entity, ItemStack item)
         {
             BlockState state = world.getBlockState(pos);
+            BlockEntity blockEntity = world.getBlockEntity(pos);
+
+            BlockEvent.BreakEvent event = new BlockEvent.BreakEvent(world, pos, state, (Player) entity);
+            MinecraftForge.EVENT_BUS.post(event);
 
             switch (this){
                 case TRIM_ROCK:default:
-                    if(state.getMaterial() == Material.STONE || state.getMaterial() == Material.METAL){
-                        world.destroyBlock(pos, true);
+                    if(state.is(BlockTags.MINEABLE_WITH_PICKAXE) && state.canHarvestBlock(world, pos, (Player)entity)){
+                        state.getBlock().playerDestroy(world, (Player) entity, pos, state,  blockEntity, item);
+                        state.getBlock().popExperience((ServerLevel) world, pos, event.getExpToDrop());
+                        world.removeBlock(pos, false);
                         return true;
                     }
                     return false;
