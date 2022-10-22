@@ -1,8 +1,7 @@
 package com.beanbot.instrumentus.common.blocks;
 
 import com.beanbot.instrumentus.common.Instrumentus;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.SoundType;
+import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.material.Material;
 import net.minecraft.world.level.material.MaterialColor;
@@ -15,7 +14,13 @@ public class ModBlocks {
     public static final DeferredRegister<Block> UTILITIES = DeferredRegister.create(ForgeRegistries.BLOCKS, Instrumentus.MODID);
     public static final DeferredRegister<Block> ENERGIZED = DeferredRegister.create(ForgeRegistries.BLOCKS, Instrumentus.MODID);
 
-    public static final RegistryObject<Block> ILLUMINATE_LIGHT = UTILITIES.register("illuminate_light", () -> new IlluminateLight());
+    public static final RegistryObject<Block> COPPER_SOUL_FLAME_LIGHT = UTILITIES.register("copper_soul_fire_flame", () -> new CopperSoulFlameLight());
+    public static final RegistryObject<Block> COPPER_SOUL_CAMPFIRE = UTILITIES.register("copper_soul_campfire", () -> new CopperSoulCampfireBlock());
+    public static final RegistryObject<Block> RAW_SOULCOPPER_BLOCK = UTILITIES.register("raw_soulcopper_block", () -> new Block(BlockBehaviour.Properties.of(Material.STONE, MaterialColor.COLOR_LIGHT_BLUE).requiresCorrectToolForDrops().strength(5.0F, 6.0F).lightLevel(e -> 15)));
+    public static final RegistryObject<Block> SOULCOPPER_BLOCK = UTILITIES.register("soulcopper_block", () -> new Block(BlockBehaviour.Properties.of(Material.METAL, MaterialColor.COLOR_CYAN).requiresCorrectToolForDrops().strength(5.0F, 6.0F).lightLevel(e -> 15)));
+    public static final RegistryObject<Block> SOULCOPPER_TORCH = UTILITIES.register("copper_soul_torch", () -> new CopperSoulTorchBlock(BlockBehaviour.Properties.of(Material.DECORATION).noCollission().instabreak().lightLevel(e -> 15).sound(SoundType.WOOD))); //(SimpleParticleType)ModParticles.COPPER_SOUL_FIRE_FLAME_PARTICLE.get())
+    public static final RegistryObject<Block> SOULCOPPER_WALL_TORCH = UTILITIES.register("copper_soul_wall_torch", () -> new CopperSoulWallTorchBlock(BlockBehaviour.Properties.of(Material.DECORATION).noCollission().instabreak().lightLevel(e -> 15).sound(SoundType.WOOD).dropsLike(SOULCOPPER_TORCH.get()))); //(SimpleParticleType)ModParticles.COPPER_SOUL_FIRE_FLAME_PARTICLE.get()
+    public static final RegistryObject<Block> SOULCOPPER_LANTERN = UTILITIES.register("copper_soul_lantern", () -> new LanternBlock(BlockBehaviour.Properties.of(Material.METAL).requiresCorrectToolForDrops().strength(3.5f).sound(SoundType.LANTERN).lightLevel(e -> 15).noOcclusion()));
     public static final RegistryObject<Block> ENERGY_BLOCK = ENERGIZED.register("energy_block", () -> new Block(BlockBehaviour.Properties.of(Material.METAL, MaterialColor.COLOR_CYAN).destroyTime(5.0f).explosionResistance(6.0f).sound(SoundType.METAL).lightLevel(e -> 4)));
     public static final Block SOUL_BLAST_FURNACE = null;
 }

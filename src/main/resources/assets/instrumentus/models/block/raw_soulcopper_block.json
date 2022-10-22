@@ -1,0 +1,6 @@
+{
+  "parent": "block/cube_all",
+  "textures": {
+    "all": "instrumentus:block/raw_soulcopper_block"
+  }
+}

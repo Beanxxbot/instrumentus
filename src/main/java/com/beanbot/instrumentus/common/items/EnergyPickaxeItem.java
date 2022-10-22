@@ -25,9 +25,27 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.List;
 
-public class EnergyPickaxeItem extends DiggerItem {
+public class EnergyPickaxeItem extends DiggerItem implements IItemLightningChargeable {
     public EnergyPickaxeItem(Tier tier, int attackDamageIn, float attackSpeedIn) {
-        super(attackDamageIn, attackSpeedIn, tier,  BlockTags.MINEABLE_WITH_PICKAXE, new Item.Properties().durability(0).stacksTo(1).tab(Instrumentus.MOD_ITEM_GROUP));
+        super(attackDamageIn, attackSpeedIn, tier,  BlockTags.MINEABLE_WITH_PICKAXE, new Item.Properties().durability(0).stacksTo(1).tab(Instrumentus.MOD_ITEM_GROUP).fireResistant());
+    }
+
+    @Override
+    public boolean isChargeFull(ItemStack stack) {
+        LazyOptional<IEnergyStorage> lazy = stack.getCapability(CapabilityEnergy.ENERGY);
+        if(lazy.isPresent()){
+            IEnergyStorage storage = lazy.orElseThrow(AssertionError::new);
+            if (storage.getEnergyStored() == storage.getMaxEnergyStored()); {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    @Override
+    public ItemStack chargeToFull(ItemStack stack) {
+        stack.getOrCreateTag().putInt(EnergyToolCommon.ENERGY_TAG, EnergyToolCommon.CAPACITY);
+        return stack;
     }
 
     @Override

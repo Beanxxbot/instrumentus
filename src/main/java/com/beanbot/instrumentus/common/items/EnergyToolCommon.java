@@ -18,7 +18,7 @@ import java.util.List;
 
 public class EnergyToolCommon {
     static final int CAPACITY = 20000;
-    static final int MAX_TRANSFER = 32;
+    static final int MAX_TRANSFER = 100;
 
     static final String ENERGY_TAG = "Energy";
 

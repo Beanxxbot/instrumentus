@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "hanging=false": {
+      "model": "instrumentus:block/copper_soul_lantern"
+    },
+    "hanging=true": {
+      "model": "instrumentus:block/copper_soul_lantern_hanging"
+    }
+  }
+}

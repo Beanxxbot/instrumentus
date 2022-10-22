@@ -1,5 +1,6 @@
 package com.beanbot.instrumentus.common.items;
 
+import com.beanbot.instrumentus.common.Instrumentus;
 import com.beanbot.instrumentus.common.capability.EnergyStorageItem;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.core.BlockPos;
@@ -7,7 +8,6 @@ import net.minecraft.core.Direction;
 import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -32,12 +32,11 @@ import org.apache.commons.lang3.tuple.Pair;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import java.awt.*;
 import java.util.List;
 
-public class EnergyPaxelItem extends PaxelItem {
+public class EnergyPaxelItem extends PaxelItem implements IItemLightningChargeable {
     public EnergyPaxelItem(Tier material, int attackDamageIn, float attackSpeedIn) {
-        super(material, attackDamageIn, attackSpeedIn);
+        super(material, attackDamageIn, attackSpeedIn, new Item.Properties().stacksTo(1).tab(Instrumentus.MOD_ITEM_GROUP).fireResistant());
     }
 
     @Nonnull
@@ -122,6 +121,24 @@ public class EnergyPaxelItem extends PaxelItem {
             }
         }
         return true;
+    }
+
+    @Override
+    public boolean isChargeFull(ItemStack stack) {
+        LazyOptional<IEnergyStorage> lazy = stack.getCapability(CapabilityEnergy.ENERGY);
+        if(lazy.isPresent()){
+            IEnergyStorage storage = lazy.orElseThrow(AssertionError::new);
+            if (storage.getEnergyStored() == storage.getMaxEnergyStored()); {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    @Override
+    public ItemStack chargeToFull(ItemStack stack) {
+        stack.getOrCreateTag().putInt(EnergyToolCommon.ENERGY_TAG, EnergyToolCommon.CAPACITY);
+        return stack;
     }
 
     @Override

@@ -33,8 +33,9 @@
   "item.instrumentus.energy_pickaxe": "Energized Di-Emerald Pickaxe",
   "item.instrumentus.energy_axe": "Energized Di-Emerald Axe",
   "item.instrumentus.energy_shovel": "Energized Di-Emerald Shovel",
+  "item.instrumentus.energy_lightning_rod": "Energized Lightning Rod",
 
-  "item.instrumentus.illuminate_pickaxe": "Soul-Infused Pickaxe",
+  "item.instrumentus.soulcopper_pickaxe": "Soulcopper Pickaxe",
 
   "item.instrumentus.solar_helmet": "Blazing Helmet",
   "item.instrumentus.solar_chestplate": "Blazing Chestplate",
@@ -46,8 +47,24 @@
   "item.instrumentus.warped_boots": "Warped Boots",
 
   "item.instrumentus.energy_ingot": "Energized Di-Emerald Ingot",
-  "item.instrumentus.illuminate_ingot": "Soul-Infused Ingot",
+  "item.instrumentus.raw_soulcopper": "Raw Soulcopper",
+  "block.instrumentus.raw_soulcopper_block": "Raw Soulcopper Block",
+  "item.instrumentus.soulcopper_ingot": "Soulcopper Ingot",
+  "block.instrumentus.soulcopper_block": "Soulcopper Block",
   "item.instrumentus.carbon_rod": "Carbon Rod",
+
+  "block.instrumentus.copper_soul_campfire": "Copper-fueled Soul Campfire",
+  "block.instrumentus.copper_soul_fire_flame": "Copper Soul Fire Flame",
+  "block.instrumentus.copper_soul_torch": "Soulcopper Torch",
+  "block.instrumentus.copper_soul_lantern": "Soulcopper Lantern",
+
+  "item.instrumentus.wooden_knife": "Wooden Knife",
+  "item.instrumentus.stone_knife": "Stone Knife",
+  "item.instrumentus.iron_knife": "Iron Knife",
+  "item.instrumentus.golden_knife": "Golden Knife",
+  "item.instrumentus.diamond_knife": "Diamond Knife",
+  "item.instrumentus.netherite_knife": "Netherite Knife",
+  "item.instrumentus.plant_fiber": "Plant Fiber",
 
   "block.instrumentus.energy_block": "Energized Di-Emerald Block",
 

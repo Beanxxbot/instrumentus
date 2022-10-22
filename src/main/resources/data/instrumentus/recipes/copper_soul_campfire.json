@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " # ",
+    "#F#",
+    "CCC"
+  ],
+  "key": {
+    "#": {
+      "item": "minecraft:stick"
+    },
+    "F": {
+      "item": "minecraft:soul_campfire"
+    },
+    "C": {
+      "item": "minecraft:raw_copper_block"
+    }
+  },
+  "result": {
+    "item": "instrumentus:copper_soul_campfire"
+  }
+}

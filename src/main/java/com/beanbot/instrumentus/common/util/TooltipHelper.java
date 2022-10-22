@@ -32,20 +32,4 @@ public class TooltipHelper {
         return new TranslatableComponent(NumberFormat.getNumberInstance(Locale.US).format(value)).withStyle(styles);
     }
 
-//    public static MutableComponent chargeRatio(ItemStack stack) {
-//        LazyOptional<IEnergyStorage> lazy = stack.getCapability(CapabilityEnergy.ENERGY);
-//        if (lazy.isPresent()) {
-//            IEnergyStorage storage = lazy.orElse(null);
-//            ChatFormatting storedColor = storage.getEnergyStored() != 0 ? ChatFormatting.GREEN : ChatFormatting.RED;
-//            TranslatableComponent chargeRatioText =
-//                    new TranslatableComponent("instrumentus.tooltip.energy",
-//                            tipInt(storage.getEnergyStored(), storedColor),
-//                            tipString(" FE / ", ChatFormatting.GRAY),
-//                            tipInt(storage.getMaxEnergyStored(), ChatFormatting.GRAY),
-//                            tipString(" FE", ChatFormatting.GRAY)
-//                    );
-//            return chargeRatioText;
-//            return tipString("");
-//        }
-//    }
 }

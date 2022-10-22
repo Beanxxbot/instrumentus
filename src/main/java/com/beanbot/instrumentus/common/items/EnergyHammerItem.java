@@ -1,5 +1,6 @@
 package com.beanbot.instrumentus.common.items;
 
+import com.beanbot.instrumentus.common.Instrumentus;
 import com.beanbot.instrumentus.common.capability.EnergyStorageItem;
 import com.google.common.collect.ImmutableSet;
 import net.minecraft.core.BlockPos;
@@ -34,13 +35,31 @@ import javax.annotation.Nullable;
 import java.util.List;
 import java.util.Set;
 
-public class EnergyHammerItem extends HammerItem {
+public class EnergyHammerItem extends HammerItem implements IItemLightningChargeable {
 
     protected Tier material;
 
     public EnergyHammerItem(Tier material, float attackDamageIn, float attackSpeedIn){
-        super(material, attackSpeedIn, attackDamageIn);
+        super(material, attackSpeedIn, attackDamageIn, new Item.Properties().stacksTo(1).tab(Instrumentus.MOD_ITEM_GROUP).fireResistant());
         this.material = material;
+    }
+
+    @Override
+    public boolean isChargeFull(ItemStack stack) {
+        LazyOptional<IEnergyStorage> lazy = stack.getCapability(CapabilityEnergy.ENERGY);
+        if(lazy.isPresent()){
+            IEnergyStorage storage = lazy.orElseThrow(AssertionError::new);
+            if (storage.getEnergyStored() == storage.getMaxEnergyStored()); {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    @Override
+    public ItemStack chargeToFull(ItemStack stack) {
+        stack.getOrCreateTag().putInt(EnergyToolCommon.ENERGY_TAG, EnergyToolCommon.CAPACITY);
+        return stack;
     }
 
     @Override

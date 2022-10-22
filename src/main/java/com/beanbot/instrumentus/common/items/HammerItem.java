@@ -2,6 +2,7 @@ package com.beanbot.instrumentus.common.items;
 
 import com.beanbot.instrumentus.common.Instrumentus;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -13,19 +14,21 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Material;
+import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.ToolAction;
 import net.minecraftforge.common.ToolActions;
 import net.minecraftforge.event.world.BlockEvent;
+import org.lwjgl.system.CallbackI;
 
 
 public class HammerItem extends DiggerItem {
 
     protected Tier material;
 
-    public HammerItem(Tier material, float attackDamageIn, float attackSpeedIn){
-        super(attackDamageIn, attackSpeedIn, material, BlockTags.MINEABLE_WITH_PICKAXE, new Item.Properties().stacksTo(1).tab(Instrumentus.MOD_ITEM_GROUP).durability(material.getUses()));
+    public HammerItem(Tier material, float attackDamageIn, float attackSpeedIn, Item.Properties properties){
+        super(attackDamageIn, attackSpeedIn, material, BlockTags.MINEABLE_WITH_PICKAXE, properties);
         this.material = material;
     }
     @Override
@@ -61,8 +64,10 @@ public class HammerItem extends DiggerItem {
         int numberTrimmed = 0;
         int fortune = 0;
         Vec3 look = entity.getLookAngle();
+        Player player = (Player) entity;
+        BlockHitResult hitResult = new BlockHitResult(new Vec3(player.getX(), player.getY(), player.getZ()), player.getDirection(), pos, false);
 
-        if(look.x >= -1 && look.x <= -0.75 || look.x <= 1 && look.x >= 0.75) {
+        if(hitResult.getDirection() == Direction.EAST || hitResult.getDirection() == Direction.WEST/*look.x >= -1 && look.x <= -0.75 || look.x <= 1 && look.x >= 0.75*/) {
             for (int dz = -r; dz <= r; dz++) {
                 for (int dy = -r; dy <= r; dy++) {
                     if (dy == 0 && dz == 0)
@@ -73,7 +78,7 @@ public class HammerItem extends DiggerItem {
                     }
                 }
             }
-        } else if(look.z >= -1 && look.z <= -0.75 || look.z <= 1 && look.z >= 0.75) {
+        } else if(hitResult.getDirection() == Direction.NORTH || hitResult.getDirection() == Direction.SOUTH/*look.z >= -1 && look.z <= -0.75 || look.z <= 1 && look.z >= 0.75*/) {
             for (int dx = -r; dx <= r; dx++) {
                 for (int dy = -r; dy <= r; dy++) {
                     if (dy == 0 && dx == 0)
@@ -84,7 +89,7 @@ public class HammerItem extends DiggerItem {
                     }
                 }
             }
-        } else if (look.y >= -1 && look.y <= -0.75 || look.y <= 1 && look.y >= 0.75) {
+        } else if (hitResult.getDirection() == Direction.UP || hitResult.getDirection() == Direction.DOWN /*look.y >= -1 && look.y <= -0.75 || look.y <= 1 && look.y >= 0.75*/) {
             for (int dx = -r; dx <= r; dx++) {
                 for (int dz = -r; dz <= r; dz++) {
                     if (dz == 0 && dx == 0)

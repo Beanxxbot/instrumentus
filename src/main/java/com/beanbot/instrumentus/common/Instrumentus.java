@@ -1,9 +1,17 @@
 package com.beanbot.instrumentus.common;
 
+import com.beanbot.instrumentus.client.particles.ModParticles;
+import com.beanbot.instrumentus.client.renderer.CopperSoulCampfireRenderer;
 import com.beanbot.instrumentus.common.blocks.ModBlocks;
+import com.beanbot.instrumentus.common.blocks.entities.ModBlockEntities;
 import com.beanbot.instrumentus.common.config.Config;
 import com.beanbot.instrumentus.common.config.ItemConfig;
+import com.beanbot.instrumentus.common.events.EntityStruckByLightningEventHook;
 import com.beanbot.instrumentus.common.items.ModItems;
+import com.beanbot.instrumentus.recipe.ModRecipes;
+import net.minecraft.client.renderer.ItemBlockRenderTypes;
+import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.blockentity.BlockEntityRenderers;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.common.MinecraftForge;
@@ -25,9 +33,6 @@ public class Instrumentus {
     private static Instrumentus instance;
     public static final Logger LOGGER = LogManager.getLogger();
 
-    //TODO Do I need this?
-//    public static final ISidedReference SIDED_SYSTEM = DistExecutor.safeRunForDist(() -> ClientReference::new, () -> DedicatedServerReference::new);
-
     public static final CreativeModeTab MOD_ITEM_GROUP = new CreativeModeTab(Instrumentus.MODID) {
         @Override
         public ItemStack makeIcon() {
@@ -42,7 +47,10 @@ public class Instrumentus {
         ModLoadingContext.get().registerConfig(ModConfig.Type.SERVER, Config.SERVER, "instrumentus-server.toml");
         ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, Config.CLIENT, "instrumentus-client.toml");
 
+        MinecraftForge.EVENT_BUS.register(new EntityStruckByLightningEventHook());
+
         LOGGER.debug("Yo Yo Yo It's Ya Boi, Instrumentus");
+        ModParticles.PARTICLE_TYPES.register(event);
 
         event.addListener(this::setup);
         MinecraftForge.EVENT_BUS.register(this);
@@ -69,19 +77,24 @@ public class Instrumentus {
         if (ItemConfig.enable_armor.get())
             ModItems.ARMOR.register(event);
 
+        ModBlockEntities.register(event);
+
+        ModRecipes.register(event);
+
         event.addListener(this::setup);
         event.addListener(this::setupClient);
 
     }
 
     private void setup(final FMLCommonSetupEvent event) {
-//        event.enqueueWork(() -> {
-//            ToolTags.init();
-//        });
     }
 
     private void setupClient(final FMLClientSetupEvent event) {
-//        ModKeys.register();
+        ItemBlockRenderTypes.setRenderLayer(ModBlocks.COPPER_SOUL_CAMPFIRE.get(), RenderType.cutout());
+        ItemBlockRenderTypes.setRenderLayer(ModBlocks.SOULCOPPER_LANTERN.get(), RenderType.cutout());
+        ItemBlockRenderTypes.setRenderLayer(ModBlocks.SOULCOPPER_TORCH.get(), RenderType.cutout());
+        ItemBlockRenderTypes.setRenderLayer(ModBlocks.SOULCOPPER_WALL_TORCH.get(), RenderType.cutout());
+        BlockEntityRenderers.register(ModBlockEntities.COPPER_SOUL_CAMPFIRE_BLOCK_ENTITY.get(), CopperSoulCampfireRenderer::new);
     }
 
     public static Instrumentus getInstance() { return instance; }

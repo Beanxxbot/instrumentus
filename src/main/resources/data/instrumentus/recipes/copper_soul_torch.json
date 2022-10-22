@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "X",
+    "#"
+  ],
+  "key": {
+    "#": {
+      "item": "minecraft:stick"
+    },
+    "X": [
+      {
+        "item": "instrumentus:raw_soulcopper"
+      }
+    ]
+  },
+  "result": {
+    "item": "instrumentus:copper_soul_torch",
+    "count": 4
+  }
+}

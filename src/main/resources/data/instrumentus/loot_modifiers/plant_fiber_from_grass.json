@@ -1,0 +1,27 @@
+{
+  "type": "instrumentus:plant_fiber_from_grass",
+  "conditions": [
+    {
+      "condition": "minecraft:alternative",
+      "terms": [
+        {
+          "condition": "minecraft:match_tool",
+          "predicate": {
+            "items": [
+              "instrumentus:wooden_knife",
+              "instrumentus:stone_knife",
+              "instrumentus:iron_knife",
+              "instrumentus:golden_knife",
+              "instrumentus:diamond_knife",
+              "instrumentus:netherite_knife"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "condition": "block_state_property",
+      "block": "minecraft:grass"
+    }
+  ]
+}

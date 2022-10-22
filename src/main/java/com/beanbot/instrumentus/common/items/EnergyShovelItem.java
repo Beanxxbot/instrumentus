@@ -30,9 +30,27 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.List;
 
-public class EnergyShovelItem extends DiggerItem {
+public class EnergyShovelItem extends DiggerItem implements IItemLightningChargeable {
     public EnergyShovelItem(Tier tier, float attackDamageIn, float attackSpeedIn) {
-        super( attackDamageIn, attackSpeedIn, tier, BlockTags.MINEABLE_WITH_SHOVEL, new Item.Properties().durability(0).stacksTo(1).tab(Instrumentus.MOD_ITEM_GROUP));
+        super( attackDamageIn, attackSpeedIn, tier, BlockTags.MINEABLE_WITH_SHOVEL, new Item.Properties().durability(0).stacksTo(1).tab(Instrumentus.MOD_ITEM_GROUP).fireResistant());
+    }
+
+    @Override
+    public boolean isChargeFull(ItemStack stack) {
+        LazyOptional<IEnergyStorage> lazy = stack.getCapability(CapabilityEnergy.ENERGY);
+        if(lazy.isPresent()){
+            IEnergyStorage storage = lazy.orElseThrow(AssertionError::new);
+            if (storage.getEnergyStored() == storage.getMaxEnergyStored()); {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    @Override
+    public ItemStack chargeToFull(ItemStack stack) {
+        stack.getOrCreateTag().putInt(EnergyToolCommon.ENERGY_TAG, EnergyToolCommon.CAPACITY);
+        return stack;
     }
 
     @Override

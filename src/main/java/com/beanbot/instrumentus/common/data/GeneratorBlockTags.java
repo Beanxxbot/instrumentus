@@ -13,13 +13,13 @@ import javax.annotation.Nullable;
 
 public class GeneratorBlockTags extends BlockTagsProvider {
 
-    public static final TagKey<Block> MINEABLE_WITH_PAXEL = BlockTags.create(new ResourceLocation("instrumentus", "mineable/paxel"));
+    public static final TagKey<Block> MINEABLE_WITH_PAXEL = BlockTags.create(new ResourceLocation("forge", "mineable/paxel"));
     public GeneratorBlockTags(DataGenerator generator, @Nullable ExistingFileHelper helper) {
         super(generator, Instrumentus.MODID, helper);
     }
 
     @Override
     protected void addTags(){
-        this.tag(MINEABLE_WITH_PAXEL).addTag(BlockTags.MINEABLE_WITH_PICKAXE).addTag(BlockTags.MINEABLE_WITH_AXE).addTag(BlockTags.MINEABLE_WITH_SHOVEL);
+        this.tag(MINEABLE_WITH_PAXEL).addTags(BlockTags.MINEABLE_WITH_PICKAXE, BlockTags.MINEABLE_WITH_AXE, BlockTags.MINEABLE_WITH_SHOVEL);
     }
 }

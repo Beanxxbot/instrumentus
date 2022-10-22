@@ -1,5 +1,6 @@
 package com.beanbot.instrumentus.common.items;
 
+import com.beanbot.instrumentus.common.Instrumentus;
 import com.beanbot.instrumentus.common.capability.EnergyStorageItem;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -30,13 +31,31 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.List;
 
-public class EnergySickleItem extends SickleItem {
+public class EnergySickleItem extends SickleItem implements IItemLightningChargeable {
 
     protected Tier material;
 
     public EnergySickleItem(Tier material) {
-        super(material);
+        super(material ,new Item.Properties().stacksTo(1).tab(Instrumentus.MOD_ITEM_GROUP).fireResistant());
         this.material = material;
+    }
+
+    @Override
+    public boolean isChargeFull(ItemStack stack) {
+        LazyOptional<IEnergyStorage> lazy = stack.getCapability(CapabilityEnergy.ENERGY);
+        if(lazy.isPresent()){
+            IEnergyStorage storage = lazy.orElseThrow(AssertionError::new);
+            if (storage.getEnergyStored() == storage.getMaxEnergyStored()); {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    @Override
+    public ItemStack chargeToFull(ItemStack stack) {
+        stack.getOrCreateTag().putInt(EnergyToolCommon.ENERGY_TAG, EnergyToolCommon.CAPACITY);
+        return stack;
     }
 
     @Override

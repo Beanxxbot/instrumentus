@@ -1,18 +1,15 @@
 package com.beanbot.instrumentus.common.items;
 
 import com.beanbot.instrumentus.common.Instrumentus;
-import com.google.common.collect.ImmutableSet;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Vec3i;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.tags.BlockTags;
-import net.minecraft.tags.Tag;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.*;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
@@ -20,14 +17,12 @@ import net.minecraft.world.level.material.Material;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.world.BlockEvent;
 
-import java.util.Set;
-
 public class SickleItem extends DiggerItem
 {
     protected Tier material;
 
-    public SickleItem(Tier material) {
-        super(material.getAttackDamageBonus(), 1, material, BlockTags.LEAVES, new Item.Properties().stacksTo(1).tab(Instrumentus.MOD_ITEM_GROUP).durability(material.getUses()));
+    public SickleItem(Tier material, Item.Properties properties) {
+        super(material.getAttackDamageBonus(), 1, material, BlockTags.LEAVES, properties);
         this.material = material;
 
     }
@@ -83,7 +78,6 @@ public class SickleItem extends DiggerItem
     public int trim(ItemStack stack, LivingEntity entity, Level world, BlockPos pos, int height, int radius, TrimType trimType, boolean cutCorners, int damagePercentChance)
     {
         int numberTrimmed = 0;
-        int fortune = 0;
 
         for(int dx = -radius; dx <= radius; dx++)
         {

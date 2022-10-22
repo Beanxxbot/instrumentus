@@ -27,11 +27,29 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.List;
 
-public class EnergyShearsItem extends ModShearsItem {
+public class EnergyShearsItem extends ModShearsItem implements IItemLightningChargeable {
 
 
     public EnergyShearsItem(Tier material) {
-        super(material, new Item.Properties().stacksTo(1).durability(0).tab(Instrumentus.MOD_ITEM_GROUP));
+        super(material, new Item.Properties().stacksTo(1).durability(0).tab(Instrumentus.MOD_ITEM_GROUP).fireResistant());
+    }
+
+    @Override
+    public boolean isChargeFull(ItemStack stack) {
+        LazyOptional<IEnergyStorage> lazy = stack.getCapability(CapabilityEnergy.ENERGY);
+        if(lazy.isPresent()){
+            IEnergyStorage storage = lazy.orElseThrow(AssertionError::new);
+            if (storage.getEnergyStored() == storage.getMaxEnergyStored()); {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    @Override
+    public ItemStack chargeToFull(ItemStack stack) {
+        stack.getOrCreateTag().putInt(EnergyToolCommon.ENERGY_TAG, EnergyToolCommon.CAPACITY);
+        return stack;
     }
 
     @Override
