@@ -10,7 +10,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 
 public class ModBlockEntities {
-    public static final DeferredRegister<BlockEntityType<?>> BLOCK_ENTITIES = DeferredRegister.create(ForgeRegistries.BLOCK_ENTITIES, Instrumentus.MODID);
+    public static final DeferredRegister<BlockEntityType<?>> BLOCK_ENTITIES = DeferredRegister.create(ForgeRegistries.BLOCK_ENTITY_TYPES, Instrumentus.MODID);
 
     public static final RegistryObject<BlockEntityType<CopperSoulCampfireBlockEntity>> COPPER_SOUL_CAMPFIRE_BLOCK_ENTITY = BLOCK_ENTITIES.register("copper_soul_campfire_block_entity", () ->
             BlockEntityType.Builder.of(CopperSoulCampfireBlockEntity::new, ModBlocks.COPPER_SOUL_CAMPFIRE.get()).build(null));

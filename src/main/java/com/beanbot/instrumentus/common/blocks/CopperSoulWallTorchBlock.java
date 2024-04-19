@@ -7,6 +7,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.core.particles.SimpleParticleType;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
@@ -89,7 +90,7 @@ public class CopperSoulWallTorchBlock extends CopperSoulTorchBlock {
     /**
      * Called periodically clientside on blocks near the player to show effects (like furnace fire particles).
      */
-    public void animateTick(BlockState pState, Level pLevel, BlockPos pPos, Random pRand) {
+    public void animateTick(BlockState pState, Level pLevel, BlockPos pPos, RandomSource pRand) {
         Direction direction = pState.getValue(FACING);
         double d0 = (double)pPos.getX() + 0.5D;
         double d1 = (double)pPos.getY() + 0.7D;
@@ -107,6 +108,7 @@ public class CopperSoulWallTorchBlock extends CopperSoulTorchBlock {
      * @deprecated call via {@link net.minecraft.world.level.block.state.BlockBehavior.BlockStateBase#rotate} whenever
      * possible. Implementing/overriding is fine.
      */
+    @SuppressWarnings("deprecation")
     public BlockState rotate(BlockState pState, Rotation pRotation) {
         return pState.setValue(FACING, pRotation.rotate(pState.getValue(FACING)));
     }
@@ -117,6 +119,7 @@ public class CopperSoulWallTorchBlock extends CopperSoulTorchBlock {
      * @deprecated call via {@link net.minecraft.world.level.block.state.BlockBehavior.BlockStateBase#mirror} whenever
      * possible. Implementing/overriding is fine.
      */
+    @SuppressWarnings("deprecation")
     public BlockState mirror(BlockState pState, Mirror pMirror) {
         return pState.rotate(pMirror.getRotation(pState.getValue(FACING)));
     }

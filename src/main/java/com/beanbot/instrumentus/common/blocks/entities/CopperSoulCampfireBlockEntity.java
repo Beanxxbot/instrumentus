@@ -9,6 +9,7 @@ import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.util.Mth;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.*;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.CampfireCookingRecipe;
@@ -44,7 +45,7 @@ public class CopperSoulCampfireBlockEntity extends BlockEntity implements Cleara
                 if (pBlockEntity.cookingProgress[i] >= pBlockEntity.cookingTime[i]) {
                     Container container = new SimpleContainer(itemstack);
                     ItemStack itemstack1 = pLevel.getRecipeManager().getRecipeFor(CopperSoulCampfireRecipe.Type.INSTANCE, container, pLevel).map((m) -> {
-                        return m.assemble(container);
+                        return m.assemble(container, pLevel.registryAccess());
                     }).orElse(itemstack);
                     Containers.dropItemStack(pLevel, (double)pPos.getX(), (double)pPos.getY(), (double)pPos.getZ(), itemstack1);
                     pBlockEntity.items.set(i, ItemStack.EMPTY);
@@ -76,7 +77,7 @@ public class CopperSoulCampfireBlockEntity extends BlockEntity implements Cleara
     }
 
     public static void particleTick(Level pLevel, BlockPos pPos, BlockState pState, CopperSoulCampfireBlockEntity pBlockEntity) {
-        Random random = pLevel.random;
+        RandomSource random = pLevel.random;
         if (random.nextFloat() < 0.11F) {
             for(int i = 0; i < random.nextInt(2) + 2; ++i) {
                 CampfireBlock.makeParticles(pLevel, pPos, pState.getValue(CampfireBlock.SIGNAL_FIRE), false);

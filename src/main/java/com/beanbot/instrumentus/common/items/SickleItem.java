@@ -1,6 +1,5 @@
 package com.beanbot.instrumentus.common.items;
 
-import com.beanbot.instrumentus.common.Instrumentus;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Vec3i;
 import net.minecraft.server.level.ServerLevel;
@@ -13,9 +12,8 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.material.Material;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.event.world.BlockEvent;
+import net.minecraftforge.event.level.BlockEvent;
 
 public class SickleItem extends DiggerItem
 {
@@ -33,7 +31,7 @@ public class SickleItem extends DiggerItem
             return false;
 
         boolean isLeaves;
-        isLeaves = state.getMaterial() == Material.LEAVES;
+        isLeaves = state.is(BlockTags.LEAVES);
 
         int radius = isLeaves ? 0 : 2;
         int height = isLeaves ? 0 : 2;
@@ -43,7 +41,7 @@ public class SickleItem extends DiggerItem
             radius = 1;
             height = 1;
         }
-        if(material == Tiers.IRON || material == Tiers.GOLD || material == Tiers.DIAMOND)
+        if(material == Tiers.IRON || material == Tiers.GOLD || material == ModItemTiers.COPPER || material == Tiers.DIAMOND)
         {
             radius = 2;
             height = 2;
@@ -117,7 +115,7 @@ public class SickleItem extends DiggerItem
             switch (this)
             {
                 case TRIM_LEAVES:
-                    if(state.getMaterial() == Material.LEAVES)
+                    if(state.is(BlockTags.LEAVES))
                     {
                         state.getBlock().playerDestroy(world, (Player) entity, pos, state,  blockEntity, item);
                         state.getBlock().popExperience((ServerLevel) world, pos, event.getExpToDrop());
@@ -127,7 +125,7 @@ public class SickleItem extends DiggerItem
                     return false;
 
                 case TRIM_GRASS_AND_FLOWERS:default:
-                if(state.getMaterial() == Material.REPLACEABLE_PLANT || state.getMaterial() == Material.PLANT)
+                if(state.is(Blocks.TALL_GRASS) || state.is(BlockTags.FLOWERS) || state.is(Blocks.GRASS))
                 {
                     state.getBlock().playerDestroy(world, (Player) entity, pos, state,  blockEntity, item);
                     state.getBlock().popExperience((ServerLevel) world, pos, event.getExpToDrop());

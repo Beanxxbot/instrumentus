@@ -1,12 +1,15 @@
 {
-  "type": "minecraft:smithing",
-  "base": {
-    "item": "instrumentus:diamond_hammer"
-  },
+  "type": "minecraft:smithing_transform",
   "addition": {
     "item": "minecraft:netherite_block"
   },
+  "base": {
+    "item": "instrumentus:diamond_hammer"
+  },
   "result": {
     "item": "instrumentus:netherite_hammer"
+  },
+  "template": {
+    "item": "minecraft:netherite_upgrade_smithing_template"
   }
 }

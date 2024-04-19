@@ -49,7 +49,7 @@ public class KnifeItem extends TieredItem implements Vanishable {
     }
 
     public boolean mineBlock(ItemStack stack, Level worldIn, BlockState state, BlockPos pos, LivingEntity entityLiving) {
-        if ((double)state.getDestroySpeed(worldIn, pos) != 0.0D) {
+        if ((double)state.getDestroySpeed(worldIn, pos) != 0.0D || state.is(Blocks.GRASS)) {
             stack.hurtAndBreak(2, entityLiving, (entity) -> {
                 entity.broadcastBreakEvent(EquipmentSlot.MAINHAND);
             });

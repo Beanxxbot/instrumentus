@@ -1,5 +1,6 @@
 package com.beanbot.instrumentus.common;
 
+import com.beanbot.instrumentus.client.ToolRenderEvents;
 import com.beanbot.instrumentus.client.particles.ModParticles;
 import com.beanbot.instrumentus.client.renderer.CopperSoulCampfireRenderer;
 import com.beanbot.instrumentus.common.blocks.ModBlocks;
@@ -7,14 +8,16 @@ import com.beanbot.instrumentus.common.blocks.entities.ModBlockEntities;
 import com.beanbot.instrumentus.common.config.Config;
 import com.beanbot.instrumentus.common.config.ItemConfig;
 import com.beanbot.instrumentus.common.events.EntityStruckByLightningEventHook;
+import com.beanbot.instrumentus.common.events.loot.ModLootModifiers;
 import com.beanbot.instrumentus.common.items.ModItems;
+import com.beanbot.instrumentus.common.creative.ModCreativeModeTab;
+import com.beanbot.instrumentus.common.creative.ModCreativeTabPopulate;
 import com.beanbot.instrumentus.recipe.ModRecipes;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderers;
-import net.minecraft.world.item.CreativeModeTab;
-import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.event.BuildCreativeModeTabContentsEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
@@ -33,16 +36,12 @@ public class Instrumentus {
     private static Instrumentus instance;
     public static final Logger LOGGER = LogManager.getLogger();
 
-    public static final CreativeModeTab MOD_ITEM_GROUP = new CreativeModeTab(Instrumentus.MODID) {
-        @Override
-        public ItemStack makeIcon() {
-            ItemStack itemStack = new ItemStack(ModItems.DIAMOND_PAXEL.get());
-            return itemStack;
-        }
-    };
+
     public Instrumentus()
     {
         IEventBus event = FMLJavaModLoadingContext.get().getModEventBus();
+
+        ModCreativeModeTab.register(event);
 
         ModLoadingContext.get().registerConfig(ModConfig.Type.SERVER, Config.SERVER, "instrumentus-server.toml");
         ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, Config.CLIENT, "instrumentus-client.toml");
@@ -54,6 +53,7 @@ public class Instrumentus {
 
         event.addListener(this::setup);
         MinecraftForge.EVENT_BUS.register(this);
+        event.addListener(this::addCreative);
 
         Config.loadConfig(Config.CLIENT, FMLPaths.CONFIGDIR.get().resolve("instrumentus-client.toml").toString());
         Config.loadConfig(Config.SERVER, FMLPaths.CONFIGDIR.get().resolve("instrumentus-server.toml").toString());
@@ -74,12 +74,14 @@ public class Instrumentus {
             ModItems.UTILITIES.register(event);
             ModBlocks.UTILITIES.register(event);
         }
-        if (ItemConfig.enable_armor.get())
-            ModItems.ARMOR.register(event);
+        ModItems.COPPER.register(event);
+        ModItems.BRUSHES.register(event);
 
         ModBlockEntities.register(event);
 
         ModRecipes.register(event);
+
+        ModLootModifiers.register(event);
 
         event.addListener(this::setup);
         event.addListener(this::setupClient);
@@ -89,12 +91,18 @@ public class Instrumentus {
     private void setup(final FMLCommonSetupEvent event) {
     }
 
+    private void addCreative(BuildCreativeModeTabContentsEvent event) {
+        ModCreativeTabPopulate.populate(event);
+    }
+
     private void setupClient(final FMLClientSetupEvent event) {
         ItemBlockRenderTypes.setRenderLayer(ModBlocks.COPPER_SOUL_CAMPFIRE.get(), RenderType.cutout());
         ItemBlockRenderTypes.setRenderLayer(ModBlocks.SOULCOPPER_LANTERN.get(), RenderType.cutout());
         ItemBlockRenderTypes.setRenderLayer(ModBlocks.SOULCOPPER_TORCH.get(), RenderType.cutout());
         ItemBlockRenderTypes.setRenderLayer(ModBlocks.SOULCOPPER_WALL_TORCH.get(), RenderType.cutout());
         BlockEntityRenderers.register(ModBlockEntities.COPPER_SOUL_CAMPFIRE_BLOCK_ENTITY.get(), CopperSoulCampfireRenderer::new);
+
+        MinecraftForge.EVENT_BUS.register(new ToolRenderEvents());
     }
 
     public static Instrumentus getInstance() { return instance; }

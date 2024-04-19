@@ -35,7 +35,7 @@ public class PaxelItem extends DiggerItem {
             SHOVEL_DIG, SHOVEL_FLATTEN,
             PICKAXE_DIG);
 
-    public PaxelItem(Tier material, int attackDamageIn, float attackSpeedIn, Item.Properties properties) {
+    public PaxelItem(Tier material, float attackDamageIn, float attackSpeedIn, Item.Properties properties) {
         super(attackDamageIn, attackSpeedIn, material, GeneratorBlockTags.MINEABLE_WITH_PAXEL, properties);
         this.material = material;
     }

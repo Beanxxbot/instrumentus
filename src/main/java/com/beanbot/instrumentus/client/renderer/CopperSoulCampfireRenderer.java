@@ -2,19 +2,19 @@ package com.beanbot.instrumentus.client.renderer;
 
 import com.beanbot.instrumentus.common.blocks.entities.CopperSoulCampfireBlockEntity;
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.math.Vector3f;
+import com.mojang.math.Axis;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.client.renderer.block.model.ItemTransforms;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.core.Direction;
 import net.minecraft.core.NonNullList;
+import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.CampfireBlock;
-import net.minecraft.world.level.block.entity.CampfireBlockEntity;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import org.joml.Vector3f;
 
 @OnlyIn(Dist.CLIENT)
 public class CopperSoulCampfireRenderer implements BlockEntityRenderer<CopperSoulCampfireBlockEntity> {
@@ -35,11 +35,11 @@ public class CopperSoulCampfireRenderer implements BlockEntityRenderer<CopperSou
                 poseStack.translate(0.5D, 0.44921875D, 0.5D);
                 Direction direction1 = Direction.from2DDataValue((j + direction.get2DDataValue()) % 4);
                 float f = -direction1.toYRot();
-                poseStack.mulPose(Vector3f.YP.rotationDegrees(f));
-                poseStack.mulPose(Vector3f.XP.rotationDegrees(90.0F));
+                poseStack.mulPose(Axis.YP.rotationDegrees(f));
+                poseStack.mulPose(Axis.XP.rotationDegrees(90.0F));
                 poseStack.translate(-0.3125D, -0.3125D, 0.0D);
                 poseStack.scale(0.375F, 0.375F, 0.375F);
-                Minecraft.getInstance().getItemRenderer().renderStatic(itemstack, ItemTransforms.TransformType.FIXED, packedLight, packedOverlay, poseStack, bufferSource, i + j);
+                Minecraft.getInstance().getItemRenderer().renderStatic(itemstack, ItemDisplayContext.FIXED, packedLight, packedOverlay, poseStack, bufferSource, blockEntity.getLevel(), i + j);
                 poseStack.popPose();
             }
         }

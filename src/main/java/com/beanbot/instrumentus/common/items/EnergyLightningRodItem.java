@@ -4,9 +4,9 @@ import com.beanbot.instrumentus.common.capability.EnergyStorageItem;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -14,22 +14,20 @@ import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.LightningBolt;
-import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.GrowingPlantHeadBlock;
 import net.minecraft.world.level.block.LightningRodBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.energy.IEnergyStorage;
 import org.apache.commons.lang3.tuple.Pair;
 
@@ -58,7 +56,7 @@ public class EnergyLightningRodItem extends Item implements IItemLightningCharge
                     CriteriaTriggers.ITEM_USED_ON_BLOCK.trigger((ServerPlayer)player, blockpos, itemstack);
                 }
             if (player != null) {
-                LazyOptional<IEnergyStorage> lazy = stack.getCapability(CapabilityEnergy.ENERGY);
+                LazyOptional<IEnergyStorage> lazy = stack.getCapability(ForgeCapabilities.ENERGY);
                 IEnergyStorage storage = lazy.orElseThrow(AssertionError::new);
                 if(lazy.isPresent()) {
                     if (storage.getEnergyStored() > 4999) {
@@ -80,7 +78,7 @@ public class EnergyLightningRodItem extends Item implements IItemLightningCharge
 
     @Override
     public boolean isChargeFull(ItemStack stack) {
-        LazyOptional<IEnergyStorage> lazy = stack.getCapability(CapabilityEnergy.ENERGY);
+        LazyOptional<IEnergyStorage> lazy = stack.getCapability(ForgeCapabilities.ENERGY);
         if(lazy.isPresent()){
             IEnergyStorage storage = lazy.orElseThrow(AssertionError::new);
             if (storage.getEnergyStored() == storage.getMaxEnergyStored()); {
@@ -103,7 +101,7 @@ public class EnergyLightningRodItem extends Item implements IItemLightningCharge
 
     @Override
     public int getBarWidth(ItemStack stack){
-        LazyOptional<IEnergyStorage> cap = stack.getCapability(CapabilityEnergy.ENERGY);
+        LazyOptional<IEnergyStorage> cap = stack.getCapability(ForgeCapabilities.ENERGY);
         if (!cap.isPresent())
             return super.getBarWidth(stack);
 
@@ -112,7 +110,7 @@ public class EnergyLightningRodItem extends Item implements IItemLightningCharge
 
     @Override
     public int getBarColor(ItemStack stack){
-        LazyOptional<IEnergyStorage> cap = stack.getCapability(CapabilityEnergy.ENERGY);
+        LazyOptional<IEnergyStorage> cap = stack.getCapability(ForgeCapabilities.ENERGY);
         if (!cap.isPresent())
             return super.getBarColor(stack);
 
@@ -122,7 +120,7 @@ public class EnergyLightningRodItem extends Item implements IItemLightningCharge
 
     @Override
     public boolean isDamaged(ItemStack stack){
-        LazyOptional<IEnergyStorage> cap = stack.getCapability(CapabilityEnergy.ENERGY);
+        LazyOptional<IEnergyStorage> cap = stack.getCapability(ForgeCapabilities.ENERGY);
         if(!cap.isPresent())
             return super.isDamaged(stack);
 
@@ -131,17 +129,17 @@ public class EnergyLightningRodItem extends Item implements IItemLightningCharge
     }
     @Override
     public boolean isBarVisible(ItemStack stack){
-        return stack.getCapability(CapabilityEnergy.ENERGY).map(e -> e.getEnergyStored() != e.getMaxEnergyStored()).orElse(super.isBarVisible(stack));
+        return stack.getCapability(ForgeCapabilities.ENERGY).map(e -> e.getEnergyStored() != e.getMaxEnergyStored()).orElse(super.isBarVisible(stack));
     }
     @Nullable
     @Override
     public ICapabilityProvider initCapabilities(ItemStack stack, @Nullable CompoundTag nbt){
-        if(CapabilityEnergy.ENERGY == null) return null;
+        if(ForgeCapabilities.ENERGY == null) return null;
         return new ICapabilityProvider() {
             @Nonnull
             @Override
             public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> cap, @Nullable Direction side) {
-                return cap == CapabilityEnergy.ENERGY ? LazyOptional.of(() -> new EnergyStorageItem(stack, EnergyToolCommon.CAPACITY, 10000)).cast() : LazyOptional.empty();
+                return cap == ForgeCapabilities.ENERGY ? LazyOptional.of(() -> new EnergyStorageItem(stack, EnergyToolCommon.CAPACITY, 10000)).cast() : LazyOptional.empty();
             }
         };
     }

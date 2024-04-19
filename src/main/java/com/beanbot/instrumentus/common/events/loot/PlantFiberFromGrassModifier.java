@@ -1,40 +1,39 @@
 package com.beanbot.instrumentus.common.events.loot;
 
-import com.beanbot.instrumentus.common.items.ModItems;
-import net.minecraft.resources.ResourceLocation;
+import com.google.common.base.Suppliers;
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
+import it.unimi.dsi.fastutil.objects.ObjectArrayList;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
-import net.minecraftforge.common.loot.GlobalLootModifierSerializer;
+import net.minecraftforge.common.loot.IGlobalLootModifier;
 import net.minecraftforge.common.loot.LootModifier;
-import org.checkerframework.checker.nullness.qual.NonNull;
+import net.minecraftforge.registries.ForgeRegistries;
+import org.jetbrains.annotations.NotNull;
 
-import com.google.gson.JsonObject;
-import java.util.List;
+import java.util.function.Supplier;
 
 public class PlantFiberFromGrassModifier extends LootModifier {
-    protected PlantFiberFromGrassModifier(LootItemCondition[] conditionsIn) {
+    public static final Supplier<Codec<PlantFiberFromGrassModifier>> CODEC = Suppliers.memoize(()
+            -> RecordCodecBuilder.create(inst -> codecStart(inst).and(ForgeRegistries.ITEMS.getCodec()
+            .fieldOf("item").forGetter(m -> m.item)).apply(inst, PlantFiberFromGrassModifier::new)));
+    private final Item item;
+
+    protected PlantFiberFromGrassModifier(LootItemCondition[] conditionsIn, Item item) {
         super(conditionsIn);
+        this.item = item;
     }
 
-    @NonNull
     @Override
-    protected List<ItemStack> doApply(List<ItemStack> generatedLoot, LootContext context) {
-        generatedLoot.add(new ItemStack(ModItems.PLANT_FIBER.get(), 1));
+    protected @NotNull ObjectArrayList<ItemStack> doApply(ObjectArrayList<ItemStack> generatedLoot, LootContext context) {
+        generatedLoot.add(new ItemStack(item));
         return generatedLoot;
     }
 
-    public static class Serializer extends GlobalLootModifierSerializer<PlantFiberFromGrassModifier> {
-
-        @Override
-        public PlantFiberFromGrassModifier read(ResourceLocation name, JsonObject object, LootItemCondition[] conditionsIn) {
-            return new PlantFiberFromGrassModifier(conditionsIn);
-        }
-
-        @Override
-        public JsonObject write(PlantFiberFromGrassModifier instance) {
-            JsonObject json = this.makeConditions(instance.conditions);
-            return json;
-        }
+    @Override
+    public Codec<? extends IGlobalLootModifier> codec() {
+        return CODEC.get();
     }
 }

@@ -1,14 +1,13 @@
 package com.beanbot.instrumentus.common.items;
 
-import com.beanbot.instrumentus.common.Instrumentus;
 import com.beanbot.instrumentus.common.capability.EnergyStorageItem;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.core.NonNullList;
 import net.minecraft.core.Vec3i;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.tags.BlockTags;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
@@ -17,14 +16,13 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.material.Material;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.energy.IEnergyStorage;
-import net.minecraftforge.event.world.BlockEvent;
+import net.minecraftforge.event.level.BlockEvent;
 import org.apache.commons.lang3.tuple.Pair;
 
 import javax.annotation.Nonnull;
@@ -36,13 +34,13 @@ public class EnergySickleItem extends SickleItem implements IItemLightningCharge
     protected Tier material;
 
     public EnergySickleItem(Tier material) {
-        super(material ,new Item.Properties().stacksTo(1).tab(Instrumentus.MOD_ITEM_GROUP).fireResistant());
+        super(material ,new Item.Properties().stacksTo(1).fireResistant());
         this.material = material;
     }
 
     @Override
     public boolean isChargeFull(ItemStack stack) {
-        LazyOptional<IEnergyStorage> lazy = stack.getCapability(CapabilityEnergy.ENERGY);
+        LazyOptional<IEnergyStorage> lazy = stack.getCapability(ForgeCapabilities.ENERGY);
         if(lazy.isPresent()){
             IEnergyStorage storage = lazy.orElseThrow(AssertionError::new);
             if (storage.getEnergyStored() == storage.getMaxEnergyStored()); {
@@ -63,8 +61,7 @@ public class EnergySickleItem extends SickleItem implements IItemLightningCharge
         if(state.getBlock() == null || world.getBlockState(pos).getBlock() == Blocks.AIR)
             return false;
 
-        boolean isLeaves;
-        isLeaves = state.getMaterial() == Material.LEAVES;
+        boolean isLeaves = state.is(BlockTags.LEAVES);
 
         int radius = isLeaves ? 0 : 2;
         int height = isLeaves ? 0 : 2;
@@ -85,7 +82,7 @@ public class EnergySickleItem extends SickleItem implements IItemLightningCharge
             height = 3;
         }
 
-        LazyOptional<IEnergyStorage> lazy = stack.getCapability(CapabilityEnergy.ENERGY);
+        LazyOptional<IEnergyStorage> lazy = stack.getCapability(ForgeCapabilities.ENERGY);
         if(lazy.isPresent()){
             IEnergyStorage storage = lazy.orElseThrow(AssertionError::new);
             if(state.getDestroySpeed(world, pos) != 0.0F){
@@ -128,7 +125,7 @@ public class EnergySickleItem extends SickleItem implements IItemLightningCharge
                     if(trimType.trimAtPos(world, pos.subtract(new Vec3i(dx,dy,dz).multiply(-1)), entity, stack))
                     {
                         numberTrimmed++;
-                        LazyOptional<IEnergyStorage> lazy = stack.getCapability(CapabilityEnergy.ENERGY);
+                        LazyOptional<IEnergyStorage> lazy = stack.getCapability(ForgeCapabilities.ENERGY);
                         if(lazy.isPresent()){
                             IEnergyStorage storage = lazy.orElseThrow(AssertionError::new);
                             storage.extractEnergy(EnergyToolCommon.MAX_TRANSFER - 24, false);
@@ -141,20 +138,8 @@ public class EnergySickleItem extends SickleItem implements IItemLightningCharge
     }
 
     @Override
-    public void fillItemCategory(CreativeModeTab group, NonNullList<ItemStack> items){
-        if(this.getCreativeTabs().contains(group)){
-            ItemStack empty = new ItemStack(this);
-            items.add(empty);
-
-            ItemStack full = new ItemStack(this);
-            full.getOrCreateTag().putInt(EnergyToolCommon.ENERGY_TAG, EnergyToolCommon.CAPACITY);
-            items.add(full);
-        }
-    }
-
-    @Override
     public boolean hurtEnemy(ItemStack stack, LivingEntity target, LivingEntity attacker){
-        LazyOptional<IEnergyStorage> lazy = stack.getCapability(CapabilityEnergy.ENERGY);
+        LazyOptional<IEnergyStorage> lazy = stack.getCapability(ForgeCapabilities.ENERGY);
         if(lazy.isPresent()){
             IEnergyStorage storage = lazy.orElseThrow(AssertionError::new);
             storage.extractEnergy(EnergyToolCommon.MAX_TRANSFER - 24, false);
@@ -165,7 +150,7 @@ public class EnergySickleItem extends SickleItem implements IItemLightningCharge
 
     @Override
     public float getDestroySpeed(ItemStack stack, BlockState state){
-        LazyOptional<IEnergyStorage> lazy = stack.getCapability(CapabilityEnergy.ENERGY);
+        LazyOptional<IEnergyStorage> lazy = stack.getCapability(ForgeCapabilities.ENERGY);
         if(lazy.isPresent()){
             IEnergyStorage storage = lazy.orElseThrow(AssertionError::new);
             if(!(storage.getEnergyStored() > 0)) return 0.0F;
@@ -180,7 +165,7 @@ public class EnergySickleItem extends SickleItem implements IItemLightningCharge
 
     @Override
     public int getBarWidth(ItemStack stack){
-        LazyOptional<IEnergyStorage> cap = stack.getCapability(CapabilityEnergy.ENERGY);
+        LazyOptional<IEnergyStorage> cap = stack.getCapability(ForgeCapabilities.ENERGY);
         if (!cap.isPresent())
             return super.getBarWidth(stack);
 
@@ -189,7 +174,7 @@ public class EnergySickleItem extends SickleItem implements IItemLightningCharge
 
     @Override
     public int getBarColor(ItemStack stack){
-        LazyOptional<IEnergyStorage> cap = stack.getCapability(CapabilityEnergy.ENERGY);
+        LazyOptional<IEnergyStorage> cap = stack.getCapability(ForgeCapabilities.ENERGY);
         if (!cap.isPresent())
             return super.getBarColor(stack);
 
@@ -199,7 +184,7 @@ public class EnergySickleItem extends SickleItem implements IItemLightningCharge
 
     @Override
     public boolean isDamaged(ItemStack stack){
-        LazyOptional<IEnergyStorage> cap = stack.getCapability(CapabilityEnergy.ENERGY);
+        LazyOptional<IEnergyStorage> cap = stack.getCapability(ForgeCapabilities.ENERGY);
         if(!cap.isPresent())
             return super.isDamaged(stack);
 
@@ -208,17 +193,17 @@ public class EnergySickleItem extends SickleItem implements IItemLightningCharge
     }
     @Override
     public boolean isBarVisible(ItemStack stack){
-        return stack.getCapability(CapabilityEnergy.ENERGY).map(e -> e.getEnergyStored() != e.getMaxEnergyStored()).orElse(super.isBarVisible(stack));
+        return stack.getCapability(ForgeCapabilities.ENERGY).map(e -> e.getEnergyStored() != e.getMaxEnergyStored()).orElse(super.isBarVisible(stack));
     }
     @Nullable
     @Override
     public ICapabilityProvider initCapabilities(ItemStack stack, @Nullable CompoundTag nbt){
-        if(CapabilityEnergy.ENERGY == null) return null;
+        if(ForgeCapabilities.ENERGY == null) return null;
         return new ICapabilityProvider() {
             @Nonnull
             @Override
             public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> cap, @Nullable Direction side) {
-                return cap == CapabilityEnergy.ENERGY ? LazyOptional.of(() -> new EnergyStorageItem(stack, EnergyToolCommon.CAPACITY, EnergyToolCommon.MAX_TRANSFER)).cast() : LazyOptional.empty();
+                return cap == ForgeCapabilities.ENERGY ? LazyOptional.of(() -> new EnergyStorageItem(stack, EnergyToolCommon.CAPACITY, EnergyToolCommon.MAX_TRANSFER)).cast() : LazyOptional.empty();
             }
         };
     }
@@ -238,7 +223,7 @@ public class EnergySickleItem extends SickleItem implements IItemLightningCharge
             switch (this)
             {
                 case TRIM_LEAVES:
-                    if(state.getMaterial() == Material.LEAVES)
+                    if(state.is(BlockTags.LEAVES))
                     {
                         state.getBlock().playerDestroy(world, (Player) entity, pos, state,  blockEntity, item);
                         state.getBlock().popExperience((ServerLevel) world, pos, event.getExpToDrop());
@@ -248,7 +233,7 @@ public class EnergySickleItem extends SickleItem implements IItemLightningCharge
                     return false;
 
                 case TRIM_GRASS_AND_FLOWERS:default:
-                if(state.getMaterial() == Material.REPLACEABLE_PLANT || state.getMaterial() == Material.PLANT)
+                if(state.is(Blocks.TALL_GRASS) || state.is(BlockTags.FLOWERS) || state.is(Blocks.GRASS))
                 {
                     state.getBlock().playerDestroy(world, (Player) entity, pos, state,  blockEntity, item);
                     state.getBlock().popExperience((ServerLevel) world, pos, event.getExpToDrop());

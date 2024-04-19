@@ -5,6 +5,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.core.particles.SimpleParticleType;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
@@ -30,12 +31,6 @@ public class CopperSoulTorchBlock extends Block{
         return AABB;
     }
 
-    /**
-     * Update the provided state given the provided neighbor direction and neighbor state, returning a new state.
-     * For example, fences make their connections to the passed in state if possible, and wet concrete powder immediately
-     * returns its solidified counterpart.
-     * Note that this method should ideally consider only the specific direction passed in.
-     */
     public BlockState updateShape(BlockState pState, Direction pFacing, BlockState pFacingState, LevelAccessor pLevel, BlockPos pCurrentPos, BlockPos pFacingPos) {
         return pFacing == Direction.DOWN && !this.canSurvive(pState, pLevel, pCurrentPos) ? Blocks.AIR.defaultBlockState() : super.updateShape(pState, pFacing, pFacingState, pLevel, pCurrentPos, pFacingPos);
     }
@@ -44,10 +39,7 @@ public class CopperSoulTorchBlock extends Block{
         return canSupportCenter(pLevel, pPos.below(), Direction.UP);
     }
 
-    /**
-     * Called periodically clientside on blocks near the player to show effects (like furnace fire particles).
-     */
-    public void animateTick(BlockState pState, Level pLevel, BlockPos pPos, Random pRand) {
+    public void animateTick(BlockState pState, Level pLevel, BlockPos pPos, RandomSource pRand) {
         double d0 = (double)pPos.getX() + 0.5D;
         double d1 = (double)pPos.getY() + 0.7D;
         double d2 = (double)pPos.getZ() + 0.5D;

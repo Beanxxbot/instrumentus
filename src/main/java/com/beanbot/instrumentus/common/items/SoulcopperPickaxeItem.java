@@ -20,7 +20,7 @@ public class SoulcopperPickaxeItem extends DiggerItem {
     protected Tier material;
 
     public SoulcopperPickaxeItem(Tier material, int attackDamageIn, float attackSpeedIn) {
-        super(1, -2.8f, material, BlockTags.MINEABLE_WITH_PICKAXE, new Item.Properties().tab(Instrumentus.MOD_ITEM_GROUP).stacksTo(1).durability(material.getUses()));
+        super(1, -2.8f, material, BlockTags.MINEABLE_WITH_PICKAXE, new Item.Properties().stacksTo(1).durability(material.getUses()));
         this.material = material;
     }
 

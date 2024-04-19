@@ -4,7 +4,7 @@ import com.beanbot.instrumentus.common.Instrumentus;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSyntaxException;
-import net.minecraft.core.Registry;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.GsonHelper;
@@ -12,11 +12,9 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.*;
 import net.minecraft.world.level.block.Blocks;
 
-import javax.annotation.Nullable;
-
 public class CopperSoulCampfireRecipe extends CampfireCookingRecipe {
     public CopperSoulCampfireRecipe(ResourceLocation id, String group, Ingredient ingredient, ItemStack result, float experience, int cookingTime) {
-        super(id, group, ingredient, result, experience, cookingTime);
+        super(id, group, CookingBookCategory.MISC, ingredient, result, experience, cookingTime);
     }
 
     @Override
@@ -57,7 +55,7 @@ public class CopperSoulCampfireRecipe extends CampfireCookingRecipe {
             else {
                 String s1 = GsonHelper.getAsString(serializedRecipe, "result");
                 ResourceLocation resourcelocation = new ResourceLocation(s1);
-                itemstack = new ItemStack(Registry.ITEM.getOptional(resourcelocation).orElseThrow(() -> {
+                itemstack = new ItemStack(BuiltInRegistries.ITEM.getOptional(resourcelocation).orElseThrow(() -> {
                     return new IllegalStateException("Item: " + s1 + " does not exist");
                 }));
             }
@@ -83,27 +81,6 @@ public class CopperSoulCampfireRecipe extends CampfireCookingRecipe {
             buf.writeItem(recipe.result);
             buf.writeFloat(recipe.experience);
             buf.writeVarInt(recipe.cookingTime);
-        }
-
-        @Override
-        public RecipeSerializer<?> setRegistryName(ResourceLocation name) {
-            return INSTANCE;
-        }
-
-        @Nullable
-        @Override
-        public ResourceLocation getRegistryName() {
-            return ID;
-        }
-
-        @Override
-        public Class<RecipeSerializer<?>> getRegistryType() {
-            return Serializer.castClass(RecipeSerializer.class);
-        }
-
-        // unchecked - need this wrapper, because generics
-        private static <G> Class<G> castClass(Class<?> cls) {
-            return (Class<G>) cls;
         }
     }
 }

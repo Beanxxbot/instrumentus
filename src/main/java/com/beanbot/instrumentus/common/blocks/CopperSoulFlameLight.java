@@ -3,17 +3,16 @@ package com.beanbot.instrumentus.common.blocks;
 import com.beanbot.instrumentus.client.particles.ModParticles;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.SimpleParticleType;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.RenderShape;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.material.Material;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
-
-import java.util.Random;
 
 public class CopperSoulFlameLight extends Block {
 
@@ -22,7 +21,7 @@ public class CopperSoulFlameLight extends Block {
     public CopperSoulFlameLight(){
         super(
                 Block.Properties
-                        .of(Material.SCULK)
+                        .copy(Blocks.SCULK)
                         .noCollission()
                         .destroyTime(0.0f)
                         .lightLevel(e -> 14)
@@ -39,6 +38,7 @@ public class CopperSoulFlameLight extends Block {
         return RenderShape.INVISIBLE;
     }
 
+    @SuppressWarnings("deprecation")
     @Override
     public VoxelShape getCollisionShape(BlockState state, BlockGetter worldIn, BlockPos pos, CollisionContext context){
         return Shapes.empty();
@@ -47,6 +47,7 @@ public class CopperSoulFlameLight extends Block {
     /**
      * @deprecated call
      */
+    @SuppressWarnings("deprecation")
     @Override
     public VoxelShape getShape(BlockState state, BlockGetter worldIn, BlockPos pos, CollisionContext selectionContext){
         return SHAPE;
@@ -58,7 +59,7 @@ public class CopperSoulFlameLight extends Block {
     }
 
     @Override
-    public void animateTick(BlockState stateIn, Level worldIn, BlockPos pos, Random rand){
+    public void animateTick(BlockState stateIn, Level worldIn, BlockPos pos, RandomSource rand){
         double d0 = (double) pos.getX() + 0.5D;
         double d1 = (double) pos.getY() + 0.5D;
         double d2 = (double) pos.getZ() + 0.5D;

@@ -1,8 +1,6 @@
 package com.beanbot.instrumentus.common.items;
 
 import com.beanbot.instrumentus.common.Instrumentus;
-
-import com.mojang.math.Vector3d;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;

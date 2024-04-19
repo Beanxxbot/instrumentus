@@ -1,11 +1,8 @@
 package com.beanbot.instrumentus.common.items;
 
-import com.beanbot.instrumentus.common.Instrumentus;
 import com.beanbot.instrumentus.common.capability.EnergyStorageItem;
-import com.google.common.collect.ImmutableSet;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
@@ -19,34 +16,32 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.material.Material;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.energy.IEnergyStorage;
-import net.minecraftforge.event.world.BlockEvent;
+import net.minecraftforge.event.level.BlockEvent;
 import org.apache.commons.lang3.tuple.Pair;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.List;
-import java.util.Set;
 
 public class EnergyHammerItem extends HammerItem implements IItemLightningChargeable {
 
     protected Tier material;
 
     public EnergyHammerItem(Tier material, float attackDamageIn, float attackSpeedIn){
-        super(material, attackSpeedIn, attackDamageIn, new Item.Properties().stacksTo(1).tab(Instrumentus.MOD_ITEM_GROUP).fireResistant());
+        super(material, attackSpeedIn, attackDamageIn, new Item.Properties().stacksTo(1).fireResistant());
         this.material = material;
     }
 
     @Override
     public boolean isChargeFull(ItemStack stack) {
-        LazyOptional<IEnergyStorage> lazy = stack.getCapability(CapabilityEnergy.ENERGY);
+        LazyOptional<IEnergyStorage> lazy = stack.getCapability(ForgeCapabilities.ENERGY);
         if(lazy.isPresent()){
             IEnergyStorage storage = lazy.orElseThrow(AssertionError::new);
             if (storage.getEnergyStored() == storage.getMaxEnergyStored()); {
@@ -67,8 +62,7 @@ public class EnergyHammerItem extends HammerItem implements IItemLightningCharge
         if(state.getBlock() == null || world.getBlockState(pos).getBlock() == Blocks.AIR)
             return false;
 
-        boolean isStone;
-        isStone = state.getMaterial() == Material.STONE || state.getMaterial() == Material.METAL;
+        boolean isStone = state.is(BlockTags.MINEABLE_WITH_PICKAXE);
 
         int r = isStone ? 0 : 2;
 
@@ -87,7 +81,7 @@ public class EnergyHammerItem extends HammerItem implements IItemLightningCharge
         return numberTrimmed > 0;
     }
 
-    public int trim(ItemStack stack, LivingEntity entity, Level world, BlockPos pos, int r, HammerItem.TrimType trimType, boolean cutCorners, int damagePercentChance){
+    public int trim(ItemStack stack, LivingEntity entity, Level world, BlockPos blockPos, int r, HammerItem.TrimType trimType, boolean cutCorners, int damagePercentChance){
         int numberTrimmed = 0;
         int fortune = 0;
         Vec3 look = entity.getLookAngle();
@@ -97,12 +91,12 @@ public class EnergyHammerItem extends HammerItem implements IItemLightningCharge
                 for (int dy = -r; dy <= r; dy++) {
                     if (dy == 0 && dz == 0)
                         continue;
-                    if (trimType.trimAtPos(world, pos.offset(0, dy, dz), entity, stack)) {
+                    if (trimType.trimAtPos(world, blockPos.offset(0, dy, dz), entity, stack)) {
                         numberTrimmed++;
-                            LazyOptional<IEnergyStorage> lazy = stack.getCapability(CapabilityEnergy.ENERGY);
+                            LazyOptional<IEnergyStorage> lazy = stack.getCapability(ForgeCapabilities.ENERGY);
                             if(lazy.isPresent()){
                                 IEnergyStorage storage = lazy.orElseThrow(AssertionError::new);
-                                if(world.getBlockState(pos).getDestroySpeed(world, pos) != 0.0F){
+                                if(world.getBlockState(blockPos).getDestroySpeed(world, blockPos) != 0.0F){
                                     storage.extractEnergy(EnergyToolCommon.MAX_TRANSFER - 24, false);
                                 }
                             }
@@ -114,12 +108,12 @@ public class EnergyHammerItem extends HammerItem implements IItemLightningCharge
                 for (int dy = -r; dy <= r; dy++) {
                     if (dy == 0 && dx == 0)
                         continue;
-                    if (trimType.trimAtPos(world, pos.offset(dx, dy, 0), entity, stack)) {
+                    if (trimType.trimAtPos(world, blockPos.offset(dx, dy, 0), entity, stack)) {
                         numberTrimmed++;
-                        LazyOptional<IEnergyStorage> lazy = stack.getCapability(CapabilityEnergy.ENERGY);
+                        LazyOptional<IEnergyStorage> lazy = stack.getCapability(ForgeCapabilities.ENERGY);
                         if(lazy.isPresent()){
                             IEnergyStorage storage = lazy.orElseThrow(AssertionError::new);
-                            if(world.getBlockState(pos).getDestroySpeed(world, pos) != 0.0F){
+                            if(world.getBlockState(blockPos).getDestroySpeed(world, blockPos) != 0.0F){
                                 storage.extractEnergy(EnergyToolCommon.MAX_TRANSFER - 24, false);
                             }
                         }
@@ -131,12 +125,12 @@ public class EnergyHammerItem extends HammerItem implements IItemLightningCharge
                 for (int dz = -r; dz <= r; dz++) {
                     if (dz == 0 && dx == 0)
                         continue;
-                    if (trimType.trimAtPos(world, pos.offset(dx, 0, dz), entity, stack)) {
+                    if (trimType.trimAtPos(world, blockPos.offset(dx, 0, dz), entity, stack)) {
                         numberTrimmed++;
-                        LazyOptional<IEnergyStorage> lazy = stack.getCapability(CapabilityEnergy.ENERGY);
+                        LazyOptional<IEnergyStorage> lazy = stack.getCapability(ForgeCapabilities.ENERGY);
                         if(lazy.isPresent()){
                             IEnergyStorage storage = lazy.orElseThrow(AssertionError::new);
-                            if(world.getBlockState(pos).getDestroySpeed(world, pos) != 0.0F){
+                            if(world.getBlockState(blockPos).getDestroySpeed(world, blockPos) != 0.0F){
                                 storage.extractEnergy(EnergyToolCommon.MAX_TRANSFER - 24, false);
                             }
                         }
@@ -148,20 +142,8 @@ public class EnergyHammerItem extends HammerItem implements IItemLightningCharge
     }
 
     @Override
-    public void fillItemCategory(CreativeModeTab group, NonNullList<ItemStack> items){
-        if(this.getCreativeTabs().contains(group)){
-            ItemStack empty = new ItemStack(this);
-            items.add(empty);
-
-            ItemStack full = new ItemStack(this);
-            full.getOrCreateTag().putInt(EnergyToolCommon.ENERGY_TAG, EnergyToolCommon.CAPACITY);
-            items.add(full);
-        }
-    }
-
-    @Override
     public boolean hurtEnemy(ItemStack stack, LivingEntity target, LivingEntity attacker){
-        LazyOptional<IEnergyStorage> lazy = stack.getCapability(CapabilityEnergy.ENERGY);
+        LazyOptional<IEnergyStorage> lazy = stack.getCapability(ForgeCapabilities.ENERGY);
         if(lazy.isPresent()){
             IEnergyStorage storage = lazy.orElseThrow(AssertionError::new);
             storage.extractEnergy(EnergyToolCommon.MAX_TRANSFER - 24, false);
@@ -172,7 +154,7 @@ public class EnergyHammerItem extends HammerItem implements IItemLightningCharge
 
     @Override
     public float getDestroySpeed(ItemStack stack, BlockState state){
-        LazyOptional<IEnergyStorage> lazy = stack.getCapability(CapabilityEnergy.ENERGY);
+        LazyOptional<IEnergyStorage> lazy = stack.getCapability(ForgeCapabilities.ENERGY);
         if(lazy.isPresent()){
             IEnergyStorage storage = lazy.orElseThrow(AssertionError::new);
             if(!(storage.getEnergyStored() > 0)) return 0.0F;
@@ -187,7 +169,7 @@ public class EnergyHammerItem extends HammerItem implements IItemLightningCharge
 
     @Override
     public int getBarWidth(ItemStack stack){
-        LazyOptional<IEnergyStorage> cap = stack.getCapability(CapabilityEnergy.ENERGY);
+        LazyOptional<IEnergyStorage> cap = stack.getCapability(ForgeCapabilities.ENERGY);
         if (!cap.isPresent())
             return super.getBarWidth(stack);
 
@@ -196,7 +178,7 @@ public class EnergyHammerItem extends HammerItem implements IItemLightningCharge
 
     @Override
     public int getBarColor(ItemStack stack){
-        LazyOptional<IEnergyStorage> cap = stack.getCapability(CapabilityEnergy.ENERGY);
+        LazyOptional<IEnergyStorage> cap = stack.getCapability(ForgeCapabilities.ENERGY);
         if (!cap.isPresent())
             return super.getBarColor(stack);
 
@@ -206,7 +188,7 @@ public class EnergyHammerItem extends HammerItem implements IItemLightningCharge
 
     @Override
     public boolean isDamaged(ItemStack stack){
-        LazyOptional<IEnergyStorage> cap = stack.getCapability(CapabilityEnergy.ENERGY);
+        LazyOptional<IEnergyStorage> cap = stack.getCapability(ForgeCapabilities.ENERGY);
         if(!cap.isPresent())
             return super.isDamaged(stack);
 
@@ -215,17 +197,17 @@ public class EnergyHammerItem extends HammerItem implements IItemLightningCharge
     }
     @Override
     public boolean isBarVisible(ItemStack stack){
-        return stack.getCapability(CapabilityEnergy.ENERGY).map(e -> e.getEnergyStored() != e.getMaxEnergyStored()).orElse(super.isBarVisible(stack));
+        return stack.getCapability(ForgeCapabilities.ENERGY).map(e -> e.getEnergyStored() != e.getMaxEnergyStored()).orElse(super.isBarVisible(stack));
     }
     @Nullable
     @Override
     public ICapabilityProvider initCapabilities(ItemStack stack, @Nullable CompoundTag nbt){
-        if(CapabilityEnergy.ENERGY == null) return null;
+        if(ForgeCapabilities.ENERGY == null) return null;
         return new ICapabilityProvider() {
             @Nonnull
             @Override
             public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> cap, @Nullable Direction side) {
-                return cap == CapabilityEnergy.ENERGY ? LazyOptional.of(() -> new EnergyStorageItem(stack, EnergyToolCommon.CAPACITY, EnergyToolCommon.MAX_TRANSFER)).cast() : LazyOptional.empty();
+                return cap == ForgeCapabilities.ENERGY ? LazyOptional.of(() -> new EnergyStorageItem(stack, EnergyToolCommon.CAPACITY, EnergyToolCommon.MAX_TRANSFER)).cast() : LazyOptional.empty();
             }
         };
     }
