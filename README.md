@@ -7,7 +7,7 @@ A Minecraft Mod adding and upgrading various tools.
 
 ## Contributing
 
-If you are looking to make content additions, please contact me directly via CurseForge, Discord (Username is Beanxxbot), or by commenting on the [Feature Request Discussion Page](https://github.com/Beanxxbot/instrumentus/discussions/13)
+If you are looking to make content additions, please contact me directly via CurseForge, Discord (Username is Beanxxbot), or by commenting on the [Feature Request Discussion Page](https://github.com/Beanxxbot/instrumentus/discussions)
 
 Contributions must be done through pull requests. I will not accept any other form of contribution.
 
