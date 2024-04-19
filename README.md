@@ -11,7 +11,7 @@ If you are looking to make content additions, please contact me directly via Cur
 
 Contributions must be done through pull requests. I will not accept any other form of contribution.
 
-## Useage Permissions 
+## Usage Permissions 
 
 ### Modpacks
 
