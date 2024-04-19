@@ -1,7 +1,6 @@
 package com.beanbot.instrumentus.common.blocks.entities;
 
 import com.beanbot.instrumentus.common.Instrumentus;
-import com.beanbot.instrumentus.common.blocks.CopperSoulCampfireBlock;
 import com.beanbot.instrumentus.common.blocks.ModBlocks;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraftforge.eventbus.api.IEventBus;

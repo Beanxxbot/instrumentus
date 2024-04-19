@@ -1,11 +1,9 @@
 package com.beanbot.instrumentus.common.items;
 
-import com.beanbot.instrumentus.common.Instrumentus;
 import com.beanbot.instrumentus.common.capability.EnergyStorageItem;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
@@ -29,6 +27,7 @@ import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.energy.IEnergyStorage;
 import org.apache.commons.lang3.tuple.Pair;
+import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -153,7 +152,7 @@ public class EnergyPaxelItem extends PaxelItem implements IItemLightningChargeab
     }
 
     @Override
-    public float getDestroySpeed(ItemStack stack, BlockState state){
+    public float getDestroySpeed(@NotNull ItemStack stack, @NotNull BlockState state){
         LazyOptional<IEnergyStorage> lazy = stack.getCapability(ForgeCapabilities.ENERGY);
         if(lazy.isPresent()){
             IEnergyStorage storage = lazy.orElseThrow(AssertionError::new);

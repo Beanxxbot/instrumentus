@@ -23,7 +23,6 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 
 import javax.annotation.Nullable;
 import java.util.Map;
-import java.util.Random;
 
 public class CopperSoulWallTorchBlock extends CopperSoulTorchBlock {
     public static final DirectionProperty FACING = HorizontalDirectionalBlock.FACING;
@@ -102,23 +101,11 @@ public class CopperSoulWallTorchBlock extends CopperSoulTorchBlock {
         pLevel.addParticle((SimpleParticleType) ModParticles.COPPER_SOUL_FIRE_FLAME_PARTICLE.get(), d0 + 0.27D * (double)direction1.getStepX(), d1 + 0.22D, d2 + 0.27D * (double)direction1.getStepZ(), 0.0D, 0.0D, 0.0D);
     }
 
-    /**
-     * Returns the blockstate with the given rotation from the passed blockstate. If inapplicable, returns the passed
-     * blockstate.
-     * @deprecated call via {@link net.minecraft.world.level.block.state.BlockBehavior.BlockStateBase#rotate} whenever
-     * possible. Implementing/overriding is fine.
-     */
     @SuppressWarnings("deprecation")
     public BlockState rotate(BlockState pState, Rotation pRotation) {
         return pState.setValue(FACING, pRotation.rotate(pState.getValue(FACING)));
     }
 
-    /**
-     * Returns the blockstate with the given mirror of the passed blockstate. If inapplicable, returns the passed
-     * blockstate.
-     * @deprecated call via {@link net.minecraft.world.level.block.state.BlockBehavior.BlockStateBase#mirror} whenever
-     * possible. Implementing/overriding is fine.
-     */
     @SuppressWarnings("deprecation")
     public BlockState mirror(BlockState pState, Mirror pMirror) {
         return pState.rotate(pMirror.getRotation(pState.getValue(FACING)));

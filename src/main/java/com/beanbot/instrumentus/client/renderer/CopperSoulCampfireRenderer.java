@@ -14,7 +14,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.CampfireBlock;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import org.joml.Vector3f;
 
 @OnlyIn(Dist.CLIENT)
 public class CopperSoulCampfireRenderer implements BlockEntityRenderer<CopperSoulCampfireBlockEntity> {
