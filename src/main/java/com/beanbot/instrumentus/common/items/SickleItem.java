@@ -20,7 +20,7 @@ public class SickleItem extends DiggerItem
     protected Tier material;
 
     public SickleItem(Tier material, Item.Properties properties) {
-        super(material.getAttackDamageBonus(), 1, material, BlockTags.LEAVES, properties);
+        super(0, -1.9f, material, BlockTags.LEAVES, properties);
         this.material = material;
 
     }
