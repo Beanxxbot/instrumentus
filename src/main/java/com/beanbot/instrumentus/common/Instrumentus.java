@@ -48,7 +48,7 @@ public class Instrumentus {
 
         MinecraftForge.EVENT_BUS.register(new EntityStruckByLightningEventHook());
 
-        LOGGER.debug("Yo Yo Yo It's Ya Boi, Instrumentus");
+        LOGGER.debug("Yo Yo Yo It's Ya Boi, Instrumentus but on NeoForge");
         ModParticles.PARTICLE_TYPES.register(event);
 
         event.addListener(this::setup);
