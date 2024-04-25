@@ -28,7 +28,7 @@ public class KnifeItem extends TieredItem implements Vanishable {
     public float getDamage() { return this.attackDamage;}
 
     public boolean isCorrectToolForDrops(BlockState block) {
-        return block.is(Blocks.TALL_GRASS) || block.is(Blocks.GRASS);
+        return block.is(Blocks.TALL_GRASS) || block.is(Blocks.SHORT_GRASS);
     }
 
     public boolean hurtEnemy(ItemStack stack, LivingEntity target, LivingEntity attacker) {
@@ -39,7 +39,7 @@ public class KnifeItem extends TieredItem implements Vanishable {
     }
 
     public boolean mineBlock(ItemStack stack, Level worldIn, BlockState state, BlockPos pos, LivingEntity entityLiving) {
-        if ((double)state.getDestroySpeed(worldIn, pos) != 0.0D || state.is(Blocks.GRASS)) {
+        if ((double)state.getDestroySpeed(worldIn, pos) != 0.0D || state.is(Blocks.SHORT_GRASS)) {
             stack.hurtAndBreak(2, entityLiving, (entity) -> {
                 entity.broadcastBreakEvent(EquipmentSlot.MAINHAND);
             });

@@ -21,7 +21,7 @@ public class CopperSoulFlameLight extends Block {
     public CopperSoulFlameLight(){
         super(
                 Block.Properties
-                        .copy(Blocks.SCULK)
+                        .ofFullCopy(Blocks.SCULK)
                         .noCollission()
                         .destroyTime(0.0f)
                         .lightLevel(e -> 14)

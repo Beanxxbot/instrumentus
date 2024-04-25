@@ -12,8 +12,8 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.event.level.BlockEvent;
+import net.neoforged.neoforge.common.NeoForge;
+import net.neoforged.neoforge.event.level.BlockEvent;
 
 public class SickleItem extends DiggerItem
 {
@@ -110,7 +110,7 @@ public class SickleItem extends DiggerItem
             BlockEntity blockEntity = world.getBlockEntity(pos);
 
             BlockEvent.BreakEvent event = new BlockEvent.BreakEvent(world, pos, state, (Player) entity);
-            MinecraftForge.EVENT_BUS.post(event);
+            NeoForge.EVENT_BUS.post(event);
 
             switch (this)
             {
@@ -125,7 +125,7 @@ public class SickleItem extends DiggerItem
                     return false;
 
                 case TRIM_GRASS_AND_FLOWERS:default:
-                if(state.is(Blocks.TALL_GRASS) || state.is(BlockTags.FLOWERS) || state.is(Blocks.GRASS))
+                if(state.is(Blocks.TALL_GRASS) || state.is(BlockTags.FLOWERS) || state.is(Blocks.SHORT_GRASS))
                 {
                     state.getBlock().playerDestroy(world, (Player) entity, pos, state,  blockEntity, item);
                     state.getBlock().popExperience((ServerLevel) world, pos, event.getExpToDrop());

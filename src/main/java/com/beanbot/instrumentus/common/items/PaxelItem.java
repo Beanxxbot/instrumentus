@@ -13,14 +13,13 @@ import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.common.ToolAction;
-import net.minecraftforge.common.ToolActions;
+import net.neoforged.neoforge.common.ToolAction;
+import net.neoforged.neoforge.common.ToolActions;
+import static net.neoforged.neoforge.common.ToolActions.*;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.Set;
-
-import static net.minecraftforge.common.ToolActions.*;
 
 public class PaxelItem extends DiggerItem {
 
@@ -39,7 +38,7 @@ public class PaxelItem extends DiggerItem {
     }
 
     @Override
-    public boolean canPerformAction(ItemStack stack, net.minecraftforge.common.ToolAction toolAction){
+    public boolean canPerformAction(ItemStack stack, ToolAction toolAction){
         return DEFAULT_PAXEL_ACTIONS.contains(toolAction) || toolAction == PAXEL_DIG;
     }
 

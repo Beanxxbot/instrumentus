@@ -11,6 +11,7 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.*;
@@ -32,7 +33,7 @@ public class CopperSoulCampfireBlock extends CampfireBlock {
 
     protected static final VoxelShape SHAPE = Block.box(0.0D, 0.0D, 0.0D, 16.0D, 7.0D, 16.0D);
     public CopperSoulCampfireBlock() {
-        super(false, 3, BlockBehaviour.Properties.copy(Blocks.SOUL_CAMPFIRE).strength(2.0f).sound(SoundType.WOOD).lightLevel(litBlockEmission(15)).noOcclusion());
+        super(false, 3, BlockBehaviour.Properties.ofFullCopy(Blocks.SOUL_CAMPFIRE).strength(2.0f).sound(SoundType.WOOD).lightLevel(litBlockEmission(15)).noOcclusion());
 
         this.registerDefaultState(this.stateDefinition.any().setValue(LIT, true).setValue(SIGNAL_FIRE, false).setValue(WATERLOGGED, false).setValue(FACING, Direction.NORTH));
     }
@@ -43,9 +44,9 @@ public class CopperSoulCampfireBlock extends CampfireBlock {
         if (blockentity instanceof CopperSoulCampfireBlockEntity) {
             CopperSoulCampfireBlockEntity soulCampfireBlockEntity = (CopperSoulCampfireBlockEntity) blockentity;
             ItemStack itemstack = pPlayer.getItemInHand(pHand);
-            Optional<CopperSoulCampfireRecipe> optional = soulCampfireBlockEntity.getCookableRecipe(itemstack);
+            Optional<RecipeHolder<CopperSoulCampfireRecipe>> optional = soulCampfireBlockEntity.getCookableRecipe(itemstack);
             if (optional.isPresent()) {
-                if (!pLevel.isClientSide && soulCampfireBlockEntity.placeFood(pPlayer.getAbilities().instabuild ? itemstack.copy() : itemstack, optional.get().getCookingTime())) {
+                if (!pLevel.isClientSide && soulCampfireBlockEntity.placeFood(pPlayer, pPlayer.getAbilities().instabuild ? itemstack.copy() : itemstack, ((CopperSoulCampfireRecipe) ((RecipeHolder) optional.get()).value()).getCookingTime())) {
                     pPlayer.awardStat(Stats.INTERACT_WITH_CAMPFIRE);
                     return InteractionResult.SUCCESS;
                 }

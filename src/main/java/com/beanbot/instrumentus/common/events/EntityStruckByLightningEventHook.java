@@ -1,14 +1,15 @@
 package com.beanbot.instrumentus.common.events;
 
-import com.beanbot.instrumentus.common.items.IItemLightningChargeable;
+import com.beanbot.instrumentus.common.items.interfaces.IItemLightningChargeable;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.item.ItemEntity;
-import net.minecraftforge.event.entity.EntityStruckByLightningEvent;
-import net.minecraftforge.eventbus.api.EventPriority;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.neoforged.bus.api.EventPriority;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.neoforge.event.entity.EntityStruckByLightningEvent;
 
 public class EntityStruckByLightningEventHook {
 
+    //TODO: Broken...
     @SubscribeEvent(priority = EventPriority.NORMAL)
     public void onEntityStruckByLightning(EntityStruckByLightningEvent event) {
         chargeItem(event);

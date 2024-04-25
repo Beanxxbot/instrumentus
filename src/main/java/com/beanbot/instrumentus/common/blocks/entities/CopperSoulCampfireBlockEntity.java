@@ -1,6 +1,7 @@
 package com.beanbot.instrumentus.common.blocks.entities;
 
 import com.beanbot.instrumentus.recipe.CopperSoulCampfireRecipe;
+import com.beanbot.instrumentus.recipe.ModRecipes;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.NonNullList;
@@ -10,12 +11,18 @@ import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.*;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.RecipeHolder;
+import net.minecraft.world.item.crafting.RecipeManager;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.CampfireBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.gameevent.GameEvent;
 
+import javax.annotation.Nullable;
 import java.util.Optional;
 import java.util.Random;
 
@@ -25,26 +32,31 @@ public class CopperSoulCampfireBlockEntity extends BlockEntity implements Cleara
     private final NonNullList<ItemStack> items = NonNullList.withSize(4, ItemStack.EMPTY);
     private final int[] cookingProgress = new int[4];
     private final int[] cookingTime = new int[4];
+    private final RecipeManager.CachedCheck<Container, CopperSoulCampfireRecipe> quickCheck;
     public CopperSoulCampfireBlockEntity(BlockPos pPos, BlockState pBlockState) {
         super(ModBlockEntities.COPPER_SOUL_CAMPFIRE_BLOCK_ENTITY.get(), pPos, pBlockState);
+        this.quickCheck = RecipeManager.createCheck(ModRecipes.COPPER_SOUL_CAMPFIRE_COOKING_TYPE.get());
     }
 
     public static void cookTick(Level pLevel, BlockPos pPos, BlockState pState, CopperSoulCampfireBlockEntity pBlockEntity) {
         boolean flag = false;
 
         for(int i = 0; i < pBlockEntity.items.size(); ++i) {
-            ItemStack itemstack = pBlockEntity.items.get(i);
+            ItemStack itemstack = (ItemStack) pBlockEntity.items.get(i);
             if (!itemstack.isEmpty()) {
                 flag = true;
                 int j = pBlockEntity.cookingProgress[i]++;
                 if (pBlockEntity.cookingProgress[i] >= pBlockEntity.cookingTime[i]) {
-                    Container container = new SimpleContainer(itemstack);
-                    ItemStack itemstack1 = pLevel.getRecipeManager().getRecipeFor(CopperSoulCampfireRecipe.Type.INSTANCE, container, pLevel).map((m) -> {
-                        return m.assemble(container, pLevel.registryAccess());
+                    Container container = new SimpleContainer(new ItemStack[]{itemstack});
+                    ItemStack itemstack1 = (ItemStack) pBlockEntity.quickCheck.getRecipeFor(container, pLevel).map((m) -> {
+                        return ((CopperSoulCampfireRecipe) m.value()).assemble(container, pLevel.registryAccess());
                     }).orElse(itemstack);
-                    Containers.dropItemStack(pLevel, (double)pPos.getX(), (double)pPos.getY(), (double)pPos.getZ(), itemstack1);
-                    pBlockEntity.items.set(i, ItemStack.EMPTY);
-                    pLevel.sendBlockUpdated(pPos, pState, pState, 3);
+                    if (itemstack1.isItemEnabled(pLevel.enabledFeatures())) {
+                        Containers.dropItemStack(pLevel, (double) pPos.getX(), (double) pPos.getY(), (double) pPos.getZ(), itemstack1);
+                        pBlockEntity.items.set(i, ItemStack.EMPTY);
+                        pLevel.sendBlockUpdated(pPos, pState, pState, 3);
+                        pLevel.gameEvent(GameEvent.BLOCK_CHANGE, pPos, GameEvent.Context.of(pState));
+                    }
                 }
             }
         }
@@ -134,17 +146,18 @@ public class CopperSoulCampfireBlockEntity extends BlockEntity implements Cleara
         return compoundtag;
     }
 
-    public Optional<CopperSoulCampfireRecipe> getCookableRecipe(ItemStack pStack) {
-        return this.items.stream().noneMatch(ItemStack::isEmpty) ? Optional.empty() : this.level.getRecipeManager().getRecipeFor(CopperSoulCampfireRecipe.Type.INSTANCE, new SimpleContainer(pStack), this.level);
+    public Optional<RecipeHolder<CopperSoulCampfireRecipe>> getCookableRecipe(ItemStack pStack) {
+        return this.items.stream().noneMatch(ItemStack::isEmpty) ? Optional.empty() : this.quickCheck.getRecipeFor(new SimpleContainer(new ItemStack[]{pStack}), this.level);
     }
 
-    public boolean placeFood(ItemStack pStack, int pCookTime) {
+    public boolean placeFood(@Nullable Entity pEntity, ItemStack pStack, int pCookTime) {
         for(int i = 0; i < this.items.size(); ++i) {
             ItemStack itemstack = this.items.get(i);
             if (itemstack.isEmpty()) {
                 this.cookingTime[i] = pCookTime;
                 this.cookingProgress[i] = 0;
                 this.items.set(i, pStack.split(1));
+                this.level.gameEvent(GameEvent.BLOCK_CHANGE, this.getBlockPos(), GameEvent.Context.of(pEntity, this.getBlockState()));
                 this.markUpdated();
                 return true;
             }

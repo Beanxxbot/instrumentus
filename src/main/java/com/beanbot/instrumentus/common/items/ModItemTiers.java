@@ -2,11 +2,12 @@ package com.beanbot.instrumentus.common.items;
 
 import net.minecraft.tags.BlockTags;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.Tier;
 import net.minecraft.world.item.crafting.Ingredient;
-import net.minecraftforge.common.ForgeTier;
+import net.neoforged.neoforge.common.SimpleTier;
 
 public class ModItemTiers {
-    public static final ForgeTier COPPER = new ForgeTier(
+    public static final Tier COPPER = new SimpleTier(
             2,
             750,
             5.0f,

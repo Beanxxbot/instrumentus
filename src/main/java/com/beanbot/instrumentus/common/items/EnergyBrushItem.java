@@ -1,15 +1,16 @@
 package com.beanbot.instrumentus.common.items;
 
-import com.beanbot.instrumentus.common.capability.EnergyStorageItem;
+import com.beanbot.instrumentus.common.items.interfaces.IEnergyItem;
+import com.beanbot.instrumentus.common.items.interfaces.IItemLightningChargeable;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.nbt.CompoundTag;
+import net.minecraft.core.particles.BlockParticleOption;
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.network.ServerGamePacketListenerImpl;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
-import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.HumanoidArm;
@@ -26,18 +27,14 @@ import net.minecraft.world.level.block.entity.BrushableBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
-import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.common.capabilities.ForgeCapabilities;
-import net.minecraftforge.common.capabilities.ICapabilityProvider;
-import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.energy.IEnergyStorage;
-import org.apache.commons.lang3.tuple.Pair;
+import net.minecraft.world.phys.Vec3;
+import net.neoforged.neoforge.capabilities.Capabilities;
+import net.neoforged.neoforge.energy.IEnergyStorage;
 
-import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.List;
 
-public class EnergyBrushItem extends BrushItem implements IItemLightningChargeable {
+public class EnergyBrushItem extends BrushItem implements IItemLightningChargeable, IEnergyItem {
     public EnergyBrushItem() {
         super(new Item.Properties().durability(0).stacksTo(1).fireResistant());
     }
@@ -45,10 +42,9 @@ public class EnergyBrushItem extends BrushItem implements IItemLightningChargeab
     @Override
     public InteractionResult useOn(UseOnContext pContext) {
         Player player = pContext.getPlayer();
-        LazyOptional<IEnergyStorage> lazy = pContext.getItemInHand().getCapability(ForgeCapabilities.ENERGY);
-        if (player != null && this.calculateHitResult(player).getType() == HitResult.Type.BLOCK && lazy.isPresent()) {
-            IEnergyStorage storage = lazy.orElseThrow(AssertionError::new);
-            if(storage.getEnergyStored() > 0) {
+        IEnergyStorage energyStorage = pContext.getItemInHand().getCapability(Capabilities.EnergyStorage.ITEM);
+        if (player != null && this.calculateHitResult(player).getType() == HitResult.Type.BLOCK && !(energyStorage == null)) {
+            if(energyStorage.getEnergyStored() > 0) {
                 player.startUsingItem(pContext.getHand());
             }
         }
@@ -85,10 +81,9 @@ public class EnergyBrushItem extends BrushItem implements IItemLightningChargeab
                                 boolean flag1 = brushableblockentity.brush(pLevel.getGameTime(), player, blockhitresult.getDirection());
                                 if (flag1) {
                                     if (player != null) {
-                                        LazyOptional<IEnergyStorage> lazy = pStack.getCapability(ForgeCapabilities.ENERGY);
-                                        if(lazy.isPresent()){
-                                            IEnergyStorage storage = lazy.orElseThrow(AssertionError::new);
-                                            storage.extractEnergy(EnergyToolCommon.MAX_TRANSFER - 24, false);
+                                        IEnergyStorage energyStorage = pStack.getCapability(Capabilities.EnergyStorage.ITEM);
+                                        if(!(energyStorage == null)){
+                                            energyStorage.extractEnergy(getMaxTransferRate() - 24, false);
                                         }
                                     }
                                 }
@@ -105,24 +100,6 @@ public class EnergyBrushItem extends BrushItem implements IItemLightningChargeab
         }
     }
 
-    @Override
-    public boolean isChargeFull(ItemStack stack) {
-        LazyOptional<IEnergyStorage> lazy = stack.getCapability(ForgeCapabilities.ENERGY);
-        if(lazy.isPresent()){
-            IEnergyStorage storage = lazy.orElseThrow(AssertionError::new);
-            if(storage.getEnergyStored() == storage.getMaxEnergyStored()); {
-                return false;
-            }
-        }
-        return true;
-    }
-
-    @Override
-    public ItemStack chargeToFull(ItemStack stack) {
-        stack.getOrCreateTag().putInt(EnergyToolCommon.ENERGY_TAG, EnergyToolCommon.CAPACITY);
-        return stack;
-    }
-
     private HitResult calculateHitResult(LivingEntity pEntity) {
         return ProjectileUtil.getHitResultOnViewVector(pEntity, (p_281111_) -> {
             return !p_281111_.isSpectator() && p_281111_.isPickable();
@@ -136,51 +113,78 @@ public class EnergyBrushItem extends BrushItem implements IItemLightningChargeab
 
     @Override
     public void appendHoverText(ItemStack stack, @Nullable Level worldIn, List<Component> tooltip, TooltipFlag flagIn){
-        EnergyToolCommon.addInformation(stack, worldIn, tooltip, flagIn);
+        addTooltip(stack, worldIn, tooltip, flagIn);
     }
 
     @Override
     public int getBarWidth(ItemStack stack){
-        LazyOptional<IEnergyStorage> cap = stack.getCapability(ForgeCapabilities.ENERGY);
-        if (!cap.isPresent())
-            return super.getBarWidth(stack);
-
-        return cap.map(e -> Math.min(13 * e.getMaxEnergyStored() / e.getMaxEnergyStored(), 13)).orElse(super.getBarWidth(stack));
+        return getEnergyBarWidth(stack);
     }
 
     @Override
     public int getBarColor(ItemStack stack){
-        LazyOptional<IEnergyStorage> cap = stack.getCapability(ForgeCapabilities.ENERGY);
-        if (!cap.isPresent())
-            return super.getBarColor(stack);
-
-        Pair<Integer, Integer> energyStorage = cap.map(e -> Pair.of(e.getEnergyStored(), e.getMaxEnergyStored())).orElse(Pair.of(0,0));
-        return Mth.hsvToRgb(Math.max(0.0f, energyStorage.getLeft() / (float) energyStorage.getRight()) / 3.0f, 1.0f, 1.0f);
+        return getEnergyBarColor(stack);
     }
 
     @Override
     public boolean isDamaged(ItemStack stack){
-        LazyOptional<IEnergyStorage> cap = stack.getCapability(ForgeCapabilities.ENERGY);
-        if(!cap.isPresent())
-            return super.isDamaged(stack);
-
-        Pair<Integer, Integer> energyStorage = cap.map(e -> Pair.of(e.getEnergyStored(), e.getMaxEnergyStored())).orElse(Pair.of(0,0));
-        return energyStorage.getLeft() != energyStorage.getRight();
+        return isEnergyBelowZero(stack);
     }
     @Override
     public boolean isBarVisible(ItemStack stack){
-        return stack.getCapability(ForgeCapabilities.ENERGY).map(e -> e.getEnergyStored() != e.getMaxEnergyStored()).orElse(super.isBarVisible(stack));
+        return isEnergyBarVisible(stack);
     }
-    @Nullable
-    @Override
-    public ICapabilityProvider initCapabilities(ItemStack stack, @Nullable CompoundTag nbt){
-        if(ForgeCapabilities.ENERGY == null) return null;
-        return new ICapabilityProvider() {
-            @Nonnull
-            @Override
-            public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> cap, @Nullable Direction side) {
-                return cap == ForgeCapabilities.ENERGY ? LazyOptional.of(() -> new EnergyStorageItem(stack, EnergyToolCommon.CAPACITY, EnergyToolCommon.MAX_TRANSFER)).cast() : LazyOptional.empty();
+
+    private void spawnDustParticles(Level pLevel, BlockHitResult pHitResult, BlockState pState, Vec3 pPos, HumanoidArm pArm) {
+        double d0 = 3.0;
+        int i = pArm == HumanoidArm.RIGHT ? 1 : -1;
+        int j = pLevel.getRandom().nextInt(7, 12);
+        BlockParticleOption blockparticleoption = new BlockParticleOption(ParticleTypes.BLOCK, pState);
+        Direction direction = pHitResult.getDirection();
+        DustParticlesDelta brushitem$dustparticlesdelta = EnergyBrushItem.DustParticlesDelta.fromDirection(pPos, direction);
+        Vec3 vec3 = pHitResult.getLocation();
+
+        for(int k = 0; k < j; ++k) {
+            pLevel.addParticle(blockparticleoption, vec3.x - (double)(direction == Direction.WEST ? 1.0E-6F : 0.0F), vec3.y, vec3.z - (double)(direction == Direction.NORTH ? 1.0E-6F : 0.0F), brushitem$dustparticlesdelta.xd() * (double)i * 3.0 * pLevel.getRandom().nextDouble(), 0.0, brushitem$dustparticlesdelta.zd() * (double)i * 3.0 * pLevel.getRandom().nextDouble());
+        }
+
+    }
+
+    static record DustParticlesDelta(double xd, double yd, double zd) {
+        private static final double ALONG_SIDE_DELTA = 1.0;
+        private static final double OUT_FROM_SIDE_DELTA = 0.1;
+
+        DustParticlesDelta(double xd, double yd, double zd) {
+            this.xd = xd;
+            this.yd = yd;
+            this.zd = zd;
+        }
+
+        public static EnergyBrushItem.DustParticlesDelta fromDirection(Vec3 pPos, Direction pDirection) {
+            double d0 = 0.0;
+            EnergyBrushItem.DustParticlesDelta var10000;
+            switch (pDirection) {
+                case DOWN:
+                case UP:
+                    var10000 = new EnergyBrushItem.DustParticlesDelta(pPos.z(), 0.0, -pPos.x());
+                    break;
+                case NORTH:
+                    var10000 = new EnergyBrushItem.DustParticlesDelta(1.0, 0.0, -0.1);
+                    break;
+                case SOUTH:
+                    var10000 = new EnergyBrushItem.DustParticlesDelta(-1.0, 0.0, 0.1);
+                    break;
+                case WEST:
+                    var10000 = new EnergyBrushItem.DustParticlesDelta(-0.1, 0.0, -1.0);
+                    break;
+                case EAST:
+                    var10000 = new EnergyBrushItem.DustParticlesDelta(0.1, 0.0, 1.0);
+                    break;
+                default:
+                    throw new IncompatibleClassChangeError();
             }
-        };
+
+            return var10000;
+        }
     }
 }

@@ -1,16 +1,14 @@
 package com.beanbot.instrumentus.common.items;
 
-import com.beanbot.instrumentus.common.capability.EnergyStorageItem;
+import com.beanbot.instrumentus.common.items.interfaces.IEnergyItem;
+import com.beanbot.instrumentus.common.items.interfaces.IItemLightningChargeable;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.BlockTags;
-import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
@@ -18,103 +16,86 @@ import net.minecraft.world.item.*;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.common.capabilities.ForgeCapabilities;
-import net.minecraftforge.common.capabilities.ICapabilityProvider;
-import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.energy.IEnergyStorage;
-import org.apache.commons.lang3.tuple.Pair;
+import net.minecraft.world.level.gameevent.GameEvent;
+import net.neoforged.neoforge.capabilities.Capabilities;
+import net.neoforged.neoforge.common.ToolAction;
+import net.neoforged.neoforge.common.ToolActions;
+import net.neoforged.neoforge.energy.IEnergyStorage;
 
-import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.List;
 import java.util.Optional;
 
-public class EnergyAxeItem extends DiggerItem implements IItemLightningChargeable {
+public class EnergyAxeItem extends DiggerItem implements IItemLightningChargeable, IEnergyItem {
     public EnergyAxeItem(Tier tier, float attackDamageIn, float attackSpeedIn) {
         super(attackDamageIn, attackSpeedIn, tier, BlockTags.MINEABLE_WITH_AXE, new Item.Properties().durability(0).stacksTo(1).fireResistant());
     }
 
     @Override
-    public boolean isChargeFull(ItemStack stack) {
-        LazyOptional<IEnergyStorage> lazy = stack.getCapability(ForgeCapabilities.ENERGY);
-        if(lazy.isPresent()){
-            IEnergyStorage storage = lazy.orElseThrow(AssertionError::new);
-            if (storage.getEnergyStored() == storage.getMaxEnergyStored()); {
-                return false;
-            }
-        }
-        return true;
-    }
-
-    @Override
-    public ItemStack chargeToFull(ItemStack stack) {
-        stack.getOrCreateTag().putInt(EnergyToolCommon.ENERGY_TAG, EnergyToolCommon.CAPACITY);
-        return stack;
-    }
-    @Override
     public InteractionResult useOn(UseOnContext context) {
-        Level world = context.getLevel();
+        Level level = context.getLevel();
         BlockPos blockpos = context.getClickedPos();
         Player player = context.getPlayer();
-        BlockState blockstate = world.getBlockState(blockpos);
-        ItemStack stack = context.getItemInHand();
-        Optional<BlockState> optional = Optional.ofNullable(blockstate.getToolModifiedState(context, net.minecraftforge.common.ToolActions.AXE_STRIP, false));
-        Optional<BlockState> optional1 = optional.isPresent() ? Optional.empty() : Optional.ofNullable(blockstate.getToolModifiedState(context, net.minecraftforge.common.ToolActions.AXE_SCRAPE, false));
-        Optional<BlockState> optional2 = optional.isPresent() || optional1.isPresent() ? Optional.empty() : Optional.ofNullable(blockstate.getToolModifiedState(context, net.minecraftforge.common.ToolActions.AXE_WAX_OFF, false));
-        ItemStack itemstack = context.getItemInHand();
-        Optional<BlockState> optional3 = Optional.empty();
-        if (optional.isPresent()) {
-            world.playSound(player, blockpos, SoundEvents.AXE_STRIP, SoundSource.BLOCKS, 1.0F, 1.0F);
-            optional3 = optional;
-        } else if (optional1.isPresent()) {
-            world.playSound(player, blockpos, SoundEvents.AXE_SCRAPE, SoundSource.BLOCKS, 1.0F, 1.0F);
-            world.levelEvent(player, 3005, blockpos, 0);
-            optional3 = optional1;
-        } else if (optional2.isPresent()) {
-            world.playSound(player, blockpos, SoundEvents.AXE_WAX_OFF, SoundSource.BLOCKS, 1.0F, 1.0F);
-            world.levelEvent(player, 3004, blockpos, 0);
-            optional3 = optional2;
-        }
-
-        if (optional3.isPresent()) {
+        Optional<BlockState> optional = this.evaluateNewBlockState(level, blockpos, player, level.getBlockState(blockpos), context);
+        if (optional.isEmpty()) {
+            return InteractionResult.PASS;
+        } else {
+            ItemStack itemstack = context.getItemInHand();
             if (player instanceof ServerPlayer) {
                 CriteriaTriggers.ITEM_USED_ON_BLOCK.trigger((ServerPlayer)player, blockpos, itemstack);
             }
 
-            world.setBlock(blockpos, optional3.get(), 11);
+            level.setBlock(blockpos, (BlockState)optional.get(), 11);
+            level.gameEvent(GameEvent.BLOCK_CHANGE, blockpos, GameEvent.Context.of(player, (BlockState)optional.get()));
             if (player != null) {
-                LazyOptional<IEnergyStorage> lazy = stack.getCapability(ForgeCapabilities.ENERGY);
-                if(lazy.isPresent()){
-                    IEnergyStorage storage = lazy.orElseThrow(AssertionError::new);
-                    storage.extractEnergy(EnergyToolCommon.MAX_TRANSFER - 24, false);
-                }
+                IEnergyStorage energyStorage = context.getItemInHand().getCapability(Capabilities.EnergyStorage.ITEM);
+                if(energyStorage == null) return InteractionResult.FAIL;
+                energyStorage.extractEnergy(getMaxTransferRate() - 24, false);
             }
 
-            return InteractionResult.sidedSuccess(world.isClientSide);
-        } else {
-            return InteractionResult.PASS;
+            return InteractionResult.sidedSuccess(level.isClientSide);
         }
+    }
+
+    private Optional<BlockState> evaluateNewBlockState(Level level, BlockPos blockPos, @Nullable Player player, BlockState state, UseOnContext context) {
+        Optional<BlockState> optional = Optional.ofNullable(state.getToolModifiedState(context, ToolActions.AXE_STRIP, false));
+        if (optional.isPresent()) {
+            level.playSound(player, blockPos, SoundEvents.AXE_STRIP, SoundSource.BLOCKS, 1.0F, 1.0F);
+            return optional;
+        } else {
+            Optional<BlockState> optional1 = Optional.ofNullable(state.getToolModifiedState(context, ToolActions.AXE_SCRAPE, false));
+            if (optional1.isPresent()) {
+                level.playSound(player, blockPos, SoundEvents.AXE_SCRAPE, SoundSource.BLOCKS, 1.0F, 1.0F);
+                level.levelEvent(player, 3005, blockPos, 0);
+                return optional1;
+            } else {
+                Optional<BlockState> optional2 = Optional.ofNullable(state.getToolModifiedState(context, ToolActions.AXE_WAX_OFF, false));
+                if (optional2.isPresent()) {
+                    level.playSound(player, blockPos, SoundEvents.AXE_WAX_OFF, SoundSource.BLOCKS, 1.0F, 1.0F);
+                    level.levelEvent(player, 3004, blockPos, 0);
+                    return optional2;
+                } else {
+                    return Optional.empty();
+                }
+            }
+        }
+    }
+
+    @Override
+    public boolean canPerformAction(ItemStack stack, ToolAction toolAction) {
+        return ToolActions.DEFAULT_AXE_ACTIONS.contains(toolAction);
     }
 
     @Override
     public boolean hurtEnemy(ItemStack stack, LivingEntity target, LivingEntity attacker){
-        LazyOptional<IEnergyStorage> lazy = stack.getCapability(ForgeCapabilities.ENERGY);
-        if(lazy.isPresent()){
-            IEnergyStorage storage = lazy.orElseThrow(AssertionError::new);
-            storage.extractEnergy(EnergyToolCommon.MAX_TRANSFER - 24, false);
-
-        }
-        return true;
+        return energyDamageEnemy(stack, target, attacker);
     }
 
     @Override
     public float getDestroySpeed(ItemStack stack, BlockState state){
-        LazyOptional<IEnergyStorage> lazy = stack.getCapability(ForgeCapabilities.ENERGY);
-        if(lazy.isPresent()){
-            IEnergyStorage storage = lazy.orElseThrow(AssertionError::new);
-            if(!(storage.getEnergyStored() > 0)) return 0.0F;
-        }
+        IEnergyStorage energyStorage = stack.getCapability(Capabilities.EnergyStorage.ITEM);
+        if(energyStorage == null) return 0.0F;
+        if(!(energyStorage.getEnergyStored() > 0)) return 0.0F;
         return super.getDestroySpeed(stack, state);
     }
 
@@ -124,12 +105,10 @@ public class EnergyAxeItem extends DiggerItem implements IItemLightningChargeabl
         if(entityLiving instanceof Player){
             Player player = (Player) entityLiving;
             if(!player.isCreative()){
-                LazyOptional<IEnergyStorage> lazy = stack.getCapability(ForgeCapabilities.ENERGY);
-                if(lazy.isPresent()){
-                    IEnergyStorage storage = lazy.orElseThrow(AssertionError::new);
-                    if(state.getDestroySpeed(worldIn, pos) != 0.0F){
-                        storage.extractEnergy(EnergyToolCommon.MAX_TRANSFER - 24, false);
-                    }
+                IEnergyStorage energyStorage = stack.getCapability(Capabilities.EnergyStorage.ITEM);
+                if(energyStorage == null) return false;
+                if(state.getDestroySpeed(worldIn, pos) != 0.0F){
+                    energyStorage.extractEnergy(EnergyToolCommon.MAX_TRANSFER - 24, false);
                 }
             }
         }
@@ -138,51 +117,26 @@ public class EnergyAxeItem extends DiggerItem implements IItemLightningChargeabl
 
     @Override
     public void appendHoverText(ItemStack stack, @Nullable Level worldIn, List<Component> tooltip, TooltipFlag flagIn){
-        EnergyToolCommon.addInformation(stack, worldIn, tooltip, flagIn);
+        addTooltip(stack, worldIn, tooltip, flagIn);
     }
 
     @Override
     public int getBarWidth(ItemStack stack){
-        LazyOptional<IEnergyStorage> cap = stack.getCapability(ForgeCapabilities.ENERGY);
-        if (!cap.isPresent())
-            return super.getBarWidth(stack);
-
-        return cap.map(e -> Math.min(13 * e.getMaxEnergyStored() / e.getMaxEnergyStored(), 13)).orElse(super.getBarWidth(stack));
+        return getEnergyBarWidth(stack);
     }
 
     @Override
     public int getBarColor(ItemStack stack){
-        LazyOptional<IEnergyStorage> cap = stack.getCapability(ForgeCapabilities.ENERGY);
-        if (!cap.isPresent())
-            return super.getBarColor(stack);
-
-        Pair<Integer, Integer> energyStorage = cap.map(e -> Pair.of(e.getEnergyStored(), e.getMaxEnergyStored())).orElse(Pair.of(0,0));
-        return Mth.hsvToRgb(Math.max(0.0f, energyStorage.getLeft() / (float) energyStorage.getRight()) / 3.0f, 1.0f, 1.0f);
+        return getEnergyBarColor(stack);
     }
 
     @Override
     public boolean isDamaged(ItemStack stack){
-        LazyOptional<IEnergyStorage> cap = stack.getCapability(ForgeCapabilities.ENERGY);
-        if(!cap.isPresent())
-            return super.isDamaged(stack);
-
-        Pair<Integer, Integer> energyStorage = cap.map(e -> Pair.of(e.getEnergyStored(), e.getMaxEnergyStored())).orElse(Pair.of(0,0));
-        return energyStorage.getLeft() != energyStorage.getRight();
+        return isEnergyBelowZero(stack);
     }
+
     @Override
     public boolean isBarVisible(ItemStack stack){
-        return stack.getCapability(ForgeCapabilities.ENERGY).map(e -> e.getEnergyStored() != e.getMaxEnergyStored()).orElse(super.isBarVisible(stack));
-    }
-    @Nullable
-    @Override
-    public ICapabilityProvider initCapabilities(ItemStack stack, @Nullable CompoundTag nbt){
-        if(ForgeCapabilities.ENERGY == null) return null;
-        return new ICapabilityProvider() {
-            @Nonnull
-            @Override
-            public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> cap, @Nullable Direction side) {
-                return cap == ForgeCapabilities.ENERGY ? LazyOptional.of(() -> new EnergyStorageItem(stack, EnergyToolCommon.CAPACITY, EnergyToolCommon.MAX_TRANSFER)).cast() : LazyOptional.empty();
-            }
-        };
-    }
+        return isEnergyBarVisible(stack);
+        }
 }

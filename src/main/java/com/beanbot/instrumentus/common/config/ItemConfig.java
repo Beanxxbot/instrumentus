@@ -1,18 +1,18 @@
 package com.beanbot.instrumentus.common.config;
 
-import net.minecraftforge.common.ForgeConfigSpec;
+import net.neoforged.neoforge.common.ModConfigSpec;
 
 public class ItemConfig {
-    public static ForgeConfigSpec.BooleanValue enable_hammers;
-    public static ForgeConfigSpec.BooleanValue enable_sickles;
-    public static ForgeConfigSpec.BooleanValue enable_shears;
-    public static ForgeConfigSpec.BooleanValue enable_armor;
-    public static ForgeConfigSpec.BooleanValue enable_paxels;
-    public static ForgeConfigSpec.BooleanValue enable_util;
-    public static ForgeConfigSpec.BooleanValue enable_energized;
-    public static ForgeConfigSpec.BooleanValue enable_knives;
+    public static ModConfigSpec.BooleanValue enable_hammers;
+    public static ModConfigSpec.BooleanValue enable_sickles;
+    public static ModConfigSpec.BooleanValue enable_shears;
+    public static ModConfigSpec.BooleanValue enable_armor;
+    public static ModConfigSpec.BooleanValue enable_paxels;
+    public static ModConfigSpec.BooleanValue enable_util;
+    public static ModConfigSpec.BooleanValue enable_energized;
+    public static ModConfigSpec.BooleanValue enable_knives;
 
-    public static void init(ForgeConfigSpec.Builder server, ForgeConfigSpec.Builder client){
+    public static void init(ModConfigSpec.Builder server, ModConfigSpec.Builder client){
         server.comment("Enable/Disable the Various Tools included in the Mod");
 
         enable_hammers = server
