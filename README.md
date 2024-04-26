@@ -3,7 +3,7 @@ A Minecraft Mod adding and upgrading various tools.
 
 #### Forge
 
-[![Versions](http://cf.way2muchnoise.eu/versions/231242_latest.svg)](https://minecraft.curseforge.com/projects/waystones) [![Downloads](http://cf.way2muchnoise.eu/full_231242_downloads.svg)](https://minecraft.curseforge.com/projects/waystones)
+[![Versions](http://cf.way2muchnoise.eu/versions/231242_latest.svg)](https://minecraft.curseforge.com/projects/instrumentus) [![Downloads](http://cf.way2muchnoise.eu/full_231242_downloads.svg)](https://minecraft.curseforge.com/projects/instrumentus)
 
 ## Contributing
 
