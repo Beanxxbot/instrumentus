@@ -24,7 +24,6 @@ import net.neoforged.neoforge.common.crafting.CraftingHelper;
 
 import java.util.Objects;
 
-//TODO: Fix - likely need to DataGen the recipes cuz its better and you're a coward
 public class CopperSoulCampfireRecipe implements Recipe<Container> {
     private final ResourceLocation id;
     protected final Ingredient ingredient;
@@ -87,7 +86,7 @@ public class CopperSoulCampfireRecipe implements Recipe<Container> {
                 p_311734_ -> p_311734_.group(
                         ResourceLocation.CODEC.fieldOf("id").forGetter(p_301134_ -> p_301134_.id),
                         Ingredient.CODEC.fieldOf("ingredient").forGetter(p_301135_ -> p_301135_.ingredient),
-                        ItemStack.CODEC.fieldOf("result").forGetter(p_301136_ -> p_301136_.result),
+                        ItemStack.ITEM_WITH_COUNT_CODEC.fieldOf("result").forGetter(p_301136_ -> p_301136_.result),
                         Codec.INT.fieldOf("cookingTime").forGetter(p_301137_ -> p_301137_.cookingTime)
                 )
                         .apply(p_311734_, CopperSoulCampfireRecipe::new)

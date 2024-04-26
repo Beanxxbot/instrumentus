@@ -2,6 +2,7 @@ package com.beanbot.instrumentus.common.events.loot;
 
 import com.google.common.base.Suppliers;
 import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -16,9 +17,13 @@ import org.jetbrains.annotations.NotNull;
 import java.util.function.Supplier;
 
 public class PlantFiberFromGrassModifier extends LootModifier {
-    public static final Supplier<Codec<PlantFiberFromGrassModifier>> CODEC = Suppliers.memoize(()
-            -> RecordCodecBuilder.create(inst -> codecStart(inst).and(BuiltInRegistries.ITEM.byNameCodec()
-            .fieldOf("item").forGetter(m -> m.item)).apply(inst, PlantFiberFromGrassModifier::new)));
+    public static final Supplier<Codec<PlantFiberFromGrassModifier>> CODEC = Suppliers.memoize(() ->
+            RecordCodecBuilder.create(
+                    inst -> codecStart(inst).and(
+                            BuiltInRegistries.ITEM.byNameCodec()
+            .fieldOf("item").forGetter(m -> m.item)
+    ).apply(inst, PlantFiberFromGrassModifier::new)));
+
     private final Item item;
 
     protected PlantFiberFromGrassModifier(LootItemCondition[] conditionsIn, Item item) {

@@ -20,7 +20,6 @@ public class ModCapabilities {
             "energystorage", () -> AttachmentType.serializable(holder -> {
                 if (holder instanceof ItemStack itemStack) {
                     int capacity = 20000;
-                    //TODO: Create EnergyItem Interface
                     if (itemStack.getItem() instanceof IEnergyItem energyItem) {
                         capacity = energyItem.getMaxCapacity();
                     }
