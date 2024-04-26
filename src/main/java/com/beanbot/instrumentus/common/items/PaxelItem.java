@@ -32,6 +32,7 @@ public class PaxelItem extends DiggerItem {
             SHOVEL_DIG, SHOVEL_FLATTEN,
             PICKAXE_DIG);
 
+    //TODO: Fix 1.20.5
     public PaxelItem(Tier material, float attackDamageIn, float attackSpeedIn, Item.Properties properties) {
         super(attackDamageIn, attackSpeedIn, material, GeneratorBlockTags.MINEABLE_WITH_PAXEL, properties);
         this.material = material;
@@ -47,6 +48,7 @@ public class PaxelItem extends DiggerItem {
         return super.getDestroySpeed(stack, state) == 1 ? 1 : material.getSpeed();
     }
 
+    //TODO: Fix 1.20.5
     @Nonnull
     @Override
     public InteractionResult useOn(UseOnContext context) {

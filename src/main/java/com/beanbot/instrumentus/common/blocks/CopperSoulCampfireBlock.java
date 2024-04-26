@@ -31,6 +31,7 @@ import java.util.function.ToIntFunction;
 
 public class CopperSoulCampfireBlock extends CampfireBlock {
 
+    //TODO: 1.20.5 Refactor
     protected static final VoxelShape SHAPE = Block.box(0.0D, 0.0D, 0.0D, 16.0D, 7.0D, 16.0D);
     public CopperSoulCampfireBlock() {
         super(false, 3, BlockBehaviour.Properties.ofFullCopy(Blocks.SOUL_CAMPFIRE).strength(2.0f).sound(SoundType.WOOD).lightLevel(litBlockEmission(15)).noOcclusion());

@@ -26,6 +26,7 @@ public class EnergyShearsItem extends ModShearsItem implements IItemLightningCha
         super(material, new Item.Properties().stacksTo(1).durability(0).fireResistant());
     }
 
+    //TODO: Fix 1.20.5
     @Override
     public InteractionResult interactLivingEntity(ItemStack stack, Player playerIn, LivingEntity entity, InteractionHand hand) {
         if (entity.level().isClientSide) return InteractionResult.PASS;
@@ -66,6 +67,7 @@ public class EnergyShearsItem extends ModShearsItem implements IItemLightningCha
         return super.getDestroySpeed(stack, state);
     }
 
+    //TODO: Fix 1.20.5
     @Override
     public void appendHoverText(ItemStack stack, @Nullable Level worldIn, List<Component> tooltip, TooltipFlag flagIn){
         addTooltip(stack, worldIn, tooltip, flagIn);

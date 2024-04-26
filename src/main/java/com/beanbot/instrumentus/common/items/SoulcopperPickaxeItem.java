@@ -19,6 +19,7 @@ public class SoulcopperPickaxeItem extends DiggerItem {
 
     protected Tier material;
 
+    //TODO: Fix 1.20.5
     public SoulcopperPickaxeItem(Tier material, int attackDamageIn, float attackSpeedIn) {
         super(1, -2.8f, material, BlockTags.MINEABLE_WITH_PICKAXE, new Item.Properties().stacksTo(1).durability(material.getUses()));
         this.material = material;
@@ -29,7 +30,7 @@ public class SoulcopperPickaxeItem extends DiggerItem {
         Level worldIn = context.getLevel();
         BlockPos pos = context.getClickedPos();
         Player player = context.getPlayer();
-
+        //TODO: Fix 1.20.5
         if(context.getClickedFace() == Direction.WEST && worldIn.isEmptyBlock(pos.west())) {
             worldIn.setBlockAndUpdate(new BlockPos(pos.getX() - 1, pos.getY(), pos.getZ()), ModBlocks.COPPER_SOUL_FLAME_LIGHT.get().defaultBlockState());
             context.getItemInHand().hurtAndBreak(1, player, (e) -> { e.broadcastBreakEvent(context.getHand());});

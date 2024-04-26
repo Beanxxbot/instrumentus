@@ -98,7 +98,7 @@ public class EnergyAxeItem extends DiggerItem implements IItemLightningChargeabl
         if(!(energyStorage.getEnergyStored() > 0)) return 0.0F;
         return super.getDestroySpeed(stack, state);
     }
-
+    //TODO: Fix 1.20.5
     @Override
     public boolean mineBlock(ItemStack stack, Level worldIn, BlockState state, BlockPos pos, LivingEntity entityLiving){
         if(!stack.hasTag()) return false;

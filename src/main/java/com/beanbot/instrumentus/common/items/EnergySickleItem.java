@@ -123,6 +123,7 @@ public class EnergySickleItem extends SickleItem implements IItemLightningCharge
         return super.getDestroySpeed(stack, state);
     }
 
+    //TODO: Fix 1.20.5
     @Override
     public void appendHoverText(ItemStack stack, @Nullable Level worldIn, List<Component> tooltip, TooltipFlag flagIn){
         addTooltip(stack, worldIn, tooltip, flagIn);

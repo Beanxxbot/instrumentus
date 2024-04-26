@@ -6,6 +6,7 @@ import net.minecraft.world.item.Tier;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.neoforged.neoforge.common.SimpleTier;
 
+//TODO: Fix 1.20.5
 public class ModItemTiers {
     public static final Tier COPPER = new SimpleTier(
             2,

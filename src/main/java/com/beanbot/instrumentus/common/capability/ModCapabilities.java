@@ -14,6 +14,7 @@ import java.util.function.Supplier;
 public class ModCapabilities {
     public static final DeferredRegister<AttachmentType<?>> ATTACHMENT_TYPES = DeferredRegister.create(NeoForgeRegistries.ATTACHMENT_TYPES, Instrumentus.MODID);
 
+    //TODO: 1.20.5 Fix
     public static final Supplier<AttachmentType<EnergyStorage>> ENERGYSTORAGE = ATTACHMENT_TYPES.register(
             "energystorage", () -> AttachmentType.serializable(holder -> {
                 if (holder instanceof ItemStack itemStack) {

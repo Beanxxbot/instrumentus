@@ -13,6 +13,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 
+//TODO: Fix 1.20.5
 public class KnifeItem extends TieredItem implements Vanishable {
     private final float attackDamage;
     private final Multimap<Attribute, AttributeModifier> attributeModifiers;
@@ -31,6 +32,7 @@ public class KnifeItem extends TieredItem implements Vanishable {
         return block.is(Blocks.TALL_GRASS) || block.is(Blocks.SHORT_GRASS);
     }
 
+    //TODO: Fix 1.20.5
     public boolean hurtEnemy(ItemStack stack, LivingEntity target, LivingEntity attacker) {
         stack.hurtAndBreak(1, attacker, (entity) -> {
             entity.broadcastBreakEvent(EquipmentSlot.MAINHAND);

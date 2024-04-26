@@ -19,6 +19,7 @@ public class SickleItem extends DiggerItem
 {
     protected Tier material;
 
+    //TODO: Fix 1.20.5
     public SickleItem(Tier material, Item.Properties properties) {
         super(0, -1.9f, material, BlockTags.LEAVES, properties);
         this.material = material;
@@ -51,7 +52,7 @@ public class SickleItem extends DiggerItem
             radius = 3;
             height = 3;
         }
-
+        //TODO: Fix 1.20.5
         stack.hurtAndBreak(1, entity, e -> e.broadcastBreakEvent(EquipmentSlot.MAINHAND));
 
         int numberTrimmed = 0;
@@ -72,7 +73,7 @@ public class SickleItem extends DiggerItem
         return (numberTrimmed > 0 && isLeaves);
 
     }
-
+    //TODO: Fix 1.20.5
     public int trim(ItemStack stack, LivingEntity entity, Level world, BlockPos pos, int height, int radius, TrimType trimType, boolean cutCorners, int damagePercentChance)
     {
         int numberTrimmed = 0;

@@ -98,6 +98,8 @@ public class EnergyPaxelItem extends PaxelItem implements IItemLightningChargeab
         }
         return null;
     }
+
+    //TODO: Fix 1.20.5
     @Override
     public boolean mineBlock(ItemStack stack, Level worldIn, BlockState state, BlockPos pos, LivingEntity entityLiving){
         if(!stack.hasTag()) return false;
@@ -128,6 +130,7 @@ public class EnergyPaxelItem extends PaxelItem implements IItemLightningChargeab
         return super.getDestroySpeed(stack, state);
     }
 
+    //TODO: Fix 1.20.5
     @Override
     public void appendHoverText(ItemStack stack, @Nullable Level worldIn, List<Component> tooltip, TooltipFlag flagIn){
         addTooltip(stack, worldIn, tooltip, flagIn);

@@ -92,11 +92,11 @@ public class ToolRenderEvents {
                     f2 /= f3;
                     vertexConsumer.vertex(posestack$pose.pose(), (float) (p_234280_ + x), (float) (p_234281_ + y), (float) (p_234282_ + z))
                             .color((float) 0.0, (float) 0.0, (float) 0.0, (float) 0.2)
-                            .normal(posestack$pose.normal(), f, f1, f2)
+                            .normal(posestack$pose, f, f1, f2)
                             .endVertex();
                     vertexConsumer.vertex(posestack$pose.pose(), (float) (p_234283_ + x), (float) (p_234284_ + y), (float) (p_234285_ + z))
                             .color((float) 0.0, (float) 0.0, (float) 0.0, (float) 0.2)
-                            .normal(posestack$pose.normal(), f, f1, f2)
+                            .normal(posestack$pose, f, f1, f2)
                             .endVertex();
                 }
         );

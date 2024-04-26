@@ -25,6 +25,7 @@ public class HammerItem extends DiggerItem {
 
     protected Tier material;
 
+    //TODO: Fix 1.20.5
     public HammerItem(Tier material, float attackDamageIn, float attackSpeedIn, Item.Properties properties){
         super(attackDamageIn, attackSpeedIn, material, BlockTags.MINEABLE_WITH_PICKAXE, properties);
         this.material = material;
@@ -47,6 +48,7 @@ public class HammerItem extends DiggerItem {
             r = 1;
         }
 
+        //TODO: Fix 1.20.5
         stack.hurtAndBreak(1, entity, e -> e.broadcastBreakEvent(EquipmentSlot.MAINHAND));
 
         int numberTrimmed = 0;
@@ -66,6 +68,7 @@ public class HammerItem extends DiggerItem {
         BlockHitResult blockHitResult = new BlockHitResult(new Vec3(player.getX(), player.getY(), player.getZ()), getPlayerPOVHitResult(world, player, ClipContext.Fluid.NONE).getDirection(), blockPos, false);
         Direction blockFaceMined = blockHitResult.getDirection();
 
+        //TODO: Fix 1.20.5
         if(blockFaceMined == Direction.EAST || blockFaceMined == Direction.WEST/*look.x >= -1 && look.x <= -0.75 || look.x <= 1 && look.x >= 0.75*/) {
             for (int dz = -r; dz <= r; dz++) {
                 for (int dy = -r; dy <= r; dy++) {

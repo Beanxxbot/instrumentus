@@ -36,6 +36,7 @@ public class PlantFiberFromGrassModifier extends LootModifier {
         return generatedLoot;
     }
 
+    //TODO: Fix 1.20.5
     @Override
     public Codec<? extends IGlobalLootModifier> codec() {
         return CODEC.get();

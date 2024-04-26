@@ -81,6 +81,7 @@ public class ModItems {
     public static final Supplier<Item> NETHERITE_KNIFE = UTILITIES.register("netherite_knife", () -> new KnifeItem(Tiers.NETHERITE, 1, -2.0f, new Item.Properties().stacksTo(1).fireResistant()));
     public static final Supplier<Item> PLANT_FIBER = UTILITIES.register("plant_fiber", () -> new Item(new Item.Properties()));
 
+    //TODO: Fix 1.20.5
     public static final Supplier<Item> COPPER_PICKAXE = COPPER.register("copper_pickaxe", () -> new PickaxeItem(ModItemTiers.COPPER, 1, -2.8f, new Item.Properties()));
     public static final Supplier<Item> COPPER_SHOVEL = COPPER.register("copper_shovel", () -> new ShovelItem(ModItemTiers.COPPER, 1, -2.8f, new Item.Properties()));
     public static final Supplier<Item> COPPER_AXE = COPPER.register("copper_axe", () -> new AxeItem(ModItemTiers.COPPER, 6.0f, -3.0f, new Item.Properties()));

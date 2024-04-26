@@ -46,6 +46,7 @@ public class EnergyHammerItem extends HammerItem implements IItemLightningCharge
             r = 1;
         }
 
+        //TODO: Fix 1.20.5
         stack.hurtAndBreak(1, entity, e -> e.broadcastBreakEvent(EquipmentSlot.MAINHAND));
 
         int numberTrimmed = 0;
@@ -127,6 +128,7 @@ public class EnergyHammerItem extends HammerItem implements IItemLightningCharge
         return super.getDestroySpeed(stack, state);
     }
 
+    //TODO: Fix 1.20.5
     @Override
     public void appendHoverText(ItemStack stack, @Nullable Level worldIn, List<Component> tooltip, TooltipFlag flagIn){
         addTooltip(stack, worldIn, tooltip, flagIn);

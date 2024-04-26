@@ -44,6 +44,7 @@ public class Instrumentus {
     {
         ModCreativeModeTab.register(instrumentusEventBus);
 
+        //TODO: Fix 1.20.5
         ModLoadingContext.get().registerConfig(ModConfig.Type.SERVER, Config.SERVER, "instrumentus-server.toml");
         ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, Config.CLIENT, "instrumentus-client.toml");
 
@@ -96,7 +97,7 @@ public class Instrumentus {
     private void addCreative(BuildCreativeModeTabContentsEvent event) {
         ModCreativeTabPopulate.populate(event);
     }
-
+    //TODO: Fix 1.20.5
     private void attachCapabilities(RegisterCapabilitiesEvent event) {
         event.registerItem(Capabilities.EnergyStorage.ITEM, (itemStack, context) -> itemStack.getData(ModCapabilities.ENERGYSTORAGE),
                 ModItems.ENERGIZED_AXE.get(),

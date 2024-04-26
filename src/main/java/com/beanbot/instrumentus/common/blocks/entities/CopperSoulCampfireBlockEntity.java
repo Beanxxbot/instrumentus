@@ -111,6 +111,7 @@ public class CopperSoulCampfireBlockEntity extends BlockEntity implements Cleara
         return this.items;
     }
 
+    //TODO: 1.20.5 Refactor
     public void load(CompoundTag pTag) {
         super.load(pTag);
         this.items.clear();

@@ -100,6 +100,7 @@ public class EnergyBrushItem extends BrushItem implements IItemLightningChargeab
         }
     }
 
+    //TODO: 1.20.5
     private HitResult calculateHitResult(LivingEntity pEntity) {
         return ProjectileUtil.getHitResultOnViewVector(pEntity, (p_281111_) -> {
             return !p_281111_.isSpectator() && p_281111_.isPickable();
@@ -111,6 +112,7 @@ public class EnergyBrushItem extends BrushItem implements IItemLightningChargeab
         return 100;
     }
 
+    //TODO: 1.20.5
     @Override
     public void appendHoverText(ItemStack stack, @Nullable Level worldIn, List<Component> tooltip, TooltipFlag flagIn){
         addTooltip(stack, worldIn, tooltip, flagIn);

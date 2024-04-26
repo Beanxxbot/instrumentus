@@ -12,6 +12,7 @@ import net.minecraft.world.item.crafting.*;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 
+//TODO: Fix 1.20.5
 public class CopperSoulCampfireRecipe implements Recipe<Container> {
     private final ResourceLocation id;
     protected final Ingredient ingredient;
