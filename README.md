@@ -1,9 +1,13 @@
 # Instrumentus
 A Minecraft Mod adding and upgrading various tools.
 
-#### Forge
+#### NeoForge & Forge (Legacy)
 
 [![Versions](http://cf.way2muchnoise.eu/versions/231242_latest.svg)](https://minecraft.curseforge.com/projects/instrumentus) [![Downloads](http://cf.way2muchnoise.eu/full_231242_downloads.svg)](https://minecraft.curseforge.com/projects/instrumentus)
+
+## Forge (Legacy) Disclaimer
+
+Starting with version 1.20.4-2.4.2, Instrumentus will exclusively be releasing feature and Minecraft Version updates on NeoForge. Please _**do not ask me**_ to port the mod to a later version of forge. I will consider PRs for later forge updates, please do not Fork and redistribute as a Forge mod, I would rather it all be included under the Instrumentus name. If someone is interested in regularly maintaining the forge version, feel free to reach out, but due to my feelings on the whole Forge-NeoForge situation, I'll only be working on NeoForge.
 
 ## Contributing
 
