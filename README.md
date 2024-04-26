@@ -5,6 +5,10 @@ A Minecraft Mod adding and upgrading various tools.
 
 [![Versions](http://cf.way2muchnoise.eu/versions/231242_latest.svg)](https://minecraft.curseforge.com/projects/instrumentus) [![Downloads](http://cf.way2muchnoise.eu/full_231242_downloads.svg)](https://minecraft.curseforge.com/projects/instrumentus)
 
+### GitHub Source
+
+The master branch just holds the ReadMe and some Issues metadata - if you'd like to see the source, look at the other branches!
+
 ## Contributing
 
 If you are looking to make content additions, please contact me directly via CurseForge, Discord (Username is Beanxxbot), or by commenting on the [Feature Request Discussion Page](https://github.com/Beanxxbot/instrumentus/discussions)
