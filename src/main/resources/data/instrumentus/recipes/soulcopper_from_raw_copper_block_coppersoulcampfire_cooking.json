@@ -1,9 +1,0 @@
-{
-  "type": "instrumentus:copper_soul_campfire_cooking",
-  "ingredient": {
-    "item": "minecraft:raw_copper_block"
-  },
-  "result": "instrumentus:raw_soulcopper",
-  "experience": 0.7,
-  "cookingtime": 1200
-}

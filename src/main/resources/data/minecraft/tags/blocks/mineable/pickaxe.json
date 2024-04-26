@@ -1,9 +1,0 @@
-{
-  "replace": false,
-  "values": [
-    "instrumentus:energy_block",
-    "instrumentus:raw_soulcopper_block",
-    "instrumentus:soulcopper_block",
-    "instrumentus:copper_soul_lantern"
-  ]
-}

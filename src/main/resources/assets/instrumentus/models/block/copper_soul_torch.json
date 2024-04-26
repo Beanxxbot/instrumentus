@@ -1,6 +1,0 @@
-{
-  "parent": "minecraft:block/template_torch",
-  "textures": {
-    "torch": "instrumentus:block/copper_soul_torch"
-  }
-}
