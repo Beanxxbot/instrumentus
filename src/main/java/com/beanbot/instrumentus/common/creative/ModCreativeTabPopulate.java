@@ -1,15 +1,11 @@
 package com.beanbot.instrumentus.common.creative;
 
 import com.beanbot.instrumentus.common.items.ModItems;
-import com.beanbot.instrumentus.common.items.interfaces.IEnergyItem;
 import net.minecraft.world.item.ItemStack;
 import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent;
 
 public class ModCreativeTabPopulate {
-
-    static final int ENERGY_CAPACITY = 20000;
-    static final String ENERGY_TAG = "Energy";
 
     public static void populate(BuildCreativeModeTabContentsEvent event) {
         if(event.getTab() == ModCreativeModeTab.MOD_ITEM_GROUP.get()) {

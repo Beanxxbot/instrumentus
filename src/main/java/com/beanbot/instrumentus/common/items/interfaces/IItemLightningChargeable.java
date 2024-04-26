@@ -1,6 +1,5 @@
 package com.beanbot.instrumentus.common.items.interfaces;
 
-import com.beanbot.instrumentus.common.Instrumentus;
 import net.minecraft.world.item.ItemStack;
 import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.energy.IEnergyStorage;

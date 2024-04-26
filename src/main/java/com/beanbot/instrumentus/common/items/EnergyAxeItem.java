@@ -108,7 +108,7 @@ public class EnergyAxeItem extends DiggerItem implements IItemLightningChargeabl
                 IEnergyStorage energyStorage = stack.getCapability(Capabilities.EnergyStorage.ITEM);
                 if(energyStorage == null) return false;
                 if(state.getDestroySpeed(worldIn, pos) != 0.0F){
-                    energyStorage.extractEnergy(EnergyToolCommon.MAX_TRANSFER - 24, false);
+                    energyStorage.extractEnergy(getMaxTransferRate() - 24, false);
                 }
             }
         }

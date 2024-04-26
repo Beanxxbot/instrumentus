@@ -1,10 +1,8 @@
 package com.beanbot.instrumentus.common.events;
 
-import com.beanbot.instrumentus.common.Instrumentus;
 import com.beanbot.instrumentus.common.items.interfaces.IItemLightningChargeable;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.item.ItemEntity;
-import net.minecraft.world.item.crafting.Ingredient;
 import net.neoforged.bus.api.EventPriority;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.neoforge.event.entity.EntityStruckByLightningEvent;

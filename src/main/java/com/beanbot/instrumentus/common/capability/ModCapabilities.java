@@ -1,11 +1,9 @@
 package com.beanbot.instrumentus.common.capability;
 
 import com.beanbot.instrumentus.common.Instrumentus;
-import com.beanbot.instrumentus.common.items.EnergyToolCommon;
 import com.beanbot.instrumentus.common.items.interfaces.IEnergyItem;
 import net.minecraft.world.item.ItemStack;
 import net.neoforged.bus.api.IEventBus;
-import net.neoforged.fml.event.IModBusEvent;
 import net.neoforged.neoforge.attachment.AttachmentType;
 import net.neoforged.neoforge.energy.EnergyStorage;
 import net.neoforged.neoforge.registries.DeferredRegister;

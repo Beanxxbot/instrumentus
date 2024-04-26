@@ -1,6 +1,5 @@
 package com.beanbot.instrumentus.client;
 
-import com.beanbot.instrumentus.common.Instrumentus;
 import com.beanbot.instrumentus.common.items.HammerItem;
 import com.mojang.blaze3d.vertex.*;
 import net.minecraft.client.Minecraft;
@@ -19,9 +18,7 @@ import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
-import net.neoforged.fml.common.Mod;
 import net.neoforged.neoforge.client.event.RenderHighlightEvent;
 
 import java.util.ArrayList;
@@ -74,7 +71,7 @@ public class ToolRenderEvents {
             Level world,
             BlockPos blockPos,
             BlockState blockState) {
-        renderShape(poseStack, vertexConsumer, blockState.getShape(world, blockPos, CollisionContext.of(player)), (double) blockPos.getX() - cX, (double) blockPos.getY() - cY, (double) blockPos.getZ() - cZ, 0.0F, 0.0F, 0.0F, 0.2F);
+        renderShape(poseStack, vertexConsumer, blockState.getShape(world, blockPos, CollisionContext.of(player)), (double) blockPos.getX() - cX, (double) blockPos.getY() - cY, (double) blockPos.getZ() - cZ);
     }
 
     private static void renderShape(PoseStack poseStack,
@@ -82,11 +79,7 @@ public class ToolRenderEvents {
                                     VoxelShape shape,
                                     double x,
                                     double y,
-                                    double z,
-                                    float r,
-                                    float g,
-                                    float b,
-                                    float a) {
+                                    double z) {
         PoseStack.Pose posestack$pose = poseStack.last();
         shape.forAllEdges(
                 (p_234280_, p_234281_, p_234282_, p_234283_, p_234284_, p_234285_) -> {
@@ -98,11 +91,11 @@ public class ToolRenderEvents {
                     f1 /= f3;
                     f2 /= f3;
                     vertexConsumer.vertex(posestack$pose.pose(), (float) (p_234280_ + x), (float) (p_234281_ + y), (float) (p_234282_ + z))
-                            .color(r, g, b, a)
+                            .color((float) 0.0, (float) 0.0, (float) 0.0, (float) 0.2)
                             .normal(posestack$pose.normal(), f, f1, f2)
                             .endVertex();
                     vertexConsumer.vertex(posestack$pose.pose(), (float) (p_234283_ + x), (float) (p_234284_ + y), (float) (p_234285_ + z))
-                            .color(r, g, b, a)
+                            .color((float) 0.0, (float) 0.0, (float) 0.0, (float) 0.2)
                             .normal(posestack$pose.normal(), f, f1, f2)
                             .endVertex();
                 }

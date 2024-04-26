@@ -11,6 +11,7 @@ import java.util.function.Supplier;
 
 public class ModItems {
 
+    @SuppressWarnings("unused")
     public static final Item.Properties ITEM_CATEGORY = new Item.Properties();
     public static final DeferredRegister<Item> SHEARS = DeferredRegister.create(BuiltInRegistries.ITEM, Instrumentus.MODID);
     public static final DeferredRegister<Item> SICKLES = DeferredRegister.create(BuiltInRegistries.ITEM, Instrumentus.MODID);
@@ -66,6 +67,7 @@ public class ModItems {
     public static final Supplier<Item> RAW_SOULCOPPER = UTILITIES.register("raw_soulcopper", () -> new Item(new Item.Properties()));
     public static final Supplier<Item> RAW_SOULCOPPER_BLOCK = UTILITIES.register("raw_soulcopper_block", () -> new BlockItem(ModBlocks.RAW_SOULCOPPER_BLOCK.get(), new Item.Properties().stacksTo(64)));
     public static final Supplier<Item> SOULCOPPER_BLOCK = UTILITIES.register("soulcopper_block", () -> new BlockItem(ModBlocks.SOULCOPPER_BLOCK.get(), new Item.Properties().stacksTo(64)));
+    @SuppressWarnings("unused")
     public static final Supplier<Item> COPPER_SOUL_FLAME_LIGHT_ITEM = UTILITIES.register("copper_soul_fire_flame", () -> new BlockItem(ModBlocks.COPPER_SOUL_FLAME_LIGHT.get(), new Item.Properties()));
     public static final Supplier<Item> COPPER_SOUL_CAMPFIRE_BLOCK_ITEM = UTILITIES.register("copper_soul_campfire", () -> new BlockItem(ModBlocks.COPPER_SOUL_CAMPFIRE.get(), new Item.Properties().stacksTo(64)));
     public static final Supplier<Item> SOULCOPPER_TORCH_ITEM = UTILITIES.register("copper_soul_torch", () -> new StandingAndWallBlockItem(ModBlocks.SOULCOPPER_TORCH.get(), ModBlocks.SOULCOPPER_WALL_TORCH.get(), (new Item.Properties()).stacksTo(64), Direction.DOWN));

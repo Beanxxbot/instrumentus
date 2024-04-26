@@ -3,7 +3,6 @@ package com.beanbot.instrumentus.common.config;
 import com.beanbot.instrumentus.common.Instrumentus;
 import com.electronwill.nightconfig.core.file.CommentedFileConfig;
 import com.electronwill.nightconfig.core.io.WritingMode;
-import net.neoforged.fml.common.Mod;
 import net.neoforged.neoforge.common.ModConfigSpec;
 
 import java.io.File;
