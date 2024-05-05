@@ -15,7 +15,7 @@ import java.util.concurrent.CompletableFuture;
 
 public class GeneratorBlockTags extends BlockTagsProvider {
 
-    public static final TagKey<Block> MINEABLE_WITH_PAXEL = BlockTags.create(new ResourceLocation("forge", "mineable/paxel"));
+    public static final TagKey<Block> MINEABLE_WITH_PAXEL = BlockTags.create(new ResourceLocation("c", "mineable/paxel"));
     public GeneratorBlockTags(PackOutput output, CompletableFuture<HolderLookup.Provider> lookupProvider, @Nullable ExistingFileHelper helper) {
         super(output, lookupProvider, Instrumentus.MODID, helper);
     }

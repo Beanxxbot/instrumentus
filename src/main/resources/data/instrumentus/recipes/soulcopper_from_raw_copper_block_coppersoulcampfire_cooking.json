@@ -5,7 +5,7 @@
     "item": "minecraft:raw_copper_block"
   },
   "result": {
-    "item": "instrumentus:raw_soulcopper"
+    "id": "instrumentus:raw_soulcopper"
   },
   "cookingTime": 1200
 }

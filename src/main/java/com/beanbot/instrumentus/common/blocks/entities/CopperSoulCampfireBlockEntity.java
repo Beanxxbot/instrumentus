@@ -4,6 +4,7 @@ import com.beanbot.instrumentus.recipe.CopperSoulCampfireRecipe;
 import com.beanbot.instrumentus.recipe.ModRecipes;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.core.NonNullList;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
@@ -40,15 +41,16 @@ public class CopperSoulCampfireBlockEntity extends BlockEntity implements Cleara
         boolean flag = false;
 
         for(int i = 0; i < pBlockEntity.items.size(); ++i) {
-            ItemStack itemstack = (ItemStack) pBlockEntity.items.get(i);
+            ItemStack itemstack = pBlockEntity.items.get(i);
             if (!itemstack.isEmpty()) {
                 flag = true;
-                int j = pBlockEntity.cookingProgress[i]++;
+                pBlockEntity.cookingProgress[i]++;
                 if (pBlockEntity.cookingProgress[i] >= pBlockEntity.cookingTime[i]) {
                     Container container = new SimpleContainer(new ItemStack[]{itemstack});
-                    ItemStack itemstack1 = (ItemStack) pBlockEntity.quickCheck.getRecipeFor(container, pLevel).map((m) -> {
-                        return ((CopperSoulCampfireRecipe) m.value()).assemble(container, pLevel.registryAccess());
-                    }).orElse(itemstack);
+                    ItemStack itemstack1 = pBlockEntity.quickCheck
+                            .getRecipeFor(container, pLevel)
+                            .map(m -> m.value().assemble(container, pLevel.registryAccess()))
+                            .orElse(itemstack);
                     if (itemstack1.isItemEnabled(pLevel.enabledFeatures())) {
                         Containers.dropItemStack(pLevel, (double) pPos.getX(), (double) pPos.getY(), (double) pPos.getZ(), itemstack1);
                         pBlockEntity.items.set(i, ItemStack.EMPTY);
@@ -111,11 +113,11 @@ public class CopperSoulCampfireBlockEntity extends BlockEntity implements Cleara
         return this.items;
     }
 
-    //TODO: 1.20.5 Refactor
-    public void load(CompoundTag pTag) {
-        super.load(pTag);
+    @Override
+    public void loadAdditional(CompoundTag pTag, HolderLookup.Provider holderProvider) {
+        super.loadAdditional(pTag, holderProvider);
         this.items.clear();
-        ContainerHelper.loadAllItems(pTag, this.items);
+        ContainerHelper.loadAllItems(pTag, this.items, holderProvider);
         if (pTag.contains("CookingTimes", 11)) {
             int[] aint = pTag.getIntArray("CookingTimes");
             System.arraycopy(aint, 0, this.cookingProgress, 0, Math.min(this.cookingTime.length, aint.length));
@@ -128,20 +130,23 @@ public class CopperSoulCampfireBlockEntity extends BlockEntity implements Cleara
 
     }
 
-    protected void saveAdditional(CompoundTag pTag) {
-        super.saveAdditional(pTag);
-        ContainerHelper.saveAllItems(pTag, this.items, true);
+    @Override
+    protected void saveAdditional(CompoundTag pTag, HolderLookup.Provider holderProvider) {
+        super.saveAdditional(pTag, holderProvider);
+        ContainerHelper.saveAllItems(pTag, this.items, true, holderProvider);
         pTag.putIntArray("CookingTimes", this.cookingProgress);
         pTag.putIntArray("CookingTotalTimes", this.cookingTime);
     }
 
+    @Override
     public ClientboundBlockEntityDataPacket getUpdatePacket() {
         return ClientboundBlockEntityDataPacket.create(this);
     }
 
-    public CompoundTag getUpdateTag() {
+    @Override
+    public CompoundTag getUpdateTag(HolderLookup.Provider holderProvider) {
         CompoundTag compoundtag = new CompoundTag();
-        ContainerHelper.saveAllItems(compoundtag, this.items, true);
+        ContainerHelper.saveAllItems(compoundtag, this.items, true, holderProvider);
         return compoundtag;
     }
 

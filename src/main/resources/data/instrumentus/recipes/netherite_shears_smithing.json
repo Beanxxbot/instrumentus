@@ -7,7 +7,7 @@
     "item": "instrumentus:diamond_shears"
   },
   "result": {
-    "item": "instrumentus:netherite_shears"
+    "id": "instrumentus:netherite_shears"
   },
   "template": {
     "item": "minecraft:netherite_upgrade_smithing_template"

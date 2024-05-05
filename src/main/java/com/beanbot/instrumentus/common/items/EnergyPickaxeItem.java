@@ -17,16 +17,14 @@ import javax.annotation.Nullable;
 import java.util.List;
 
 public class EnergyPickaxeItem extends DiggerItem implements IItemLightningChargeable, IEnergyItem {
-    //TODO: Fix 1.20.5
     public EnergyPickaxeItem(Tier tier, int attackDamageIn, float attackSpeedIn) {
-        super(attackDamageIn, attackSpeedIn, tier,  BlockTags.MINEABLE_WITH_PICKAXE,
-                new Item.Properties().durability(0).stacksTo(1).fireResistant());
+        super(tier,  BlockTags.MINEABLE_WITH_PICKAXE,
+                new Item.Properties().attributes(PickaxeItem.createAttributes(tier, attackDamageIn, attackSpeedIn)).durability(0).stacksTo(1).fireResistant());
     }
 
-    //TODO: Fix 1.20.5
     @Override
     public boolean mineBlock(ItemStack stack, Level worldIn, BlockState state, BlockPos pos, LivingEntity entityLiving){
-        if(!stack.hasTag()) return false;
+        if(!(stack.getItem() instanceof IEnergyItem)) return false;
         if(entityLiving instanceof Player){
             Player player = (Player) entityLiving;
             if(!player.isCreative()){
@@ -54,10 +52,9 @@ public class EnergyPickaxeItem extends DiggerItem implements IItemLightningCharg
         return super.getDestroySpeed(stack, state);
     }
 
-    //TODO: Fix 1.20.5
     @Override
-    public void appendHoverText(ItemStack stack, @Nullable Level worldIn, List<Component> tooltip, TooltipFlag flagIn){
-        addTooltip(stack, worldIn, tooltip, flagIn);
+    public void appendHoverText(ItemStack stack, Item.TooltipContext context, List<Component> tooltip, TooltipFlag flagIn){
+        addTooltip(stack, context, tooltip, flagIn);
     }
 
     @Override

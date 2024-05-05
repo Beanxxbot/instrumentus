@@ -20,17 +20,15 @@ import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.energy.IEnergyStorage;
 import net.neoforged.neoforge.event.level.BlockEvent;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import java.util.List;
 
 public class EnergyHammerItem extends HammerItem implements IItemLightningChargeable, IEnergyItem {
 
-    protected Tier material;
+    protected Tier tier;
 
-    public EnergyHammerItem(Tier material, float attackDamageIn, float attackSpeedIn){
-        super(material, attackSpeedIn, attackDamageIn, new Item.Properties().stacksTo(1).fireResistant());
-        this.material = material;
+    public EnergyHammerItem(Tier tier, float attackDamageIn, float attackSpeedIn){
+        super(tier, attackSpeedIn, attackDamageIn);
+        this.tier = tier;
     }
 
     @Override
@@ -42,12 +40,10 @@ public class EnergyHammerItem extends HammerItem implements IItemLightningCharge
 
         int r = isStone ? 0 : 2;
 
-        if(material == Tiers.WOOD || material == Tiers.STONE || material == Tiers.IRON || material == Tiers.GOLD || material == Tiers.DIAMOND || material == Tiers.NETHERITE){
+        if(tier == Tiers.WOOD || tier == Tiers.STONE || tier == Tiers.IRON || tier == Tiers.GOLD || tier == Tiers.DIAMOND || tier == Tiers.NETHERITE || tier == ModItemTiers.ENERGIZED){
             r = 1;
         }
-
-        //TODO: Fix 1.20.5
-        stack.hurtAndBreak(1, entity, e -> e.broadcastBreakEvent(EquipmentSlot.MAINHAND));
+        stack.hurtAndBreak(1, entity, EquipmentSlot.MAINHAND);
 
         int numberTrimmed = 0;
 
@@ -128,10 +124,9 @@ public class EnergyHammerItem extends HammerItem implements IItemLightningCharge
         return super.getDestroySpeed(stack, state);
     }
 
-    //TODO: Fix 1.20.5
     @Override
-    public void appendHoverText(ItemStack stack, @Nullable Level worldIn, List<Component> tooltip, TooltipFlag flagIn){
-        addTooltip(stack, worldIn, tooltip, flagIn);
+    public void appendHoverText(ItemStack stack, Item.TooltipContext context, List<Component> tooltip, TooltipFlag flagIn){
+        addTooltip(stack, context, tooltip, flagIn);
     }
 
     @Override

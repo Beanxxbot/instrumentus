@@ -5,6 +5,7 @@ import com.beanbot.instrumentus.client.particles.ModParticles;
 import com.beanbot.instrumentus.client.renderer.CopperSoulCampfireRenderer;
 import com.beanbot.instrumentus.common.blocks.ModBlocks;
 import com.beanbot.instrumentus.common.blocks.entities.ModBlockEntities;
+import com.beanbot.instrumentus.common.capability.EnergyItemstack;
 import com.beanbot.instrumentus.common.capability.ModCapabilities;
 import com.beanbot.instrumentus.common.config.Config;
 import com.beanbot.instrumentus.common.config.ItemConfig;
@@ -13,12 +14,15 @@ import com.beanbot.instrumentus.common.events.loot.ModLootModifiers;
 import com.beanbot.instrumentus.common.items.ModItems;
 import com.beanbot.instrumentus.common.creative.ModCreativeModeTab;
 import com.beanbot.instrumentus.common.creative.ModCreativeTabPopulate;
+import com.beanbot.instrumentus.common.items.datacomponents.ModDataComponents;
+import com.beanbot.instrumentus.common.items.interfaces.IEnergyItem;
 import com.beanbot.instrumentus.recipe.ModRecipes;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderers;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.IEventBus;
+import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.ModLoadingContext;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.config.ModConfig;
@@ -38,22 +42,22 @@ public class Instrumentus {
     public static final String MODID = "instrumentus";
     private static Instrumentus instance;
     public static final Logger LOGGER = LogManager.getLogger();
+    public static final ModContainer MOD_CONTAINER = ModLoadingContext.get().getActiveContainer();
 
 
     public Instrumentus(IEventBus instrumentusEventBus, Dist dist)
     {
         ModCreativeModeTab.register(instrumentusEventBus);
 
-        //TODO: Fix 1.20.5
-        ModLoadingContext.get().registerConfig(ModConfig.Type.SERVER, Config.SERVER, "instrumentus-server.toml");
-        ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, Config.CLIENT, "instrumentus-client.toml");
+        MOD_CONTAINER.registerConfig(ModConfig.Type.SERVER, Config.SERVER, "instrumentus-server.toml");
+        MOD_CONTAINER.registerConfig(ModConfig.Type.CLIENT, Config.CLIENT, "instrumentus-client.toml");
+
 
         NeoForge.EVENT_BUS.register(new EntityStruckByLightningEventHook());
 
         LOGGER.debug("Yo Yo Yo It's Ya Boi, Instrumentus but on NeoForge");
         ModParticles.PARTICLE_TYPES.register(instrumentusEventBus);
 
-        ModCapabilities.register(instrumentusEventBus);
         Config.loadConfig(Config.CLIENT, FMLPaths.CONFIGDIR.get().resolve("instrumentus-client.toml").toString());
         Config.loadConfig(Config.SERVER, FMLPaths.CONFIGDIR.get().resolve("instrumentus-server.toml").toString());
 
@@ -84,6 +88,8 @@ public class Instrumentus {
 
         ModLootModifiers.register(instrumentusEventBus);
 
+        ModDataComponents.COMPONENTS.register(instrumentusEventBus);
+
         instrumentusEventBus.addListener(this::attachCapabilities);
 
         instrumentusEventBus.addListener(this::setup);
@@ -97,9 +103,14 @@ public class Instrumentus {
     private void addCreative(BuildCreativeModeTabContentsEvent event) {
         ModCreativeTabPopulate.populate(event);
     }
-    //TODO: Fix 1.20.5
     private void attachCapabilities(RegisterCapabilitiesEvent event) {
-        event.registerItem(Capabilities.EnergyStorage.ITEM, (itemStack, context) -> itemStack.getData(ModCapabilities.ENERGYSTORAGE),
+        event.registerItem(Capabilities.EnergyStorage.ITEM, (itemStack, context) -> {
+            int capacity = 20000;
+            if (itemStack.getItem() instanceof IEnergyItem energyItem) {
+                capacity = energyItem.getMaxCapacity();
+            }
+            return new EnergyItemstack(capacity, itemStack);
+        },
                 ModItems.ENERGIZED_AXE.get(),
                 ModItems.ENERGIZED_PICKAXE.get(),
                 ModItems.ENERGIZED_SHOVEL.get(),

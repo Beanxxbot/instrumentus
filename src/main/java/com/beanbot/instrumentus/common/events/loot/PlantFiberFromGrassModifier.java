@@ -2,6 +2,7 @@ package com.beanbot.instrumentus.common.events.loot;
 
 import com.google.common.base.Suppliers;
 import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -16,8 +17,8 @@ import org.jetbrains.annotations.NotNull;
 import java.util.function.Supplier;
 
 public class PlantFiberFromGrassModifier extends LootModifier {
-    public static final Supplier<Codec<PlantFiberFromGrassModifier>> CODEC = Suppliers.memoize(() ->
-            RecordCodecBuilder.create(
+    public static final Supplier<MapCodec<PlantFiberFromGrassModifier>> CODEC = Suppliers.memoize(() ->
+            RecordCodecBuilder.mapCodec(
                     inst -> codecStart(inst).and(
                             BuiltInRegistries.ITEM.byNameCodec()
             .fieldOf("item").forGetter(m -> m.item)
@@ -36,9 +37,8 @@ public class PlantFiberFromGrassModifier extends LootModifier {
         return generatedLoot;
     }
 
-    //TODO: Fix 1.20.5
     @Override
-    public Codec<? extends IGlobalLootModifier> codec() {
+    public MapCodec<? extends IGlobalLootModifier> codec() {
         return CODEC.get();
     }
 }

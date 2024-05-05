@@ -66,10 +66,9 @@ public class EnergyLightningRodItem extends Item implements IItemLightningCharge
         return InteractionResult.FAIL;
     }
 
-    //TODO: Fix 1.20.5
     @Override
-    public void appendHoverText(ItemStack stack, @Nullable Level worldIn, List<Component> tooltip, TooltipFlag flagIn){
-        addTooltip(stack, worldIn, tooltip, flagIn);
+    public void appendHoverText(ItemStack stack, Item.TooltipContext context, List<Component> tooltip, TooltipFlag flagIn){
+        addTooltip(stack, context, tooltip, flagIn);
     }
 
     @Override

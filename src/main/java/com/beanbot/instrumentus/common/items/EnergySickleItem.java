@@ -19,16 +19,15 @@ import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.energy.IEnergyStorage;
 import net.neoforged.neoforge.event.level.BlockEvent;
 
-import javax.annotation.Nullable;
 import java.util.List;
 
 public class EnergySickleItem extends SickleItem implements IItemLightningChargeable, IEnergyItem {
 
-    protected Tier material;
+    protected Tier tier;
 
-    public EnergySickleItem(Tier material) {
-        super(material ,new Item.Properties().stacksTo(1).fireResistant());
-        this.material = material;
+    public EnergySickleItem(Tier tier) {
+        super(tier);
+        this.tier = tier;
     }
 
     @Override
@@ -41,17 +40,17 @@ public class EnergySickleItem extends SickleItem implements IItemLightningCharge
         int radius = isLeaves ? 0 : 2;
         int height = isLeaves ? 0 : 2;
 
-        if(material == Tiers.WOOD || material == Tiers.STONE)
+        if(tier == Tiers.WOOD || tier == Tiers.STONE)
         {
             radius = 1;
             height = 1;
         }
-        if(material == Tiers.IRON || material == Tiers.GOLD || material == Tiers.DIAMOND)
+        if(tier == Tiers.IRON || tier == Tiers.GOLD || tier == Tiers.DIAMOND)
         {
             radius = 2;
             height = 2;
         }
-        if(material == Tiers.NETHERITE)
+        if(tier == Tiers.NETHERITE || tier == ModItemTiers.ENERGIZED)
         {
             radius = 3;
             height = 3;
@@ -123,10 +122,9 @@ public class EnergySickleItem extends SickleItem implements IItemLightningCharge
         return super.getDestroySpeed(stack, state);
     }
 
-    //TODO: Fix 1.20.5
     @Override
-    public void appendHoverText(ItemStack stack, @Nullable Level worldIn, List<Component> tooltip, TooltipFlag flagIn){
-        addTooltip(stack, worldIn, tooltip, flagIn);
+    public void appendHoverText(ItemStack stack, Item.TooltipContext context, List<Component> tooltip, TooltipFlag flagIn){
+        addTooltip(stack, context, tooltip, flagIn);
     }
 
     @Override

@@ -6,6 +6,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Tier;
 import net.minecraft.world.item.TooltipFlag;
@@ -20,14 +21,13 @@ import java.util.List;
 
 public class EnergyKnifeItem extends KnifeItem implements IItemLightningChargeable, IEnergyItem {
 
-    public EnergyKnifeItem(Tier tier, int attackDamageIn, float attackSpeedIn, Properties builderIn) {
-        super(tier, attackDamageIn, attackSpeedIn, builderIn);
+    public EnergyKnifeItem(Tier tier, int attackDamageIn, float attackSpeedIn) {
+        super(tier, attackDamageIn, attackSpeedIn);
     }
 
-    //TODO: Fix 1.20.5
     @Override
     public boolean mineBlock(ItemStack stack, Level worldIn, BlockState state, BlockPos pos, LivingEntity entityLiving){
-        if(!stack.hasTag()) return false;
+        if(!(stack.getItem() instanceof IEnergyItem)) return false;
         if(entityLiving instanceof Player){
             Player player = (Player) entityLiving;
             if(!player.isCreative()){
@@ -55,10 +55,9 @@ public class EnergyKnifeItem extends KnifeItem implements IItemLightningChargeab
         return super.getDestroySpeed(stack, state);
     }
 
-    //TODO: Fix 1.20.5
     @Override
-    public void appendHoverText(ItemStack stack, @Nullable Level worldIn, List<Component> tooltip, TooltipFlag flagIn){
-        addTooltip(stack, worldIn, tooltip, flagIn);
+    public void appendHoverText(ItemStack stack, Item.TooltipContext context, List<Component> tooltip, TooltipFlag flagIn){
+        addTooltip(stack, context, tooltip, flagIn);
     }
 
     @Override

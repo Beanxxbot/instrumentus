@@ -1,5 +1,6 @@
 package com.beanbot.instrumentus.common.items;
 
+import com.beanbot.instrumentus.common.Instrumentus;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
@@ -20,36 +21,40 @@ import net.neoforged.neoforge.common.ToolAction;
 import net.neoforged.neoforge.common.ToolActions;
 import net.neoforged.neoforge.event.level.BlockEvent;
 
-
 public class HammerItem extends DiggerItem {
 
-    protected Tier material;
+    protected Tier tier;
 
-    //TODO: Fix 1.20.5
-    public HammerItem(Tier material, float attackDamageIn, float attackSpeedIn, Item.Properties properties){
-        super(attackDamageIn, attackSpeedIn, material, BlockTags.MINEABLE_WITH_PICKAXE, properties);
-        this.material = material;
+    public HammerItem(Tier tier, float attackDamageIn, float attackSpeedIn){
+        super(tier, BlockTags.MINEABLE_WITH_PICKAXE, generateItemProperties(tier, attackDamageIn, attackSpeedIn));
+        this.tier = tier;
     }
+
+    private static Item.Properties generateItemProperties(Tier tier, float attackDamageIn, float attackSpeedIn) {
+        if (tier == Tiers.NETHERITE || tier == ModItemTiers.ENERGIZED) {
+            return new Item.Properties().attributes(HammerItem.createAttributes(tier, attackDamageIn, attackSpeedIn)).stacksTo(1).fireResistant();
+        }
+        return new Item.Properties().attributes(HammerItem.createAttributes(tier, attackDamageIn, attackSpeedIn)).stacksTo(1);
+    }
+
     @Override
     public boolean canPerformAction(ItemStack stack, ToolAction action){
         return ToolActions.DEFAULT_PICKAXE_ACTIONS.contains(action);
     }
 
     @Override
-    public boolean mineBlock(ItemStack stack, Level world, BlockState state, BlockPos pos, LivingEntity entity){
-        if(state.getBlock() == null || world.getBlockState(pos).getBlock() == Blocks.AIR)
+    public boolean mineBlock(ItemStack stack, Level world, BlockState state, BlockPos pos, LivingEntity entity) {
+        if (state.getBlock() == null || world.getBlockState(pos).getBlock() == Blocks.AIR)
             return false;
-
         boolean isStone;
         isStone = state.is(BlockTags.MINEABLE_WITH_PICKAXE);
         int r = isStone ? 0 : 2;
 
-        if(material == Tiers.WOOD || material == Tiers.STONE || material == Tiers.IRON || material == ModItemTiers.COPPER || material == Tiers.GOLD || material == Tiers.DIAMOND || material == Tiers.NETHERITE){
+        if(tier == Tiers.WOOD || tier == Tiers.STONE || tier == Tiers.IRON || tier == ModItemTiers.COPPER || tier == Tiers.GOLD || tier == Tiers.DIAMOND || tier == Tiers.NETHERITE || tier == ModItemTiers.ENERGIZED){
             r = 1;
         }
 
-        //TODO: Fix 1.20.5
-        stack.hurtAndBreak(1, entity, e -> e.broadcastBreakEvent(EquipmentSlot.MAINHAND));
+        stack.hurtAndBreak(1, entity, EquipmentSlot.MAINHAND);
 
         int numberTrimmed = 0;
 
@@ -68,7 +73,6 @@ public class HammerItem extends DiggerItem {
         BlockHitResult blockHitResult = new BlockHitResult(new Vec3(player.getX(), player.getY(), player.getZ()), getPlayerPOVHitResult(world, player, ClipContext.Fluid.NONE).getDirection(), blockPos, false);
         Direction blockFaceMined = blockHitResult.getDirection();
 
-        //TODO: Fix 1.20.5
         if(blockFaceMined == Direction.EAST || blockFaceMined == Direction.WEST/*look.x >= -1 && look.x <= -0.75 || look.x <= 1 && look.x >= 0.75*/) {
             for (int dz = -r; dz <= r; dz++) {
                 for (int dy = -r; dy <= r; dy++) {
@@ -76,7 +80,7 @@ public class HammerItem extends DiggerItem {
                         continue;
                     if (trimType.trimAtPos(world, blockPos.offset(0, dy, dz), entity, stack)) {
                         numberTrimmed++;
-                        stack.hurtAndBreak(1, entity, e -> e.broadcastBreakEvent(EquipmentSlot.MAINHAND));
+                        stack.hurtAndBreak(1, entity, EquipmentSlot.MAINHAND);
                     }
                 }
             }
@@ -87,7 +91,7 @@ public class HammerItem extends DiggerItem {
                         continue;
                     if (trimType.trimAtPos(world, blockPos.offset(dx, dy, 0), entity, stack)) {
                         numberTrimmed++;
-                        stack.hurtAndBreak(1, entity, e -> e.broadcastBreakEvent(EquipmentSlot.MAINHAND));
+                        stack.hurtAndBreak(1, entity, EquipmentSlot.MAINHAND);
                     }
                 }
             }
@@ -98,7 +102,7 @@ public class HammerItem extends DiggerItem {
                         continue;
                     if (trimType.trimAtPos(world, blockPos.offset(dx, 0, dz), entity, stack)) {
                         numberTrimmed++;
-                        stack.hurtAndBreak(1, entity, e -> e.broadcastBreakEvent(EquipmentSlot.MAINHAND));
+                        stack.hurtAndBreak(1, entity, EquipmentSlot.MAINHAND);
                     }
                 }
             }

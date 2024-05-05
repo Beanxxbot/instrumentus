@@ -17,13 +17,19 @@ import net.neoforged.neoforge.event.level.BlockEvent;
 
 public class SickleItem extends DiggerItem
 {
-    protected Tier material;
+    protected Tier tier;
 
-    //TODO: Fix 1.20.5
-    public SickleItem(Tier material, Item.Properties properties) {
-        super(0, -1.9f, material, BlockTags.LEAVES, properties);
-        this.material = material;
+    public SickleItem(Tier tier) {
+        super(tier, BlockTags.LEAVES, generateItemProperties(tier, 0, -1.9f));
+        this.tier = tier;
 
+    }
+
+    private static Item.Properties generateItemProperties(Tier tier, float attackDamageIn, float attackSpeedIn) {
+        if (tier == Tiers.NETHERITE || tier == ModItemTiers.ENERGIZED) {
+            return new Item.Properties().attributes(SickleItem.createAttributes(tier, attackDamageIn, attackSpeedIn)).stacksTo(1).fireResistant();
+        }
+        return new Item.Properties().attributes(SickleItem.createAttributes(tier, attackDamageIn, attackSpeedIn)).stacksTo(1);
     }
 
     @Override
@@ -37,23 +43,22 @@ public class SickleItem extends DiggerItem
         int radius = isLeaves ? 0 : 2;
         int height = isLeaves ? 0 : 2;
 
-        if(material == Tiers.WOOD || material == Tiers.STONE)
+        if(tier == Tiers.WOOD || tier == Tiers.STONE)
         {
             radius = 1;
             height = 1;
         }
-        if(material == Tiers.IRON || material == Tiers.GOLD || material == ModItemTiers.COPPER || material == Tiers.DIAMOND)
+        if(tier == Tiers.IRON || tier == Tiers.GOLD || tier == ModItemTiers.COPPER || tier == Tiers.DIAMOND)
         {
             radius = 2;
             height = 2;
         }
-        if(material == Tiers.NETHERITE)
+        if(tier == Tiers.NETHERITE || tier == ModItemTiers.ENERGIZED)
         {
             radius = 3;
             height = 3;
         }
-        //TODO: Fix 1.20.5
-        stack.hurtAndBreak(1, entity, e -> e.broadcastBreakEvent(EquipmentSlot.MAINHAND));
+        stack.hurtAndBreak(1, entity, EquipmentSlot.MAINHAND);
 
         int numberTrimmed = 0;
 
@@ -73,7 +78,6 @@ public class SickleItem extends DiggerItem
         return (numberTrimmed > 0 && isLeaves);
 
     }
-    //TODO: Fix 1.20.5
     public int trim(ItemStack stack, LivingEntity entity, Level world, BlockPos pos, int height, int radius, TrimType trimType, boolean cutCorners, int damagePercentChance)
     {
         int numberTrimmed = 0;
@@ -92,7 +96,7 @@ public class SickleItem extends DiggerItem
                         numberTrimmed++;
                         if(world.random.nextInt(100) < damagePercentChance)
                         {
-                            stack.hurtAndBreak(1, entity, e -> e.broadcastBreakEvent(EquipmentSlot.MAINHAND));
+                            stack.hurtAndBreak(1, entity, EquipmentSlot.MAINHAND);
                         }
                     }
                 }

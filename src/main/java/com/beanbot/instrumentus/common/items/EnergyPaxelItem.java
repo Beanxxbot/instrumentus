@@ -30,7 +30,7 @@ import java.util.List;
 
 public class EnergyPaxelItem extends PaxelItem implements IItemLightningChargeable, IEnergyItem {
     public EnergyPaxelItem(Tier material, int attackDamageIn, float attackSpeedIn) {
-        super(material, attackDamageIn, attackSpeedIn, new Item.Properties().stacksTo(1).fireResistant());
+        super(material, attackDamageIn, attackSpeedIn);
     }
 
     @Nonnull
@@ -99,10 +99,9 @@ public class EnergyPaxelItem extends PaxelItem implements IItemLightningChargeab
         return null;
     }
 
-    //TODO: Fix 1.20.5
     @Override
     public boolean mineBlock(ItemStack stack, Level worldIn, BlockState state, BlockPos pos, LivingEntity entityLiving){
-        if(!stack.hasTag()) return false;
+        if(!(stack.getItem() instanceof IEnergyItem)) return false;
         if(entityLiving instanceof Player){
             Player player = (Player) entityLiving;
             if(!player.isCreative()){
@@ -130,10 +129,9 @@ public class EnergyPaxelItem extends PaxelItem implements IItemLightningChargeab
         return super.getDestroySpeed(stack, state);
     }
 
-    //TODO: Fix 1.20.5
     @Override
-    public void appendHoverText(ItemStack stack, @Nullable Level worldIn, List<Component> tooltip, TooltipFlag flagIn){
-        addTooltip(stack, worldIn, tooltip, flagIn);
+    public void appendHoverText(ItemStack stack, Item.TooltipContext context, List<Component> tooltip, TooltipFlag flagIn){
+        addTooltip(stack, context, tooltip, flagIn);
     }
 
     @Override

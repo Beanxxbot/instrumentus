@@ -7,7 +7,7 @@
     "item": "instrumentus:diamond_sickle"
   },
   "result": {
-    "item": "instrumentus:netherite_sickle"
+    "id": "instrumentus:netherite_sickle"
   },
   "template": {
     "item": "minecraft:netherite_upgrade_smithing_template"

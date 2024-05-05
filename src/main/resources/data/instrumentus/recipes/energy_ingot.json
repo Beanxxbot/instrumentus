@@ -20,7 +20,7 @@
     }
   },
   "result": {
-    "item": "instrumentus:energy_ingot",
+    "id": "instrumentus:energy_ingot",
     "count": 2
   }
 }

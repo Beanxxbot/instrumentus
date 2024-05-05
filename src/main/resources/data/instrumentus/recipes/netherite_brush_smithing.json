@@ -7,7 +7,7 @@
     "item": "instrumentus:diamond_brush"
   },
   "result": {
-    "item": "instrumentus:netherite_brush"
+    "id": "instrumentus:netherite_brush"
   },
   "template": {
     "item": "minecraft:netherite_upgrade_smithing_template"

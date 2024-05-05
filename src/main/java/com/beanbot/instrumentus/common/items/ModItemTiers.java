@@ -6,15 +6,23 @@ import net.minecraft.world.item.Tier;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.neoforged.neoforge.common.SimpleTier;
 
-//TODO: Fix 1.20.5
 public class ModItemTiers {
     public static final Tier COPPER = new SimpleTier(
-            2,
+            BlockTags.INCORRECT_FOR_IRON_TOOL,
             750,
             5.0f,
             1.5f,
             14,
-            BlockTags.MINEABLE_WITH_PICKAXE,
             () -> Ingredient.of(Items.COPPER_INGOT)
+    );
+
+    public static final Tier ENERGIZED = new SimpleTier(
+            BlockTags.INCORRECT_FOR_NETHERITE_TOOL,
+            2031,
+            9.0F,
+            4.0F,
+            15,
+            () -> Ingredient.of(ModItems.ENERGIZED_INGOT.get())
+
     );
 }

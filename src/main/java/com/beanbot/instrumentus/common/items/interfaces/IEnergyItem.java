@@ -4,6 +4,7 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
@@ -57,7 +58,7 @@ public interface IEnergyItem {
         return energyStorage.getEnergyStored() != energyStorage.getMaxEnergyStored();
     }
 
-    default void addTooltip(ItemStack stack, Level level, List<Component> tooltip, TooltipFlag flagIn){
+    default void addTooltip(ItemStack stack, Item.TooltipContext context, List<Component> tooltip, TooltipFlag flagIn){
         if(Capabilities.EnergyStorage.ITEM == null) return;
         IEnergyStorage energyStorage = stack.getCapability(Capabilities.EnergyStorage.ITEM);
         if(energyStorage == null) return;

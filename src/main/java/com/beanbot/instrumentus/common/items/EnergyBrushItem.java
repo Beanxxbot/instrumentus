@@ -54,7 +54,7 @@ public class EnergyBrushItem extends BrushItem implements IItemLightningChargeab
     @Override
     public void onUseTick(Level pLevel, LivingEntity pLivingEntity, ItemStack pStack, int pRemainingUseDuration) {
         if (pRemainingUseDuration >= 0 && pLivingEntity instanceof Player player) {
-            HitResult hitresult = this.calculateHitResult(pLivingEntity);
+            HitResult hitresult = this.calculateHitResult(player);
             if (hitresult instanceof BlockHitResult blockhitresult) {
                 if (hitresult.getType() == HitResult.Type.BLOCK) {
                     int i = this.getUseDuration(pStack) - pRemainingUseDuration + 1;
@@ -100,11 +100,9 @@ public class EnergyBrushItem extends BrushItem implements IItemLightningChargeab
         }
     }
 
-    //TODO: 1.20.5
-    private HitResult calculateHitResult(LivingEntity pEntity) {
-        return ProjectileUtil.getHitResultOnViewVector(pEntity, (p_281111_) -> {
-            return !p_281111_.isSpectator() && p_281111_.isPickable();
-        }, Math.sqrt(ServerGamePacketListenerImpl.MAX_INTERACTION_DISTANCE) - 1.0D);
+    private HitResult calculateHitResult(Player pPlayer) {
+        return ProjectileUtil.getHitResultOnViewVector(pPlayer,
+                (p_281111_) -> p_281111_.isSpectator() && p_281111_.isPickable(), pPlayer.blockInteractionRange());
     }
 
     @Override
@@ -112,10 +110,9 @@ public class EnergyBrushItem extends BrushItem implements IItemLightningChargeab
         return 100;
     }
 
-    //TODO: 1.20.5
     @Override
-    public void appendHoverText(ItemStack stack, @Nullable Level worldIn, List<Component> tooltip, TooltipFlag flagIn){
-        addTooltip(stack, worldIn, tooltip, flagIn);
+    public void appendHoverText(ItemStack stack, Item.TooltipContext context, List<Component> tooltip, TooltipFlag flagIn){
+        addTooltip(stack, context, tooltip, flagIn);
     }
 
     @Override

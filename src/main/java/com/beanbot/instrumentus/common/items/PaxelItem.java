@@ -32,10 +32,16 @@ public class PaxelItem extends DiggerItem {
             SHOVEL_DIG, SHOVEL_FLATTEN,
             PICKAXE_DIG);
 
-    //TODO: Fix 1.20.5
-    public PaxelItem(Tier material, float attackDamageIn, float attackSpeedIn, Item.Properties properties) {
-        super(attackDamageIn, attackSpeedIn, material, GeneratorBlockTags.MINEABLE_WITH_PAXEL, properties);
-        this.material = material;
+    public PaxelItem(Tier tier, float attackDamageIn, float attackSpeedIn) {
+        super(tier, GeneratorBlockTags.MINEABLE_WITH_PAXEL, generateItemProperties(tier, attackDamageIn, attackSpeedIn));
+        this.material = tier;
+    }
+
+    private static Item.Properties generateItemProperties(Tier tier, float attackDamageIn, float attackSpeedIn) {
+        if (tier == Tiers.NETHERITE || tier == ModItemTiers.ENERGIZED) {
+            return new Item.Properties().attributes(AxeItem.createAttributes(tier, attackDamageIn, attackSpeedIn)).stacksTo(1).fireResistant();
+        }
+        return new Item.Properties().attributes(AxeItem.createAttributes(tier, attackDamageIn, attackSpeedIn)).stacksTo(1);
     }
 
     @Override
@@ -48,7 +54,6 @@ public class PaxelItem extends DiggerItem {
         return super.getDestroySpeed(stack, state) == 1 ? 1 : material.getSpeed();
     }
 
-    //TODO: Fix 1.20.5
     @Nonnull
     @Override
     public InteractionResult useOn(UseOnContext context) {
@@ -83,7 +88,7 @@ public class PaxelItem extends DiggerItem {
             }
             world.setBlock(blockpos, resultToSet, Block.UPDATE_ALL_IMMEDIATE);
             if (player != null) {
-                stack.hurtAndBreak(1, player, onBroken -> onBroken.broadcastBreakEvent(context.getHand()));
+                stack.hurtAndBreak(1, player, context.getItemInHand().getEquipmentSlot());
             }
         }
         return InteractionResult.sidedSuccess(world.isClientSide);

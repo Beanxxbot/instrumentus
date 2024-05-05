@@ -7,7 +7,7 @@
     "item": "instrumentus:diamond_hammer"
   },
   "result": {
-    "item": "instrumentus:netherite_hammer"
+    "id": "instrumentus:netherite_hammer"
   },
   "template": {
     "item": "minecraft:netherite_upgrade_smithing_template"
