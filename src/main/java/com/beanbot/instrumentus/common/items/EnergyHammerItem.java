@@ -163,7 +163,7 @@ public class EnergyHammerItem extends HammerItem implements IItemLightningCharge
                 case TRIM_ROCK:default:
                     if(state.is(BlockTags.MINEABLE_WITH_PICKAXE) && state.canHarvestBlock(world, pos, (Player)entity)){
                         state.getBlock().playerDestroy(world, (Player) entity, pos, state,  blockEntity, item);
-                        state.getBlock().popExperience((ServerLevel) world, pos, event.getExpToDrop());
+                        state.getBlock().popExperience((ServerLevel) world, pos, event.getState().getExpDrop(world, pos, blockEntity, entity, item));
                         world.removeBlock(pos, false);
                         return true;
                     }

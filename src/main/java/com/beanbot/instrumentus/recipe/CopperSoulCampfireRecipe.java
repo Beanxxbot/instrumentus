@@ -20,7 +20,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.neoforged.neoforge.network.codec.NeoForgeStreamCodecs;
 
-public class CopperSoulCampfireRecipe implements Recipe<Container> {
+public class CopperSoulCampfireRecipe implements Recipe<SingleRecipeInput> {
     private final ResourceLocation id;
     protected final Ingredient ingredient;
     protected final ItemStack result;
@@ -33,8 +33,8 @@ public class CopperSoulCampfireRecipe implements Recipe<Container> {
         this.cookingTime = cookingTime;
     }
 
-    public boolean matches(Container pInv, Level pLevel) {
-        return this.ingredient.test(pInv.getItem(0));
+    public boolean matches(SingleRecipeInput pInput, Level pLevel) {
+        return this.ingredient.test(pInput.item());
     }
 
     public ResourceLocation getId() {
@@ -42,7 +42,7 @@ public class CopperSoulCampfireRecipe implements Recipe<Container> {
     }
 
     @Override
-    public ItemStack assemble(Container container, HolderLookup.Provider holderProvider) {
+    public ItemStack assemble(SingleRecipeInput pInput, HolderLookup.Provider holderProvider) {
         return this.result.copy();
     }
 
@@ -91,7 +91,7 @@ public class CopperSoulCampfireRecipe implements Recipe<Container> {
 
     public static class Serializer implements RecipeSerializer<CopperSoulCampfireRecipe> {
 
-        private static final ResourceLocation NAME = new ResourceLocation(Instrumentus.MODID, "copper_soul_campfire_cooking");
+        private static final net.minecraft.resources.ResourceLocation NAME = ResourceLocation.fromNamespaceAndPath(Instrumentus.MODID, "copper_soul_campfire_cooking");
 
         private static final MapCodec<CopperSoulCampfireRecipe> CODEC = RecordCodecBuilder.mapCodec(
                 map -> map.group(

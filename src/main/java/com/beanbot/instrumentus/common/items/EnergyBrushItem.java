@@ -57,7 +57,7 @@ public class EnergyBrushItem extends BrushItem implements IItemLightningChargeab
             HitResult hitresult = this.calculateHitResult(player);
             if (hitresult instanceof BlockHitResult blockhitresult) {
                 if (hitresult.getType() == HitResult.Type.BLOCK) {
-                    int i = this.getUseDuration(pStack) - pRemainingUseDuration + 1;
+                    int i = this.getUseDuration(pStack, pLivingEntity) - pRemainingUseDuration + 1;
                     boolean flag = i % 10 == 5;
                     if (flag) {
                         BlockPos blockpos = blockhitresult.getBlockPos();
@@ -106,7 +106,7 @@ public class EnergyBrushItem extends BrushItem implements IItemLightningChargeab
     }
 
     @Override
-    public int getUseDuration(ItemStack pStack) {
+    public int getUseDuration(ItemStack pStack, LivingEntity pLivingEntity) {
         return 100;
     }
 

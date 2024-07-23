@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " I ",
+    " S ",
+    " S "
+  ],
+  "key": {
+    "S": {
+      "item": "instrumentus:carbon_rod"
+    },
+    "I": {
+      "item": "instrumentus:energy_ingot"
+    }
+  },
+  "result": {
+    "id": "instrumentus:energy_shovel"
+  }
+}

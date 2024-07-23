@@ -18,8 +18,8 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.gameevent.GameEvent;
 import net.neoforged.neoforge.capabilities.Capabilities;
-import net.neoforged.neoforge.common.ToolAction;
-import net.neoforged.neoforge.common.ToolActions;
+import net.neoforged.neoforge.common.ItemAbility;
+import net.neoforged.neoforge.common.ItemAbilities;
 import net.neoforged.neoforge.energy.IEnergyStorage;
 
 import javax.annotation.Nullable;
@@ -58,18 +58,18 @@ public class EnergyAxeItem extends DiggerItem implements IItemLightningChargeabl
     }
 
     private Optional<BlockState> evaluateNewBlockState(Level level, BlockPos blockPos, @Nullable Player player, BlockState state, UseOnContext context) {
-        Optional<BlockState> optional = Optional.ofNullable(state.getToolModifiedState(context, ToolActions.AXE_STRIP, false));
+        Optional<BlockState> optional = Optional.ofNullable(state.getToolModifiedState(context, ItemAbilities.AXE_STRIP, false));
         if (optional.isPresent()) {
             level.playSound(player, blockPos, SoundEvents.AXE_STRIP, SoundSource.BLOCKS, 1.0F, 1.0F);
             return optional;
         } else {
-            Optional<BlockState> optional1 = Optional.ofNullable(state.getToolModifiedState(context, ToolActions.AXE_SCRAPE, false));
+            Optional<BlockState> optional1 = Optional.ofNullable(state.getToolModifiedState(context, ItemAbilities.AXE_SCRAPE, false));
             if (optional1.isPresent()) {
                 level.playSound(player, blockPos, SoundEvents.AXE_SCRAPE, SoundSource.BLOCKS, 1.0F, 1.0F);
                 level.levelEvent(player, 3005, blockPos, 0);
                 return optional1;
             } else {
-                Optional<BlockState> optional2 = Optional.ofNullable(state.getToolModifiedState(context, ToolActions.AXE_WAX_OFF, false));
+                Optional<BlockState> optional2 = Optional.ofNullable(state.getToolModifiedState(context, ItemAbilities.AXE_WAX_OFF, false));
                 if (optional2.isPresent()) {
                     level.playSound(player, blockPos, SoundEvents.AXE_WAX_OFF, SoundSource.BLOCKS, 1.0F, 1.0F);
                     level.levelEvent(player, 3004, blockPos, 0);
@@ -82,8 +82,8 @@ public class EnergyAxeItem extends DiggerItem implements IItemLightningChargeabl
     }
 
     @Override
-    public boolean canPerformAction(ItemStack stack, ToolAction toolAction) {
-        return ToolActions.DEFAULT_AXE_ACTIONS.contains(toolAction);
+    public boolean canPerformAction(ItemStack stack, ItemAbility toolAction) {
+        return ItemAbilities.DEFAULT_AXE_ACTIONS.contains(toolAction);
     }
 
     @Override

@@ -17,8 +17,8 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.common.NeoForge;
-import net.neoforged.neoforge.common.ToolAction;
-import net.neoforged.neoforge.common.ToolActions;
+import net.neoforged.neoforge.common.ItemAbility;
+import net.neoforged.neoforge.common.ItemAbilities;
 import net.neoforged.neoforge.event.level.BlockEvent;
 
 public class HammerItem extends DiggerItem {
@@ -38,8 +38,8 @@ public class HammerItem extends DiggerItem {
     }
 
     @Override
-    public boolean canPerformAction(ItemStack stack, ToolAction action){
-        return ToolActions.DEFAULT_PICKAXE_ACTIONS.contains(action);
+    public boolean canPerformAction(ItemStack stack, ItemAbility action){
+        return ItemAbilities.DEFAULT_PICKAXE_ACTIONS.contains(action);
     }
 
     @Override
@@ -125,7 +125,7 @@ public class HammerItem extends DiggerItem {
                 case TRIM_ROCK:default:
                     if(state.is(BlockTags.MINEABLE_WITH_PICKAXE) && state.canHarvestBlock(world, pos, (Player)entity)){
                         state.getBlock().playerDestroy(world, (Player) entity, pos, state,  blockEntity, item);
-                        state.getBlock().popExperience((ServerLevel) world, pos, event.getExpToDrop());
+                        state.getBlock().popExperience((ServerLevel) world, pos, event.getState().getExpDrop(world, pos, blockEntity, entity, item));
                         world.removeBlock(pos, false);
                         return true;
                     }

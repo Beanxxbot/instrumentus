@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "CCC",
+    "CSC",
+    "CCC"
+  ],
+  "key": {
+    "C": {
+      "item": "minecraft:coal"
+    },
+    "S": {
+      "item": "minecraft:stick"
+    }
+  },
+  "result": {
+    "id": "instrumentus:carbon_rod",
+    "count": 1
+  }
+}

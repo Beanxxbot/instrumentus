@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "AVP",
+    " S ",
+    " S "
+  ],
+  "key": {
+    "S": {
+      "item": "instrumentus:carbon_rod"
+    },
+    "A": {
+      "item": "instrumentus:energy_axe"
+    },
+    "V": {
+      "item": "instrumentus:energy_shovel"
+    },
+    "P": {
+      "item": "instrumentus:energy_pickaxe"
+    }
+  },
+  "result": {
+    "id": "instrumentus:energy_paxel"
+  }
+}

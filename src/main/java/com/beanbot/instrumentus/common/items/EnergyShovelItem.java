@@ -18,8 +18,8 @@ import net.minecraft.world.level.block.CampfireBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.gameevent.GameEvent;
 import net.neoforged.neoforge.capabilities.Capabilities;
-import net.neoforged.neoforge.common.ToolAction;
-import net.neoforged.neoforge.common.ToolActions;
+import net.neoforged.neoforge.common.ItemAbility;
+import net.neoforged.neoforge.common.ItemAbilities;
 import net.neoforged.neoforge.energy.IEnergyStorage;
 
 import javax.annotation.Nullable;
@@ -40,7 +40,7 @@ public class EnergyShovelItem extends DiggerItem implements IItemLightningCharge
             return InteractionResult.PASS;
         } else {
             Player playerentity = context.getPlayer();
-            BlockState blockstate1 = blockstate.getToolModifiedState(context, ToolActions.SHOVEL_FLATTEN, false);
+            BlockState blockstate1 = blockstate.getToolModifiedState(context, ItemAbilities.SHOVEL_FLATTEN, false);
             BlockState blockstate2 = null;
             ItemStack stack = context.getItemInHand();
             if (blockstate1 != null && world.isEmptyBlock(blockpos.above())) {
@@ -74,8 +74,8 @@ public class EnergyShovelItem extends DiggerItem implements IItemLightningCharge
     }
 
     @Override
-    public boolean canPerformAction(ItemStack stack, ToolAction toolAction) {
-        return ToolActions.DEFAULT_SHOVEL_ACTIONS.contains(toolAction);
+    public boolean canPerformAction(ItemStack stack, ItemAbility toolAction) {
+        return ItemAbilities.DEFAULT_SHOVEL_ACTIONS.contains(toolAction);
     }
 
     @Override

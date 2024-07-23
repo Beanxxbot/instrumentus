@@ -1,5 +1,6 @@
 package com.beanbot.instrumentus.common.items;
 
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.*;
 
 public class ModBrushItem extends BrushItem {
@@ -11,7 +12,7 @@ public class ModBrushItem extends BrushItem {
     }
 
     @Override
-    public int getUseDuration(ItemStack pStack) {
+    public int getUseDuration(ItemStack pStack, LivingEntity pEntity) {
         if (material == Tiers.WOOD || material == Tiers.STONE) {
             return 300;
         } else if (material == Tiers.IRON) {

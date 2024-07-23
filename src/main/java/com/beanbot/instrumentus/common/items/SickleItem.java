@@ -123,7 +123,7 @@ public class SickleItem extends DiggerItem
                     if(state.is(BlockTags.LEAVES))
                     {
                         state.getBlock().playerDestroy(world, (Player) entity, pos, state,  blockEntity, item);
-                        state.getBlock().popExperience((ServerLevel) world, pos, event.getExpToDrop());
+                        state.getBlock().popExperience((ServerLevel) world, pos, event.getState().getExpDrop(world, pos, blockEntity, entity, item));
                         world.removeBlock(pos, false);
                         return true;
                     }
@@ -133,7 +133,7 @@ public class SickleItem extends DiggerItem
                 if(state.is(Blocks.TALL_GRASS) || state.is(BlockTags.FLOWERS) || state.is(Blocks.SHORT_GRASS))
                 {
                     state.getBlock().playerDestroy(world, (Player) entity, pos, state,  blockEntity, item);
-                    state.getBlock().popExperience((ServerLevel) world, pos, event.getExpToDrop());
+                    state.getBlock().popExperience((ServerLevel) world, pos, event.getState().getExpDrop(world, pos, blockEntity, entity, item));
                     world.removeBlock(pos, false);
                     return true;
                 }

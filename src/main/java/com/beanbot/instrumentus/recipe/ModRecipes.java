@@ -14,7 +14,7 @@ public class ModRecipes {
     public static final DeferredRegister<RecipeType<?>> RECIPE_TYPES =
             DeferredRegister.create(Registries.RECIPE_TYPE, Instrumentus.MODID);
     public static final Supplier<RecipeType<CopperSoulCampfireRecipe>> COPPER_SOUL_CAMPFIRE_COOKING_TYPE =
-            RECIPE_TYPES.register("copper_soul_campfire_cooking_recipe", () -> RecipeType.simple(new ResourceLocation(Instrumentus.MODID, "copper_soul_campfire_cooking_recipe")));
+            RECIPE_TYPES.register("copper_soul_campfire_cooking_recipe", () -> RecipeType.simple(ResourceLocation.fromNamespaceAndPath(Instrumentus.MODID, "copper_soul_campfire_cooking_recipe")));
 
     public static final DeferredRegister<RecipeSerializer<?>> RECIPE_SERIALIZERS =
             DeferredRegister.create(Registries.RECIPE_SERIALIZER, Instrumentus.MODID);

@@ -13,9 +13,9 @@ import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockState;
-import net.neoforged.neoforge.common.ToolAction;
-import net.neoforged.neoforge.common.ToolActions;
-import static net.neoforged.neoforge.common.ToolActions.*;
+import net.neoforged.neoforge.common.ItemAbility;
+import net.neoforged.neoforge.common.ItemAbilities;
+import static net.neoforged.neoforge.common.ItemAbilities.*;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -23,11 +23,11 @@ import java.util.Set;
 
 public class PaxelItem extends DiggerItem {
 
-    private static final ToolAction PAXEL_DIG = ToolAction.get("paxel_dig");
+    private static final ItemAbility PAXEL_DIG = ItemAbility.get("paxel_dig");
 
     protected Tier material;
 
-    public static final Set<ToolAction> DEFAULT_PAXEL_ACTIONS = Set.of(
+    public static final Set<ItemAbility> DEFAULT_PAXEL_ACTIONS = Set.of(
             AXE_DIG, AXE_STRIP, AXE_SCRAPE, AXE_WAX_OFF,
             SHOVEL_DIG, SHOVEL_FLATTEN,
             PICKAXE_DIG);
@@ -45,7 +45,7 @@ public class PaxelItem extends DiggerItem {
     }
 
     @Override
-    public boolean canPerformAction(ItemStack stack, ToolAction toolAction){
+    public boolean canPerformAction(ItemStack stack, ItemAbility toolAction){
         return DEFAULT_PAXEL_ACTIONS.contains(toolAction) || toolAction == PAXEL_DIG;
     }
 
@@ -66,7 +66,7 @@ public class PaxelItem extends DiggerItem {
             if (context.getClickedFace() == Direction.DOWN){
                 return InteractionResult.PASS;
             }
-            BlockState foundResult = blockstate.getToolModifiedState(context, ToolActions.SHOVEL_FLATTEN, false);
+            BlockState foundResult = blockstate.getToolModifiedState(context, ItemAbilities.SHOVEL_FLATTEN, false);
             if (foundResult != null && world.isEmptyBlock(blockpos.above())){
                 world.playSound(player, blockpos, SoundEvents.SHOVEL_FLATTEN, SoundSource.BLOCKS, 1.0F, 1.0F);
                 resultToSet = foundResult;
@@ -99,17 +99,17 @@ public class PaxelItem extends DiggerItem {
         Level world = context.getLevel();
         BlockPos blockpos = context.getClickedPos();
         Player player = context.getPlayer();
-        BlockState resultToSet = blockstate.getToolModifiedState(context, ToolActions.AXE_STRIP, false);
+        BlockState resultToSet = blockstate.getToolModifiedState(context, ItemAbilities.AXE_STRIP, false);
         if (resultToSet != null){
             world.playSound(player, blockpos, SoundEvents.AXE_STRIP, SoundSource.BLOCKS, 1.0f, 1.0f);
             return resultToSet;
         }
-        resultToSet = blockstate.getToolModifiedState(context, ToolActions.AXE_SCRAPE, false);
+        resultToSet = blockstate.getToolModifiedState(context, ItemAbilities.AXE_SCRAPE, false);
         if (resultToSet != null){
             world.playSound(player, blockpos, SoundEvents.AXE_SCRAPE, SoundSource.BLOCKS, 1.0f, 1.0f);
             return resultToSet;
         }
-        resultToSet = blockstate.getToolModifiedState(context, ToolActions.AXE_WAX_OFF, false);
+        resultToSet = blockstate.getToolModifiedState(context, ItemAbilities.AXE_WAX_OFF, false);
         if (resultToSet != null){
             world.playSound(player, blockpos, SoundEvents.AXE_WAX_OFF, SoundSource.BLOCKS, 1.0f, 1.0f);
             return resultToSet;

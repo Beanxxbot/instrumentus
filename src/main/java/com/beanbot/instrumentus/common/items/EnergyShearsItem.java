@@ -15,6 +15,7 @@ import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.gameevent.GameEvent;
 import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.common.IShearable;
 import net.neoforged.neoforge.energy.IEnergyStorage;
@@ -37,14 +38,10 @@ public class EnergyShearsItem extends ModShearsItem implements IItemLightningCha
                 if(!(energyStorage.getEnergyStored() > 0)) return InteractionResult.PASS;
             IShearable target = (IShearable) entity;
             BlockPos pos = BlockPos.containing(entity.position());
-            if (target.isShearable(stack, entity.level(), pos)) {
-                java.util.List<ItemStack> drops = target.onSheared(playerIn, stack, entity.level(), pos,
-                        net.minecraft.world.item.enchantment.EnchantmentHelper.getItemEnchantmentLevel(Enchantments.FORTUNE, stack));
-                java.util.Random rand = new java.util.Random();
-                drops.forEach(d -> {
-                    net.minecraft.world.entity.item.ItemEntity ent = entity.spawnAtLocation(d, 1.0F);
-                    ent.setDeltaMovement(ent.getDeltaMovement().add((double) ((rand.nextFloat() - rand.nextFloat()) * 0.1F), (double) (rand.nextFloat() * 0.05F), (double) ((rand.nextFloat() - rand.nextFloat()) * 0.1F)));
-                });
+            if (target.isShearable(playerIn, stack, entity.level(), pos)) {
+                target.onSheared(playerIn, stack, entity.level(), pos)
+                        .forEach(drop -> target.spawnShearedDrop(entity.level(), pos, drop));
+                entity.gameEvent(GameEvent.SHEAR, playerIn);
                 if (!(energyStorage == null)) {
                     energyStorage.extractEnergy(getMaxTransferRate() - 24, false);
                 }

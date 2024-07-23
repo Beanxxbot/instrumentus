@@ -1,0 +1,26 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "QEQ",
+    "DGD",
+    "QEQ"
+  ],
+  "key": {
+    "Q": {
+      "item": "minecraft:quartz"
+    },
+    "G": {
+      "item": "minecraft:gold_ingot"
+    },
+    "E": {
+      "item": "minecraft:emerald"
+    },
+    "D": {
+      "item": "minecraft:diamond"
+    }
+  },
+  "result": {
+    "id": "instrumentus:energy_ingot",
+    "count": 2
+  }
+}

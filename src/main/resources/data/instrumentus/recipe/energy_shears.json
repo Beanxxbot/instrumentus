@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " #",
+    "# "
+  ],
+  "key": {
+    "#": {
+      "item": "instrumentus:energy_ingot"
+    }
+  },
+  "result": {
+    "id": "instrumentus:energy_shears"
+  }
+}

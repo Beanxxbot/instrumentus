@@ -20,7 +20,7 @@ import net.minecraft.world.level.block.CampfireBlock;
 import net.minecraft.world.level.block.LevelEvent;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.capabilities.Capabilities;
-import net.neoforged.neoforge.common.ToolActions;
+import net.neoforged.neoforge.common.ItemAbilities;
 import net.neoforged.neoforge.energy.IEnergyStorage;
 import org.jetbrains.annotations.NotNull;
 
@@ -45,7 +45,7 @@ public class EnergyPaxelItem extends PaxelItem implements IItemLightningChargeab
             if (context.getClickedFace() == Direction.DOWN){
                 return InteractionResult.PASS;
             }
-            BlockState foundResult = blockstate.getToolModifiedState(context, ToolActions.SHOVEL_FLATTEN, false);
+            BlockState foundResult = blockstate.getToolModifiedState(context, ItemAbilities.SHOVEL_FLATTEN, false);
             if (foundResult != null && world.isEmptyBlock(blockpos.above())){
                 world.playSound(player, blockpos, SoundEvents.SHOVEL_FLATTEN, SoundSource.BLOCKS, 1.0F, 1.0F);
                 resultToSet = foundResult;
@@ -81,17 +81,17 @@ public class EnergyPaxelItem extends PaxelItem implements IItemLightningChargeab
         Level world = context.getLevel();
         BlockPos blockpos = context.getClickedPos();
         Player player = context.getPlayer();
-        BlockState resultToSet = blockstate.getToolModifiedState(context, ToolActions.AXE_STRIP, false);
+        BlockState resultToSet = blockstate.getToolModifiedState(context, ItemAbilities.AXE_STRIP, false);
         if (resultToSet != null){
             world.playSound(player, blockpos, SoundEvents.AXE_STRIP, SoundSource.BLOCKS, 1.0f, 1.0f);
             return resultToSet;
         }
-        resultToSet = blockstate.getToolModifiedState(context, ToolActions.AXE_SCRAPE, false);
+        resultToSet = blockstate.getToolModifiedState(context, ItemAbilities.AXE_SCRAPE, false);
         if (resultToSet != null){
             world.playSound(player, blockpos, SoundEvents.AXE_SCRAPE, SoundSource.BLOCKS, 1.0f, 1.0f);
             return resultToSet;
         }
-        resultToSet = blockstate.getToolModifiedState(context, ToolActions.AXE_WAX_OFF, false);
+        resultToSet = blockstate.getToolModifiedState(context, ItemAbilities.AXE_WAX_OFF, false);
         if (resultToSet != null){
             world.playSound(player, blockpos, SoundEvents.AXE_WAX_OFF, SoundSource.BLOCKS, 1.0f, 1.0f);
             return resultToSet;
