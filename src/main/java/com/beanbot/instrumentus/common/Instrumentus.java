@@ -49,34 +49,29 @@ public class Instrumentus {
     {
         ModCreativeModeTab.register(instrumentusEventBus);
 
-        MOD_CONTAINER.registerConfig(ModConfig.Type.SERVER, Config.SERVER, "instrumentus-server.toml");
-        MOD_CONTAINER.registerConfig(ModConfig.Type.CLIENT, Config.CLIENT, "instrumentus-client.toml");
-
+        Config.register(MOD_CONTAINER);
 
         NeoForge.EVENT_BUS.register(new EntityStruckByLightningEventHook());
 
         LOGGER.debug("Yo Yo Yo It's Ya Boi, Instrumentus but on NeoForge");
         ModParticles.PARTICLE_TYPES.register(instrumentusEventBus);
 
-        Config.loadConfig(Config.CLIENT, FMLPaths.CONFIGDIR.get().resolve("instrumentus-client.toml").toString());
-        Config.loadConfig(Config.SERVER, FMLPaths.CONFIGDIR.get().resolve("instrumentus-server.toml").toString());
-
-        if (ItemConfig.enable_shears.get())
+//        if (Config.SHEARS.get())
             ModItems.SHEARS.register(instrumentusEventBus);
-        if (ItemConfig.enable_sickles.get())
+//        if (Config.SICKLES.get())
             ModItems.SICKLES.register(instrumentusEventBus);
-        if (ItemConfig.enable_paxels.get())
+//        if (Config.PAXELS.get())
             ModItems.PAXELS.register(instrumentusEventBus);
-        if (ItemConfig.enable_hammers.get())
+//        if (Config.HAMMERS.get())
             ModItems.HAMMERS.register(instrumentusEventBus);
-        if (ItemConfig.enable_energized.get()) {
+//        if (Config.ENERGIZED.get()) {
             ModItems.ENERGIZED.register(instrumentusEventBus);
             ModBlocks.ENERGIZED.register(instrumentusEventBus);
-        }
-        if (ItemConfig.enable_util.get()) {
+//        }
+//        if (Config.SOULCOPPER.get()) {
             ModItems.UTILITIES.register(instrumentusEventBus);
             ModBlocks.UTILITIES.register(instrumentusEventBus);
-        }
+//        }
         ModItems.COPPER.register(instrumentusEventBus);
         ModItems.BRUSHES.register(instrumentusEventBus);
 
