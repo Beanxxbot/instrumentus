@@ -13,6 +13,7 @@ public class Config {
     private static final ModConfigSpec.Builder SERVER_BUILDER = new ModConfigSpec.Builder();
     private static final ModConfigSpec.Builder CLIENT_BUILDER = new ModConfigSpec.Builder();
     private static final ModConfigSpec.Builder COMMON_BUILDER = new ModConfigSpec.Builder();
+    private static final ModConfigSpec.Builder STARTUP_BUILDER = new ModConfigSpec.Builder();
 
     public static final String CATEGORY_TOOLS = "tools";
     public static ModConfigSpec.BooleanValue HAMMERS;
@@ -22,11 +23,14 @@ public class Config {
     public static ModConfigSpec.BooleanValue SOULCOPPER;
     public static ModConfigSpec.BooleanValue ENERGIZED;
     public static ModConfigSpec.BooleanValue KNIVES;
+    public static ModConfigSpec.BooleanValue COPPER_TOOLS;
+    public static ModConfigSpec.BooleanValue BRUSHES;
 
     public static void register(ModContainer container){
-        registerServerConfig(container);
-        registerClientConfig(container);
-        registerCommonConfig(container);
+//        registerServerConfig(container);
+//        registerClientConfig(container);
+//        registerCommonConfig(container);
+        registerStartupConfig(container);
     }
 
     private static void registerServerConfig(ModContainer container){
@@ -38,35 +42,43 @@ public class Config {
     }
 
     private static void registerCommonConfig(ModContainer container){
+
+    }
+
+    private static void registerStartupConfig(ModContainer container){
         toolsConfig();
-        container.registerConfig(ModConfig.Type.COMMON, COMMON_BUILDER.build());
+        container.registerConfig(ModConfig.Type.STARTUP, STARTUP_BUILDER.build(), "instrumentus-startup.toml");
     }
 
     private static void toolsConfig() {
-        COMMON_BUILDER.comment("Enable/Disable the Various Tools included in the Mod").push(CATEGORY_TOOLS);
-        HAMMERS = COMMON_BUILDER.comment("Hammers mine in a 3x3 radius, made of every single tool material")
+        STARTUP_BUILDER.comment("Enable/Disable the Various Tools included in the Mod").push(CATEGORY_TOOLS);
+        HAMMERS = STARTUP_BUILDER.comment("Hammers mine in a 3x3 radius, made of every single tool material")
                 .define("enable_hammers", true);
-        COMMON_BUILDER.comment("Sickles mass harvest leaf and tall-grass blocks, their range increases the higher the tool level")
+
+        SICKLES = STARTUP_BUILDER.comment("Sickles mass harvest leaf and tall-grass blocks, their range increases the higher the tool level")
                 .define("enable_sickles", true);
 
-        COMMON_BUILDER.comment("Material variants for iron shears (Wood-Netherite)")
+        SHEARS = STARTUP_BUILDER.comment("Material variants for iron shears (Wood-Netherite)")
                 .define("enable_shears", true);
 
-        COMMON_BUILDER.comment("Armor with special set-bonus abilities")
-                .define("enable_armor", true);
-
-        COMMON_BUILDER.comment("The original item in the mod! Paxels are a tool able to mine all blocks that an Axe, Pickaxe and Shovel Can")
+        PAXELS = STARTUP_BUILDER.comment("The original item in the mod! Paxels are a tool able to mine all blocks that an Axe, Pickaxe and Shovel Can")
                 .define("enable_paxels", true);
 
-        COMMON_BUILDER.comment("Utility items currently present in instrumentus is the Soul-Infused Pickaxe, which places light blocks on right click")
-                .define("enable_util", true);
+        SOULCOPPER = STARTUP_BUILDER.comment("Soulcopper items currently present in instrumentus is the Soul-Infused Pickaxe, which places light blocks on right click")
+                .define("enable_soulcopper", true);
 
-        COMMON_BUILDER.comment("RF-Powered tools made of diamonds, emeralds and redstone. This will also disable carbon rods.")
+        ENERGIZED = STARTUP_BUILDER.comment("RF-Powered tools made of diamonds, emeralds and redstone. This will also disable carbon rods.")
                 .define("enable_energized", true);
 
-        COMMON_BUILDER.comment("Knives harvest plant fiber from tall grass, which can be used to make string. Disables Knives as well as plant fiber.")
-                .define("instrumentus.enable_knives", true);
+        KNIVES = STARTUP_BUILDER.comment("Knives harvest plant fiber from tall grass, which can be used to make string. Disables Knives as well as plant fiber.")
+                .define("enable_knives", true);
 
-        COMMON_BUILDER.pop();
+        COPPER_TOOLS = STARTUP_BUILDER.comment("Copper Tools that are slower than iron tools, but have three times the durability")
+                .define("enable_copper", true);
+
+        BRUSHES = STARTUP_BUILDER.comment("Brushes made of every tool material, including Instrumentus ones - their speed stays the same, however they have different durabilities")
+                .define("enable_brushes", true);
+
+        STARTUP_BUILDER.pop();
     }
 }

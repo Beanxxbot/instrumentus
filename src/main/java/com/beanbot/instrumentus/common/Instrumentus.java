@@ -6,14 +6,12 @@ import com.beanbot.instrumentus.client.renderer.CopperSoulCampfireRenderer;
 import com.beanbot.instrumentus.common.blocks.ModBlocks;
 import com.beanbot.instrumentus.common.blocks.entities.ModBlockEntities;
 import com.beanbot.instrumentus.common.capability.EnergyItemstack;
-import com.beanbot.instrumentus.common.capability.ModCapabilities;
 import com.beanbot.instrumentus.common.config.Config;
-import com.beanbot.instrumentus.common.config.ItemConfig;
 import com.beanbot.instrumentus.common.events.EntityStruckByLightningEventHook;
 import com.beanbot.instrumentus.common.events.loot.ModLootModifiers;
 import com.beanbot.instrumentus.common.items.ModItems;
 import com.beanbot.instrumentus.common.creative.ModCreativeModeTab;
-import com.beanbot.instrumentus.common.creative.ModCreativeTabPopulate;
+import com.beanbot.instrumentus.common.creative.ModCreativeModeTabPopulate;
 import com.beanbot.instrumentus.common.items.datacomponents.ModDataComponents;
 import com.beanbot.instrumentus.common.items.interfaces.IEnergyItem;
 import com.beanbot.instrumentus.recipe.ModRecipes;
@@ -25,10 +23,8 @@ import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.ModLoadingContext;
 import net.neoforged.fml.common.Mod;
-import net.neoforged.fml.config.ModConfig;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
-import net.neoforged.fml.loading.FMLPaths;
 import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
 import net.neoforged.neoforge.common.NeoForge;
@@ -56,24 +52,35 @@ public class Instrumentus {
         LOGGER.debug("Yo Yo Yo It's Ya Boi, Instrumentus but on NeoForge");
         ModParticles.PARTICLE_TYPES.register(instrumentusEventBus);
 
-//        if (Config.SHEARS.get())
+        if (Config.SHEARS.get())
             ModItems.SHEARS.register(instrumentusEventBus);
-//        if (Config.SICKLES.get())
+
+        if (Config.SICKLES.get())
             ModItems.SICKLES.register(instrumentusEventBus);
-//        if (Config.PAXELS.get())
+
+        if (Config.PAXELS.get())
             ModItems.PAXELS.register(instrumentusEventBus);
-//        if (Config.HAMMERS.get())
+
+        if (Config.HAMMERS.get())
             ModItems.HAMMERS.register(instrumentusEventBus);
-//        if (Config.ENERGIZED.get()) {
+
+        if (Config.ENERGIZED.get()) {
             ModItems.ENERGIZED.register(instrumentusEventBus);
             ModBlocks.ENERGIZED.register(instrumentusEventBus);
-//        }
-//        if (Config.SOULCOPPER.get()) {
-            ModItems.UTILITIES.register(instrumentusEventBus);
-            ModBlocks.UTILITIES.register(instrumentusEventBus);
-//        }
-        ModItems.COPPER.register(instrumentusEventBus);
-        ModItems.BRUSHES.register(instrumentusEventBus);
+        }
+
+        if (Config.KNIVES.get())
+            ModItems.KNIVES.register(instrumentusEventBus);
+
+        if (Config.SOULCOPPER.get()) {
+            ModItems.SOULCOPPER.register(instrumentusEventBus);
+            ModBlocks.SOULCOPPER.register(instrumentusEventBus);
+        }
+        if (Config.COPPER_TOOLS.get())
+            ModItems.COPPER.register(instrumentusEventBus);
+
+        if (Config.BRUSHES.get())
+            ModItems.BRUSHES.register(instrumentusEventBus);
 
         instrumentusEventBus.addListener(this::addCreative);
 
@@ -96,7 +103,7 @@ public class Instrumentus {
     }
 
     private void addCreative(BuildCreativeModeTabContentsEvent event) {
-        ModCreativeTabPopulate.populate(event);
+        ModCreativeModeTabPopulate.populate(event);
     }
     private void attachCapabilities(RegisterCapabilitiesEvent event) {
         event.registerItem(Capabilities.EnergyStorage.ITEM, (itemStack, context) -> {
