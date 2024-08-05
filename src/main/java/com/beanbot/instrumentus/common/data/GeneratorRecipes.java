@@ -1,5 +1,6 @@
 package com.beanbot.instrumentus.common.data;
 
+import com.beanbot.instrumentus.common.Instrumentus;
 import com.beanbot.instrumentus.common.config.Config;
 import com.beanbot.instrumentus.common.items.ModItems;
 import net.minecraft.advancements.critereon.InventoryChangeTrigger;
@@ -8,7 +9,6 @@ import net.minecraft.data.PackOutput;
 import net.minecraft.data.recipes.*;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.world.item.Items;
-import net.minecraft.world.item.crafting.BlastingRecipe;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.neoforged.neoforge.common.Tags;
 
@@ -24,6 +24,7 @@ public class GeneratorRecipes extends RecipeProvider {
     protected void buildRecipes(RecipeOutput consumer) {
         //Copper Tools
         if(Config.COPPER_TOOLS.get()) {
+            Instrumentus.LOGGER.info("Registering Copper Tools Recipes");
             ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, ModItems.COPPER_AXE.get())
                     .pattern("XX")
                     .pattern("XS")
@@ -123,7 +124,8 @@ public class GeneratorRecipes extends RecipeProvider {
         }
 
         //Brushes
-        if(Config.BRUSHES.get()) {
+        //if(Config.BRUSHES.get()) {
+            Instrumentus.LOGGER.info("Registering Brushes Recipes");
             ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, ModItems.DIAMOND_BRUSH.get())
                     .pattern("F")
                     .pattern("I")
@@ -182,10 +184,11 @@ public class GeneratorRecipes extends RecipeProvider {
                     .group("instrumentus")
                     .unlockedBy("has_planks", InventoryChangeTrigger.TriggerInstance.hasItems(Items.OAK_PLANKS))
                     .save(consumer);
-        }
+        //}
 
         //Hammers
         if(Config.HAMMERS.get()) {
+            Instrumentus.LOGGER.info("Registering Hammers Recipes");
             ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, ModItems.DIAMOND_HAMMER.get())
                     .pattern("ABA")
                     .pattern(" S ")
@@ -248,6 +251,7 @@ public class GeneratorRecipes extends RecipeProvider {
 
         //Knives
         if(Config.KNIVES.get()) {
+            Instrumentus.LOGGER.info("Registering Knives Recipes");
             ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, ModItems.DIAMOND_KNIFE.get())
                     .pattern(" XX")
                     .pattern("XX ")
@@ -313,6 +317,7 @@ public class GeneratorRecipes extends RecipeProvider {
 
         //Paxels
         if(Config.PAXELS.get()) {
+            Instrumentus.LOGGER.info("Registering Paxels Recipes");
             ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, ModItems.DIAMOND_PAXEL.get())
                     .pattern("AVP")
                     .pattern(" S ")
@@ -380,6 +385,7 @@ public class GeneratorRecipes extends RecipeProvider {
 
         //Shears
         if(Config.SHEARS.get()) {
+            Instrumentus.LOGGER.info("Registering Shears Recipes");
             ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, ModItems.DIAMOND_SHEARS.get())
                     .pattern(" X")
                     .pattern("X ")
@@ -420,6 +426,7 @@ public class GeneratorRecipes extends RecipeProvider {
 
         //Sickles
         if(Config.SICKLES.get()) {
+            Instrumentus.LOGGER.info("Registering Sickles Recipes");
             ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, ModItems.DIAMOND_SICKLE.get())
                     .pattern(" X ")
                     .pattern("  X")
@@ -477,6 +484,7 @@ public class GeneratorRecipes extends RecipeProvider {
 
         //Energized
         if(Config.ENERGIZED.get()) {
+            Instrumentus.LOGGER.info("Registering Energized Recipes");
             ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, ModItems.CARBON_ROD.get())
                     .pattern("CCC")
                     .pattern("CSC")
@@ -615,6 +623,7 @@ public class GeneratorRecipes extends RecipeProvider {
 
         //Soulcopper
         if(Config.SOULCOPPER.get()) {
+            Instrumentus.LOGGER.info("Registering Soulcopper Recipes");
             ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, ModItems.SOULCOPPER_LANTERN_ITEM.get())
                     .pattern("XXX")
                     .pattern("XCX")
