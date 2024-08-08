@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "group": "instrumentus",
+  "key": {
+    "C": {
+      "item": "minecraft:raw_copper_block"
+    },
+    "F": {
+      "item": "minecraft:soul_campfire"
+    },
+    "S": {
+      "item": "minecraft:stick"
+    }
+  },
+  "pattern": [
+    " S ",
+    "SFS",
+    "CCC"
+  ],
+  "result": {
+    "count": 1,
+    "id": "instrumentus:copper_soul_campfire"
+  }
+}

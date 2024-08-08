@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "group": "instrumentus",
+  "key": {
+    "A": {
+      "item": "instrumentus:energy_block"
+    },
+    "B": {
+      "item": "instrumentus:energy_ingot"
+    },
+    "S": {
+      "item": "instrumentus:carbon_rod"
+    }
+  },
+  "pattern": [
+    "ABA",
+    " S ",
+    " S "
+  ],
+  "result": {
+    "count": 1,
+    "id": "instrumentus:energy_hammer"
+  }
+}

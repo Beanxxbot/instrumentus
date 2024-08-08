@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "instrumentus",
+  "ingredients": [
+    {
+      "item": "instrumentus:energy_block"
+    }
+  ],
+  "result": {
+    "count": 9,
+    "id": "instrumentus:energy_ingot"
+  }
+}

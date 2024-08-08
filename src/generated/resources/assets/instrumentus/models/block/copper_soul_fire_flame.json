@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/cube_all",
+  "textures": {
+    "all": "instrumentus:block/copper_soul_fire_flame"
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "variants": {
+    "hanging=false,waterlogged=false": {
+      "model": "instrumentus:block/copper_soul_lantern"
+    },
+    "hanging=false,waterlogged=true": {
+      "model": "instrumentus:block/copper_soul_lantern"
+    },
+    "hanging=true,waterlogged=false": {
+      "model": "instrumentus:block/copper_soul_lantern_hanging"
+    },
+    "hanging=true,waterlogged=true": {
+      "model": "instrumentus:block/copper_soul_lantern_hanging"
+    }
+  }
+}

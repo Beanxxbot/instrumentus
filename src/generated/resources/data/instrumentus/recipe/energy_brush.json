@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "group": "instrumentus",
+  "key": {
+    "D": {
+      "item": "instrumentus:energy_ingot"
+    },
+    "F": {
+      "item": "minecraft:feather"
+    },
+    "S": {
+      "item": "instrumentus:carbon_rod"
+    }
+  },
+  "pattern": [
+    "F",
+    "D",
+    "S"
+  ],
+  "result": {
+    "count": 1,
+    "id": "instrumentus:energy_brush"
+  }
+}

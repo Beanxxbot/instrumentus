@@ -84,8 +84,8 @@ public class ModCreativeModeTabPopulate {
                 event.accept(ModItems.ENERGIZED_INGOT.get());
                 event.accept(ModItems.ENERGIZED_BLOCK.get());
                 event.accept(ModItems.CARBON_ROD.get());
-                event.accept(ModItems.ENERGY_LIGHTNING_ROD.get());
-                ItemStack fullLightningRod = new ItemStack(ModItems.ENERGY_LIGHTNING_ROD.get());
+                event.accept(ModItems.ENERGIZED_LIGHTNING_ROD.get());
+                ItemStack fullLightningRod = new ItemStack(ModItems.ENERGIZED_LIGHTNING_ROD.get());
                 int lightningRodCapacity = fullLightningRod.getCapability(Capabilities.EnergyStorage.ITEM).getMaxEnergyStored();
                 fullLightningRod.getCapability(Capabilities.EnergyStorage.ITEM).receiveEnergy(lightningRodCapacity, false);
                 event.accept(fullLightningRod);

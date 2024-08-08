@@ -122,7 +122,7 @@ public class Instrumentus {
                 ModItems.ENERGIZED_HAMMER.get(),
                 ModItems.ENERGIZED_KNIFE.get(),
                 ModItems.ENERGIZED_BRUSH.get(),
-                ModItems.ENERGY_LIGHTNING_ROD.get()
+                ModItems.ENERGIZED_LIGHTNING_ROD.get()
         );
     }
 

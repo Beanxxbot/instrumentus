@@ -4,11 +4,14 @@ import com.beanbot.instrumentus.common.Instrumentus;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.PackOutput;
+import net.minecraft.data.loot.LootTableProvider;
+import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
-import net.neoforged.neoforge.common.data.ExistingFileHelper;
 import net.neoforged.neoforge.data.event.GatherDataEvent;
 
+import java.util.Collections;
+import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
 @SuppressWarnings("unused")
@@ -21,21 +24,16 @@ public class Generator {
         CompletableFuture<HolderLookup.Provider> lookupProvider = event.getLookupProvider();
 
         generator.addProvider(event.includeServer(), new GeneratorRecipes(output, lookupProvider));
+        generator.addProvider(event.includeServer(), new LootTableProvider(output, Collections.emptySet(),
+                List.of(new LootTableProvider.SubProviderEntry(GeneratorBlockLootTables::new, LootContextParamSets.BLOCK)), event.getLookupProvider()));
+        GeneratorBlockTags blockTags = new GeneratorBlockTags(output, lookupProvider, event.getExistingFileHelper());
+        generator.addProvider(event.includeServer(), blockTags);
+        GeneratorItemTags itemTags = new GeneratorItemTags(output, lookupProvider, blockTags ,event.getExistingFileHelper());
+        generator.addProvider(event.includeServer(), itemTags);
 
-        generator.addProvider(event.includeClient(), new GeneratorBlockTags(output, lookupProvider, event.getExistingFileHelper()));
+        generator.addProvider(event.includeClient(), new GeneratorBlockStates(output, event.getExistingFileHelper()));
+        generator.addProvider(event.includeClient(), new GeneratorItemModels(output, event.getExistingFileHelper()));
 
-
-//        if( event.includeServer() )
-//            registerCommonProviders(event.getGenerator(), event.getGenerator().getPackOutput(), event.getLookupProvider());
-//
-//        if( event.includeClient() )
-//            registerClientProviders(event.getGenerator(), event.getGenerator().getPackOutput(), event.getLookupProvider(), event.getExistingFileHelper());
+        generator.addProvider(event.includeClient(), new GeneratorLanguage(output));
     }
-
-    private static void registerCommonProviders(DataGenerator generator, PackOutput output, CompletableFuture<HolderLookup.Provider> lookupProvider) {
-    }
-
-    private static void registerClientProviders(DataGenerator generator, PackOutput output, CompletableFuture<HolderLookup.Provider> lookupProvider, ExistingFileHelper helper) {
-    }
-
 }

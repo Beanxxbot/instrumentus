@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_soulcopper": {
+      "conditions": {
+        "items": [
+          {
+            "items": "instrumentus:soulcopper_ingot"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "instrumentus:soulcopper_pickaxe"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_soulcopper"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "instrumentus:soulcopper_pickaxe"
+    ]
+  }
+}
