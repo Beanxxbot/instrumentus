@@ -51,6 +51,7 @@ public class ModItems {
     public static final DeferredHolder<Item, EnergyPickaxeItem> ENERGIZED_PICKAXE = ENERGIZED.register("energy_pickaxe", () -> new EnergyPickaxeItem(ModItemTiers.ENERGIZED, 1, -2.8f));
     public static final DeferredHolder<Item, EnergyShovelItem> ENERGIZED_SHOVEL = ENERGIZED.register("energy_shovel", () -> new EnergyShovelItem(ModItemTiers.ENERGIZED, 1, -2.8f));
     public static final DeferredHolder<Item, EnergyAxeItem> ENERGIZED_AXE = ENERGIZED.register("energy_axe", () -> new EnergyAxeItem(ModItemTiers.ENERGIZED, 1, -2.8f));
+    public static final DeferredHolder<Item, EnergyHoeItem> ENERGIZED_HOE = ENERGIZED.register("energy_hoe", () -> new EnergyHoeItem(ModItemTiers.ENERGIZED, 1, -2.8f));
     public static final DeferredHolder<Item, EnergyPaxelItem> ENERGIZED_PAXEL = ENERGIZED.register("energy_paxel", () -> new EnergyPaxelItem(ModItemTiers.ENERGIZED, 1, -2.8f));
     public static final DeferredHolder<Item, EnergyHammerItem> ENERGIZED_HAMMER = ENERGIZED.register("energy_hammer", () -> new EnergyHammerItem(ModItemTiers.ENERGIZED, 1, -2.8f));
     public static final DeferredHolder<Item, EnergySickleItem> ENERGIZED_SICKLE = ENERGIZED.register("energy_sickle", () -> new EnergySickleItem(ModItemTiers.ENERGIZED));
@@ -66,6 +67,7 @@ public class ModItems {
     public static final DeferredHolder<Item, Item> RAW_SOULCOPPER = SOULCOPPER.register("raw_soulcopper", () -> new Item(new Item.Properties()));
     public static final DeferredHolder<Item, BlockItem> RAW_SOULCOPPER_BLOCK = SOULCOPPER.register("raw_soulcopper_block", () -> new BlockItem(ModBlocks.RAW_SOULCOPPER_BLOCK.get(), new Item.Properties().stacksTo(64)));
     public static final DeferredHolder<Item, BlockItem> SOULCOPPER_BLOCK = SOULCOPPER.register("soulcopper_block", () -> new BlockItem(ModBlocks.SOULCOPPER_BLOCK.get(), new Item.Properties().stacksTo(64)));
+    public static final DeferredHolder<Item, BurnerItem> SOULCOPPER_BURNER = SOULCOPPER.register("soulcopper_burner", BurnerItem::new);
     @SuppressWarnings("unused")
     public static final DeferredHolder<Item, BlockItem> COPPER_SOUL_FLAME_LIGHT_ITEM = SOULCOPPER.register("copper_soul_fire_flame", () -> new BlockItem(ModBlocks.COPPER_SOUL_FLAME_LIGHT.get(), new Item.Properties()));
     public static final DeferredHolder<Item, BlockItem> COPPER_SOUL_CAMPFIRE_BLOCK_ITEM = SOULCOPPER.register("copper_soul_campfire", () -> new BlockItem(ModBlocks.COPPER_SOUL_CAMPFIRE.get(), new Item.Properties().stacksTo(64)));

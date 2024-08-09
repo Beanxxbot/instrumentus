@@ -2,25 +2,23 @@ package com.beanbot.instrumentus.common.items;
 
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.*;
+import net.minecraft.world.item.Tiers;
 
 public class ModBrushItem extends BrushItem {
 
-    protected Tier material;
+    protected Tier tier;
     public ModBrushItem(Tier material) {
         super(new Item.Properties().durability(material.getUses()));
-        this.material = material;
+        this.tier = material;
     }
 
     @Override
     public int getUseDuration(ItemStack pStack, LivingEntity pEntity) {
-        if (material == Tiers.WOOD || material == Tiers.STONE) {
-            return 300;
-        } else if (material == Tiers.IRON) {
-            return 250;
-        } else if (material == Tiers.GOLD || material == Tiers.DIAMOND || material == Tiers.NETHERITE) {
-            return 100;
-        } else {
-            return 200;
-        }
+        return switch (tier) {
+            case Tiers.WOOD, Tiers.STONE -> 300;
+            case Tiers.IRON -> 150;
+            case Tiers.GOLD, Tiers.DIAMOND, Tiers.NETHERITE -> 50;
+            case null, default -> 200;
+        };
     }
 }

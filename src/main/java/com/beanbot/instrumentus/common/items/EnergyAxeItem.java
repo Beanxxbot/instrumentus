@@ -45,11 +45,12 @@ public class EnergyAxeItem extends DiggerItem implements IItemLightningChargeabl
                 CriteriaTriggers.ITEM_USED_ON_BLOCK.trigger((ServerPlayer)player, blockpos, itemstack);
             }
 
-            level.setBlock(blockpos, (BlockState)optional.get(), 11);
-            level.gameEvent(GameEvent.BLOCK_CHANGE, blockpos, GameEvent.Context.of(player, (BlockState)optional.get()));
             if (player != null) {
                 IEnergyStorage energyStorage = context.getItemInHand().getCapability(Capabilities.EnergyStorage.ITEM);
                 if(energyStorage == null) return InteractionResult.FAIL;
+                if(energyStorage.getEnergyStored() == 0) return InteractionResult.FAIL;
+                level.setBlock(blockpos, (BlockState)optional.get(), 11);
+                level.gameEvent(GameEvent.BLOCK_CHANGE, blockpos, GameEvent.Context.of(player, (BlockState)optional.get()));
                 energyStorage.extractEnergy(getMaxTransferRate() - 24, false);
             }
 

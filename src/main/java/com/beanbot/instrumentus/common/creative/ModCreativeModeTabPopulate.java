@@ -104,6 +104,11 @@ public class ModCreativeModeTabPopulate {
                 int shovelCapacity = fullShovel.getCapability(Capabilities.EnergyStorage.ITEM).getMaxEnergyStored();
                 fullShovel.getCapability(Capabilities.EnergyStorage.ITEM).receiveEnergy(shovelCapacity, false);
                 event.accept(fullShovel);
+                event.accept(ModItems.ENERGIZED_HOE.get());
+                ItemStack fullHoe = new ItemStack(ModItems.ENERGIZED_HOE.get());
+                int hoeCapacity = fullHoe.getCapability(Capabilities.EnergyStorage.ITEM).getMaxEnergyStored();
+                fullHoe.getCapability(Capabilities.EnergyStorage.ITEM).receiveEnergy(hoeCapacity, false);
+                event.accept(fullHoe);
             }
 
             if(Config.SOULCOPPER.get()) {
@@ -115,6 +120,7 @@ public class ModCreativeModeTabPopulate {
                 event.accept(ModItems.COPPER_SOUL_CAMPFIRE_BLOCK_ITEM.get());
                 event.accept(ModItems.SOULCOPPER_TORCH_ITEM.get());
                 event.accept(ModItems.SOULCOPPER_LANTERN_ITEM.get());
+                event.accept(ModItems.SOULCOPPER_BURNER.get());
             }
 
             if(Config.COPPER_TOOLS.get()) {

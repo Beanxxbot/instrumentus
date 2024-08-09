@@ -56,11 +56,12 @@ public class EnergyShovelItem extends DiggerItem implements IItemLightningCharge
 
             if (blockstate2 != null) {
                 if (!world.isClientSide) {
-                    world.setBlock(blockpos, blockstate2, 11);
-                    world.gameEvent(GameEvent.BLOCK_CHANGE, blockpos, GameEvent.Context.of(playerentity, blockstate2));
                     if (playerentity != null) {
                         IEnergyStorage energyStorage = stack.getCapability(Capabilities.EnergyStorage.ITEM);
                         if(!(energyStorage == null)){
+                            if(energyStorage.getEnergyStored() == 0) return InteractionResult.FAIL;
+                            world.setBlock(blockpos, blockstate2, 11);
+                            world.gameEvent(GameEvent.BLOCK_CHANGE, blockpos, GameEvent.Context.of(playerentity, blockstate2));
                             energyStorage.extractEnergy(getMaxTransferRate() - 24, false);
                         }
                     }

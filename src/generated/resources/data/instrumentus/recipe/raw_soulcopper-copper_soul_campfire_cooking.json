@@ -1,0 +1,13 @@
+{
+  "type": "instrumentus:copper_soul_campfire_cooking",
+  "cookingTime": 1200,
+  "id": "instrumentus:raw_copper_block_to_raw_soulcopper",
+  "input": {
+    "count": 1,
+    "id": "minecraft:raw_copper_block"
+  },
+  "result": {
+    "count": 1,
+    "id": "instrumentus:raw_soulcopper"
+  }
+}

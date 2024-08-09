@@ -51,6 +51,7 @@ public class GeneratorLanguage extends LanguageProvider {
         addItem(ModItems.ENERGIZED_PICKAXE, "Energized Di-Emerald Pickaxe");
         addItem(ModItems.ENERGIZED_AXE, "Energized Di-Emerald Pickaxe");
         addItem(ModItems.ENERGIZED_SHOVEL, "Energized Di-Emerald Shovel");
+        addItem(ModItems.ENERGIZED_HOE, "Energized Di-Emerald Hoe");
         addItem(ModItems.ENERGIZED_LIGHTNING_ROD, "Energized Di-Emerald Lightning Rod");
 
         addItem(ModItems.SOULCOPPER_PICKAXE, "Soulcopper Pickaxe");
@@ -66,6 +67,7 @@ public class GeneratorLanguage extends LanguageProvider {
         addBlock(ModBlocks.COPPER_SOUL_FLAME_LIGHT, "Copper Soul Fire Flame");
         addBlock(ModBlocks.SOULCOPPER_TORCH, "Soulcopper Torch");
         addBlock(ModBlocks.SOULCOPPER_LANTERN, "Soulcopper Lantern");
+        addItem(ModItems.SOULCOPPER_BURNER, "Soulcopper Burner");
 
         addItem(ModItems.WOODEN_KNIFE, "Wooden Knife");
         addItem(ModItems.STONE_KNIFE, "Stone Knife");

@@ -2,11 +2,13 @@ package com.beanbot.instrumentus.common.data;
 
 import com.beanbot.instrumentus.common.Instrumentus;
 import com.beanbot.instrumentus.common.config.Config;
+import com.beanbot.instrumentus.common.data.recipes.CopperSoulCampfireCookingRecipeBuilder;
 import com.beanbot.instrumentus.common.items.ModItems;
 import net.minecraft.advancements.critereon.InventoryChangeTrigger;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.recipes.*;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
@@ -503,6 +505,15 @@ public class GeneratorRecipes extends RecipeProvider {
                     .group("instrumentus")
                     .unlockedBy("has_energized_ingot", InventoryChangeTrigger.TriggerInstance.hasItems(ModItems.ENERGIZED_INGOT.get()))
                     .save(consumer);
+            ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, ModItems.ENERGIZED_HOE.get())
+                    .pattern("XX")
+                    .pattern(" S")
+                    .pattern(" S")
+                    .define('X', ModItems.ENERGIZED_INGOT.get())
+                    .define('S', ModItems.CARBON_ROD.get())
+                    .group("instrumentus")
+                    .unlockedBy("has_energized_ingot", InventoryChangeTrigger.TriggerInstance.hasItems(ModItems.ENERGIZED_INGOT.get()))
+                    .save(consumer);
             nineBlockStorageRecipes(consumer, RecipeCategory.MISC, ModItems.ENERGIZED_INGOT.get(), RecipeCategory.BUILDING_BLOCKS, ModItems.ENERGIZED_BLOCK.get(), ModItems.ENERGIZED_INGOT.get().toString() + "_9x9", "instrumentus", ModItems.ENERGIZED_BLOCK.get().toString() + "_9x9", "instrumentus");
             if(Config.BRUSHES.get())
                 ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, ModItems.ENERGIZED_BRUSH.get())
@@ -641,7 +652,6 @@ public class GeneratorRecipes extends RecipeProvider {
                     .save(consumer);
             nineBlockStorageRecipes(consumer, RecipeCategory.MISC, ModItems.RAW_SOULCOPPER.get(), RecipeCategory.BUILDING_BLOCKS, ModItems.RAW_SOULCOPPER_BLOCK.get(), ModItems.RAW_SOULCOPPER.get().toString() + "_9x9", "instrumentus", ModItems.RAW_SOULCOPPER_BLOCK.get().toString() + "_9x9", "instrumentus");
             nineBlockStorageRecipes(consumer, RecipeCategory.MISC, ModItems.SOULCOPPER_INGOT.get(), RecipeCategory.BUILDING_BLOCKS, ModItems.SOULCOPPER_BLOCK.get(), ModItems.SOULCOPPER_INGOT.get().toString() + "_9x9", "instrumentus", ModItems.SOULCOPPER_BLOCK.get().toString() + "_9x9", "instrumentus");
-
             SimpleCookingRecipeBuilder.blasting(
                     Ingredient.of(ModItems.RAW_SOULCOPPER.get()),
                     RecipeCategory.MISC,
@@ -659,6 +669,26 @@ public class GeneratorRecipes extends RecipeProvider {
                     .group("instrumentus")
                     .unlockedBy("has_soulcopper", InventoryChangeTrigger.TriggerInstance.hasItems(ModItems.SOULCOPPER_INGOT.get()))
                     .save(consumer);
+            ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, ModItems.SOULCOPPER_BURNER.get())
+                    .pattern("CTC")
+                    .pattern("CBC")
+                    .pattern("CBC")
+                    .define('C', ModItems.SOULCOPPER_INGOT.get())
+                    .define('T', ModItems.SOULCOPPER_TORCH_ITEM.get())
+                    .define('B', Items.BLAZE_ROD)
+                    .group("instrumentus")
+                    .unlockedBy("has_soulcopper", InventoryChangeTrigger.TriggerInstance.hasItems(ModItems.SOULCOPPER_INGOT.get()))
+                    .save(consumer);
+            CopperSoulCampfireCookingRecipeBuilder.smelting(
+                ResourceLocation.fromNamespaceAndPath(Instrumentus.MODID, "raw_copper_block_to_raw_soulcopper"),
+                Items.RAW_COPPER_BLOCK.getDefaultInstance(),
+                ModItems.RAW_SOULCOPPER.get().getDefaultInstance(),
+                1200
+                )
+                    .group("instrumentus")
+                    .unlockedBy("has_raw_copper", InventoryChangeTrigger.TriggerInstance.hasItems(Items.RAW_COPPER_BLOCK))
+                    .save(consumer);
+
         }
     }
 }

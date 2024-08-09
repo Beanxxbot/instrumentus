@@ -19,6 +19,7 @@ public class GeneratorItemModels extends ItemModelProvider {
         singleTexture(ModItems.ENERGIZED_PICKAXE.getId().getPath(), mcLoc("item/handheld"), "layer0", modLoc("item/energy_pickaxe"));
         singleTexture(ModItems.ENERGIZED_SHOVEL.getId().getPath(), mcLoc("item/handheld"), "layer0", modLoc("item/energy_shovel"));
         singleTexture(ModItems.ENERGIZED_AXE.getId().getPath(), mcLoc("item/handheld"), "layer0", modLoc("item/energy_axe"));
+        singleTexture(ModItems.ENERGIZED_HOE.getId().getPath(), mcLoc("item/generated"), "layer0", modLoc("item/energy_hoe"));
         singleTexture(ModItems.ENERGIZED_PAXEL.getId().getPath(), mcLoc("item/handheld"), "layer0", modLoc("item/energy_paxel"));
         singleTexture(ModItems.ENERGIZED_HAMMER.getId().getPath(), mcLoc("item/handheld"), "layer0", modLoc("item/energy_hammer"));
         singleTexture(ModItems.ENERGIZED_SICKLE.getId().getPath(), mcLoc("item/handheld"), "layer0", modLoc("item/energy_sickle"));
@@ -38,6 +39,7 @@ public class GeneratorItemModels extends ItemModelProvider {
         singleTexture(ModItems.SOULCOPPER_TORCH_ITEM.getId().getPath(), mcLoc("item/generated"), "layer0", modLoc("block/copper_soul_torch"));
         singleTexture(ModItems.SOULCOPPER_LANTERN_ITEM.getId().getPath(), mcLoc("item/generated"), "layer0", modLoc("item/copper_soul_lantern"));
         withExistingParent(ModItems.COPPER_SOUL_FLAME_LIGHT_ITEM.getId().getPath(), modLoc("block/copper_soul_fire_flame"));
+        singleTexture(ModItems.SOULCOPPER_BURNER.getId().getPath(), mcLoc("item/handheld"), "layer0", modLoc("item/soulcopper_burner"));
 
         registerTools();
     }

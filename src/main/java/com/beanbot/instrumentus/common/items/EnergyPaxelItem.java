@@ -19,6 +19,7 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.CampfireBlock;
 import net.minecraft.world.level.block.LevelEvent;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.gameevent.GameEvent;
 import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.common.ItemAbilities;
 import net.neoforged.neoforge.energy.IEnergyStorage;
@@ -65,10 +66,12 @@ public class EnergyPaxelItem extends PaxelItem implements IItemLightningChargeab
             if (player instanceof ServerPlayer serverPlayer) {
                 CriteriaTriggers.ITEM_USED_ON_BLOCK.trigger(serverPlayer, blockpos, stack);
             }
-            world.setBlock(blockpos, resultToSet, Block.UPDATE_ALL_IMMEDIATE);
             if (player != null) {
                 IEnergyStorage energyStorage = stack.getCapability(Capabilities.EnergyStorage.ITEM);
                 if(!(energyStorage == null)){
+                    if(energyStorage.getEnergyStored() == 0) return InteractionResult.FAIL;
+                    world.setBlock(blockpos, resultToSet, 11);
+                    world.gameEvent(GameEvent.BLOCK_CHANGE, blockpos, GameEvent.Context.of(player, resultToSet));
                     energyStorage.extractEnergy(getMaxTransferRate() - 24, false);
                 }
             }

@@ -117,6 +117,7 @@ public class Instrumentus {
                 ModItems.ENERGIZED_PICKAXE.get(),
                 ModItems.ENERGIZED_SHOVEL.get(),
                 ModItems.ENERGIZED_PAXEL.get(),
+                ModItems.ENERGIZED_HOE.get(),
                 ModItems.ENERGIZED_SHEARS.get(),
                 ModItems.ENERGIZED_SICKLE.get(),
                 ModItems.ENERGIZED_HAMMER.get(),

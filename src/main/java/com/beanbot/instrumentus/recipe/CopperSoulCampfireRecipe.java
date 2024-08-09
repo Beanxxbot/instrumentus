@@ -7,10 +7,7 @@ import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.NonNullList;
 import net.minecraft.core.RegistryAccess;
-import net.minecraft.core.registries.Registries;
-import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.RegistryFriendlyByteBuf;
-import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.Container;
@@ -18,23 +15,22 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.*;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
-import net.neoforged.neoforge.network.codec.NeoForgeStreamCodecs;
 
 public class CopperSoulCampfireRecipe implements Recipe<SingleRecipeInput> {
     private final ResourceLocation id;
-    protected final Ingredient ingredient;
-    protected final ItemStack result;
-    protected int cookingTime;
+    public final ItemStack input;
+    public final ItemStack result;
+    public int cookingTime;
 
-    public CopperSoulCampfireRecipe(ResourceLocation id, Ingredient ingredient, ItemStack result, int cookingTime) {
+    public CopperSoulCampfireRecipe(ResourceLocation id, ItemStack input, ItemStack result, int cookingTime) {
         this.id = id;
-        this.ingredient = ingredient;
+        this.input = input;
         this.result = result;
         this.cookingTime = cookingTime;
     }
 
     public boolean matches(SingleRecipeInput pInput, Level pLevel) {
-        return this.ingredient.test(pInput.item());
+        return this.input.is(pInput.item().getItem());
     }
 
     public ResourceLocation getId() {
@@ -65,9 +61,15 @@ public class CopperSoulCampfireRecipe implements Recipe<SingleRecipeInput> {
         return this.result;
     }
 
-    public Ingredient getSingleIngredient() {
-        NonNullList<Ingredient> nonNullList = getIngredients();
-        return nonNullList.getFirst();
+//    @Override
+//    public NonNullList<Ingredient> getIngredients() {
+//        NonNullList<Ingredient> nonnulllist = NonNullList.create();
+//        nonnulllist.add(this.input);
+//        return nonnulllist;
+//    }
+
+    public ItemStack getInput() {
+        return input;
     }
 
     @Override
@@ -96,7 +98,7 @@ public class CopperSoulCampfireRecipe implements Recipe<SingleRecipeInput> {
         private static final MapCodec<CopperSoulCampfireRecipe> CODEC = RecordCodecBuilder.mapCodec(
                 map -> map.group(
                         ResourceLocation.CODEC.fieldOf("id").forGetter(idField -> idField.id),
-                        Ingredient.CODEC.fieldOf("ingredient").forGetter(ingredientField -> ingredientField.ingredient),
+                        ItemStack.STRICT_CODEC.fieldOf("input").forGetter(inputField -> inputField.input),
                         ItemStack.STRICT_CODEC.fieldOf("result").forGetter(resultField -> resultField.result),
                         Codec.INT.fieldOf("cookingTime").forGetter(cookingTimeField -> cookingTimeField.cookingTime)
                 )
@@ -117,16 +119,16 @@ public class CopperSoulCampfireRecipe implements Recipe<SingleRecipeInput> {
 
         public CopperSoulCampfireRecipe fromNetwork(RegistryFriendlyByteBuf buf) {
             ResourceLocation resourceLocation = buf.readResourceLocation();
-            Ingredient ingredient = Ingredient.CONTENTS_STREAM_CODEC.decode(buf);
+            ItemStack input = ItemStack.STREAM_CODEC.decode(buf);
             ItemStack result = ItemStack.STREAM_CODEC.decode(buf);
             int cookingTime = buf.readVarInt();
 
-            return new CopperSoulCampfireRecipe(resourceLocation, ingredient, result, cookingTime);
+            return new CopperSoulCampfireRecipe(resourceLocation, input, result, cookingTime);
         }
 
         public void toNetwork(RegistryFriendlyByteBuf buf, CopperSoulCampfireRecipe recipe){
             buf.writeResourceLocation(recipe.id);
-            Ingredient.CONTENTS_STREAM_CODEC.encode(buf, recipe.ingredient);
+            ItemStack.STREAM_CODEC.encode(buf, recipe.input);
             ItemStack.STREAM_CODEC.encode(buf, recipe.result);
             buf.writeVarInt(recipe.cookingTime);
         }
