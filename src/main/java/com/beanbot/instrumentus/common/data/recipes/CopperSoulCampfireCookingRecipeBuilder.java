@@ -26,20 +26,20 @@ public class CopperSoulCampfireCookingRecipeBuilder implements RecipeBuilder {
     private String group;
 
     private final ResourceLocation id;
-    protected final ItemStack input;
+    protected final Ingredient input;
     protected final ItemStack output;
     protected final int cookingTime;
     private final NonNullList<Ingredient> ingredients = NonNullList.create();
     private final Map<String, Criterion<?>> criteria = new LinkedHashMap<>();
 
-    public CopperSoulCampfireCookingRecipeBuilder(ResourceLocation id, ItemStack input, ItemStack output, int cookingTime) {
+    public CopperSoulCampfireCookingRecipeBuilder(ResourceLocation id, Ingredient input, ItemStack output, int cookingTime) {
         this.id = id;
         this.input = input;
         this.output = output;
         this.cookingTime = cookingTime;
     }
 
-    public static CopperSoulCampfireCookingRecipeBuilder smelting(ResourceLocation id, ItemStack input, ItemStack output, int cookingTime) {
+    public static CopperSoulCampfireCookingRecipeBuilder smelting(ResourceLocation id, Ingredient input, ItemStack output, int cookingTime) {
         return new CopperSoulCampfireCookingRecipeBuilder(id, input, output, cookingTime);
     }
 

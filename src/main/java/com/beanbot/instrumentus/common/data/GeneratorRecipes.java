@@ -681,7 +681,7 @@ public class GeneratorRecipes extends RecipeProvider {
                     .save(consumer);
             CopperSoulCampfireCookingRecipeBuilder.smelting(
                 ResourceLocation.fromNamespaceAndPath(Instrumentus.MODID, "raw_copper_block_to_raw_soulcopper"),
-                Items.RAW_COPPER_BLOCK.getDefaultInstance(),
+                Ingredient.of(Items.RAW_COPPER_BLOCK.getDefaultInstance()),
                 ModItems.RAW_SOULCOPPER.get().getDefaultInstance(),
                 1200
                 )

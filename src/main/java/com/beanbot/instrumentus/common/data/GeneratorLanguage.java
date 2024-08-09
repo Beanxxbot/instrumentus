@@ -98,6 +98,7 @@ public class GeneratorLanguage extends LanguageProvider {
         add(Instrumentus.MODID + ".lore.no_energy", "No Energy");
         add(Instrumentus.MODID + ".lore.energy", "%d FE/%d FE");
         add(Instrumentus.MODID + ".tooltip.energy", "");
+        add(Instrumentus.MODID + ".coppersoulcampfirecookingrecipe.title", "Copper-fueled Soul Campfire Cooking");
 
         add(Instrumentus.MODID + ".creativetab", "Instrumentus");
     }

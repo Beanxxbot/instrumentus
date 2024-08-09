@@ -1,27 +1,28 @@
 package com.beanbot.instrumentus.client.jei;
 
 import com.beanbot.instrumentus.common.Instrumentus;
+import com.beanbot.instrumentus.common.blocks.ModBlocks;
 import com.beanbot.instrumentus.common.items.ModItems;
 import com.beanbot.instrumentus.recipe.CopperSoulCampfireRecipe;
 import com.beanbot.instrumentus.recipe.ModRecipes;
 import mezz.jei.api.IModPlugin;
 import mezz.jei.api.JeiPlugin;
-import mezz.jei.api.constants.RecipeTypes;
 import mezz.jei.api.helpers.IGuiHelper;
 import mezz.jei.api.helpers.IJeiHelpers;
-import mezz.jei.api.recipe.IRecipeManager;
+import mezz.jei.api.ingredients.subtypes.IIngredientSubtypeInterpreter;
 import mezz.jei.api.registration.IRecipeCatalystRegistration;
 import mezz.jei.api.registration.IRecipeCategoryRegistration;
 import mezz.jei.api.registration.IRecipeRegistration;
+import mezz.jei.api.registration.ISubtypeRegistration;
 import mezz.jei.api.runtime.IJeiRuntime;
 import net.minecraft.client.Minecraft;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.CraftingRecipe;
 import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.item.crafting.RecipeManager;
+import net.neoforged.neoforge.capabilities.Capabilities;
+import net.neoforged.neoforge.energy.IEnergyStorage;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -29,18 +30,19 @@ import java.util.stream.Collectors;
 public class ModJEIIntegration implements IModPlugin {
     @Override
     public ResourceLocation getPluginUid() {
-        Instrumentus.LOGGER.info("JEI Plugin is Online");
         return ResourceLocation.fromNamespaceAndPath("instrumentus", "jei_plugin");
     }
 
-    //TODO - Fix Recipe not added because the recipe category cannot handle it: com.beanbot.instrumentus.recipe.CopperSoulCampfireRecipe@55ab20e1 Failed to get ingredients from recipe wrapper
+    private static final IIngredientSubtypeInterpreter<ItemStack> INSTRUMENTUS_ENERGY_INTERPRETER = (stack, context) -> {
+        IEnergyStorage energyStorage = stack.getCapability(Capabilities.EnergyStorage.ITEM);
+        if (energyStorage == null) return IIngredientSubtypeInterpreter.NONE;
+        int maxEnergy = energyStorage.getMaxEnergyStored();
+        return String.valueOf(maxEnergy);
+    };
+
     @Override
-    @SuppressWarnings("unchecked")
-    public void onRuntimeAvailable(IJeiRuntime jeiRuntime) {
-        IRecipeManager recipeRegistry = jeiRuntime.getRecipeManager();
-        RecipeManager recipeManager = Minecraft.getInstance().level.getRecipeManager();
-        List<RecipeHolder<CraftingRecipe>> hiddenRecipes = new ArrayList<>();
-        recipeRegistry.hideRecipes(RecipeTypes.CRAFTING, hiddenRecipes);
+    public void registerItemSubtypes(ISubtypeRegistration registration) {
+        registration.registerSubtypeInterpreter(ModItems.ENERGIZED_AXE.get().asItem(), INSTRUMENTUS_ENERGY_INTERPRETER);
     }
 
     @Override
@@ -50,6 +52,12 @@ public class ModJEIIntegration implements IModPlugin {
         registration.addRecipeCategories(
             new CopperSoulCampfireCookingRecipeCategory(guiHelper)
         );
+        Instrumentus.LOGGER.info("Registered JEI Categories");
+    }
+
+    @Override
+    public void registerRecipeCatalysts(IRecipeCatalystRegistration registration) {
+        registration.addRecipeCatalyst(new ItemStack(ModBlocks.COPPER_SOUL_CAMPFIRE.get().asItem()), CopperSoulCampfireCookingRecipeCategory.TYPE);
     }
 
     @Override
@@ -61,10 +69,4 @@ public class ModJEIIntegration implements IModPlugin {
 
         registration.addRecipes(CopperSoulCampfireCookingRecipeCategory.TYPE, copperSoulCampfireRecipes);
     }
-
-    @Override
-    public void registerRecipeCatalysts(IRecipeCatalystRegistration registration) {
-        registration.addRecipeCatalyst(new ItemStack(ModItems.COPPER_SOUL_CAMPFIRE_BLOCK_ITEM.get()), CopperSoulCampfireCookingRecipeCategory.TYPE);
-    }
-
 }

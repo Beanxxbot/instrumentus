@@ -15,14 +15,16 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.*;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
+import net.neoforged.neoforge.common.crafting.IngredientType;
+import org.jetbrains.annotations.NotNull;
 
 public class CopperSoulCampfireRecipe implements Recipe<SingleRecipeInput> {
-    private final ResourceLocation id;
-    public final ItemStack input;
+    protected final ResourceLocation id;
+    public final Ingredient input;
     public final ItemStack result;
     public int cookingTime;
 
-    public CopperSoulCampfireRecipe(ResourceLocation id, ItemStack input, ItemStack result, int cookingTime) {
+    public CopperSoulCampfireRecipe(ResourceLocation id, Ingredient input, ItemStack result, int cookingTime) {
         this.id = id;
         this.input = input;
         this.result = result;
@@ -30,7 +32,7 @@ public class CopperSoulCampfireRecipe implements Recipe<SingleRecipeInput> {
     }
 
     public boolean matches(SingleRecipeInput pInput, Level pLevel) {
-        return this.input.is(pInput.item().getItem());
+        return this.input.test(pInput.item());
     }
 
     public ResourceLocation getId() {
@@ -57,19 +59,19 @@ public class CopperSoulCampfireRecipe implements Recipe<SingleRecipeInput> {
     }
 
     @Override
-    public ItemStack getResultItem(HolderLookup.Provider holderProvider) {
+    public @NotNull ItemStack getResultItem(HolderLookup.Provider holderProvider) {
         return this.result;
     }
 
-//    @Override
-//    public NonNullList<Ingredient> getIngredients() {
-//        NonNullList<Ingredient> nonnulllist = NonNullList.create();
-//        nonnulllist.add(this.input);
-//        return nonnulllist;
-//    }
+    public ItemStack getResultItem() {
+        return getResultItem(null);
+    }
 
-    public ItemStack getInput() {
-        return input;
+    @Override
+    public NonNullList<Ingredient> getIngredients() {
+        NonNullList<Ingredient> nonnulllist = NonNullList.create();
+        nonnulllist.add(this.input);
+        return nonnulllist;
     }
 
     @Override
@@ -98,7 +100,7 @@ public class CopperSoulCampfireRecipe implements Recipe<SingleRecipeInput> {
         private static final MapCodec<CopperSoulCampfireRecipe> CODEC = RecordCodecBuilder.mapCodec(
                 map -> map.group(
                         ResourceLocation.CODEC.fieldOf("id").forGetter(idField -> idField.id),
-                        ItemStack.STRICT_CODEC.fieldOf("input").forGetter(inputField -> inputField.input),
+                        Ingredient.CODEC.fieldOf("input").forGetter(inputField -> inputField.input),
                         ItemStack.STRICT_CODEC.fieldOf("result").forGetter(resultField -> resultField.result),
                         Codec.INT.fieldOf("cookingTime").forGetter(cookingTimeField -> cookingTimeField.cookingTime)
                 )
@@ -119,7 +121,7 @@ public class CopperSoulCampfireRecipe implements Recipe<SingleRecipeInput> {
 
         public CopperSoulCampfireRecipe fromNetwork(RegistryFriendlyByteBuf buf) {
             ResourceLocation resourceLocation = buf.readResourceLocation();
-            ItemStack input = ItemStack.STREAM_CODEC.decode(buf);
+            Ingredient input = Ingredient.CONTENTS_STREAM_CODEC.decode(buf);
             ItemStack result = ItemStack.STREAM_CODEC.decode(buf);
             int cookingTime = buf.readVarInt();
 
@@ -128,7 +130,7 @@ public class CopperSoulCampfireRecipe implements Recipe<SingleRecipeInput> {
 
         public void toNetwork(RegistryFriendlyByteBuf buf, CopperSoulCampfireRecipe recipe){
             buf.writeResourceLocation(recipe.id);
-            ItemStack.STREAM_CODEC.encode(buf, recipe.input);
+            Ingredient.CONTENTS_STREAM_CODEC.encode(buf, recipe.input);
             ItemStack.STREAM_CODEC.encode(buf, recipe.result);
             buf.writeVarInt(recipe.cookingTime);
         }
