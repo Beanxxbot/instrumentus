@@ -5,26 +5,36 @@ import com.beanbot.instrumentus.common.items.ModItems;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.tags.ItemTagsProvider;
-import net.minecraft.data.tags.TagsProvider;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.ItemTags;
-import net.minecraft.world.level.block.Block;
-import net.neoforged.fml.common.Mod;
-import net.neoforged.neoforge.common.Tags;
+import net.minecraft.tags.TagKey;
+import net.minecraft.world.item.Item;
 import net.neoforged.neoforge.common.data.BlockTagsProvider;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
 import org.checkerframework.checker.nullness.qual.Nullable;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.concurrent.CompletableFuture;
 
 public class GeneratorItemTags extends ItemTagsProvider {
+
+    public static final TagKey<Item> TOOLS_KNIVES = ItemTags.create(ResourceLocation.fromNamespaceAndPath("instrumentus", "tools/knives"));
 
     public GeneratorItemTags(PackOutput output, CompletableFuture<HolderLookup.Provider> lookupProvider, BlockTagsProvider blockTags, @Nullable ExistingFileHelper helper) {
         super(output, lookupProvider, blockTags.contentsGetter(), Instrumentus.MODID, helper);
     }
 
     @Override
-    protected void addTags(HolderLookup.Provider provider) {
+    protected void addTags(HolderLookup.@NotNull Provider provider) {
         addTools();
+
+        for (var knife : ModItems.KNIVES.getEntries()) {
+            tag(TOOLS_KNIVES)
+                    .add(knife.get());
+        }
+        tag(TOOLS_KNIVES)
+                .add(ModItems.COPPER_KNIFE.get())
+                .add(ModItems.ENERGIZED_KNIFE.get());
     }
 
     public void addTools() {
@@ -78,7 +88,7 @@ public class GeneratorItemTags extends ItemTagsProvider {
                 if (tool != ModItems.ENERGIZED_LIGHTNING_ROD) {
                     tag(ItemTags.MINING_ENCHANTABLE)
                             .add(tool.get());
-                    if (tool != ModItems.ENERGIZED_SHOVEL || tool != ModItems.ENERGIZED_KNIFE || tool != ModItems.ENERGIZED_SHEARS) {
+                    if (tool != ModItems.ENERGIZED_SHOVEL || tool != ModItems.ENERGIZED_KNIFE || tool != ModItems.ENERGIZED_SHEARS || tool != ModItems.ENERGIZED_EXCAVATOR) {
                         tag(ItemTags.MINING_LOOT_ENCHANTABLE)
                                 .add(tool.get());
                     }
@@ -91,7 +101,7 @@ public class GeneratorItemTags extends ItemTagsProvider {
             if (tool != ModItems.COPPER_SWORD) {
                 tag(ItemTags.MINING_ENCHANTABLE)
                         .add(tool.get());
-                if (tool != ModItems.COPPER_SHOVEL || tool != ModItems.COPPER_KNIFE || tool != ModItems.COPPER_SHEARS) {
+                if (tool != ModItems.COPPER_SHOVEL || tool != ModItems.COPPER_KNIFE || tool != ModItems.COPPER_SHEARS || tool != ModItems.COPPER_EXCAVATOR) {
                     tag(ItemTags.MINING_LOOT_ENCHANTABLE)
                             .add(tool.get());
                 }
@@ -99,6 +109,12 @@ public class GeneratorItemTags extends ItemTagsProvider {
                 tag(ItemTags.SWORD_ENCHANTABLE)
                         .add(tool.get());
             }
+        }
+        for (var tool : ModItems.EXCAVATORS.getEntries()) {
+            tag(ItemTags.MINING_ENCHANTABLE)
+                    .add(tool.get());
+            tag(ItemTags.DURABILITY_ENCHANTABLE)
+                    .add(tool.get());
         }
     }
 }

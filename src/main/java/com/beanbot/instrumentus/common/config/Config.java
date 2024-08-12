@@ -1,14 +1,10 @@
 package com.beanbot.instrumentus.common.config;
 
-import com.beanbot.instrumentus.common.Instrumentus;
-import com.electronwill.nightconfig.core.file.CommentedFileConfig;
-import com.electronwill.nightconfig.core.io.WritingMode;
 import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.config.ModConfig;
 import net.neoforged.neoforge.common.ModConfigSpec;
 
-import java.io.File;
-
+@SuppressWarnings("unused")
 public class Config {
     private static final ModConfigSpec.Builder SERVER_BUILDER = new ModConfigSpec.Builder();
     private static final ModConfigSpec.Builder CLIENT_BUILDER = new ModConfigSpec.Builder();
@@ -25,6 +21,7 @@ public class Config {
     public static ModConfigSpec.BooleanValue KNIVES;
     public static ModConfigSpec.BooleanValue COPPER_TOOLS;
     public static ModConfigSpec.BooleanValue BRUSHES;
+    public static ModConfigSpec.BooleanValue EXCAVATORS;
 
     public static void register(ModContainer container){
 //        registerServerConfig(container);
@@ -78,6 +75,9 @@ public class Config {
 
         BRUSHES = STARTUP_BUILDER.comment("Brushes made of every tool material, including Instrumentus ones - their speed stays the same, however they have different durabilities")
                 .define("enable_brushes", true);
+
+        EXCAVATORS = STARTUP_BUILDER.comment("Excavators are 3x3 shovels that can mine a bunch of dirt!")
+                .define("instrumentus.enable_excavators", true);
 
         STARTUP_BUILDER.pop();
     }

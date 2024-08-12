@@ -1,5 +1,6 @@
 package com.beanbot.instrumentus.client;
 
+import com.beanbot.instrumentus.common.items.ExcavatorItem;
 import com.beanbot.instrumentus.common.items.HammerItem;
 import com.mojang.blaze3d.vertex.*;
 import net.minecraft.client.Minecraft;
@@ -35,8 +36,10 @@ public class ToolRenderEvents {
         Level world = player.level();
 
         ItemStack stack = player.getMainHandItem();
-        if (stack.isEmpty() || (!(stack.getItem() instanceof HammerItem hammerItem))){
-            return;
+        if (stack.isEmpty() || (!(stack.getItem() instanceof HammerItem))) {
+            if (!(stack.getItem() instanceof ExcavatorItem)) {
+                return;
+            }
         }
 
         BlockHitResult blockTrace = event.getTarget();

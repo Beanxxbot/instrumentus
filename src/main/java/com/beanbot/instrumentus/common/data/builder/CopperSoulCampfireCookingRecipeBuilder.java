@@ -1,4 +1,4 @@
-package com.beanbot.instrumentus.common.data.recipes;
+package com.beanbot.instrumentus.common.data.builder;
 
 import com.beanbot.instrumentus.common.Instrumentus;
 import com.beanbot.instrumentus.recipe.CopperSoulCampfireRecipe;
@@ -16,13 +16,15 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
-import net.minecraft.world.level.block.state.BlockState;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+@SuppressWarnings("unused")
 public class CopperSoulCampfireCookingRecipeBuilder implements RecipeBuilder {
+    @SuppressWarnings("FieldCanBeLocal")
     private String group;
 
     private final ResourceLocation id;
@@ -45,28 +47,28 @@ public class CopperSoulCampfireCookingRecipeBuilder implements RecipeBuilder {
 
 
     @Override
-    public RecipeBuilder unlockedBy(String pName, Criterion<?> pCriterion) {
+    public @NotNull RecipeBuilder unlockedBy(@NotNull String pName, @NotNull Criterion<?> pCriterion) {
         this.criteria.put(pName, pCriterion);
         return this;
     }
 
     @Override
-    public RecipeBuilder group(@Nullable String pGroupName) {
+    public @NotNull RecipeBuilder group(@Nullable String pGroupName) {
         this.group = pGroupName;
         return this;
     }
 
     @Override
-    public Item getResult() {
+    public @NotNull Item getResult() {
         return this.output.getItem();
     }
 
-    public void save(RecipeOutput recipeOutput) {
+    public void save(@NotNull RecipeOutput recipeOutput) {
         this.save(recipeOutput, ResourceLocation.fromNamespaceAndPath(Instrumentus.MODID, BuiltInRegistries.ITEM.getKey(this.output.getItem()).getPath() + "-copper_soul_campfire_cooking"));
     }
 
     @Override
-    public void save(RecipeOutput recipeOutput, ResourceLocation pId) {
+    public void save(RecipeOutput recipeOutput, @NotNull ResourceLocation pId) {
         this.ensureValid(pId);
         Advancement.Builder advancementBuilder = recipeOutput.advancement()
                 .addCriterion("has_the_recipe", RecipeUnlockedTrigger.unlocked(pId))

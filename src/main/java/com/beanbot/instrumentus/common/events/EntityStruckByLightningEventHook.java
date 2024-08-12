@@ -1,7 +1,6 @@
 package com.beanbot.instrumentus.common.events;
 
 import com.beanbot.instrumentus.common.items.interfaces.IItemLightningChargeable;
-import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.neoforged.bus.api.EventPriority;
 import net.neoforged.bus.api.SubscribeEvent;
@@ -16,15 +15,10 @@ public class EntityStruckByLightningEventHook {
     }
 
     private void chargeItem(EntityStruckByLightningEvent event) {
-        if(event.getEntity() instanceof ItemEntity) {
-            ItemEntity entity = (ItemEntity) event.getEntity();
-            if(entity.getItem().getItem() instanceof IItemLightningChargeable) {
-                IItemLightningChargeable energized = (IItemLightningChargeable) entity.getItem().getItem();
-                if(!energized.isChargeFull(entity.getItem())) {
+        if(event.getEntity() instanceof ItemEntity entity) {
+            if(entity.getItem().getItem() instanceof IItemLightningChargeable energized) {
                     entity.setItem(energized.chargeToFull(entity.getItem()));
                     event.setCanceled(true);
-                    event.getLightning().remove(Entity.RemovalReason.DISCARDED);
-                }
             }
         }
     }

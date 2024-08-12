@@ -1,7 +1,6 @@
 package com.beanbot.instrumentus.common.events.loot;
 
 import com.google.common.base.Suppliers;
-import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
@@ -26,19 +25,19 @@ public class PlantFiberFromGrassModifier extends LootModifier {
 
     private final Item item;
 
-    protected PlantFiberFromGrassModifier(LootItemCondition[] conditionsIn, Item item) {
+    public PlantFiberFromGrassModifier(LootItemCondition[] conditionsIn, Item item) {
         super(conditionsIn);
         this.item = item;
     }
 
     @Override
-    protected @NotNull ObjectArrayList<ItemStack> doApply(ObjectArrayList<ItemStack> generatedLoot, LootContext context) {
+    protected @NotNull ObjectArrayList<ItemStack> doApply(ObjectArrayList<ItemStack> generatedLoot, @NotNull LootContext context) {
         generatedLoot.add(new ItemStack(item));
         return generatedLoot;
     }
 
     @Override
-    public MapCodec<? extends IGlobalLootModifier> codec() {
+    public @NotNull MapCodec<? extends IGlobalLootModifier> codec() {
         return CODEC.get();
     }
 }

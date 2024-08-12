@@ -1,6 +1,5 @@
 package com.beanbot.instrumentus.common.items;
 
-import com.beanbot.instrumentus.common.Instrumentus;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
@@ -20,6 +19,7 @@ import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.common.ItemAbility;
 import net.neoforged.neoforge.common.ItemAbilities;
 import net.neoforged.neoforge.event.level.BlockEvent;
+import org.jetbrains.annotations.NotNull;
 
 public class HammerItem extends DiggerItem {
 
@@ -38,17 +38,17 @@ public class HammerItem extends DiggerItem {
     }
 
     @Override
-    public boolean canPerformAction(ItemStack stack, ItemAbility action){
-        return ItemAbilities.DEFAULT_PICKAXE_ACTIONS.contains(action);
+    public boolean canPerformAction(@NotNull ItemStack stack, @NotNull ItemAbility ability){
+        return ItemAbilities.DEFAULT_PICKAXE_ACTIONS.contains(ability);
     }
 
     @Override
-    public boolean mineBlock(ItemStack stack, Level world, BlockState state, BlockPos pos, LivingEntity entity) {
-        if (state.getBlock() == null || world.getBlockState(pos).getBlock() == Blocks.AIR)
+    public boolean mineBlock(@NotNull ItemStack stack, @NotNull Level level, BlockState state, @NotNull BlockPos pos, @NotNull LivingEntity entity) {
+        //noinspection ConstantValue
+        if (state.getBlock() == null || level.getBlockState(pos).getBlock() == Blocks.AIR)
             return false;
-        boolean isStone;
-        isStone = state.is(BlockTags.MINEABLE_WITH_PICKAXE);
-        int r = isStone ? 0 : 2;
+        boolean isPickaxeable = state.is(BlockTags.MINEABLE_WITH_PICKAXE);
+        int r = isPickaxeable ? 0 : 2;
 
         if(tier == Tiers.WOOD || tier == Tiers.STONE || tier == Tiers.IRON || tier == ModItemTiers.COPPER || tier == Tiers.GOLD || tier == Tiers.DIAMOND || tier == Tiers.NETHERITE || tier == ModItemTiers.ENERGIZED){
             r = 1;
@@ -58,19 +58,18 @@ public class HammerItem extends DiggerItem {
 
         int numberTrimmed = 0;
 
-        if(isStone && !entity.isCrouching())
+        if(isPickaxeable && !entity.isCrouching())
         {
-            numberTrimmed += trim(stack, entity, world, pos, r, TrimType.TRIM_ROCK, false, 100);
+            numberTrimmed += trim(stack, entity, level, pos, r, TrimType.TRIM_ROCK);
         }
         return numberTrimmed > 0;
     }
 
-    public int trim(ItemStack stack, LivingEntity entity, Level world, BlockPos blockPos, int r, TrimType trimType, boolean cutCorners, int damagePercentChance){
+    public int trim(ItemStack stack, LivingEntity entity, Level level, BlockPos blockPos, int r, TrimType trimType){
         int numberTrimmed = 0;
-        int fortune = 0;
         Player player = (Player) entity;
 
-        BlockHitResult blockHitResult = new BlockHitResult(new Vec3(player.getX(), player.getY(), player.getZ()), getPlayerPOVHitResult(world, player, ClipContext.Fluid.NONE).getDirection(), blockPos, false);
+        BlockHitResult blockHitResult = new BlockHitResult(new Vec3(player.getX(), player.getY(), player.getZ()), getPlayerPOVHitResult(level, player, ClipContext.Fluid.NONE).getDirection(), blockPos, false);
         Direction blockFaceMined = blockHitResult.getDirection();
 
         if(blockFaceMined == Direction.EAST || blockFaceMined == Direction.WEST/*look.x >= -1 && look.x <= -0.75 || look.x <= 1 && look.x >= 0.75*/) {
@@ -78,7 +77,7 @@ public class HammerItem extends DiggerItem {
                 for (int dy = -r; dy <= r; dy++) {
                     if (dy == 0 && dz == 0)
                         continue;
-                    if (trimType.trimAtPos(world, blockPos.offset(0, dy, dz), entity, stack)) {
+                    if (trimType.trimAtPos(level, blockPos.offset(0, dy, dz), entity, stack)) {
                         numberTrimmed++;
                         stack.hurtAndBreak(1, entity, EquipmentSlot.MAINHAND);
                     }
@@ -89,7 +88,7 @@ public class HammerItem extends DiggerItem {
                 for (int dy = -r; dy <= r; dy++) {
                     if (dy == 0 && dx == 0)
                         continue;
-                    if (trimType.trimAtPos(world, blockPos.offset(dx, dy, 0), entity, stack)) {
+                    if (trimType.trimAtPos(level, blockPos.offset(dx, dy, 0), entity, stack)) {
                         numberTrimmed++;
                         stack.hurtAndBreak(1, entity, EquipmentSlot.MAINHAND);
                     }
@@ -100,7 +99,7 @@ public class HammerItem extends DiggerItem {
                 for (int dz = -r; dz <= r; dz++) {
                     if (dz == 0 && dx == 0)
                         continue;
-                    if (trimType.trimAtPos(world, blockPos.offset(dx, 0, dz), entity, stack)) {
+                    if (trimType.trimAtPos(level, blockPos.offset(dx, 0, dz), entity, stack)) {
                         numberTrimmed++;
                         stack.hurtAndBreak(1, entity, EquipmentSlot.MAINHAND);
                     }
@@ -113,24 +112,26 @@ public class HammerItem extends DiggerItem {
     public enum TrimType{
         TRIM_ROCK;
 
-        public boolean trimAtPos(Level world, BlockPos pos, LivingEntity entity, ItemStack item)
+        public boolean trimAtPos(Level level, BlockPos pos, LivingEntity entity, ItemStack item)
         {
-            BlockState state = world.getBlockState(pos);
-            BlockEntity blockEntity = world.getBlockEntity(pos);
+            BlockState state = level.getBlockState(pos);
+            BlockEntity blockEntity = level.getBlockEntity(pos);
 
-            BlockEvent.BreakEvent event = new BlockEvent.BreakEvent(world, pos, state, (Player) entity);
+            BlockEvent.BreakEvent event = new BlockEvent.BreakEvent(level, pos, state, (Player) entity);
             NeoForge.EVENT_BUS.post(event);
 
-            switch (this){
-                case TRIM_ROCK:default:
-                    if(state.is(BlockTags.MINEABLE_WITH_PICKAXE) && state.canHarvestBlock(world, pos, (Player)entity)){
-                        state.getBlock().playerDestroy(world, (Player) entity, pos, state,  blockEntity, item);
-                        state.getBlock().popExperience((ServerLevel) world, pos, event.getState().getExpDrop(world, pos, blockEntity, entity, item));
-                        world.removeBlock(pos, false);
-                        return true;
+            //noinspection SwitchStatementWithTooFewBranches
+            return switch (this) {
+                default -> {
+                    if (state.is(BlockTags.MINEABLE_WITH_PICKAXE) && state.canHarvestBlock(level, pos, (Player) entity)) {
+                        state.getBlock().playerDestroy(level, (Player) entity, pos, state, blockEntity, item);
+                        state.getBlock().popExperience((ServerLevel) level, pos, event.getState().getExpDrop(level, pos, blockEntity, entity, item));
+                        level.removeBlock(pos, false);
+                        yield true;
                     }
-                    return false;
-            }
+                    yield false;
+                }
+            };
         }
     }
 

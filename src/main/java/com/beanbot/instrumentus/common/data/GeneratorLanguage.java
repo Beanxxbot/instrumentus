@@ -53,6 +53,7 @@ public class GeneratorLanguage extends LanguageProvider {
         addItem(ModItems.ENERGIZED_SHOVEL, "Energized Di-Emerald Shovel");
         addItem(ModItems.ENERGIZED_HOE, "Energized Di-Emerald Hoe");
         addItem(ModItems.ENERGIZED_LIGHTNING_ROD, "Energized Di-Emerald Lightning Rod");
+        addBlock(ModBlocks.ENERGIZED_BLOCK, "Energized Di-Emerald Block");
 
         addItem(ModItems.SOULCOPPER_PICKAXE, "Soulcopper Pickaxe");
 
@@ -93,7 +94,14 @@ public class GeneratorLanguage extends LanguageProvider {
         addItem(ModItems.NETHERITE_BRUSH, "Netherite Brush");
         addItem(ModItems.ENERGIZED_BRUSH, "Energized Di-Emerald Brush");
 
-        addBlock(ModBlocks.ENERGIZED_BLOCK, "Energized Di-Emerald Block");
+        addItem(ModItems.WOODEN_EXCAVATOR, "Wooden Excavator");
+        addItem(ModItems.STONE_EXCAVATOR, "Stone Excavator");
+        addItem(ModItems.IRON_EXCAVATOR, "Iron Excavator");
+        addItem(ModItems.GOLDEN_EXCAVATOR, "Golden Excavator");
+        addItem(ModItems.DIAMOND_EXCAVATOR, "Diamond Excavator");
+        addItem(ModItems.NETHERITE_EXCAVATOR, "Netherite Excavator");
+        addItem(ModItems.COPPER_EXCAVATOR, "Copper Excavator");
+        addItem(ModItems.ENERGIZED_EXCAVATOR, "Energized Di-Emerald Excavator");
 
         add(Instrumentus.MODID + ".lore.no_energy", "No Energy");
         add(Instrumentus.MODID + ".lore.energy", "%d FE/%d FE");

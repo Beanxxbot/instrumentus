@@ -19,6 +19,7 @@ import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.energy.IEnergyStorage;
 import net.neoforged.neoforge.event.level.BlockEvent;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
@@ -32,8 +33,9 @@ public class EnergyHammerItem extends HammerItem implements IItemLightningCharge
     }
 
     @Override
-    public boolean mineBlock(ItemStack stack, Level world, BlockState state, BlockPos pos, LivingEntity entity){
-        if(state.getBlock() == null || world.getBlockState(pos).getBlock() == Blocks.AIR)
+    public boolean mineBlock(@NotNull ItemStack stack, @NotNull Level level, BlockState state, @NotNull BlockPos pos, @NotNull LivingEntity entity){
+        //noinspection ConstantValue
+        if(state.getBlock() == null || level.getBlockState(pos).getBlock() == Blocks.AIR)
             return false;
 
         boolean isStone = state.is(BlockTags.MINEABLE_WITH_PICKAXE);
@@ -49,14 +51,13 @@ public class EnergyHammerItem extends HammerItem implements IItemLightningCharge
 
         if(isStone && !entity.isCrouching())
         {
-            numberTrimmed += trim(stack, entity, world, pos, r, HammerItem.TrimType.TRIM_ROCK, false, 100);
+            numberTrimmed += trim(stack, entity, level, pos, r, TrimType.TRIM_ROCK);
         }
         return numberTrimmed > 0;
     }
 
-    public int trim(ItemStack stack, LivingEntity entity, Level world, BlockPos blockPos, int r, HammerItem.TrimType trimType, boolean cutCorners, int damagePercentChance){
+    public int trim(ItemStack stack, LivingEntity entity, Level level, BlockPos blockPos, int r, TrimType trimType){
         int numberTrimmed = 0;
-        int fortune = 0;
         Vec3 look = entity.getLookAngle();
 
         if(look.x >= -1 && look.x <= -0.75 || look.x <= 1 && look.x >= 0.75) {
@@ -64,11 +65,11 @@ public class EnergyHammerItem extends HammerItem implements IItemLightningCharge
                 for (int dy = -r; dy <= r; dy++) {
                     if (dy == 0 && dz == 0)
                         continue;
-                    if (trimType.trimAtPos(world, blockPos.offset(0, dy, dz), entity, stack)) {
+                    if (trimType.trimAtPos(level, blockPos.offset(0, dy, dz), entity, stack)) {
                         numberTrimmed++;
                         IEnergyStorage energyStorage = stack.getCapability(Capabilities.EnergyStorage.ITEM);
                             if(!(energyStorage == null)){
-                                if(world.getBlockState(blockPos).getDestroySpeed(world, blockPos) != 0.0F){
+                                if(level.getBlockState(blockPos).getDestroySpeed(level, blockPos) != 0.0F){
                                     energyStorage.extractEnergy(getMaxTransferRate() - 24, false);
                                 }
                             }
@@ -80,11 +81,11 @@ public class EnergyHammerItem extends HammerItem implements IItemLightningCharge
                 for (int dy = -r; dy <= r; dy++) {
                     if (dy == 0 && dx == 0)
                         continue;
-                    if (trimType.trimAtPos(world, blockPos.offset(dx, dy, 0), entity, stack)) {
+                    if (trimType.trimAtPos(level, blockPos.offset(dx, dy, 0), entity, stack)) {
                         numberTrimmed++;
                         IEnergyStorage energyStorage = stack.getCapability(Capabilities.EnergyStorage.ITEM);
                         if(!(energyStorage == null)){
-                            if(world.getBlockState(blockPos).getDestroySpeed(world, blockPos) != 0.0F){
+                            if(level.getBlockState(blockPos).getDestroySpeed(level, blockPos) != 0.0F){
                                 energyStorage.extractEnergy(getMaxTransferRate() - 24, false);
                             }
                         }
@@ -96,11 +97,11 @@ public class EnergyHammerItem extends HammerItem implements IItemLightningCharge
                 for (int dz = -r; dz <= r; dz++) {
                     if (dz == 0 && dx == 0)
                         continue;
-                    if (trimType.trimAtPos(world, blockPos.offset(dx, 0, dz), entity, stack)) {
+                    if (trimType.trimAtPos(level, blockPos.offset(dx, 0, dz), entity, stack)) {
                         numberTrimmed++;
                         IEnergyStorage energyStorage = stack.getCapability(Capabilities.EnergyStorage.ITEM);
                         if(!(energyStorage == null)){
-                            if(world.getBlockState(blockPos).getDestroySpeed(world, blockPos) != 0.0F){
+                            if(level.getBlockState(blockPos).getDestroySpeed(level, blockPos) != 0.0F){
                                 energyStorage.extractEnergy(getMaxTransferRate() - 24, false);
                             }
                         }
@@ -112,12 +113,12 @@ public class EnergyHammerItem extends HammerItem implements IItemLightningCharge
     }
 
     @Override
-    public boolean hurtEnemy(ItemStack stack, LivingEntity target, LivingEntity attacker){
+    public boolean hurtEnemy(@NotNull ItemStack stack, @NotNull LivingEntity target, @NotNull LivingEntity attacker){
         return energyDamageEnemy(stack, target, attacker);
     }
 
     @Override
-    public float getDestroySpeed(ItemStack stack, BlockState state){
+    public float getDestroySpeed(ItemStack stack, @NotNull BlockState state){
         IEnergyStorage energyStorage = stack.getCapability(Capabilities.EnergyStorage.ITEM);
         if(energyStorage == null) return 0.0F;
         if(!(energyStorage.getEnergyStored() > 0)) return 0.0F;
@@ -125,26 +126,26 @@ public class EnergyHammerItem extends HammerItem implements IItemLightningCharge
     }
 
     @Override
-    public void appendHoverText(ItemStack stack, Item.TooltipContext context, List<Component> tooltip, TooltipFlag flagIn){
+    public void appendHoverText(@NotNull ItemStack stack, Item.@NotNull TooltipContext context, @NotNull List<Component> tooltip, @NotNull TooltipFlag flagIn){
         addTooltip(stack, context, tooltip, flagIn);
     }
 
     @Override
-    public int getBarWidth(ItemStack stack){
+    public int getBarWidth(@NotNull ItemStack stack){
         return getEnergyBarWidth(stack);
     }
 
     @Override
-    public int getBarColor(ItemStack stack){
+    public int getBarColor(@NotNull ItemStack stack){
         return getEnergyBarColor(stack);
     }
 
     @Override
-    public boolean isDamaged(ItemStack stack){
+    public boolean isDamaged(@NotNull ItemStack stack){
         return isEnergyBelowZero(stack);
     }
     @Override
-    public boolean isBarVisible(ItemStack stack){
+    public boolean isBarVisible(@NotNull ItemStack stack){
         return isEnergyBarVisible(stack);
     }
 
@@ -159,16 +160,18 @@ public class EnergyHammerItem extends HammerItem implements IItemLightningCharge
             BlockEvent.BreakEvent event = new BlockEvent.BreakEvent(world, pos, state, (Player) entity);
             NeoForge.EVENT_BUS.post(event);
 
-            switch (this){
-                case TRIM_ROCK:default:
-                    if(state.is(BlockTags.MINEABLE_WITH_PICKAXE) && state.canHarvestBlock(world, pos, (Player)entity)){
-                        state.getBlock().playerDestroy(world, (Player) entity, pos, state,  blockEntity, item);
+            //noinspection SwitchStatementWithTooFewBranches
+            return switch (this) {
+                default -> {
+                    if (state.is(BlockTags.MINEABLE_WITH_PICKAXE) && state.canHarvestBlock(world, pos, (Player) entity)) {
+                        state.getBlock().playerDestroy(world, (Player) entity, pos, state, blockEntity, item);
                         state.getBlock().popExperience((ServerLevel) world, pos, event.getState().getExpDrop(world, pos, blockEntity, entity, item));
                         world.removeBlock(pos, false);
-                        return true;
+                        yield true;
                     }
-                    return false;
-            }
+                    yield false;
+                }
+            };
         }
     }
 }

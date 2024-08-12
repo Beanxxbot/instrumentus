@@ -20,6 +20,7 @@ public class ModItems {
     public static final DeferredRegister.Items SOULCOPPER = DeferredRegister.createItems(Instrumentus.MODID);
     public static final DeferredRegister.Items COPPER = DeferredRegister.createItems(Instrumentus.MODID);
     public static final DeferredRegister.Items BRUSHES = DeferredRegister.createItems(Instrumentus.MODID);
+    public static final DeferredRegister.Items EXCAVATORS = DeferredRegister.createItems(Instrumentus.MODID);
 
     public static final DeferredHolder<Item, ModShearsItem> WOODEN_SHEARS = SHEARS.register("wooden_shears", () -> new ModShearsItem(Tiers.WOOD, new Item.Properties().stacksTo(1).durability(Math.toIntExact(Math.round(Tiers.WOOD.getUses() * 0.952)))));
     public static final DeferredHolder<Item, ModShearsItem> STONE_SHEARS = SHEARS.register("stone_shears", () -> new ModShearsItem(Tiers.STONE, new Item.Properties().stacksTo(1).durability(Math.toIntExact(Math.round(Tiers.STONE.getUses() * 0.952)))));
@@ -61,6 +62,7 @@ public class ModItems {
     public static final DeferredHolder<Item, BlockItem> ENERGIZED_BLOCK = ENERGIZED.register("energy_block", () -> new BlockItem(ModBlocks.ENERGIZED_BLOCK.get(), new Item.Properties().stacksTo(64)));
     public static final DeferredHolder<Item, Item> CARBON_ROD = ENERGIZED.register("carbon_rod", () -> new Item(new Item.Properties()));
     public static final DeferredHolder<Item, EnergyLightningRodItem> ENERGIZED_LIGHTNING_ROD = ENERGIZED.register("energy_lightning_rod", () -> new EnergyLightningRodItem(new Item.Properties().stacksTo(1).fireResistant()));
+    public static final DeferredHolder<Item, EnergyExcavatorItem> ENERGIZED_EXCAVATOR = ENERGIZED.register("energy_excavator", () -> new EnergyExcavatorItem(ModItemTiers.ENERGIZED, 1, -3.0f));
 
     public static final DeferredHolder<Item, SoulcopperPickaxeItem> SOULCOPPER_PICKAXE = SOULCOPPER.register("soulcopper_pickaxe", () -> new SoulcopperPickaxeItem(Tiers.DIAMOND, 1, -2.8f));
     public static final DeferredHolder<Item, Item> SOULCOPPER_INGOT = SOULCOPPER.register("soulcopper_ingot", () -> new Item(new Item.Properties()));
@@ -92,6 +94,7 @@ public class ModItems {
     public static final DeferredHolder<Item, SickleItem> COPPER_SICKLE = COPPER.register("copper_sickle", () -> new SickleItem(ModItemTiers.COPPER));
     public static final DeferredHolder<Item, ModShearsItem> COPPER_SHEARS = COPPER.register("copper_shears", () -> new ModShearsItem(ModItemTiers.COPPER, new Item.Properties().stacksTo(1).durability(Math.toIntExact(Math.round(ModItemTiers.COPPER.getUses() * 0.952)))));
     public static final DeferredHolder<Item, KnifeItem> COPPER_KNIFE = COPPER.register("copper_knife", () -> new KnifeItem(ModItemTiers.COPPER, 1, -2.8f));
+    public static final DeferredHolder<Item, ExcavatorItem> COPPER_EXCAVATOR = COPPER.register("copper_excavator", () -> new ExcavatorItem(ModItemTiers.COPPER, 1, -3.0f));
 
     public static final DeferredHolder<Item, ModBrushItem> WOODEN_BRUSH = BRUSHES.register("wooden_brush", () -> new ModBrushItem(Tiers.WOOD));
     public static final DeferredHolder<Item, ModBrushItem> STONE_BRUSH = BRUSHES.register("stone_brush", () -> new ModBrushItem(Tiers.STONE));
@@ -100,6 +103,13 @@ public class ModItems {
     public static final DeferredHolder<Item, ModBrushItem> DIAMOND_BRUSH = BRUSHES.register("diamond_brush", () -> new ModBrushItem(Tiers.DIAMOND));
     public static final DeferredHolder<Item, ModBrushItem> NETHERITE_BRUSH = BRUSHES.register("netherite_brush", () -> new ModBrushItem(Tiers.NETHERITE));
     public static final DeferredHolder<Item, EnergyBrushItem> ENERGIZED_BRUSH = BRUSHES.register("energy_brush", EnergyBrushItem::new);
+
+    public static final DeferredHolder<Item, ExcavatorItem> WOODEN_EXCAVATOR = EXCAVATORS.register("wooden_excavator", () -> new ExcavatorItem(Tiers.WOOD, 1, -3.0f));
+    public static final DeferredHolder<Item, ExcavatorItem> STONE_EXCAVATOR = EXCAVATORS.register("stone_excavator", () -> new ExcavatorItem(Tiers.STONE, 1, -3.0f));
+    public static final DeferredHolder<Item, ExcavatorItem> IRON_EXCAVATOR = EXCAVATORS.register("iron_excavator", () -> new ExcavatorItem(Tiers.IRON, 1, -3.0f));
+    public static final DeferredHolder<Item, ExcavatorItem> GOLDEN_EXCAVATOR = EXCAVATORS.register("golden_excavator", () -> new ExcavatorItem(Tiers.GOLD, 1, -3.0f));
+    public static final DeferredHolder<Item, ExcavatorItem> DIAMOND_EXCAVATOR = EXCAVATORS.register("diamond_excavator", () -> new ExcavatorItem(Tiers.DIAMOND, 1, -3.0f));
+    public static final DeferredHolder<Item, ExcavatorItem> NETHERITE_EXCAVATOR = EXCAVATORS.register("netherite_excavator", () -> new ExcavatorItem(Tiers.NETHERITE, 1, -3.0f));
 
 
 

@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "group": "instrumentus",
+  "key": {
+    "I": {
+      "item": "instrumentus:energy_block"
+    },
+    "S": {
+      "item": "instrumentus:carbon_rod"
+    }
+  },
+  "pattern": [
+    "I",
+    "S",
+    "S"
+  ],
+  "result": {
+    "count": 1,
+    "id": "instrumentus:energy_excavator"
+  }
+}

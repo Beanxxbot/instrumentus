@@ -15,8 +15,6 @@ import com.beanbot.instrumentus.common.creative.ModCreativeModeTabPopulate;
 import com.beanbot.instrumentus.common.items.datacomponents.ModDataComponents;
 import com.beanbot.instrumentus.common.items.interfaces.IEnergyItem;
 import com.beanbot.instrumentus.recipe.ModRecipes;
-import net.minecraft.client.renderer.ItemBlockRenderTypes;
-import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderers;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.IEventBus;
@@ -36,12 +34,13 @@ import org.apache.logging.log4j.Logger;
 public class Instrumentus {
 
     public static final String MODID = "instrumentus";
+    @SuppressWarnings("unused")
     private static Instrumentus instance;
     public static final Logger LOGGER = LogManager.getLogger();
     public static final ModContainer MOD_CONTAINER = ModLoadingContext.get().getActiveContainer();
 
 
-    public Instrumentus(IEventBus instrumentusEventBus, Dist dist)
+    public Instrumentus(IEventBus instrumentusEventBus, @SuppressWarnings("unused") Dist dist)
     {
         ModCreativeModeTab.register(instrumentusEventBus);
 
@@ -81,6 +80,9 @@ public class Instrumentus {
 
         if (Config.BRUSHES.get())
             ModItems.BRUSHES.register(instrumentusEventBus);
+
+        if (Config.EXCAVATORS.get())
+            ModItems.EXCAVATORS.register(instrumentusEventBus);
 
         instrumentusEventBus.addListener(this::addCreative);
 
@@ -123,20 +125,18 @@ public class Instrumentus {
                 ModItems.ENERGIZED_HAMMER.get(),
                 ModItems.ENERGIZED_KNIFE.get(),
                 ModItems.ENERGIZED_BRUSH.get(),
-                ModItems.ENERGIZED_LIGHTNING_ROD.get()
+                ModItems.ENERGIZED_LIGHTNING_ROD.get(),
+                ModItems.ENERGIZED_EXCAVATOR.get()
         );
     }
 
     private void setupClient(final FMLClientSetupEvent event) {
-        ItemBlockRenderTypes.setRenderLayer(ModBlocks.COPPER_SOUL_CAMPFIRE.get(), RenderType.cutout());
-        ItemBlockRenderTypes.setRenderLayer(ModBlocks.SOULCOPPER_LANTERN.get(), RenderType.cutout());
-        ItemBlockRenderTypes.setRenderLayer(ModBlocks.SOULCOPPER_TORCH.get(), RenderType.cutout());
-        ItemBlockRenderTypes.setRenderLayer(ModBlocks.SOULCOPPER_WALL_TORCH.get(), RenderType.cutout());
         BlockEntityRenderers.register(ModBlockEntities.COPPER_SOUL_CAMPFIRE_BLOCK_ENTITY.get(), CopperSoulCampfireRenderer::new);
 
         NeoForge.EVENT_BUS.register(ToolRenderEvents.class);
     }
 
+    @SuppressWarnings("unused")
     public static Instrumentus getInstance() { return instance; }
 
 }

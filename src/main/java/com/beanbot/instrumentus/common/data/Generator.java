@@ -4,14 +4,10 @@ import com.beanbot.instrumentus.common.Instrumentus;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.PackOutput;
-import net.minecraft.data.loot.LootTableProvider;
-import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.data.event.GatherDataEvent;
 
-import java.util.Collections;
-import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
 @SuppressWarnings("unused")
@@ -24,8 +20,8 @@ public class Generator {
         CompletableFuture<HolderLookup.Provider> lookupProvider = event.getLookupProvider();
 
         generator.addProvider(event.includeServer(), new GeneratorRecipes(output, lookupProvider));
-        generator.addProvider(event.includeServer(), new LootTableProvider(output, Collections.emptySet(),
-                List.of(new LootTableProvider.SubProviderEntry(GeneratorBlockLootTables::new, LootContextParamSets.BLOCK)), event.getLookupProvider()));
+        generator.addProvider(event.includeServer(), new GeneratorLootTables(output, event.getLookupProvider()));
+
         GeneratorBlockTags blockTags = new GeneratorBlockTags(output, lookupProvider, event.getExistingFileHelper());
         generator.addProvider(event.includeServer(), blockTags);
         GeneratorItemTags itemTags = new GeneratorItemTags(output, lookupProvider, blockTags ,event.getExistingFileHelper());
@@ -34,6 +30,7 @@ public class Generator {
         generator.addProvider(event.includeClient(), new GeneratorBlockStates(output, event.getExistingFileHelper()));
         generator.addProvider(event.includeClient(), new GeneratorItemModels(output, event.getExistingFileHelper()));
 
+        generator.addProvider(event.includeServer(), new GeneratorGlobalLootModifier(output, event.getLookupProvider()));
         generator.addProvider(event.includeClient(), new GeneratorLanguage(output));
     }
 }

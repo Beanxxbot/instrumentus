@@ -28,6 +28,7 @@ public class GeneratorItemModels extends ItemModelProvider {
         singleTexture(ModItems.ENERGIZED_INGOT.getId().getPath(), mcLoc("item/generated"), "layer0", modLoc("item/energy_ingot"));
         singleTexture(ModItems.ENERGIZED_LIGHTNING_ROD.getId().getPath(), mcLoc("item/handheld"), "layer0", modLoc("item/energy_lightning_rod"));
         withExistingParent(ModItems.ENERGIZED_BLOCK.getId().getPath(), modLoc("block/energy_block"));
+        singleTexture(ModItems.ENERGIZED_EXCAVATOR.getId().getPath(), mcLoc("item/generated"), "layer0", modLoc("item/energy_excavator"));
 
         //Soulcopper
         singleTexture(ModItems.SOULCOPPER_PICKAXE.getId().getPath(), mcLoc("item/handheld"), "layer0", modLoc("item/soulcopper_pickaxe"));
@@ -87,6 +88,12 @@ public class GeneratorItemModels extends ItemModelProvider {
                     .texture("layer0", modelPath);
         }
         for (var tool : ModItems.BRUSHES.getEntries()) {
+            ResourceLocation modelPath = modLoc("item/" + tool.getId().getPath());
+            getBuilder(tool.getId().getPath())
+                    .parent(getExistingFile(mcLoc("item/handheld")))
+                    .texture("layer0", modelPath);
+        }
+        for (var tool : ModItems.EXCAVATORS.getEntries()) {
             ResourceLocation modelPath = modLoc("item/" + tool.getId().getPath());
             getBuilder(tool.getId().getPath())
                     .parent(getExistingFile(mcLoc("item/handheld")))

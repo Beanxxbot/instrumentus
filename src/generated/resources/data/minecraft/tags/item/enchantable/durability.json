@@ -43,6 +43,7 @@
     "instrumentus:energy_block",
     "instrumentus:carbon_rod",
     "instrumentus:energy_lightning_rod",
+    "instrumentus:energy_excavator",
     "instrumentus:copper_pickaxe",
     "instrumentus:copper_shovel",
     "instrumentus:copper_axe",
@@ -52,6 +53,13 @@
     "instrumentus:copper_hammer",
     "instrumentus:copper_sickle",
     "instrumentus:copper_shears",
-    "instrumentus:copper_knife"
+    "instrumentus:copper_knife",
+    "instrumentus:copper_excavator",
+    "instrumentus:wooden_excavator",
+    "instrumentus:stone_excavator",
+    "instrumentus:iron_excavator",
+    "instrumentus:golden_excavator",
+    "instrumentus:diamond_excavator",
+    "instrumentus:netherite_excavator"
   ]
 }

@@ -1,5 +1,6 @@
 {
   "parent": "minecraft:block/template_campfire",
+  "render_type": "minecraft:cutout",
   "textures": {
     "fire": "instrumentus:block/copper_soul_campfire_fire",
     "lit_log": "instrumentus:block/copper_soul_campfire_log_lit"
