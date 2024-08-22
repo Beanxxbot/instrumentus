@@ -2,21 +2,21 @@ package com.beanbot.instrumentus.common;
 
 import com.beanbot.instrumentus.client.ToolRenderEvents;
 import com.beanbot.instrumentus.client.inventory.recipebook.RecipeBookExtensionClientHelper;
-import com.beanbot.instrumentus.common.inventory.ModMenus;
-import com.beanbot.instrumentus.client.particles.ModParticles;
+import com.beanbot.instrumentus.common.inventory.InstrumentusMenus;
+import com.beanbot.instrumentus.client.particles.InstrumentusParticles;
 import com.beanbot.instrumentus.client.renderer.CopperSoulCampfireRenderer;
-import com.beanbot.instrumentus.common.blocks.ModBlocks;
-import com.beanbot.instrumentus.common.blocks.entities.ModBlockEntities;
+import com.beanbot.instrumentus.common.blocks.InstrumentusBlocks;
+import com.beanbot.instrumentus.common.blocks.entities.InstrumentusBlockEntities;
 import com.beanbot.instrumentus.common.capability.EnergyItemstack;
 import com.beanbot.instrumentus.common.config.Config;
 import com.beanbot.instrumentus.common.events.EntityStruckByLightningEventHook;
-import com.beanbot.instrumentus.common.events.loot.ModLootModifiers;
-import com.beanbot.instrumentus.common.items.ModItems;
-import com.beanbot.instrumentus.common.creative.ModCreativeModeTab;
-import com.beanbot.instrumentus.common.creative.ModCreativeModeTabPopulate;
-import com.beanbot.instrumentus.common.items.datacomponents.ModDataComponents;
+import com.beanbot.instrumentus.common.events.loot.InstrumentusLootModifiers;
+import com.beanbot.instrumentus.common.items.InstrumentusItems;
+import com.beanbot.instrumentus.common.creative.InstrumentusCreativeModeTab;
+import com.beanbot.instrumentus.common.creative.InstrumentusCreativeModeTabPopulate;
+import com.beanbot.instrumentus.common.items.datacomponents.InstrumentusDataComponents;
 import com.beanbot.instrumentus.common.items.interfaces.IEnergyItem;
-import com.beanbot.instrumentus.common.recipe.ModRecipes;
+import com.beanbot.instrumentus.common.recipe.InstrumentusRecipes;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderers;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.IEventBus;
@@ -45,63 +45,63 @@ public class Instrumentus {
 
     public Instrumentus(IEventBus instrumentusEventBus, @SuppressWarnings("unused") Dist dist)
     {
-        ModCreativeModeTab.register(instrumentusEventBus);
+        InstrumentusCreativeModeTab.register(instrumentusEventBus);
 
         Config.register(MOD_CONTAINER);
 
         NeoForge.EVENT_BUS.register(new EntityStruckByLightningEventHook());
 
         LOGGER.debug("Yo Yo Yo It's Ya Boi, Instrumentus but on NeoForge");
-        ModParticles.PARTICLE_TYPES.register(instrumentusEventBus);
+        InstrumentusParticles.PARTICLE_TYPES.register(instrumentusEventBus);
 
         if (Config.SHEARS.get())
-            ModItems.SHEARS.register(instrumentusEventBus);
+            InstrumentusItems.SHEARS.register(instrumentusEventBus);
 
         if (Config.SICKLES.get())
-            ModItems.SICKLES.register(instrumentusEventBus);
+            InstrumentusItems.SICKLES.register(instrumentusEventBus);
 
         if (Config.PAXELS.get())
-            ModItems.PAXELS.register(instrumentusEventBus);
+            InstrumentusItems.PAXELS.register(instrumentusEventBus);
 
         if (Config.HAMMERS.get())
-            ModItems.HAMMERS.register(instrumentusEventBus);
+            InstrumentusItems.HAMMERS.register(instrumentusEventBus);
 
         if (Config.ENERGIZED.get()) {
-            ModItems.ENERGIZED.register(instrumentusEventBus);
-            ModBlocks.ENERGIZED.register(instrumentusEventBus);
+            InstrumentusItems.ENERGIZED.register(instrumentusEventBus);
+            InstrumentusBlocks.ENERGIZED.register(instrumentusEventBus);
         }
 
         if (Config.KNIVES.get())
-            ModItems.KNIVES.register(instrumentusEventBus);
+            InstrumentusItems.KNIVES.register(instrumentusEventBus);
 
         if (Config.SOULCOPPER.get()) {
-            ModItems.SOULCOPPER.register(instrumentusEventBus);
-            ModBlocks.SOULCOPPER.register(instrumentusEventBus);
+            InstrumentusItems.SOULCOPPER.register(instrumentusEventBus);
+            InstrumentusBlocks.SOULCOPPER.register(instrumentusEventBus);
         }
         if (Config.COPPER_TOOLS.get())
-            ModItems.COPPER.register(instrumentusEventBus);
+            InstrumentusItems.COPPER.register(instrumentusEventBus);
 
         if (Config.BRUSHES.get())
-            ModItems.BRUSHES.register(instrumentusEventBus);
+            InstrumentusItems.BRUSHES.register(instrumentusEventBus);
 
         if (Config.EXCAVATORS.get())
-            ModItems.EXCAVATORS.register(instrumentusEventBus);
+            InstrumentusItems.EXCAVATORS.register(instrumentusEventBus);
 
-        ModItems.UTIL.register(instrumentusEventBus);
-        ModBlocks.UTIL.register(instrumentusEventBus);
+        InstrumentusItems.UTIL.register(instrumentusEventBus);
+        InstrumentusBlocks.UTIL.register(instrumentusEventBus);
 
         instrumentusEventBus.addListener(this::addCreative);
 
-        ModMenus.register(instrumentusEventBus);
+        InstrumentusMenus.register(instrumentusEventBus);
         instrumentusEventBus.addListener(this::registerRecipeBookCategories);
 
-        ModBlockEntities.register(instrumentusEventBus);
+        InstrumentusBlockEntities.register(instrumentusEventBus);
 
-        ModRecipes.register(instrumentusEventBus);
+        InstrumentusRecipes.register(instrumentusEventBus);
 
-        ModLootModifiers.register(instrumentusEventBus);
+        InstrumentusLootModifiers.register(instrumentusEventBus);
 
-        ModDataComponents.COMPONENTS.register(instrumentusEventBus);
+        InstrumentusDataComponents.COMPONENTS.register(instrumentusEventBus);
 
         instrumentusEventBus.addListener(this::attachCapabilities);
 
@@ -114,7 +114,7 @@ public class Instrumentus {
     }
 
     private void addCreative(BuildCreativeModeTabContentsEvent event) {
-        ModCreativeModeTabPopulate.populate(event);
+        InstrumentusCreativeModeTabPopulate.populate(event);
     }
     private void attachCapabilities(RegisterCapabilitiesEvent event) {
         event.registerItem(Capabilities.EnergyStorage.ITEM, (itemStack, context) -> {
@@ -124,23 +124,23 @@ public class Instrumentus {
             }
             return new EnergyItemstack(capacity, itemStack);
         },
-                ModItems.ENERGIZED_AXE.get(),
-                ModItems.ENERGIZED_PICKAXE.get(),
-                ModItems.ENERGIZED_SHOVEL.get(),
-                ModItems.ENERGIZED_PAXEL.get(),
-                ModItems.ENERGIZED_HOE.get(),
-                ModItems.ENERGIZED_SHEARS.get(),
-                ModItems.ENERGIZED_SICKLE.get(),
-                ModItems.ENERGIZED_HAMMER.get(),
-                ModItems.ENERGIZED_KNIFE.get(),
-                ModItems.ENERGIZED_BRUSH.get(),
-                ModItems.ENERGIZED_LIGHTNING_ROD.get(),
-                ModItems.ENERGIZED_EXCAVATOR.get()
+                InstrumentusItems.ENERGIZED_AXE.get(),
+                InstrumentusItems.ENERGIZED_PICKAXE.get(),
+                InstrumentusItems.ENERGIZED_SHOVEL.get(),
+                InstrumentusItems.ENERGIZED_PAXEL.get(),
+                InstrumentusItems.ENERGIZED_HOE.get(),
+                InstrumentusItems.ENERGIZED_SHEARS.get(),
+                InstrumentusItems.ENERGIZED_SICKLE.get(),
+                InstrumentusItems.ENERGIZED_HAMMER.get(),
+                InstrumentusItems.ENERGIZED_KNIFE.get(),
+                InstrumentusItems.ENERGIZED_BRUSH.get(),
+                InstrumentusItems.ENERGIZED_LIGHTNING_ROD.get(),
+                InstrumentusItems.ENERGIZED_EXCAVATOR.get()
         );
     }
 
     private void setupClient(final FMLClientSetupEvent event) {
-        BlockEntityRenderers.register(ModBlockEntities.COPPER_SOUL_CAMPFIRE_BLOCK_ENTITY.get(), CopperSoulCampfireRenderer::new);
+        BlockEntityRenderers.register(InstrumentusBlockEntities.COPPER_SOUL_CAMPFIRE_BLOCK_ENTITY.get(), CopperSoulCampfireRenderer::new);
         NeoForge.EVENT_BUS.register(ToolRenderEvents.class);
     }
 

@@ -8,7 +8,7 @@ import net.neoforged.neoforge.registries.DeferredRegister;
 
 import java.util.function.Supplier;
 
-public class ModParticles {
+public class InstrumentusParticles {
     public static final DeferredRegister<ParticleType<?>> PARTICLE_TYPES = DeferredRegister.create(BuiltInRegistries.PARTICLE_TYPE, Instrumentus.MODID);
 
     public static final Supplier<ParticleType<SimpleParticleType>> COPPER_SOUL_FIRE_FLAME_PARTICLE =

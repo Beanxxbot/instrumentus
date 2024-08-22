@@ -4,10 +4,10 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.*;
 import net.minecraft.world.item.Tiers;
 
-public class ModBrushItem extends BrushItem {
+public class InstrumentusBrushItem extends BrushItem {
 
     protected Tier tier;
-    public ModBrushItem(Tier material) {
+    public InstrumentusBrushItem(Tier material) {
         super(new Item.Properties().durability(material.getUses()));
         this.tier = material;
     }

@@ -1,6 +1,6 @@
 package com.beanbot.instrumentus.client.inventory.recipebook;
 
-import com.beanbot.instrumentus.common.recipe.ModRecipes;
+import com.beanbot.instrumentus.common.recipe.InstrumentusRecipes;
 import com.google.common.base.Suppliers;
 import com.google.common.collect.ImmutableList;
 import net.minecraft.client.Minecraft;
@@ -37,7 +37,7 @@ public class RecipeBookExtensionClientHelper {
     public static void init(RegisterRecipeBookCategoriesEvent event) {
         event.registerBookCategories(RecipeBookType.valueOf("INSTRUMENTUS_FIRING"), ImmutableList.of(FIRING_CATEGORY_SEARCH.get(), FIRING_CATEGORY_BLOCKS.get(), FIRING_CATEGORY_MISC.get()));
         event.registerAggregateCategory(FIRING_CATEGORY_SEARCH.get(), ImmutableList.of(FIRING_CATEGORY_BLOCKS.get(), FIRING_CATEGORY_MISC.get()));
-        event.registerRecipeCategoryFinder(ModRecipes.FIRING.get(), r -> {
+        event.registerRecipeCategoryFinder(InstrumentusRecipes.FIRING.get(), r -> {
             if(r.value().getResultItem(Minecraft.getInstance().level.registryAccess()).getItem() instanceof BlockItem) {
                 return FIRING_CATEGORY_BLOCKS.get();
             } else {

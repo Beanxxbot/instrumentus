@@ -7,11 +7,9 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.*;
-import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
@@ -20,10 +18,9 @@ import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.common.IShearable;
 import net.neoforged.neoforge.energy.IEnergyStorage;
 
-import javax.annotation.Nullable;
 import java.util.List;
 
-public class EnergyShearsItem extends ModShearsItem implements IItemLightningChargeable, IEnergyItem {
+public class EnergyShearsItem extends InstrumentusShearsItem implements IItemLightningChargeable, IEnergyItem {
 
     public EnergyShearsItem(Tier material) {
         super(material, new Item.Properties().stacksTo(1).durability(0).fireResistant());

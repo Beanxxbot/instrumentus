@@ -26,7 +26,7 @@ public class SickleItem extends DiggerItem
     }
 
     private static Item.Properties generateItemProperties(Tier tier, float attackDamageIn, float attackSpeedIn) {
-        if (tier == Tiers.NETHERITE || tier == ModItemTiers.ENERGIZED) {
+        if (tier == Tiers.NETHERITE || tier == InstrumentusItemTiers.ENERGIZED) {
             return new Item.Properties().attributes(SickleItem.createAttributes(tier, attackDamageIn, attackSpeedIn)).stacksTo(1).fireResistant();
         }
         return new Item.Properties().attributes(SickleItem.createAttributes(tier, attackDamageIn, attackSpeedIn)).stacksTo(1);
@@ -48,12 +48,12 @@ public class SickleItem extends DiggerItem
             radius = 1;
             height = 1;
         }
-        if(tier == Tiers.IRON || tier == Tiers.GOLD || tier == ModItemTiers.COPPER || tier == Tiers.DIAMOND)
+        if(tier == Tiers.IRON || tier == Tiers.GOLD || tier == InstrumentusItemTiers.COPPER || tier == Tiers.DIAMOND)
         {
             radius = 2;
             height = 2;
         }
-        if(tier == Tiers.NETHERITE || tier == ModItemTiers.ENERGIZED)
+        if(tier == Tiers.NETHERITE || tier == InstrumentusItemTiers.ENERGIZED)
         {
             radius = 3;
             height = 3;

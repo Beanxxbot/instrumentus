@@ -1,7 +1,7 @@
 package com.beanbot.instrumentus.common.blocks;
 
 import com.beanbot.instrumentus.common.blocks.entities.KilnBlockEntity;
-import com.beanbot.instrumentus.common.blocks.entities.ModBlockEntities;
+import com.beanbot.instrumentus.common.blocks.entities.InstrumentusBlockEntities;
 import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -37,7 +37,7 @@ public class KilnBlock extends AbstractFurnaceBlock {
 
     @Override
     public <T extends BlockEntity>BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> blockEntityType) {
-        return createFurnaceTicker(level, blockEntityType, ModBlockEntities.KILN_BLOCK_ENTITY.get());
+        return createFurnaceTicker(level, blockEntityType, InstrumentusBlockEntities.KILN_BLOCK_ENTITY.get());
     }
 
     @Override

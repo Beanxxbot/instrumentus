@@ -4,7 +4,7 @@ import com.beanbot.instrumentus.common.Instrumentus;
 import com.beanbot.instrumentus.common.events.loot.PlantFiberFromGrassModifier;
 import com.beanbot.instrumentus.common.events.loot.ToolsInOminousTrialVaultsModifier;
 import com.beanbot.instrumentus.common.events.loot.ToolsInTrialVaultsModifier;
-import com.beanbot.instrumentus.common.items.ModItems;
+import com.beanbot.instrumentus.common.items.InstrumentusItems;
 import net.minecraft.advancements.critereon.ItemPredicate;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
@@ -17,8 +17,8 @@ import net.neoforged.neoforge.common.loot.LootTableIdCondition;
 
 import java.util.concurrent.CompletableFuture;
 
-public class GeneratorGlobalLootModifier extends GlobalLootModifierProvider {
-    public GeneratorGlobalLootModifier(PackOutput output, CompletableFuture<HolderLookup.Provider> lookupProvider) {
+public class InstrumentusGeneratorGlobalLootModifier extends GlobalLootModifierProvider {
+    public InstrumentusGeneratorGlobalLootModifier(PackOutput output, CompletableFuture<HolderLookup.Provider> lookupProvider) {
         super(output, lookupProvider, Instrumentus.MODID);
     }
 
@@ -27,10 +27,10 @@ public class GeneratorGlobalLootModifier extends GlobalLootModifierProvider {
         add("plant_fiber_from_grass", new PlantFiberFromGrassModifier(
                 new LootItemCondition[]{
                         AnyOfCondition.anyOf(
-                                MatchTool.toolMatches(ItemPredicate.Builder.item().of(GeneratorItemTags.TOOLS_KNIVES))).build(),
+                                MatchTool.toolMatches(ItemPredicate.Builder.item().of(InstrumentusGeneratorItemTags.TOOLS_KNIVES))).build(),
                         LootItemBlockStatePropertyCondition.hasBlockStateProperties(Blocks.SHORT_GRASS).build(),
                         LootItemBlockStatePropertyCondition.hasBlockStateProperties(Blocks.TALL_GRASS).build()
-                }, ModItems.PLANT_FIBER.get()));
+                }, InstrumentusItems.PLANT_FIBER.get()));
 
         add("vault_loot", new ToolsInTrialVaultsModifier(
                 new LootItemCondition[]{

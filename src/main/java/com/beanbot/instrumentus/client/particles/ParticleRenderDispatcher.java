@@ -11,8 +11,8 @@ import net.neoforged.neoforge.client.event.RegisterParticleProvidersEvent;
 public class ParticleRenderDispatcher {
     @SubscribeEvent
     public static void registerParticleFactories(final RegisterParticleProvidersEvent event) {
-//        Minecraft.getInstance().particleEngine.register(ModParticles.COPPER_SOUL_FIRE_FLAME_PARTICLE.get(), FlameParticle.Provider::new);
-//        event.registerSpecial(ModParticles.COPPER_SOUL_FIRE_FLAME_PARTICLE.get(), CopperSoulFireFlameParticle.Provider::new);
-        Minecraft.getInstance().particleEngine.register(ModParticles.COPPER_SOUL_FIRE_FLAME_PARTICLE.get(), CopperSoulFireFlameParticle.Provider::new);
+//        Minecraft.getInstance().particleEngine.register(InstrumentusParticles.COPPER_SOUL_FIRE_FLAME_PARTICLE.get(), FlameParticle.Provider::new);
+//        event.registerSpecial(InstrumentusParticles.COPPER_SOUL_FIRE_FLAME_PARTICLE.get(), CopperSoulFireFlameParticle.Provider::new);
+        Minecraft.getInstance().particleEngine.register(InstrumentusParticles.COPPER_SOUL_FIRE_FLAME_PARTICLE.get(), CopperSoulFireFlameParticle.Provider::new);
     }
 }

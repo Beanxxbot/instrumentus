@@ -1,7 +1,7 @@
 package com.beanbot.instrumentus.common.data;
 
 import com.beanbot.instrumentus.common.Instrumentus;
-import com.beanbot.instrumentus.common.blocks.ModBlocks;
+import com.beanbot.instrumentus.common.blocks.InstrumentusBlocks;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
@@ -16,7 +16,7 @@ import org.jetbrains.annotations.NotNull;
 import javax.annotation.Nullable;
 import java.util.concurrent.CompletableFuture;
 
-public class GeneratorBlockTags extends BlockTagsProvider {
+public class InstrumentusGeneratorBlockTags extends BlockTagsProvider {
 
     public static final TagKey<Block> MINEABLE_WITH_PAXEL = BlockTags.create(ResourceLocation.fromNamespaceAndPath("c", "mineable/paxel"));
     public static final TagKey<Block> CAN_BE_OXIDIZED = BlockTags.create(ResourceLocation.fromNamespaceAndPath(Instrumentus.MODID, "burnerable/canoxidize"));
@@ -25,7 +25,7 @@ public class GeneratorBlockTags extends BlockTagsProvider {
     public static final TagKey<Block> WEATHERED_COPPER = BlockTags.create(ResourceLocation.fromNamespaceAndPath(Instrumentus.MODID, "burnerable/canoxidize"));
 
 
-    public GeneratorBlockTags(PackOutput output, CompletableFuture<HolderLookup.Provider> lookupProvider, @Nullable ExistingFileHelper helper) {
+    public InstrumentusGeneratorBlockTags(PackOutput output, CompletableFuture<HolderLookup.Provider> lookupProvider, @Nullable ExistingFileHelper helper) {
         super(output, lookupProvider, Instrumentus.MODID, helper);
     }
 
@@ -69,15 +69,15 @@ public class GeneratorBlockTags extends BlockTagsProvider {
                 .addTags(CLEAN_COPPER, EXPOSED_COPPER, WEATHERED_COPPER);
 
         this.tag(BlockTags.MINEABLE_WITH_PICKAXE)
-                .add(ModBlocks.RAW_SOULCOPPER_BLOCK.get())
-                .add(ModBlocks.SOULCOPPER_BLOCK.get())
-                .add(ModBlocks.ENERGIZED_BLOCK.get())
-                .add(ModBlocks.SOULCOPPER_LANTERN.get());
+                .add(InstrumentusBlocks.RAW_SOULCOPPER_BLOCK.get())
+                .add(InstrumentusBlocks.SOULCOPPER_BLOCK.get())
+                .add(InstrumentusBlocks.ENERGIZED_BLOCK.get())
+                .add(InstrumentusBlocks.SOULCOPPER_LANTERN.get());
         this.tag(BlockTags.MINEABLE_WITH_AXE)
-                .add(ModBlocks.COPPER_SOUL_CAMPFIRE.get());
+                .add(InstrumentusBlocks.COPPER_SOUL_CAMPFIRE.get());
         this.tag(BlockTags.NEEDS_IRON_TOOL)
-                .add(ModBlocks.RAW_SOULCOPPER_BLOCK.get())
-                .add(ModBlocks.SOULCOPPER_BLOCK.get());
+                .add(InstrumentusBlocks.RAW_SOULCOPPER_BLOCK.get())
+                .add(InstrumentusBlocks.SOULCOPPER_BLOCK.get());
 
     }
 }

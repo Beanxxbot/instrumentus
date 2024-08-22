@@ -45,7 +45,7 @@ public class CopperSoulCampfireRecipe implements Recipe<SingleRecipeInput> {
 
     @Override
     public RecipeType<?> getType() {
-        return ModRecipes.COPPER_SOUL_CAMPFIRE_COOKING_TYPE.get();
+        return InstrumentusRecipes.COPPER_SOUL_CAMPFIRE_COOKING_TYPE.get();
     }
 
     public int getCookingTime() {
@@ -89,7 +89,7 @@ public class CopperSoulCampfireRecipe implements Recipe<SingleRecipeInput> {
 
     @Override
     public RecipeSerializer<?> getSerializer() {
-        return ModRecipes.COPPER_SOUL_CAMPFIRE_COOKING_SERIALIZER.get();
+        return InstrumentusRecipes.COPPER_SOUL_CAMPFIRE_COOKING_SERIALIZER.get();
     }
 
     public static class Serializer implements RecipeSerializer<CopperSoulCampfireRecipe> {

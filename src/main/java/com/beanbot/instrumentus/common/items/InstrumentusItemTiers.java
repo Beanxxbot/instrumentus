@@ -6,7 +6,7 @@ import net.minecraft.world.item.Tier;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.neoforged.neoforge.common.SimpleTier;
 
-public class ModItemTiers {
+public class InstrumentusItemTiers {
     public static final Tier COPPER = new SimpleTier(
             BlockTags.INCORRECT_FOR_IRON_TOOL,
             175,
@@ -22,7 +22,7 @@ public class ModItemTiers {
             9.0F,
             4.0F,
             15,
-            () -> Ingredient.of(ModItems.ENERGIZED_INGOT.get())
+            () -> Ingredient.of(InstrumentusItems.ENERGIZED_INGOT.get())
 
     );
 }

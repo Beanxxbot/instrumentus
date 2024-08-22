@@ -1,6 +1,6 @@
 package com.beanbot.instrumentus.common.blocks;
 
-import com.beanbot.instrumentus.client.particles.ModParticles;
+import com.beanbot.instrumentus.client.particles.InstrumentusParticles;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.SimpleParticleType;
 import net.minecraft.util.RandomSource;
@@ -63,6 +63,6 @@ public class CopperSoulFlameLight extends Block {
         double d0 = (double) pos.getX() + 0.5D;
         double d1 = (double) pos.getY() + 0.5D;
         double d2 = (double) pos.getZ() + 0.5D;
-        worldIn.addParticle((SimpleParticleType)ModParticles.COPPER_SOUL_FIRE_FLAME_PARTICLE.get(), d0, d1, d2, 0.0d, 0.0d, 0.0d);
+        worldIn.addParticle((SimpleParticleType) InstrumentusParticles.COPPER_SOUL_FIRE_FLAME_PARTICLE.get(), d0, d1, d2, 0.0d, 0.0d, 0.0d);
     }
 }

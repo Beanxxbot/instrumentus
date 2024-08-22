@@ -1,7 +1,7 @@
 package com.beanbot.instrumentus.common.blocks.entities;
 
 import com.beanbot.instrumentus.common.inventory.KilnMenu;
-import com.beanbot.instrumentus.common.recipe.ModRecipes;
+import com.beanbot.instrumentus.common.recipe.InstrumentusRecipes;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Inventory;
@@ -13,7 +13,7 @@ import org.jetbrains.annotations.NotNull;
 
 public class KilnBlockEntity extends AbstractFurnaceBlockEntity {
     public KilnBlockEntity(BlockPos pos, BlockState state) {
-        super(ModBlockEntities.KILN_BLOCK_ENTITY.get(), pos, state, ModRecipes.FIRING.get());
+        super(InstrumentusBlockEntities.KILN_BLOCK_ENTITY.get(), pos, state, InstrumentusRecipes.FIRING.get());
     }
 
     @Override

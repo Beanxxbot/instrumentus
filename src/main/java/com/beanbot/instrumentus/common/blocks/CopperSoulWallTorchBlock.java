@@ -1,6 +1,6 @@
 package com.beanbot.instrumentus.common.blocks;
 
-import com.beanbot.instrumentus.client.particles.ModParticles;
+import com.beanbot.instrumentus.client.particles.InstrumentusParticles;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
 import net.minecraft.core.BlockPos;
@@ -17,8 +17,6 @@ import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
-import net.minecraft.world.level.block.state.properties.BlockStateProperties;
-import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.block.state.properties.DirectionProperty;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Fluids;
@@ -103,7 +101,7 @@ public class CopperSoulWallTorchBlock extends CopperSoulTorchBlock {
         double d4 = 0.27D;
         Direction direction1 = direction.getOpposite();
         pLevel.addParticle(ParticleTypes.SMOKE, d0 + 0.27D * (double)direction1.getStepX(), d1 + 0.22D, d2 + 0.27D * (double)direction1.getStepZ(), 0.0D, 0.0D, 0.0D);
-        pLevel.addParticle((SimpleParticleType) ModParticles.COPPER_SOUL_FIRE_FLAME_PARTICLE.get(), d0 + 0.27D * (double)direction1.getStepX(), d1 + 0.22D, d2 + 0.27D * (double)direction1.getStepZ(), 0.0D, 0.0D, 0.0D);
+        pLevel.addParticle((SimpleParticleType) InstrumentusParticles.COPPER_SOUL_FIRE_FLAME_PARTICLE.get(), d0 + 0.27D * (double)direction1.getStepX(), d1 + 0.22D, d2 + 0.27D * (double)direction1.getStepZ(), 0.0D, 0.0D, 0.0D);
     }
 
     @SuppressWarnings("deprecation")

@@ -42,7 +42,7 @@ public class EnergyHammerItem extends HammerItem implements IItemLightningCharge
 
         int r = isStone ? 0 : 2;
 
-        if(tier == Tiers.WOOD || tier == Tiers.STONE || tier == Tiers.IRON || tier == Tiers.GOLD || tier == Tiers.DIAMOND || tier == Tiers.NETHERITE || tier == ModItemTiers.ENERGIZED){
+        if(tier == Tiers.WOOD || tier == Tiers.STONE || tier == Tiers.IRON || tier == Tiers.GOLD || tier == Tiers.DIAMOND || tier == Tiers.NETHERITE || tier == InstrumentusItemTiers.ENERGIZED){
             r = 1;
         }
         stack.hurtAndBreak(1, entity, EquipmentSlot.MAINHAND);

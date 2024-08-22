@@ -1,16 +1,9 @@
 package com.beanbot.instrumentus.common.items;
 
-import com.google.common.collect.ImmutableMultimap;
-import com.google.common.collect.Multimap;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.EquipmentSlot;
-import net.minecraft.world.entity.EquipmentSlotGroup;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.ai.attributes.Attribute;
-import net.minecraft.world.entity.ai.attributes.AttributeModifier;
-import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.item.*;
-import net.minecraft.world.item.component.ItemAttributeModifiers;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
@@ -22,7 +15,7 @@ public class KnifeItem extends TieredItem {
     }
 
     private static Item.Properties generateItemProperties(Tier tier, float attackDamageIn, float attackSpeedIn) {
-        if (tier == Tiers.NETHERITE || tier == ModItemTiers.ENERGIZED) {
+        if (tier == Tiers.NETHERITE || tier == InstrumentusItemTiers.ENERGIZED) {
             return new Item.Properties().attributes(DiggerItem.createAttributes(tier, attackDamageIn, attackSpeedIn)).stacksTo(1).fireResistant();
         }
         return new Item.Properties().attributes(DiggerItem.createAttributes(tier, attackDamageIn, attackSpeedIn)).stacksTo(1);

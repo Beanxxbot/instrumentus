@@ -1,7 +1,7 @@
 package com.beanbot.instrumentus.client.jei;
 
 import com.beanbot.instrumentus.common.Instrumentus;
-import com.beanbot.instrumentus.common.blocks.ModBlocks;
+import com.beanbot.instrumentus.common.blocks.InstrumentusBlocks;
 import com.beanbot.instrumentus.common.recipe.CopperSoulCampfireRecipe;
 import mezz.jei.api.constants.ModIds;
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
@@ -40,7 +40,7 @@ public class CopperSoulCampfireCookingRecipeCategory implements IRecipeCategory<
         background = guiHelper.drawableBuilder(ResourceLocation.fromNamespaceAndPath(ModIds.JEI_ID, "textures/jei/gui/gui_vanilla.png"), 0, 186, 82, 34)
                 .addPadding(0, 10, 0, 0)
                 .build();
-        icon = guiHelper.createDrawableItemStack(new ItemStack(ModBlocks.COPPER_SOUL_CAMPFIRE.get()));
+        icon = guiHelper.createDrawableItemStack(new ItemStack(InstrumentusBlocks.COPPER_SOUL_CAMPFIRE.get()));
         localizedName = Component.translatable("instrumentus.coppersoulcampfirecookingrecipe.title");
         staticFlame = guiHelper.createDrawable(ResourceLocation.fromNamespaceAndPath(ModIds.JEI_ID, "textures/jei/gui/gui_vanilla.png"), 82, 114, 14, 14);
         animatedFlame = guiHelper.createAnimatedDrawable(staticFlame, 300, IDrawableAnimated.StartDirection.TOP, true);

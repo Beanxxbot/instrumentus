@@ -1,19 +1,12 @@
 package com.beanbot.instrumentus.common.capability;
 
 import com.beanbot.instrumentus.common.Instrumentus;
-import com.beanbot.instrumentus.common.items.interfaces.IEnergyItem;
 import net.minecraft.core.component.DataComponentType;
 import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.world.item.ItemStack;
 import net.neoforged.bus.api.IEventBus;
-import net.neoforged.neoforge.attachment.AttachmentType;
-import net.neoforged.neoforge.energy.EnergyStorage;
 import net.neoforged.neoforge.registries.DeferredRegister;
-import net.neoforged.neoforge.registries.NeoForgeRegistries;
 
-import java.util.function.Supplier;
-
-public class ModCapabilities {
+public class InstrumentusCapabilities {
     public static final DeferredRegister<DataComponentType<?>> ATTACHMENT_TYPES = DeferredRegister.create(BuiltInRegistries.DATA_COMPONENT_TYPE, Instrumentus.MODID);
 
 //    public static final Supplier<AttachmentType<EnergyStorage>> ENERGYSTORAGE = ATTACHMENT_TYPES.register(

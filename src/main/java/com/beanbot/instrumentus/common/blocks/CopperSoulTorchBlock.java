@@ -1,6 +1,6 @@
 package com.beanbot.instrumentus.common.blocks;
 
-import com.beanbot.instrumentus.client.particles.ModParticles;
+import com.beanbot.instrumentus.client.particles.InstrumentusParticles;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;
@@ -69,7 +69,7 @@ public class CopperSoulTorchBlock extends Block implements SimpleWaterloggedBloc
         double d1 = (double)pPos.getY() + 0.7D;
         double d2 = (double)pPos.getZ() + 0.5D;
         pLevel.addParticle(ParticleTypes.SMOKE, d0, d1, d2, 0.0D, 0.0D, 0.0D);
-        pLevel.addParticle((SimpleParticleType) ModParticles.COPPER_SOUL_FIRE_FLAME_PARTICLE.get(), d0, d1, d2, 0.0D, 0.0D, 0.0D);
+        pLevel.addParticle((SimpleParticleType) InstrumentusParticles.COPPER_SOUL_FIRE_FLAME_PARTICLE.get(), d0, d1, d2, 0.0D, 0.0D, 0.0D);
     }
 
     @Override

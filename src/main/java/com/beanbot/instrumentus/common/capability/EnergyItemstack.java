@@ -1,6 +1,6 @@
 package com.beanbot.instrumentus.common.capability;
 
-import com.beanbot.instrumentus.common.items.datacomponents.ModDataComponents;
+import com.beanbot.instrumentus.common.items.datacomponents.InstrumentusDataComponents;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.IntTag;
 import net.minecraft.nbt.Tag;
@@ -13,12 +13,12 @@ public class EnergyItemstack extends EnergyStorage {
     public EnergyItemstack(int capacity, ItemStack itemStack) {
         super(capacity, capacity, capacity, 0);
         this.itemStack = itemStack;
-        this.energy = itemStack.getOrDefault(ModDataComponents.FORGE_ENERGY, 0);
+        this.energy = itemStack.getOrDefault(InstrumentusDataComponents.FORGE_ENERGY, 0);
     }
 
     public void setEnergy(int energy) {
         this.energy = energy;
-        itemStack.set(ModDataComponents.FORGE_ENERGY, energy);
+        itemStack.set(InstrumentusDataComponents.FORGE_ENERGY, energy);
     }
 
     @Override
@@ -29,7 +29,7 @@ public class EnergyItemstack extends EnergyStorage {
         int energyReceived = Math.min(capacity - energy, Math.min(this.maxReceive, maxReceive));
         if(!simulate) {
             energy += energyReceived;
-            itemStack.set(ModDataComponents.FORGE_ENERGY, energy);
+            itemStack.set(InstrumentusDataComponents.FORGE_ENERGY, energy);
         }
         return energyReceived;
     }
@@ -42,14 +42,14 @@ public class EnergyItemstack extends EnergyStorage {
         int energyExtracted = Math.min(energy, Math.min(this.maxExtract, maxExtract));
         if (!simulate) {
             energy -= energyExtracted;
-            itemStack.set(ModDataComponents.FORGE_ENERGY, energy);
+            itemStack.set(InstrumentusDataComponents.FORGE_ENERGY, energy);
         }
         return energyExtracted;
     }
 
     @Override
     public int getEnergyStored() {
-        return itemStack.getOrDefault(ModDataComponents.FORGE_ENERGY, 0);
+        return itemStack.getOrDefault(InstrumentusDataComponents.FORGE_ENERGY, 0);
     }
 
     @Override

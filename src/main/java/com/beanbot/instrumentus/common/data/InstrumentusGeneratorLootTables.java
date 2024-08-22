@@ -1,8 +1,8 @@
 package com.beanbot.instrumentus.common.data;
 
 import com.beanbot.instrumentus.common.Instrumentus;
-import com.beanbot.instrumentus.common.blocks.ModBlocks;
-import com.beanbot.instrumentus.common.items.ModItems;
+import com.beanbot.instrumentus.common.blocks.InstrumentusBlocks;
+import com.beanbot.instrumentus.common.items.InstrumentusItems;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.PackOutput;
@@ -35,8 +35,8 @@ import java.util.Set;
 import java.util.concurrent.CompletableFuture;
 import java.util.function.BiConsumer;
 
-public class GeneratorLootTables extends LootTableProvider {
-    public GeneratorLootTables(PackOutput output, CompletableFuture<HolderLookup.Provider> lookupProvider) {
+public class InstrumentusGeneratorLootTables extends LootTableProvider {
+    public InstrumentusGeneratorLootTables(PackOutput output, CompletableFuture<HolderLookup.Provider> lookupProvider) {
         super(output, Set.of(), List.of(
             new LootTableProvider.SubProviderEntry(GeneratorBlockLootTables::new, LootContextParamSets.BLOCK),
             new LootTableProvider.SubProviderEntry(CustomVaultLootProvider::new, LootContextParamSets.CHEST),
@@ -55,15 +55,15 @@ public class GeneratorLootTables extends LootTableProvider {
 
         @Override
         protected void generate() {
-            add(ModBlocks.COPPER_SOUL_FLAME_LIGHT.get(), noDrop());
-            dropSelf(ModBlocks.SOULCOPPER_LANTERN.get());
-            dropSelf(ModBlocks.SOULCOPPER_TORCH.get());
-            dropSelf(ModBlocks.ENERGIZED_BLOCK.get());
-            dropSelf(ModBlocks.RAW_SOULCOPPER_BLOCK.get());
-            dropSelf(ModBlocks.SOULCOPPER_BLOCK.get());
-            dropSelf(ModBlocks.KILN.get());
+            add(InstrumentusBlocks.COPPER_SOUL_FLAME_LIGHT.get(), noDrop());
+            dropSelf(InstrumentusBlocks.SOULCOPPER_LANTERN.get());
+            dropSelf(InstrumentusBlocks.SOULCOPPER_TORCH.get());
+            dropSelf(InstrumentusBlocks.ENERGIZED_BLOCK.get());
+            dropSelf(InstrumentusBlocks.RAW_SOULCOPPER_BLOCK.get());
+            dropSelf(InstrumentusBlocks.SOULCOPPER_BLOCK.get());
+            dropSelf(InstrumentusBlocks.KILN.get());
 
-            add(ModBlocks.COPPER_SOUL_CAMPFIRE.get(),
+            add(InstrumentusBlocks.COPPER_SOUL_CAMPFIRE.get(),
                     silkTouchDispatchTable -> this.createSilkTouchDispatchTable(
                             silkTouchDispatchTable,
                             this.applyExplosionCondition(
@@ -73,9 +73,9 @@ public class GeneratorLootTables extends LootTableProvider {
         @Override
         protected @NotNull Iterable<Block> getKnownBlocks() {
             List<Block> knownBlocks = new ArrayList<>();
-            knownBlocks.addAll(ModBlocks.ENERGIZED.getEntries().stream().map(DeferredHolder::get).toList());
-            knownBlocks.addAll(ModBlocks.SOULCOPPER.getEntries().stream().map(DeferredHolder::get).toList());
-            knownBlocks.addAll(ModBlocks.UTIL.getEntries().stream().map(DeferredHolder::get).toList());
+            knownBlocks.addAll(InstrumentusBlocks.ENERGIZED.getEntries().stream().map(DeferredHolder::get).toList());
+            knownBlocks.addAll(InstrumentusBlocks.SOULCOPPER.getEntries().stream().map(DeferredHolder::get).toList());
+            knownBlocks.addAll(InstrumentusBlocks.UTIL.getEntries().stream().map(DeferredHolder::get).toList());
             return knownBlocks;
         }
     }
@@ -85,29 +85,29 @@ public class GeneratorLootTables extends LootTableProvider {
         public void generate(BiConsumer<ResourceKey<LootTable>, LootTable.Builder> builder) {
             LootPool.Builder commonPool = LootPool.lootPool();
             commonPool.setRolls(UniformGenerator.between(0, 1))
-                    .add(createEntry(ModItems.COPPER_SWORD.get(), 2, 1, 1))
-                    .add(createEntry(ModItems.COPPER_PAXEL.get(), 2, 1, 1))
-                    .add(createEntry(ModItems.RAW_SOULCOPPER.get(), 4, 4, 8));
+                    .add(createEntry(InstrumentusItems.COPPER_SWORD.get(), 2, 1, 1))
+                    .add(createEntry(InstrumentusItems.COPPER_PAXEL.get(), 2, 1, 1))
+                    .add(createEntry(InstrumentusItems.RAW_SOULCOPPER.get(), 4, 4, 8));
             LootTable.Builder commonTable = LootTable.lootTable();
             commonTable.withPool(commonPool);
             builder.accept(lootResourceKey("custom/common_vault_loot"), commonTable);
 
             LootPool.Builder rarePool = LootPool.lootPool();
             rarePool.setRolls(UniformGenerator.between(0, 1))
-                    .add(enchantedTool(ModItems.IRON_PAXEL.get(), 1))
-                    .add(enchantedTool(ModItems.IRON_HAMMER.get(), 1))
-                    .add(createEntry(ModItems.RAW_SOULCOPPER_BLOCK.get(), 2, 1, 3))
-                    .add(createEntry(ModItems.SOULCOPPER_INGOT.get(), 3, 4, 6));
+                    .add(enchantedTool(InstrumentusItems.IRON_PAXEL.get(), 1))
+                    .add(enchantedTool(InstrumentusItems.IRON_HAMMER.get(), 1))
+                    .add(createEntry(InstrumentusItems.RAW_SOULCOPPER_BLOCK.get(), 2, 1, 3))
+                    .add(createEntry(InstrumentusItems.SOULCOPPER_INGOT.get(), 3, 4, 6));
             LootTable.Builder rareTable = LootTable.lootTable();
             rareTable.withPool(rarePool);
             builder.accept(lootResourceKey("custom/rare_vault_loot"), rareTable);
 
             LootPool.Builder uniquePool = LootPool.lootPool();
             uniquePool.setRolls(UniformGenerator.between(0, 1))
-                    .add(enchantedTool(ModItems.DIAMOND_PAXEL.get(), 1))
-                    .add(enchantedTool(ModItems.DIAMOND_HAMMER.get(), 1))
-                    .add(createEntry(ModItems.SOULCOPPER_BURNER.get(), 3, 1, 1))
-                    .add(createEntry(ModItems.ENERGIZED_INGOT.get(), 2, 2, 3));
+                    .add(enchantedTool(InstrumentusItems.DIAMOND_PAXEL.get(), 1))
+                    .add(enchantedTool(InstrumentusItems.DIAMOND_HAMMER.get(), 1))
+                    .add(createEntry(InstrumentusItems.SOULCOPPER_BURNER.get(), 3, 1, 1))
+                    .add(createEntry(InstrumentusItems.ENERGIZED_INGOT.get(), 2, 2, 3));
             LootTable.Builder uniqueTable = LootTable.lootTable();
             uniqueTable.withPool(uniquePool);
             builder.accept(lootResourceKey("custom/unique_vault_loot"), uniqueTable);
@@ -134,27 +134,27 @@ public class GeneratorLootTables extends LootTableProvider {
         public void generate(BiConsumer<ResourceKey<LootTable>, LootTable.Builder> builder) {
             LootPool.Builder commonPool = LootPool.lootPool();
             commonPool.setRolls(UniformGenerator.between(0, 1))
-                    .add(createEntry(ModItems.ENERGIZED_INGOT.get(), 4, 2, 6))
-                    .add(createEntry(ModItems.SOULCOPPER_BLOCK.get(), 3, 1, 2));
+                    .add(createEntry(InstrumentusItems.ENERGIZED_INGOT.get(), 4, 2, 6))
+                    .add(createEntry(InstrumentusItems.SOULCOPPER_BLOCK.get(), 3, 1, 2));
             LootTable.Builder commonTable = LootTable.lootTable();
             commonTable.withPool(commonPool);
             builder.accept(lootResourceKey("custom/common_ominous_vault_loot"), commonTable);
 
             LootPool.Builder rarePool = LootPool.lootPool();
             rarePool.setRolls(UniformGenerator.between(0, 1))
-                    .add(createEntry(ModItems.ENERGIZED_PAXEL.get(), 2, 1, 1))
-                    .add(createEntry(ModItems.NETHERITE_SICKLE.get(), 3, 1, 1))
-                    .add(enchantedTool(ModItems.ENERGIZED_PICKAXE.get(), 1));
+                    .add(createEntry(InstrumentusItems.ENERGIZED_PAXEL.get(), 2, 1, 1))
+                    .add(createEntry(InstrumentusItems.NETHERITE_SICKLE.get(), 3, 1, 1))
+                    .add(enchantedTool(InstrumentusItems.ENERGIZED_PICKAXE.get(), 1));
             LootTable.Builder rareTable = LootTable.lootTable();
             rareTable.withPool(rarePool);
             builder.accept(lootResourceKey("custom/rare_ominous_vault_loot"), rareTable);
 
             LootPool.Builder uniquePool = LootPool.lootPool();
             uniquePool.setRolls(UniformGenerator.between(0, 1))
-                    .add(enchantedTool(ModItems.ENERGIZED_PAXEL.get(), 1))
-                    .add(createEntry(ModItems.ENERGIZED_BLOCK.get(), 3, 1, 2))
-                    .add(createEntry(ModItems.SOULCOPPER_BLOCK.get(), 4, 1, 2))
-                    .add(enchantedTool(ModItems.NETHERITE_PAXEL.get(), 2));
+                    .add(enchantedTool(InstrumentusItems.ENERGIZED_PAXEL.get(), 1))
+                    .add(createEntry(InstrumentusItems.ENERGIZED_BLOCK.get(), 3, 1, 2))
+                    .add(createEntry(InstrumentusItems.SOULCOPPER_BLOCK.get(), 4, 1, 2))
+                    .add(enchantedTool(InstrumentusItems.NETHERITE_PAXEL.get(), 2));
             LootTable.Builder uniqueTable = LootTable.lootTable();
             uniqueTable.withPool(uniquePool);
             builder.accept(lootResourceKey("custom/unique_ominous_vault_loot"), uniqueTable);

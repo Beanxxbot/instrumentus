@@ -11,7 +11,7 @@ import net.neoforged.neoforge.registries.DeferredRegister;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
 
-public class ModDataComponents {
+public class InstrumentusDataComponents {
     public static final DeferredRegister<DataComponentType<?>> COMPONENTS = DeferredRegister.createDataComponents(Instrumentus.MODID);
 
     public static final DeferredHolder<DataComponentType<?>, DataComponentType<Integer>> FORGE_ENERGY = COMPONENTS.register(

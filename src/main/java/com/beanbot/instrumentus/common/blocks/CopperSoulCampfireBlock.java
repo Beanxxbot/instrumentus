@@ -1,7 +1,7 @@
 package com.beanbot.instrumentus.common.blocks;
 
 import com.beanbot.instrumentus.common.blocks.entities.CopperSoulCampfireBlockEntity;
-import com.beanbot.instrumentus.common.blocks.entities.ModBlockEntities;
+import com.beanbot.instrumentus.common.blocks.entities.InstrumentusBlockEntities;
 import com.beanbot.instrumentus.common.recipe.CopperSoulCampfireRecipe;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -90,9 +90,9 @@ public class CopperSoulCampfireBlock extends CampfireBlock {
     @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level world, BlockState state, BlockEntityType<T> blockEntityType) {
         if (world.isClientSide) {
-            return state.getValue(LIT) ? createTickerHelper(blockEntityType, ModBlockEntities.COPPER_SOUL_CAMPFIRE_BLOCK_ENTITY.get(), CopperSoulCampfireBlockEntity::particleTick) : null;
+            return state.getValue(LIT) ? createTickerHelper(blockEntityType, InstrumentusBlockEntities.COPPER_SOUL_CAMPFIRE_BLOCK_ENTITY.get(), CopperSoulCampfireBlockEntity::particleTick) : null;
         } else {
-            return state.getValue(LIT) ? createTickerHelper(blockEntityType, ModBlockEntities.COPPER_SOUL_CAMPFIRE_BLOCK_ENTITY.get(), CopperSoulCampfireBlockEntity::cookTick) : createTickerHelper(blockEntityType, ModBlockEntities.COPPER_SOUL_CAMPFIRE_BLOCK_ENTITY.get(), CopperSoulCampfireBlockEntity::cooldownTick);
+            return state.getValue(LIT) ? createTickerHelper(blockEntityType, InstrumentusBlockEntities.COPPER_SOUL_CAMPFIRE_BLOCK_ENTITY.get(), CopperSoulCampfireBlockEntity::cookTick) : createTickerHelper(blockEntityType, InstrumentusBlockEntities.COPPER_SOUL_CAMPFIRE_BLOCK_ENTITY.get(), CopperSoulCampfireBlockEntity::cooldownTick);
         }
     }
 

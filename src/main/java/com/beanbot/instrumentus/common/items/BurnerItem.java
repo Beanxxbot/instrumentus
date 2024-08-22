@@ -1,6 +1,6 @@
 package com.beanbot.instrumentus.common.items;
 
-import com.beanbot.instrumentus.client.particles.ModParticles;
+import com.beanbot.instrumentus.client.particles.InstrumentusParticles;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.SimpleParticleType;
@@ -106,7 +106,7 @@ public class BurnerItem extends Item {
         double d0 = 0.5;
         for (int k = 0; k < j; k++) {
             level.addParticle(
-                    (SimpleParticleType) ModParticles.COPPER_SOUL_FIRE_FLAME_PARTICLE.get(),
+                    (SimpleParticleType) InstrumentusParticles.COPPER_SOUL_FIRE_FLAME_PARTICLE.get(),
                     vec3.x,
                     vec3.y,
                     vec3.z,

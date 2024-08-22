@@ -1,7 +1,6 @@
 package com.beanbot.instrumentus.common.items;
 
-import com.beanbot.instrumentus.common.Instrumentus;
-import com.beanbot.instrumentus.common.blocks.ModBlocks;
+import com.beanbot.instrumentus.common.blocks.InstrumentusBlocks;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.tags.BlockTags;
@@ -35,22 +34,22 @@ public class SoulcopperPickaxeItem extends DiggerItem {
         BlockPos pos = context.getClickedPos();
         Player player = context.getPlayer();
         if(context.getClickedFace() == Direction.WEST && worldIn.isEmptyBlock(pos.west())) {
-            worldIn.setBlockAndUpdate(new BlockPos(pos.getX() - 1, pos.getY(), pos.getZ()), ModBlocks.COPPER_SOUL_FLAME_LIGHT.get().defaultBlockState());
+            worldIn.setBlockAndUpdate(new BlockPos(pos.getX() - 1, pos.getY(), pos.getZ()), InstrumentusBlocks.COPPER_SOUL_FLAME_LIGHT.get().defaultBlockState());
             context.getItemInHand().hurtAndBreak(1, player, context.getItemInHand().getEquipmentSlot());
         } else if(context.getClickedFace() == Direction.EAST && worldIn.isEmptyBlock(pos.east())) {
-            worldIn.setBlockAndUpdate(new BlockPos(pos.getX() + 1, pos.getY(), pos.getZ()), ModBlocks.COPPER_SOUL_FLAME_LIGHT.get().defaultBlockState());
+            worldIn.setBlockAndUpdate(new BlockPos(pos.getX() + 1, pos.getY(), pos.getZ()), InstrumentusBlocks.COPPER_SOUL_FLAME_LIGHT.get().defaultBlockState());
             context.getItemInHand().hurtAndBreak(1, player, context.getItemInHand().getEquipmentSlot());
         } else if(context.getClickedFace() == Direction.NORTH && worldIn.isEmptyBlock(pos.north())){
-            worldIn.setBlockAndUpdate(new BlockPos(pos.getX(), pos.getY(), pos.getZ() - 1), ModBlocks.COPPER_SOUL_FLAME_LIGHT.get().defaultBlockState());
+            worldIn.setBlockAndUpdate(new BlockPos(pos.getX(), pos.getY(), pos.getZ() - 1), InstrumentusBlocks.COPPER_SOUL_FLAME_LIGHT.get().defaultBlockState());
             context.getItemInHand().hurtAndBreak(1, player, context.getItemInHand().getEquipmentSlot());
         } else if(context.getClickedFace() == Direction.SOUTH && worldIn.isEmptyBlock(pos.south())){
-            worldIn.setBlockAndUpdate(new BlockPos(pos.getX(), pos.getY(), pos.getZ() + 1), ModBlocks.COPPER_SOUL_FLAME_LIGHT.get().defaultBlockState());
+            worldIn.setBlockAndUpdate(new BlockPos(pos.getX(), pos.getY(), pos.getZ() + 1), InstrumentusBlocks.COPPER_SOUL_FLAME_LIGHT.get().defaultBlockState());
             context.getItemInHand().hurtAndBreak(1, player, context.getItemInHand().getEquipmentSlot());
         } else if(context.getClickedFace() == Direction.DOWN && worldIn.isEmptyBlock(pos.below())){
-            worldIn.setBlockAndUpdate(new BlockPos(pos.getX(), pos.getY() - 1, pos.getZ()), ModBlocks.COPPER_SOUL_FLAME_LIGHT.get().defaultBlockState());
+            worldIn.setBlockAndUpdate(new BlockPos(pos.getX(), pos.getY() - 1, pos.getZ()), InstrumentusBlocks.COPPER_SOUL_FLAME_LIGHT.get().defaultBlockState());
             context.getItemInHand().hurtAndBreak(1, player, context.getItemInHand().getEquipmentSlot());
         } else if(context.getClickedFace() == Direction.UP && worldIn.isEmptyBlock(pos.above())){
-            worldIn.setBlockAndUpdate(new BlockPos(pos.getX(), pos.getY() + 1, pos.getZ()), ModBlocks.COPPER_SOUL_FLAME_LIGHT.get().defaultBlockState());
+            worldIn.setBlockAndUpdate(new BlockPos(pos.getX(), pos.getY() + 1, pos.getZ()), InstrumentusBlocks.COPPER_SOUL_FLAME_LIGHT.get().defaultBlockState());
             context.getItemInHand().hurtAndBreak(1, player, context.getItemInHand().getEquipmentSlot());
         } else {
             return InteractionResult.FAIL;

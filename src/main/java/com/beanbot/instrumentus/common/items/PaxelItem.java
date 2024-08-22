@@ -1,5 +1,5 @@
 package com.beanbot.instrumentus.common.items;
-import com.beanbot.instrumentus.common.data.GeneratorBlockTags;
+import com.beanbot.instrumentus.common.data.InstrumentusGeneratorBlockTags;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -33,12 +33,12 @@ public class PaxelItem extends DiggerItem {
             PICKAXE_DIG);
 
     public PaxelItem(Tier tier, float attackDamageIn, float attackSpeedIn) {
-        super(tier, GeneratorBlockTags.MINEABLE_WITH_PAXEL, generateItemProperties(tier, attackDamageIn, attackSpeedIn));
+        super(tier, InstrumentusGeneratorBlockTags.MINEABLE_WITH_PAXEL, generateItemProperties(tier, attackDamageIn, attackSpeedIn));
         this.material = tier;
     }
 
     private static Item.Properties generateItemProperties(Tier tier, float attackDamageIn, float attackSpeedIn) {
-        if (tier == Tiers.NETHERITE || tier == ModItemTiers.ENERGIZED) {
+        if (tier == Tiers.NETHERITE || tier == InstrumentusItemTiers.ENERGIZED) {
             return new Item.Properties().attributes(AxeItem.createAttributes(tier, attackDamageIn, attackSpeedIn)).stacksTo(1).fireResistant();
         }
         return new Item.Properties().attributes(AxeItem.createAttributes(tier, attackDamageIn, attackSpeedIn)).stacksTo(1);

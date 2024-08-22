@@ -1,7 +1,7 @@
 package com.beanbot.instrumentus.common.blocks.entities;
 
 import com.beanbot.instrumentus.common.recipe.CopperSoulCampfireRecipe;
-import com.beanbot.instrumentus.common.recipe.ModRecipes;
+import com.beanbot.instrumentus.common.recipe.InstrumentusRecipes;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
@@ -34,8 +34,8 @@ public class CopperSoulCampfireBlockEntity extends BlockEntity implements Cleara
     private final int[] cookingTime = new int[4];
     private final RecipeManager.CachedCheck<SingleRecipeInput, CopperSoulCampfireRecipe> quickCheck;
     public CopperSoulCampfireBlockEntity(BlockPos pPos, BlockState pBlockState) {
-        super(ModBlockEntities.COPPER_SOUL_CAMPFIRE_BLOCK_ENTITY.get(), pPos, pBlockState);
-        this.quickCheck = RecipeManager.createCheck(ModRecipes.COPPER_SOUL_CAMPFIRE_COOKING_TYPE.get());
+        super(InstrumentusBlockEntities.COPPER_SOUL_CAMPFIRE_BLOCK_ENTITY.get(), pPos, pBlockState);
+        this.quickCheck = RecipeManager.createCheck(InstrumentusRecipes.COPPER_SOUL_CAMPFIRE_COOKING_TYPE.get());
     }
 
     public static void cookTick(Level pLevel, BlockPos pPos, BlockState pState, CopperSoulCampfireBlockEntity pBlockEntity) {

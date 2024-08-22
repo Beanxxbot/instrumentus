@@ -50,7 +50,7 @@ public class EnergySickleItem extends SickleItem implements IItemLightningCharge
             radius = 2;
             height = 2;
         }
-        if(tier == Tiers.NETHERITE || tier == ModItemTiers.ENERGIZED)
+        if(tier == Tiers.NETHERITE || tier == InstrumentusItemTiers.ENERGIZED)
         {
             radius = 3;
             height = 3;

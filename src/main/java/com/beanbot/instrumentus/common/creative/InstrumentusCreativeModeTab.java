@@ -2,7 +2,7 @@ package com.beanbot.instrumentus.common.creative;
 
 import com.beanbot.instrumentus.common.Instrumentus;
 import com.beanbot.instrumentus.common.config.Config;
-import com.beanbot.instrumentus.common.items.ModItems;
+import com.beanbot.instrumentus.common.items.InstrumentusItems;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.CreativeModeTab;
@@ -13,7 +13,7 @@ import net.neoforged.neoforge.registries.DeferredRegister;
 
 import java.util.function.Supplier;
 
-public class ModCreativeModeTab {
+public class InstrumentusCreativeModeTab {
     public static final DeferredRegister<CreativeModeTab> CREATIVE_MOD_TABS = DeferredRegister.create(Registries.CREATIVE_MODE_TAB, Instrumentus.MODID);
     public static Supplier<CreativeModeTab> MOD_ITEM_GROUP = CREATIVE_MOD_TABS.register("instrumentus_tab", () ->
             CreativeModeTab.builder().icon(() -> creativeTabIcon())
@@ -25,7 +25,7 @@ public class ModCreativeModeTab {
 
     private static ItemStack creativeTabIcon() {
         if (Config.PAXELS.get())
-            return new ItemStack(ModItems.DIAMOND_PAXEL.get());
+            return new ItemStack(InstrumentusItems.DIAMOND_PAXEL.get());
         return new ItemStack(Items.DIAMOND_PICKAXE);
     }
 }
