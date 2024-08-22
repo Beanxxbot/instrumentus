@@ -3,17 +3,23 @@
   "category": "equipment",
   "group": "instrumentus",
   "key": {
-    "S": {
-      "item": "minecraft:stick"
+    "B": {
+      "item": "minecraft:brick"
     },
-    "X": {
-      "item": "minecraft:copper_ingot"
+    "F": {
+      "item": "minecraft:furnace"
+    },
+    "L": {
+      "item": "minecraft:bricks"
+    },
+    "S": {
+      "item": "minecraft:smooth_stone"
     }
   },
   "pattern": [
-    "XX",
-    "XS",
-    " S"
+    "BBB",
+    "BFB",
+    "SLS"
   ],
   "result": {
     "count": 1,

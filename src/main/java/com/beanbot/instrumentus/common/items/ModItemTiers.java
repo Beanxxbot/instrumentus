@@ -9,10 +9,10 @@ import net.neoforged.neoforge.common.SimpleTier;
 public class ModItemTiers {
     public static final Tier COPPER = new SimpleTier(
             BlockTags.INCORRECT_FOR_IRON_TOOL,
-            750,
+            175,
             5.0f,
-            1.5f,
-            14,
+            1.0f,
+            8,
             () -> Ingredient.of(Items.COPPER_INGOT)
     );
 

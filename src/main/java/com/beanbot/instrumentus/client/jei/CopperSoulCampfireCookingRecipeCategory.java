@@ -2,7 +2,7 @@ package com.beanbot.instrumentus.client.jei;
 
 import com.beanbot.instrumentus.common.Instrumentus;
 import com.beanbot.instrumentus.common.blocks.ModBlocks;
-import com.beanbot.instrumentus.recipe.CopperSoulCampfireRecipe;
+import com.beanbot.instrumentus.common.recipe.CopperSoulCampfireRecipe;
 import mezz.jei.api.constants.ModIds;
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
 import mezz.jei.api.gui.drawable.IDrawable;
@@ -113,7 +113,7 @@ public class CopperSoulCampfireCookingRecipeCategory implements IRecipeCategory<
         private final IDrawableAnimated arrow;
         private final ScreenPosition position;
 
-        public CookingArrowRecipeWidget(IGuiHelper guiHelper, com.beanbot.instrumentus.recipe.CopperSoulCampfireRecipe recipe, int regularCookTime, ScreenPosition position) {
+        public CookingArrowRecipeWidget(IGuiHelper guiHelper, com.beanbot.instrumentus.common.recipe.CopperSoulCampfireRecipe recipe, int regularCookTime, ScreenPosition position) {
             int cookTime = recipe.getCookingTime();
             if (cookTime <= 0) {
                 cookTime = regularCookTime;

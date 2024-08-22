@@ -1,7 +1,7 @@
 package com.beanbot.instrumentus.common.data.builder;
 
 import com.beanbot.instrumentus.common.Instrumentus;
-import com.beanbot.instrumentus.recipe.CopperSoulCampfireRecipe;
+import com.beanbot.instrumentus.common.recipe.CopperSoulCampfireRecipe;
 import net.minecraft.advancements.Advancement;
 import net.minecraft.advancements.AdvancementRequirements;
 import net.minecraft.advancements.AdvancementRewards;

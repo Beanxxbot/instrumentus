@@ -42,6 +42,8 @@ public class GeneratorItemModels extends ItemModelProvider {
         withExistingParent(ModItems.COPPER_SOUL_FLAME_LIGHT_ITEM.getId().getPath(), modLoc("block/copper_soul_fire_flame"));
         singleTexture(ModItems.SOULCOPPER_BURNER.getId().getPath(), mcLoc("item/handheld"), "layer0", modLoc("item/soulcopper_burner"));
 
+        withExistingParent(ModItems.KILN_BLOCK_ITEM.getId().getPath(), modLoc("block/kiln"));
+
         registerTools();
     }
 

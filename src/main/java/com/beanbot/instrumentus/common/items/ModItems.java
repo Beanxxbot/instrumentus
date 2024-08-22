@@ -21,6 +21,7 @@ public class ModItems {
     public static final DeferredRegister.Items COPPER = DeferredRegister.createItems(Instrumentus.MODID);
     public static final DeferredRegister.Items BRUSHES = DeferredRegister.createItems(Instrumentus.MODID);
     public static final DeferredRegister.Items EXCAVATORS = DeferredRegister.createItems(Instrumentus.MODID);
+    public static final DeferredRegister.Items UTIL = DeferredRegister.createItems(Instrumentus.MODID);
 
     public static final DeferredHolder<Item, ModShearsItem> WOODEN_SHEARS = SHEARS.register("wooden_shears", () -> new ModShearsItem(Tiers.WOOD, new Item.Properties().stacksTo(1).durability(Math.toIntExact(Math.round(Tiers.WOOD.getUses() * 0.952)))));
     public static final DeferredHolder<Item, ModShearsItem> STONE_SHEARS = SHEARS.register("stone_shears", () -> new ModShearsItem(Tiers.STONE, new Item.Properties().stacksTo(1).durability(Math.toIntExact(Math.round(Tiers.STONE.getUses() * 0.952)))));
@@ -111,7 +112,7 @@ public class ModItems {
     public static final DeferredHolder<Item, ExcavatorItem> DIAMOND_EXCAVATOR = EXCAVATORS.register("diamond_excavator", () -> new ExcavatorItem(Tiers.DIAMOND, 1, -3.0f));
     public static final DeferredHolder<Item, ExcavatorItem> NETHERITE_EXCAVATOR = EXCAVATORS.register("netherite_excavator", () -> new ExcavatorItem(Tiers.NETHERITE, 1, -3.0f));
 
-
+    public static final DeferredHolder<Item, BlockItem> KILN_BLOCK_ITEM = UTIL.registerSimpleBlockItem(ModBlocks.KILN);
 
 
 }

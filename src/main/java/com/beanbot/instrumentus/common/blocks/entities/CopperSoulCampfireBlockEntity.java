@@ -1,7 +1,7 @@
 package com.beanbot.instrumentus.common.blocks.entities;
 
-import com.beanbot.instrumentus.recipe.CopperSoulCampfireRecipe;
-import com.beanbot.instrumentus.recipe.ModRecipes;
+import com.beanbot.instrumentus.common.recipe.CopperSoulCampfireRecipe;
+import com.beanbot.instrumentus.common.recipe.ModRecipes;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;

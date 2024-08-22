@@ -1,5 +1,6 @@
 package com.beanbot.instrumentus.common.creative;
 
+import com.beanbot.instrumentus.common.blocks.ModBlocks;
 import com.beanbot.instrumentus.common.config.Config;
 import com.beanbot.instrumentus.common.items.ModItems;
 import net.minecraft.world.item.ItemStack;
@@ -12,6 +13,7 @@ public class ModCreativeModeTabPopulate {
 
     public static void populate(BuildCreativeModeTabContentsEvent event) {
         if(event.getTab() == ModCreativeModeTab.MOD_ITEM_GROUP.get()) {
+            event.accept(ModItems.KILN_BLOCK_ITEM.get());
             if(Config.PAXELS.get()) {
                 event.accept(ModItems.WOODEN_PAXEL.get());
                 event.accept(ModItems.STONE_PAXEL.get());

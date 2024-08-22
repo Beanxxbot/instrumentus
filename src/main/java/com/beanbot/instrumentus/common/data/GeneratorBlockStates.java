@@ -1,15 +1,20 @@
 package com.beanbot.instrumentus.common.data;
 
 import com.beanbot.instrumentus.common.Instrumentus;
+import com.beanbot.instrumentus.common.blocks.KilnBlock;
 import com.beanbot.instrumentus.common.blocks.ModBlocks;
 import net.minecraft.client.renderer.RenderType;
+import net.minecraft.core.Direction;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.level.block.HorizontalDirectionalBlock;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.neoforged.neoforge.client.model.generators.BlockStateProvider;
 import net.neoforged.neoforge.client.model.generators.ConfiguredModel;
 import net.neoforged.neoforge.client.model.generators.ModelFile;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
+
+import java.util.Objects;
 
 public class GeneratorBlockStates extends BlockStateProvider {
     public GeneratorBlockStates(PackOutput output, ExistingFileHelper helper) {
@@ -24,6 +29,35 @@ public class GeneratorBlockStates extends BlockStateProvider {
         simpleBlock(ModBlocks.COPPER_SOUL_FLAME_LIGHT.get(), models().cubeAll(ModBlocks.COPPER_SOUL_FLAME_LIGHT.getId().getPath(), blockTexture(ModBlocks.COPPER_SOUL_FLAME_LIGHT.get())).renderType(RenderType.CUTOUT.name));
         simpleBlock(ModBlocks.SOULCOPPER_TORCH.get(), models().torch(ModBlocks.SOULCOPPER_TORCH.getId().getPath(), modLoc("block/copper_soul_torch")).renderType(RenderType.CUTOUT.name));
         horizontalBlock(ModBlocks.SOULCOPPER_WALL_TORCH.get(), models().torchWall(ModBlocks.SOULCOPPER_WALL_TORCH.getId().getPath(), modLoc("block/copper_soul_torch")).renderType(RenderType.CUTOUT.name), 90);
+
+
+
+        getVariantBuilder(ModBlocks.KILN.get()).forAllStates(s -> {
+            ModelFile model;
+            boolean active = s.getValue(KilnBlock.LIT);
+            Direction dir = s.getValue(BlockStateProperties.HORIZONTAL_FACING);
+            if(active) {
+                model = models().orientableWithBottom(
+                        Objects.requireNonNull(ModBlocks.KILN.getId()).getPath() + "_on",
+                        modLoc("block/" + ModBlocks.KILN.getId().getPath() + "_side"),
+                        modLoc("block/" + ModBlocks.KILN.getId().getPath() + "_front_on"),
+                        modLoc("block/" + ModBlocks.KILN.getId().getPath() + "_bottom"),
+                        modLoc("block/" + ModBlocks.KILN.getId().getPath() + "_top")
+                ).renderType("solid");
+            } else {
+                model = models().orientableWithBottom(
+                        Objects.requireNonNull(ModBlocks.KILN.getId()).getPath(),
+                        modLoc("block/" + ModBlocks.KILN.getId().getPath() + "_side"),
+                        modLoc("block/" + ModBlocks.KILN.getId().getPath() + "_front"),
+                        modLoc("block/" + ModBlocks.KILN.getId().getPath() + "_bottom"),
+                        modLoc("block/" + ModBlocks.KILN.getId().getPath() + "_top")
+                ).renderType("solid");
+            }
+            return ConfiguredModel.builder()
+                    .modelFile(model)
+                    .rotationY(((int) dir.toYRot() + 180) % 360)
+                    .build();
+        });
 
         getVariantBuilder(ModBlocks.COPPER_SOUL_CAMPFIRE.get()).forAllStates(s -> {
             ModelFile model;

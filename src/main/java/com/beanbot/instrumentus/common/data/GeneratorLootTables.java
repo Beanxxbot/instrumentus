@@ -61,6 +61,7 @@ public class GeneratorLootTables extends LootTableProvider {
             dropSelf(ModBlocks.ENERGIZED_BLOCK.get());
             dropSelf(ModBlocks.RAW_SOULCOPPER_BLOCK.get());
             dropSelf(ModBlocks.SOULCOPPER_BLOCK.get());
+            dropSelf(ModBlocks.KILN.get());
 
             add(ModBlocks.COPPER_SOUL_CAMPFIRE.get(),
                     silkTouchDispatchTable -> this.createSilkTouchDispatchTable(
@@ -74,6 +75,7 @@ public class GeneratorLootTables extends LootTableProvider {
             List<Block> knownBlocks = new ArrayList<>();
             knownBlocks.addAll(ModBlocks.ENERGIZED.getEntries().stream().map(DeferredHolder::get).toList());
             knownBlocks.addAll(ModBlocks.SOULCOPPER.getEntries().stream().map(DeferredHolder::get).toList());
+            knownBlocks.addAll(ModBlocks.UTIL.getEntries().stream().map(DeferredHolder::get).toList());
             return knownBlocks;
         }
     }

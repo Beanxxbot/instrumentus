@@ -1,6 +1,8 @@
 package com.beanbot.instrumentus.common;
 
 import com.beanbot.instrumentus.client.ToolRenderEvents;
+import com.beanbot.instrumentus.client.inventory.recipebook.RecipeBookExtensionClientHelper;
+import com.beanbot.instrumentus.common.inventory.ModMenus;
 import com.beanbot.instrumentus.client.particles.ModParticles;
 import com.beanbot.instrumentus.client.renderer.CopperSoulCampfireRenderer;
 import com.beanbot.instrumentus.common.blocks.ModBlocks;
@@ -14,7 +16,7 @@ import com.beanbot.instrumentus.common.creative.ModCreativeModeTab;
 import com.beanbot.instrumentus.common.creative.ModCreativeModeTabPopulate;
 import com.beanbot.instrumentus.common.items.datacomponents.ModDataComponents;
 import com.beanbot.instrumentus.common.items.interfaces.IEnergyItem;
-import com.beanbot.instrumentus.recipe.ModRecipes;
+import com.beanbot.instrumentus.common.recipe.ModRecipes;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderers;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.IEventBus;
@@ -25,6 +27,7 @@ import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
+import net.neoforged.neoforge.client.event.RegisterRecipeBookCategoriesEvent;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent;
 import org.apache.logging.log4j.LogManager;
@@ -84,7 +87,13 @@ public class Instrumentus {
         if (Config.EXCAVATORS.get())
             ModItems.EXCAVATORS.register(instrumentusEventBus);
 
+        ModItems.UTIL.register(instrumentusEventBus);
+        ModBlocks.UTIL.register(instrumentusEventBus);
+
         instrumentusEventBus.addListener(this::addCreative);
+
+        ModMenus.register(instrumentusEventBus);
+        instrumentusEventBus.addListener(this::registerRecipeBookCategories);
 
         ModBlockEntities.register(instrumentusEventBus);
 
@@ -132,8 +141,11 @@ public class Instrumentus {
 
     private void setupClient(final FMLClientSetupEvent event) {
         BlockEntityRenderers.register(ModBlockEntities.COPPER_SOUL_CAMPFIRE_BLOCK_ENTITY.get(), CopperSoulCampfireRenderer::new);
-
         NeoForge.EVENT_BUS.register(ToolRenderEvents.class);
+    }
+
+    private void registerRecipeBookCategories(RegisterRecipeBookCategoriesEvent event) {
+        RecipeBookExtensionClientHelper.init(event);
     }
 
     @SuppressWarnings("unused")

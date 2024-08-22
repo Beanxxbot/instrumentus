@@ -3,8 +3,9 @@ package com.beanbot.instrumentus.client.jei;
 import com.beanbot.instrumentus.common.Instrumentus;
 import com.beanbot.instrumentus.common.blocks.ModBlocks;
 import com.beanbot.instrumentus.common.items.ModItems;
-import com.beanbot.instrumentus.recipe.CopperSoulCampfireRecipe;
-import com.beanbot.instrumentus.recipe.ModRecipes;
+import com.beanbot.instrumentus.common.recipe.CopperSoulCampfireRecipe;
+import com.beanbot.instrumentus.common.recipe.KilnRecipe;
+import com.beanbot.instrumentus.common.recipe.ModRecipes;
 import mezz.jei.api.IModPlugin;
 import mezz.jei.api.JeiPlugin;
 import mezz.jei.api.helpers.IGuiHelper;
@@ -14,7 +15,6 @@ import mezz.jei.api.registration.IRecipeCatalystRegistration;
 import mezz.jei.api.registration.IRecipeCategoryRegistration;
 import mezz.jei.api.registration.IRecipeRegistration;
 import mezz.jei.api.registration.ISubtypeRegistration;
-import mezz.jei.api.runtime.IJeiRuntime;
 import net.minecraft.client.Minecraft;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
@@ -50,7 +50,8 @@ public class ModJEIIntegration implements IModPlugin {
         IJeiHelpers jeiHelpers = registration.getJeiHelpers();
         IGuiHelper guiHelper = jeiHelpers.getGuiHelper();
         registration.addRecipeCategories(
-            new CopperSoulCampfireCookingRecipeCategory(guiHelper)
+                new CopperSoulCampfireCookingRecipeCategory(guiHelper),
+                new FiringRecipeCategory(guiHelper)
         );
         Instrumentus.LOGGER.info("Registered JEI Categories");
     }
@@ -58,6 +59,7 @@ public class ModJEIIntegration implements IModPlugin {
     @Override
     public void registerRecipeCatalysts(IRecipeCatalystRegistration registration) {
         registration.addRecipeCatalyst(new ItemStack(ModBlocks.COPPER_SOUL_CAMPFIRE.get().asItem()), CopperSoulCampfireCookingRecipeCategory.TYPE);
+        registration.addRecipeCatalyst(new ItemStack(ModBlocks.KILN.get().asItem()), FiringRecipeCategory.TYPE);
     }
 
     @Override
@@ -66,7 +68,10 @@ public class ModJEIIntegration implements IModPlugin {
         RecipeManager recipeManager = Minecraft.getInstance().level.getRecipeManager();
         List<CopperSoulCampfireRecipe> copperSoulCampfireRecipes = recipeManager.getAllRecipesFor(ModRecipes.COPPER_SOUL_CAMPFIRE_COOKING_TYPE.get())
                 .stream().map(RecipeHolder::value).collect(Collectors.toList());
+        List<KilnRecipe> firingRecipes = recipeManager.getAllRecipesFor(ModRecipes.FIRING.get())
+                .stream().map(RecipeHolder::value).collect(Collectors.toList());
 
         registration.addRecipes(CopperSoulCampfireCookingRecipeCategory.TYPE, copperSoulCampfireRecipes);
+        registration.addRecipes(FiringRecipeCategory.TYPE, firingRecipes);
     }
 }

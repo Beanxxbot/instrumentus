@@ -1,4 +1,4 @@
-package com.beanbot.instrumentus.recipe;
+package com.beanbot.instrumentus.common.recipe;
 
 import com.beanbot.instrumentus.common.Instrumentus;
 import com.mojang.serialization.Codec;
@@ -15,7 +15,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.*;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
-import net.neoforged.neoforge.common.crafting.IngredientType;
 import org.jetbrains.annotations.NotNull;
 
 public class CopperSoulCampfireRecipe implements Recipe<SingleRecipeInput> {

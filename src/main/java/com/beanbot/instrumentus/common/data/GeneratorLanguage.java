@@ -103,6 +103,9 @@ public class GeneratorLanguage extends LanguageProvider {
         addItem(ModItems.COPPER_EXCAVATOR, "Copper Excavator");
         addItem(ModItems.ENERGIZED_EXCAVATOR, "Energized Di-Emerald Excavator");
 
+        addBlock(ModBlocks.KILN, "Kiln");
+        add(Instrumentus.MODID + ".container.kiln", "Kiln");
+
         add(Instrumentus.MODID + ".lore.no_energy", "No Energy");
         add(Instrumentus.MODID + ".lore.energy", "%d FE/%d FE");
         add(Instrumentus.MODID + ".tooltip.energy", "");

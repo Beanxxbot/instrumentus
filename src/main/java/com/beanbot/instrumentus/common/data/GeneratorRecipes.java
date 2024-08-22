@@ -1,8 +1,10 @@
 package com.beanbot.instrumentus.common.data;
 
 import com.beanbot.instrumentus.common.Instrumentus;
+import com.beanbot.instrumentus.common.blocks.ModBlocks;
 import com.beanbot.instrumentus.common.config.Config;
 import com.beanbot.instrumentus.common.data.builder.CopperSoulCampfireCookingRecipeBuilder;
+import com.beanbot.instrumentus.common.data.builder.KilnCookingRecipeBuilder;
 import com.beanbot.instrumentus.common.items.ModItems;
 import net.minecraft.advancements.critereon.InventoryChangeTrigger;
 import net.minecraft.core.HolderLookup;
@@ -12,6 +14,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.level.block.Blocks;
 import net.neoforged.neoforge.common.Tags;
 import org.jetbrains.annotations.NotNull;
 
@@ -25,6 +28,223 @@ public class GeneratorRecipes extends RecipeProvider {
 
     @Override
     protected void buildRecipes(@NotNull RecipeOutput consumer) {
+        //Kiln
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModBlocks.KILN.get().asItem())
+                .pattern("BBB")
+                .pattern("BFB")
+                .pattern("SLS")
+                .define('B', Items.BRICK)
+                .define('F', Blocks.FURNACE)
+                .define('S', Blocks.SMOOTH_STONE)
+                .define('L', Blocks.BRICKS)
+                .group("instrumentus")
+                .unlockedBy("has_furnace", InventoryChangeTrigger.TriggerInstance.hasItems(Blocks.BRICKS.asItem()))
+                .save(consumer);
+        KilnCookingRecipeBuilder.fireDefault(
+                        Ingredient.of(ItemTags.SAND),
+                        RecipeCategory.BUILDING_BLOCKS,
+                        Blocks.GLASS.asItem().getDefaultInstance())
+                .unlockedBy("has_sand", InventoryChangeTrigger.TriggerInstance.hasItems(Blocks.SAND.asItem()))
+                .save(consumer);
+        KilnCookingRecipeBuilder.fireDefault(
+                        Ingredient.of(Blocks.DEEPSLATE_TILES.asItem()),
+                        RecipeCategory.BUILDING_BLOCKS,
+                        Blocks.CRACKED_DEEPSLATE_TILES.asItem().getDefaultInstance())
+                .unlockedBy("has_deepslate_tiles", InventoryChangeTrigger.TriggerInstance.hasItems(Blocks.DEEPSLATE_TILES.asItem()))
+                .save(consumer);
+        KilnCookingRecipeBuilder.fireDefault(
+                        Ingredient.of(Blocks.PINK_TERRACOTTA.asItem()),
+                        RecipeCategory.BUILDING_BLOCKS,
+                        Blocks.PINK_GLAZED_TERRACOTTA.asItem().getDefaultInstance())
+                .unlockedBy("has_pink_terracotta", InventoryChangeTrigger.TriggerInstance.hasItems(Blocks.PINK_TERRACOTTA.asItem()))
+                .save(consumer);
+        KilnCookingRecipeBuilder.fireDefault(
+                        Ingredient.of(Blocks.BLUE_TERRACOTTA.asItem()),
+                        RecipeCategory.BUILDING_BLOCKS,
+                        Blocks.BLUE_GLAZED_TERRACOTTA.asItem().getDefaultInstance())
+                .unlockedBy("has_blue_terracotta", InventoryChangeTrigger.TriggerInstance.hasItems(Blocks.BLUE_TERRACOTTA.asItem()))
+                .save(consumer);
+        KilnCookingRecipeBuilder.fireDefault(
+                        Ingredient.of(Blocks.DEEPSLATE_BRICKS.asItem()),
+                        RecipeCategory.BUILDING_BLOCKS,
+                        Blocks.CRACKED_DEEPSLATE_BRICKS.asItem().getDefaultInstance())
+                .unlockedBy("has_deepslate_bricks", InventoryChangeTrigger.TriggerInstance.hasItems(Blocks.DEEPSLATE_BRICKS.asItem()))
+                .save(consumer);
+        KilnCookingRecipeBuilder.fireDefault(
+                        Ingredient.of(Blocks.CLAY.asItem()),
+                        RecipeCategory.BUILDING_BLOCKS,
+                        Blocks.TERRACOTTA.asItem().getDefaultInstance())
+                .unlockedBy("has_clay_block", InventoryChangeTrigger.TriggerInstance.hasItems(Blocks.CLAY.asItem()))
+                .save(consumer);
+        KilnCookingRecipeBuilder.fireDefault(
+                        Ingredient.of(Blocks.CYAN_TERRACOTTA.asItem()),
+                        RecipeCategory.BUILDING_BLOCKS,
+                        Blocks.CYAN_GLAZED_TERRACOTTA.asItem().getDefaultInstance())
+                .unlockedBy("has_cyan_terracotta", InventoryChangeTrigger.TriggerInstance.hasItems(Blocks.CYAN_TERRACOTTA.asItem()))
+                .save(consumer);
+        KilnCookingRecipeBuilder.fireDefault(
+                        Ingredient.of(Blocks.MAGENTA_TERRACOTTA.asItem()),
+                        RecipeCategory.BUILDING_BLOCKS,
+                        Blocks.MAGENTA_GLAZED_TERRACOTTA.asItem().getDefaultInstance())
+                .unlockedBy("has_magenta_terracotta", InventoryChangeTrigger.TriggerInstance.hasItems(Blocks.MAGENTA_TERRACOTTA.asItem()))
+                .save(consumer);
+        KilnCookingRecipeBuilder.fireDefault(
+                        Ingredient.of(Blocks.POLISHED_BLACKSTONE_BRICKS.asItem()),
+                        RecipeCategory.BUILDING_BLOCKS,
+                        Blocks.CRACKED_POLISHED_BLACKSTONE_BRICKS.asItem().getDefaultInstance())
+                .unlockedBy("has_polished_blackstone_bricks", InventoryChangeTrigger.TriggerInstance.hasItems(Blocks.POLISHED_BLACKSTONE_BRICKS.asItem()))
+                .save(consumer);
+        KilnCookingRecipeBuilder.fireDefault(
+                        Ingredient.of(Blocks.BROWN_TERRACOTTA.asItem()),
+                        RecipeCategory.BUILDING_BLOCKS,
+                        Blocks.BROWN_GLAZED_TERRACOTTA.asItem().getDefaultInstance())
+                .unlockedBy("has_brown_terracotta", InventoryChangeTrigger.TriggerInstance.hasItems(Blocks.BROWN_TERRACOTTA.asItem()))
+                .save(consumer);
+        KilnCookingRecipeBuilder.fireDefault(
+                        Ingredient.of(Blocks.BASALT.asItem()),
+                        RecipeCategory.BUILDING_BLOCKS,
+                        Blocks.SMOOTH_BASALT.asItem().getDefaultInstance())
+                .unlockedBy("has_basalt", InventoryChangeTrigger.TriggerInstance.hasItems(Blocks.BASALT.asItem()))
+                .save(consumer);
+        KilnCookingRecipeBuilder.fireDefault(
+                        Ingredient.of(Blocks.RED_SANDSTONE.asItem()),
+                        RecipeCategory.BUILDING_BLOCKS,
+                        Blocks.SMOOTH_RED_SANDSTONE.asItem().getDefaultInstance())
+                .unlockedBy("has_red_sandstone", InventoryChangeTrigger.TriggerInstance.hasItems(Blocks.RED_SANDSTONE.asItem()))
+                .save(consumer);
+        KilnCookingRecipeBuilder.fireDefault(
+                        Ingredient.of(Blocks.COBBLED_DEEPSLATE.asItem()),
+                        RecipeCategory.BUILDING_BLOCKS,
+                        Blocks.DEEPSLATE.asItem().getDefaultInstance())
+                .unlockedBy("has_cobbled_deepslate", InventoryChangeTrigger.TriggerInstance.hasItems(Blocks.COBBLED_DEEPSLATE.asItem()))
+                .save(consumer);
+        KilnCookingRecipeBuilder.fireDefault(
+                        Ingredient.of(Blocks.QUARTZ_BLOCK.asItem()),
+                        RecipeCategory.BUILDING_BLOCKS,
+                        Blocks.SMOOTH_QUARTZ.asItem().getDefaultInstance())
+                .unlockedBy("has_quartz_block", InventoryChangeTrigger.TriggerInstance.hasItems(Blocks.QUARTZ_BLOCK.asItem()))
+                .save(consumer);
+        KilnCookingRecipeBuilder.fireDefault(
+                        Ingredient.of(Blocks.SANDSTONE.asItem()),
+                        RecipeCategory.BUILDING_BLOCKS,
+                        Blocks.SMOOTH_SANDSTONE.asItem().getDefaultInstance())
+                .unlockedBy("has_sandstone", InventoryChangeTrigger.TriggerInstance.hasItems(Blocks.SANDSTONE.asItem()))
+                .save(consumer);
+        KilnCookingRecipeBuilder.fireDefault(
+                        Ingredient.of(Blocks.LIGHT_BLUE_TERRACOTTA.asItem()),
+                        RecipeCategory.BUILDING_BLOCKS,
+                        Blocks.LIGHT_BLUE_GLAZED_TERRACOTTA.asItem().getDefaultInstance())
+                .unlockedBy("has_light_blue_terracotta", InventoryChangeTrigger.TriggerInstance.hasItems(Blocks.LIGHT_BLUE_TERRACOTTA.asItem()))
+                .save(consumer);
+        KilnCookingRecipeBuilder.fireDefault(
+                        Ingredient.of(Blocks.PURPLE_TERRACOTTA.asItem()),
+                        RecipeCategory.BUILDING_BLOCKS,
+                        Blocks.PURPLE_GLAZED_TERRACOTTA.asItem().getDefaultInstance())
+                .unlockedBy("has_purple_terracotta", InventoryChangeTrigger.TriggerInstance.hasItems(Blocks.PURPLE_TERRACOTTA.asItem()))
+                .save(consumer);
+        KilnCookingRecipeBuilder.fireDefault(
+                        Ingredient.of(Blocks.STONE_BRICKS.asItem()),
+                        RecipeCategory.BUILDING_BLOCKS,
+                        Blocks.CRACKED_STONE_BRICKS.asItem().getDefaultInstance())
+                .unlockedBy("has_stone_bricks", InventoryChangeTrigger.TriggerInstance.hasItems(Blocks.STONE_BRICKS.asItem()))
+                .save(consumer);
+        KilnCookingRecipeBuilder.fireDefault(
+                        Ingredient.of(Blocks.GREEN_TERRACOTTA.asItem()),
+                        RecipeCategory.BUILDING_BLOCKS,
+                        Blocks.GREEN_GLAZED_TERRACOTTA.asItem().getDefaultInstance())
+                .unlockedBy("has_green_terracotta", InventoryChangeTrigger.TriggerInstance.hasItems(Blocks.GREEN_TERRACOTTA.asItem()))
+                .save(consumer);
+        KilnCookingRecipeBuilder.fireDefault(
+                        Ingredient.of(Blocks.CACTUS.asItem()),
+                        RecipeCategory.MISC,
+                        Items.GREEN_DYE.getDefaultInstance())
+                .unlockedBy("has_cactus", InventoryChangeTrigger.TriggerInstance.hasItems(Blocks.CACTUS.asItem()))
+                .save(consumer);
+        KilnCookingRecipeBuilder.fireDefault(
+                        Ingredient.of(Blocks.SEA_PICKLE.asItem()),
+                        RecipeCategory.MISC,
+                        Items.LIME_DYE.getDefaultInstance())
+                .unlockedBy("has_sea_pickle", InventoryChangeTrigger.TriggerInstance.hasItems(Blocks.SEA_PICKLE.asItem()))
+                .save(consumer);
+        KilnCookingRecipeBuilder.fireDefault(
+                        Ingredient.of(Blocks.ORANGE_TERRACOTTA.asItem()),
+                        RecipeCategory.BUILDING_BLOCKS,
+                        Blocks.ORANGE_GLAZED_TERRACOTTA.asItem().getDefaultInstance())
+                .unlockedBy("has_orange_terracotta", InventoryChangeTrigger.TriggerInstance.hasItems(Blocks.ORANGE_TERRACOTTA.asItem()))
+                .save(consumer);
+        KilnCookingRecipeBuilder.fireDefault(
+                        Ingredient.of(Blocks.GRAY_TERRACOTTA.asItem()),
+                        RecipeCategory.BUILDING_BLOCKS,
+                        Blocks.GRAY_GLAZED_TERRACOTTA.asItem().getDefaultInstance())
+                .unlockedBy("has_gray_terracotta", InventoryChangeTrigger.TriggerInstance.hasItems(Blocks.GRAY_TERRACOTTA.asItem()))
+                .save(consumer);
+        KilnCookingRecipeBuilder.fireDefault(
+                        Ingredient.of(Blocks.NETHERRACK.asItem()),
+                        RecipeCategory.MISC,
+                        Items.NETHER_BRICK.getDefaultInstance())
+                .unlockedBy("has_netherrack", InventoryChangeTrigger.TriggerInstance.hasItems(Blocks.NETHERRACK.asItem()))
+                .save(consumer);
+        KilnCookingRecipeBuilder.fireDefault(
+                        Ingredient.of(Blocks.BLACK_TERRACOTTA.asItem()),
+                        RecipeCategory.BUILDING_BLOCKS,
+                        Blocks.BLACK_GLAZED_TERRACOTTA.asItem().getDefaultInstance())
+                .unlockedBy("has_black_terracotta", InventoryChangeTrigger.TriggerInstance.hasItems(Blocks.BLACK_TERRACOTTA.asItem()))
+                .save(consumer);
+        KilnCookingRecipeBuilder.fireDefault(
+                        Ingredient.of(Blocks.CLAY.asItem()),
+                        RecipeCategory.MISC,
+                        Items.BRICK.getDefaultInstance())
+                .unlockedBy("has_clay_block", InventoryChangeTrigger.TriggerInstance.hasItems(Blocks.CLAY.asItem()))
+                .save(consumer);
+        KilnCookingRecipeBuilder.fireDefault(
+                        Ingredient.of(Blocks.YELLOW_TERRACOTTA.asItem()),
+                        RecipeCategory.BUILDING_BLOCKS,
+                        Blocks.YELLOW_GLAZED_TERRACOTTA.asItem().getDefaultInstance())
+                .unlockedBy("has_yellow_terracotta", InventoryChangeTrigger.TriggerInstance.hasItems(Blocks.YELLOW_TERRACOTTA.asItem()))
+                .save(consumer);
+        KilnCookingRecipeBuilder.fireDefault(
+                        Ingredient.of(Blocks.COBBLESTONE.asItem()),
+                        RecipeCategory.BUILDING_BLOCKS,
+                        Blocks.STONE.asItem().getDefaultInstance())
+                .unlockedBy("has_cobblestone", InventoryChangeTrigger.TriggerInstance.hasItems(Blocks.COBBLESTONE.asItem()))
+                .save(consumer);
+        KilnCookingRecipeBuilder.fireDefault(
+                        Ingredient.of(Blocks.STONE.asItem()),
+                        RecipeCategory.BUILDING_BLOCKS,
+                        Blocks.SMOOTH_STONE.asItem().getDefaultInstance())
+                .unlockedBy("has_stone", InventoryChangeTrigger.TriggerInstance.hasItems(Blocks.STONE.asItem()))
+                .save(consumer);
+        KilnCookingRecipeBuilder.fireDefault(
+                        Ingredient.of(Blocks.LIGHT_GRAY_TERRACOTTA.asItem()),
+                        RecipeCategory.BUILDING_BLOCKS,
+                        Blocks.LIGHT_GRAY_GLAZED_TERRACOTTA.asItem().getDefaultInstance())
+                .unlockedBy("has_light_gray_terracotta", InventoryChangeTrigger.TriggerInstance.hasItems(Blocks.LIGHT_GRAY_TERRACOTTA.asItem()))
+                .save(consumer);
+        KilnCookingRecipeBuilder.fireDefault(
+                        Ingredient.of(Blocks.NETHER_BRICKS.asItem()),
+                        RecipeCategory.BUILDING_BLOCKS,
+                        Blocks.CRACKED_NETHER_BRICKS.asItem().getDefaultInstance())
+                .unlockedBy("has_nether_bricks", InventoryChangeTrigger.TriggerInstance.hasItems(Blocks.NETHER_BRICKS.asItem()))
+                .save(consumer);
+        KilnCookingRecipeBuilder.fireDefault(
+                        Ingredient.of(Blocks.RED_TERRACOTTA.asItem()),
+                        RecipeCategory.BUILDING_BLOCKS,
+                        Blocks.RED_GLAZED_TERRACOTTA.asItem().getDefaultInstance())
+                .unlockedBy("has_red_terracotta", InventoryChangeTrigger.TriggerInstance.hasItems(Blocks.RED_TERRACOTTA.asItem()))
+                .save(consumer);
+        KilnCookingRecipeBuilder.fireDefault(
+                        Ingredient.of(Blocks.WHITE_TERRACOTTA.asItem()),
+                        RecipeCategory.BUILDING_BLOCKS,
+                        Blocks.WHITE_GLAZED_TERRACOTTA.asItem().getDefaultInstance())
+                .unlockedBy("has_white_terracotta", InventoryChangeTrigger.TriggerInstance.hasItems(Blocks.WHITE_TERRACOTTA.asItem()))
+                .save(consumer);
+        KilnCookingRecipeBuilder.fireDefault(
+                        Ingredient.of(Blocks.LIME_TERRACOTTA.asItem()),
+                        RecipeCategory.BUILDING_BLOCKS,
+                        Blocks.LIME_GLAZED_TERRACOTTA.asItem().getDefaultInstance())
+                .unlockedBy("has_lime_terracotta", InventoryChangeTrigger.TriggerInstance.hasItems(Blocks.LIME_TERRACOTTA.asItem()))
+                .save(consumer);
+
         //Copper Tools
         if (Config.COPPER_TOOLS.get()) {
             Instrumentus.LOGGER.info("Registering Copper Tools Recipes");
@@ -709,7 +929,6 @@ public class GeneratorRecipes extends RecipeProvider {
                     .group("instrumentus")
                     .unlockedBy("has_raw_copper", InventoryChangeTrigger.TriggerInstance.hasItems(Items.RAW_COPPER_BLOCK))
                     .save(consumer);
-
         }
         if (Config.EXCAVATORS.get()) {
             ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, ModItems.WOODEN_EXCAVATOR.get())

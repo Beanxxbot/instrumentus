@@ -1,0 +1,13 @@
+{
+  "type": "instrumentus:firing",
+  "category": "misc",
+  "cookingtime": 100,
+  "experience": 0.1,
+  "ingredient": {
+    "item": "minecraft:sea_pickle"
+  },
+  "result": {
+    "count": 1,
+    "id": "minecraft:lime_dye"
+  }
+}

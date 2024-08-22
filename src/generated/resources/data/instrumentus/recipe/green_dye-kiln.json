@@ -1,0 +1,13 @@
+{
+  "type": "instrumentus:firing",
+  "category": "misc",
+  "cookingtime": 100,
+  "experience": 0.1,
+  "ingredient": {
+    "item": "minecraft:cactus"
+  },
+  "result": {
+    "count": 1,
+    "id": "minecraft:green_dye"
+  }
+}

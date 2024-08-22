@@ -17,7 +17,11 @@ import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.block.state.properties.DirectionProperty;
+import net.minecraft.world.level.material.FluidState;
+import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
@@ -31,7 +35,7 @@ public class CopperSoulWallTorchBlock extends CopperSoulTorchBlock {
 
     public CopperSoulWallTorchBlock(BlockBehaviour.Properties pProperties) {
         super(pProperties);
-        this.registerDefaultState(this.stateDefinition.any().setValue(FACING, Direction.NORTH));
+        this.registerDefaultState(this.stateDefinition.any().setValue(FACING, Direction.NORTH).setValue(WATERLOGGED, Boolean.valueOf(false)));
     }
 
     /**
@@ -59,6 +63,7 @@ public class CopperSoulWallTorchBlock extends CopperSoulTorchBlock {
     @Nullable
     public BlockState getStateForPlacement(BlockPlaceContext pContext) {
         BlockState blockstate = this.defaultBlockState();
+        FluidState fluidState = pContext.getLevel().getFluidState(pContext.getClickedPos());
         LevelReader levelreader = pContext.getLevel();
         BlockPos blockpos = pContext.getClickedPos();
         Direction[] adirection = pContext.getNearestLookingDirections();
@@ -66,7 +71,7 @@ public class CopperSoulWallTorchBlock extends CopperSoulTorchBlock {
         for(Direction direction : adirection) {
             if (direction.getAxis().isHorizontal()) {
                 Direction direction1 = direction.getOpposite();
-                blockstate = blockstate.setValue(FACING, direction1);
+                blockstate = blockstate.setValue(FACING, direction1).setValue(WATERLOGGED, Boolean.valueOf(fluidState.getType() == Fluids.WATER));
                 if (blockstate.canSurvive(levelreader, blockpos)) {
                     return blockstate;
                 }
@@ -111,7 +116,13 @@ public class CopperSoulWallTorchBlock extends CopperSoulTorchBlock {
         return pState.rotate(pMirror.getRotation(pState.getValue(FACING)));
     }
 
+    @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> pBuilder) {
-        pBuilder.add(FACING);
+        pBuilder.add(FACING, WATERLOGGED);
+    }
+
+    @Override
+    protected FluidState getFluidState(BlockState state) {
+        return state.getValue(WATERLOGGED) ? Fluids.WATER.getSource(false) : super.getFluidState(state);
     }
 }

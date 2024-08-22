@@ -2,13 +2,12 @@ package com.beanbot.instrumentus.common.blocks;
 
 import com.beanbot.instrumentus.common.blocks.entities.CopperSoulCampfireBlockEntity;
 import com.beanbot.instrumentus.common.blocks.entities.ModBlockEntities;
-import com.beanbot.instrumentus.recipe.CopperSoulCampfireRecipe;
+import com.beanbot.instrumentus.common.recipe.CopperSoulCampfireRecipe;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.stats.Stats;
 import net.minecraft.world.Containers;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.InteractionResult;
 import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
