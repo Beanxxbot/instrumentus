@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "group": "instrumentus",
+  "key": {
+    "B": {
+      "item": "minecraft:blaze_rod"
+    },
+    "C": {
+      "item": "instrumentus:soulcopper_ingot"
+    },
+    "T": {
+      "item": "instrumentus:copper_soul_torch"
+    }
+  },
+  "pattern": [
+    "CTC",
+    "CBC",
+    "CBC"
+  ],
+  "result": {
+    "count": 1,
+    "id": "instrumentus:soulcopper_burner"
+  }
+}

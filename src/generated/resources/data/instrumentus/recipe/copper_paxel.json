@@ -1,0 +1,28 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "group": "instrumentus",
+  "key": {
+    "A": {
+      "item": "instrumentus:copper_axe"
+    },
+    "P": {
+      "item": "instrumentus:copper_pickaxe"
+    },
+    "S": {
+      "item": "minecraft:stick"
+    },
+    "V": {
+      "item": "instrumentus:copper_shovel"
+    }
+  },
+  "pattern": [
+    "AVP",
+    " S ",
+    " S "
+  ],
+  "result": {
+    "count": 1,
+    "id": "instrumentus:copper_paxel"
+  }
+}

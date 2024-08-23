@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "group": "instrumentus",
+  "key": {
+    "A": {
+      "tag": "c:cobblestones"
+    },
+    "B": {
+      "tag": "c:stones"
+    },
+    "S": {
+      "item": "minecraft:stick"
+    }
+  },
+  "pattern": [
+    "ABA",
+    " S ",
+    " S "
+  ],
+  "result": {
+    "count": 1,
+    "id": "instrumentus:stone_hammer"
+  }
+}

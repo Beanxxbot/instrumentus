@@ -1,0 +1,28 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "group": "instrumentus",
+  "key": {
+    "A": {
+      "item": "minecraft:golden_axe"
+    },
+    "P": {
+      "item": "minecraft:golden_pickaxe"
+    },
+    "S": {
+      "item": "minecraft:stick"
+    },
+    "V": {
+      "item": "minecraft:golden_shovel"
+    }
+  },
+  "pattern": [
+    "AVP",
+    " S ",
+    " S "
+  ],
+  "result": {
+    "count": 1,
+    "id": "instrumentus:golden_paxel"
+  }
+}

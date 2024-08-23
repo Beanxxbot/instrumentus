@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "group": "instrumentus",
+  "key": {
+    "X": {
+      "item": "instrumentus:plant_fiber"
+    }
+  },
+  "pattern": [
+    " X ",
+    "XXX",
+    " X "
+  ],
+  "result": {
+    "count": 2,
+    "id": "minecraft:string"
+  }
+}

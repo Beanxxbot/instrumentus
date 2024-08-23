@@ -1,0 +1,28 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "group": "instrumentus",
+  "key": {
+    "A": {
+      "item": "minecraft:iron_axe"
+    },
+    "P": {
+      "item": "minecraft:iron_pickaxe"
+    },
+    "S": {
+      "item": "minecraft:stick"
+    },
+    "V": {
+      "item": "minecraft:iron_shovel"
+    }
+  },
+  "pattern": [
+    "AVP",
+    " S ",
+    " S "
+  ],
+  "result": {
+    "count": 1,
+    "id": "instrumentus:iron_paxel"
+  }
+}

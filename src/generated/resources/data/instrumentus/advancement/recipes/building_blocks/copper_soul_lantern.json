@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_copper_soul_torch": {
+      "conditions": {
+        "items": [
+          {
+            "items": "instrumentus:copper_soul_torch"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "instrumentus:copper_soul_lantern"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_copper_soul_torch"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "instrumentus:copper_soul_lantern"
+    ]
+  }
+}

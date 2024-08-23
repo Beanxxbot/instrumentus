@@ -1,0 +1,28 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "group": "instrumentus",
+  "key": {
+    "B": {
+      "item": "instrumentus:energy_block"
+    },
+    "C": {
+      "item": "instrumentus:carbon_rod"
+    },
+    "I": {
+      "item": "instrumentus:energy_ingot"
+    },
+    "R": {
+      "item": "minecraft:lightning_rod"
+    }
+  },
+  "pattern": [
+    " B ",
+    "IRI",
+    " C "
+  ],
+  "result": {
+    "count": 1,
+    "id": "instrumentus:energy_lightning_rod"
+  }
+}

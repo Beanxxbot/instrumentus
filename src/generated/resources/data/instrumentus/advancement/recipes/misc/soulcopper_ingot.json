@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_raw_soulcopper": {
+      "conditions": {
+        "items": [
+          {
+            "items": "instrumentus:raw_soulcopper"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "instrumentus:soulcopper_ingot"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_raw_soulcopper"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "instrumentus:soulcopper_ingot"
+    ]
+  }
+}

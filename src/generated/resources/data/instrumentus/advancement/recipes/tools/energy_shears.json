@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_energy_ingot": {
+      "conditions": {
+        "items": [
+          {
+            "items": "instrumentus:energy_ingot"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "instrumentus:energy_shears"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_energy_ingot"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "instrumentus:energy_shears"
+    ]
+  }
+}
