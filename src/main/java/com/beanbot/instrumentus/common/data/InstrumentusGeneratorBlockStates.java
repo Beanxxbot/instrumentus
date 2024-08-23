@@ -78,10 +78,10 @@ public class InstrumentusGeneratorBlockStates extends BlockStateProvider {
             boolean hanging = s.getValue(BlockStateProperties.HANGING);
             if (hanging) {
                 model = models().withExistingParent(InstrumentusBlocks.SOULCOPPER_LANTERN.getId().getPath() + "_hanging", ResourceLocation.parse("minecraft:block/template_hanging_lantern"))
-                        .texture("lantern", modLoc("block/copper_soul_lantern"));
+                        .texture("lantern", modLoc("block/copper_soul_lantern")).renderType(RenderType.CUTOUT.name);
             } else {
                 model = models().withExistingParent(InstrumentusBlocks.SOULCOPPER_LANTERN.getId().getPath(), ResourceLocation.parse("minecraft:block/template_lantern"))
-                        .texture("lantern", modLoc("block/copper_soul_lantern"));
+                        .texture("lantern", modLoc("block/copper_soul_lantern")).renderType(RenderType.CUTOUT.name);
             }
             return ConfiguredModel.builder()
                     .modelFile(model).build();

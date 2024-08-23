@@ -77,7 +77,7 @@ public class Config {
                 .define("enable_brushes", true);
 
         EXCAVATORS = STARTUP_BUILDER.comment("Excavators are 3x3 shovels that can mine a bunch of dirt!")
-                .define("instrumentus.enable_excavators", true);
+                .define("enable_excavators", true);
 
         STARTUP_BUILDER.pop();
     }
