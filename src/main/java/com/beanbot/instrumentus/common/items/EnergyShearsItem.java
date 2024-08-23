@@ -3,6 +3,7 @@ package com.beanbot.instrumentus.common.items;
 import com.beanbot.instrumentus.common.items.interfaces.IEnergyItem;
 import com.beanbot.instrumentus.common.items.interfaces.IItemLightningChargeable;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.world.InteractionHand;
@@ -23,7 +24,7 @@ import java.util.List;
 public class EnergyShearsItem extends InstrumentusShearsItem implements IItemLightningChargeable, IEnergyItem {
 
     public EnergyShearsItem(Tier material) {
-        super(material, new Item.Properties().stacksTo(1).durability(0).fireResistant());
+        super(material);
     }
 
     @Override
