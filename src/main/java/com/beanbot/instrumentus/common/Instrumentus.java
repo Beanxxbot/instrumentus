@@ -87,8 +87,10 @@ public class Instrumentus {
         if (Config.EXCAVATORS.get())
             InstrumentusItems.EXCAVATORS.register(instrumentusEventBus);
 
-        InstrumentusItems.UTIL.register(instrumentusEventBus);
-        InstrumentusBlocks.UTIL.register(instrumentusEventBus);
+        if (Config.UTILITIES.get()) {
+            InstrumentusItems.UTIL.register(instrumentusEventBus);
+            InstrumentusBlocks.UTIL.register(instrumentusEventBus);
+        }
 
         instrumentusEventBus.addListener(this::addCreative);
 
