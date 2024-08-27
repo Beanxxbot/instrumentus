@@ -3,6 +3,7 @@ package com.beanbot.instrumentus.common.items;
 import com.beanbot.instrumentus.common.Instrumentus;
 import com.beanbot.instrumentus.common.blocks.InstrumentusBlocks;
 import net.minecraft.core.Direction;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.world.item.*;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
@@ -23,11 +24,11 @@ public class InstrumentusItems {
     public static final DeferredRegister.Items EXCAVATORS = DeferredRegister.createItems(Instrumentus.MODID);
     public static final DeferredRegister.Items UTIL = DeferredRegister.createItems(Instrumentus.MODID);
 
-    public static final DeferredHolder<Item, InstrumentusShearsItem> WOODEN_SHEARS = SHEARS.register("wooden_shears", () -> new InstrumentusShearsItem(Tiers.WOOD, new Item.Properties().stacksTo(1).durability(Math.toIntExact(Math.round(Tiers.WOOD.getUses() * 0.952)))));
-    public static final DeferredHolder<Item, InstrumentusShearsItem> STONE_SHEARS = SHEARS.register("stone_shears", () -> new InstrumentusShearsItem(Tiers.STONE, new Item.Properties().stacksTo(1).durability(Math.toIntExact(Math.round(Tiers.STONE.getUses() * 0.952)))));
-    public static final DeferredHolder<Item, InstrumentusShearsItem> GOLDEN_SHEARS = SHEARS.register("golden_shears", () -> new InstrumentusShearsItem(Tiers.GOLD, new Item.Properties().stacksTo(1).durability(Math.toIntExact(Math.round(Tiers.GOLD.getUses() * 0.952)))));
-    public static final DeferredHolder<Item, InstrumentusShearsItem> DIAMOND_SHEARS = SHEARS.register("diamond_shears", () -> new InstrumentusShearsItem(Tiers.DIAMOND, new Item.Properties().stacksTo(1).durability(Math.toIntExact(Math.round(Tiers.DIAMOND.getUses() * 0.952)))));
-    public static final DeferredHolder<Item, InstrumentusShearsItem> NETHERITE_SHEARS = SHEARS.register("netherite_shears", () -> new InstrumentusShearsItem(Tiers.NETHERITE, new Item.Properties().stacksTo(1).durability(Math.toIntExact(Math.round(Tiers.NETHERITE.getUses() * 0.952))).fireResistant()));
+    public static final DeferredHolder<Item, InstrumentusShearsItem> WOODEN_SHEARS = SHEARS.register("wooden_shears", () -> new InstrumentusShearsItem(Tiers.WOOD));
+    public static final DeferredHolder<Item, InstrumentusShearsItem> STONE_SHEARS = SHEARS.register("stone_shears", () -> new InstrumentusShearsItem(Tiers.STONE));
+    public static final DeferredHolder<Item, InstrumentusShearsItem> GOLDEN_SHEARS = SHEARS.register("golden_shears", () -> new InstrumentusShearsItem(Tiers.GOLD));
+    public static final DeferredHolder<Item, InstrumentusShearsItem> DIAMOND_SHEARS = SHEARS.register("diamond_shears", () -> new InstrumentusShearsItem(Tiers.DIAMOND));
+    public static final DeferredHolder<Item, InstrumentusShearsItem> NETHERITE_SHEARS = SHEARS.register("netherite_shears", () -> new InstrumentusShearsItem(Tiers.NETHERITE));
 
     public static final DeferredHolder<Item, SickleItem> WOODEN_SICKLE = SICKLES.register("wooden_sickle", () -> new SickleItem(Tiers.WOOD));
     public static final DeferredHolder<Item, SickleItem> STONE_SICKLE = SICKLES.register("stone_sickle", () -> new SickleItem(Tiers.STONE));
@@ -93,7 +94,7 @@ public class InstrumentusItems {
     public static final DeferredHolder<Item, PaxelItem> COPPER_PAXEL = COPPER.register("copper_paxel", () -> new PaxelItem(InstrumentusItemTiers.COPPER, 1, -2.8f));
     public static final DeferredHolder<Item, HammerItem> COPPER_HAMMER = COPPER.register("copper_hammer", () -> new HammerItem(InstrumentusItemTiers.COPPER, 1, -2.8f));
     public static final DeferredHolder<Item, SickleItem> COPPER_SICKLE = COPPER.register("copper_sickle", () -> new SickleItem(InstrumentusItemTiers.COPPER));
-    public static final DeferredHolder<Item, InstrumentusShearsItem> COPPER_SHEARS = COPPER.register("copper_shears", () -> new InstrumentusShearsItem(InstrumentusItemTiers.COPPER, new Item.Properties().stacksTo(1).durability(Math.toIntExact(Math.round(InstrumentusItemTiers.COPPER.getUses() * 0.952)))));
+    public static final DeferredHolder<Item, InstrumentusShearsItem> COPPER_SHEARS = COPPER.register("copper_shears", () -> new InstrumentusShearsItem(InstrumentusItemTiers.COPPER));
     public static final DeferredHolder<Item, KnifeItem> COPPER_KNIFE = COPPER.register("copper_knife", () -> new KnifeItem(InstrumentusItemTiers.COPPER, 1, -2.8f));
     public static final DeferredHolder<Item, ExcavatorItem> COPPER_EXCAVATOR = COPPER.register("copper_excavator", () -> new ExcavatorItem(InstrumentusItemTiers.COPPER, 1, -3.0f));
 

@@ -191,10 +191,10 @@ public class InstrumentusGeneratorRecipes extends RecipeProvider {
                 .unlockedBy("has_black_terracotta", InventoryChangeTrigger.TriggerInstance.hasItems(Blocks.BLACK_TERRACOTTA.asItem()))
                 .save(consumer);
         KilnCookingRecipeBuilder.fireDefault(
-                        Ingredient.of(Blocks.CLAY.asItem()),
+                        Ingredient.of(Items.CLAY_BALL),
                         RecipeCategory.MISC,
                         Items.BRICK.getDefaultInstance())
-                .unlockedBy("has_clay_block", InventoryChangeTrigger.TriggerInstance.hasItems(Blocks.CLAY.asItem()))
+                .unlockedBy("has_clay_ball", InventoryChangeTrigger.TriggerInstance.hasItems(Items.CLAY_BALL))
                 .save(consumer);
         KilnCookingRecipeBuilder.fireDefault(
                         Ingredient.of(Blocks.YELLOW_TERRACOTTA.asItem()),

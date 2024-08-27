@@ -22,6 +22,7 @@ public class Config {
     public static ModConfigSpec.BooleanValue COPPER_TOOLS;
     public static ModConfigSpec.BooleanValue BRUSHES;
     public static ModConfigSpec.BooleanValue EXCAVATORS;
+    public static ModConfigSpec.BooleanValue UTILITIES;
 
     public static void register(ModContainer container){
 //        registerServerConfig(container);
@@ -78,6 +79,9 @@ public class Config {
 
         EXCAVATORS = STARTUP_BUILDER.comment("Excavators are 3x3 shovels that can mine a bunch of dirt!")
                 .define("enable_excavators", true);
+
+        UTILITIES = STARTUP_BUILDER.comment("Miscelaneous Utilities added by the mod. Currently this includes the Kiln.")
+                        .define("enable_util", true);
 
         STARTUP_BUILDER.pop();
     }
