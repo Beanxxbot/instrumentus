@@ -11,6 +11,7 @@ import com.beanbot.instrumentus.common.capability.EnergyItemstack;
 import com.beanbot.instrumentus.common.config.Config;
 import com.beanbot.instrumentus.common.events.EntityStruckByLightningEventHook;
 import com.beanbot.instrumentus.common.events.loot.InstrumentusLootModifiers;
+import com.beanbot.instrumentus.common.items.InstrumentusArmorMaterials;
 import com.beanbot.instrumentus.common.items.InstrumentusItems;
 import com.beanbot.instrumentus.common.creative.InstrumentusCreativeModeTab;
 import com.beanbot.instrumentus.common.creative.InstrumentusCreativeModeTabPopulate;
@@ -53,6 +54,8 @@ public class Instrumentus {
 
         LOGGER.debug("Yo Yo Yo It's Ya Boi, Instrumentus but on NeoForge");
         InstrumentusParticles.PARTICLE_TYPES.register(instrumentusEventBus);
+
+        InstrumentusArmorMaterials.register(instrumentusEventBus);
 
         if (Config.SHEARS.get())
             InstrumentusItems.SHEARS.register(instrumentusEventBus);

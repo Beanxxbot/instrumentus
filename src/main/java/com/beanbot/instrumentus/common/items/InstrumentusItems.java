@@ -3,7 +3,6 @@ package com.beanbot.instrumentus.common.items;
 import com.beanbot.instrumentus.common.Instrumentus;
 import com.beanbot.instrumentus.common.blocks.InstrumentusBlocks;
 import net.minecraft.core.Direction;
-import net.minecraft.core.component.DataComponents;
 import net.minecraft.world.item.*;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
@@ -115,5 +114,6 @@ public class InstrumentusItems {
 
     public static final DeferredHolder<Item, BlockItem> KILN_BLOCK_ITEM = UTIL.registerSimpleBlockItem(InstrumentusBlocks.KILN);
 
+    public static final DeferredHolder<Item, BreezeArmorItem> BREEZE_ARMOR_BOOTS = UTIL.register("breeze_boots", () -> new BreezeArmorItem(ArmorItem.Type.BOOTS));
 
 }
