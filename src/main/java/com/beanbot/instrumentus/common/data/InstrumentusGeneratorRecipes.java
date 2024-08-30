@@ -28,6 +28,17 @@ public class InstrumentusGeneratorRecipes extends RecipeProvider {
 
     @Override
     protected void buildRecipes(@NotNull RecipeOutput consumer) {
+        //Breeze Boots
+        ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, InstrumentusItems.BREEZE_ARMOR_BOOTS.get())
+                .pattern("R R")
+                .pattern("RBR")
+                .pattern("C C")
+                .define('R', Tags.Items.RODS_BREEZE)
+                .define('B', Items.DIAMOND_BOOTS)
+                .define('C', Items.WIND_CHARGE)
+                .group("instrumentus")
+                .unlockedBy("has_breeze_rod", InventoryChangeTrigger.TriggerInstance.hasItems(Items.WIND_CHARGE))
+                .save(consumer);
         //Kiln
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC, InstrumentusBlocks.KILN.get().asItem())
                 .pattern("BBB")

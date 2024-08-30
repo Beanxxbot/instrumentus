@@ -103,6 +103,8 @@ public class InstrumentusGeneratorLanguage extends LanguageProvider {
         addItem(InstrumentusItems.COPPER_EXCAVATOR, "Copper Excavator");
         addItem(InstrumentusItems.ENERGIZED_EXCAVATOR, "Energized Di-Emerald Excavator");
 
+        addItem(InstrumentusItems.BREEZE_ARMOR_BOOTS, "Breeze Boots");
+
         addBlock(InstrumentusBlocks.KILN, "Kiln");
         add(Instrumentus.MODID + ".container.kiln", "Kiln");
 

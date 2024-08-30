@@ -45,6 +45,9 @@ public class InstrumentusGeneratorItemTags extends ItemTagsProvider {
         tag(ItemTags.DURABILITY_ENCHANTABLE)
                 .add(InstrumentusItems.SOULCOPPER_PICKAXE.get());
 
+        tag(ItemTags.FOOT_ARMOR_ENCHANTABLE).add(InstrumentusItems.BREEZE_ARMOR_BOOTS.get());
+        tag(ItemTags.DURABILITY_ENCHANTABLE).add(InstrumentusItems.BREEZE_ARMOR_BOOTS.get());
+
         for (var tool : InstrumentusItems.SHEARS.getEntries()) {
             tag(ItemTags.MINING_ENCHANTABLE)
                     .add(tool.get());
