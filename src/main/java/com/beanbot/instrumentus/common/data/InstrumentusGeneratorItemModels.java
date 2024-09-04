@@ -41,6 +41,7 @@ public class InstrumentusGeneratorItemModels extends ItemModelProvider {
         singleTexture(InstrumentusItems.SOULCOPPER_LANTERN_ITEM.getId().getPath(), mcLoc("item/generated"), "layer0", modLoc("item/copper_soul_lantern"));
         withExistingParent(InstrumentusItems.COPPER_SOUL_FLAME_LIGHT_ITEM.getId().getPath(), modLoc("block/copper_soul_fire_flame"));
         singleTexture(InstrumentusItems.SOULCOPPER_BURNER.getId().getPath(), mcLoc("item/handheld"), "layer0", modLoc("item/soulcopper_burner"));
+        singleTexture(InstrumentusItems.BREEZE_ARMOR_BOOTS.getId().getPath(), mcLoc("item/generated"), "layer0", modLoc("item/breeze_boots"));
 
         withExistingParent(InstrumentusItems.KILN_BLOCK_ITEM.getId().getPath(), modLoc("block/kiln"));
 
