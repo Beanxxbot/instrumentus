@@ -11,6 +11,10 @@ If you are looking to make content additions, please contact me directly via Cur
 
 Contributions must be done through pull requests. I will not accept any other form of contribution.
 
+## Wiki
+
+If you're looking for a wiki, please consult the fancy new [Modded Minecraft Wiki](https://moddedmc.org), you can find the Instrumentus page [here](https://moddedmc.org/en/mod/instrumentus)
+
 ## Usage Permissions 
 
 ### Modpacks
