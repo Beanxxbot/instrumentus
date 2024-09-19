@@ -1,0 +1,39 @@
+---
+title: Configuration
+hide_meta: true
+---
+
+Instrumentus is highly configurable, allowing you to enable and disable features at a registration-level via the Configuration File.
+
+## How to use the Configuration File
+
+To enable or disable features in Instrumentus, you'll need to navigate to the `config` folder of your Minecraft Instance, and then open up the file titled `instrumentus-startup.toml`. The file should looks something like the file below.
+
+```toml
+#Enable/Disable the Various Tools included in the Mod
+[tools]
+	#Hammers mine in a 3x3 radius, made of every single tool material
+	enable_hammers = true
+	#Sickles mass harvest leaf and tall-grass blocks, their range increases the higher the tool level
+	enable_sickles = true
+	#Material variants for iron shears (Wood-Netherite)
+	enable_shears = true
+	#The original item in the mod! Paxels are a tool able to mine all blocks that an Axe, Pickaxe and Shovel Can
+	enable_paxels = true
+	#Soulcopper items currently present in instrumentus is the Soul-Infused Pickaxe, which places light blocks on right click
+	enable_soulcopper = true
+	#RF-Powered tools made of diamonds, emeralds and redstone. This will also disable carbon rods.
+	enable_energized = true
+	#Knives harvest plant fiber from tall grass, which can be used to make string. Disables Knives as well as plant fiber.
+	enable_knives = true
+	#Copper Tools that are slower than iron tools, but have three times the durability
+	enable_copper = true
+	#Brushes made of every tool material, including Instrumentus ones - their speed stays the same, however they have different durabilities
+	enable_brushes = true
+	#Excavators are 3x3 shovels that can mine a bunch of dirt!
+	enable_excavators = true
+```
+(Sample Config File last updated with Version 1.21.x-2.6.0)
+
+Each line in the Configuration file should have a brief explanation of what each feature does. If you'd like to disable any of these features, replace the `true` with `false`. Please note, that enabling or disabling any of these features requires a **full restart** of your game, and if you **enter a world with features that were formerly enabled after disabling them, your experience may vary**.
+
