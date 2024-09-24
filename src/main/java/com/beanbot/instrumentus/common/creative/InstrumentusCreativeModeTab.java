@@ -24,8 +24,8 @@ public class InstrumentusCreativeModeTab {
     }
 
     private static ItemStack creativeTabIcon() {
-        if (Config.PAXELS.get())
-            return new ItemStack(InstrumentusItems.DIAMOND_PAXEL.get());
-        return new ItemStack(Items.DIAMOND_PICKAXE);
+//        if (Config.PAXELS.get())
+        return new ItemStack(InstrumentusItems.DIAMOND_PAXEL.get());
+//        return new ItemStack(Items.DIAMOND_PICKAXE);
     }
 }

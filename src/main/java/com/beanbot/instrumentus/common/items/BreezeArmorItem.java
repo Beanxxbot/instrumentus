@@ -5,10 +5,12 @@ import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.tags.BlockTags;
+import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.windcharge.WindCharge;
 import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.ExplosionDamageCalculator;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.SimpleExplosionDamageCalculator;
@@ -26,9 +28,9 @@ public class BreezeArmorItem extends ArmorItem {
         super(InstrumentusArmorMaterials.BREEZE_ARMOR_MATERIAL, pType, new Item.Properties().durability(pType.getDurability(33)));
     }
 
-    public void doubleJump(Player player, Level level) {
+    public void windJump(ItemStack stack, Player player, Level level) {
         if (!player.onGround()) {
-            player.getCooldowns().addCooldown(this, 50);
+            player.getCooldowns().addCooldown(this, 60);
             player.setIgnoreFallDamageFromCurrentImpulse(true);
             WindCharge windCharge = new WindCharge(player, level, player.position().x(), player.position().y(), player.position().z());
             level.addFreshEntity(windCharge);
@@ -45,8 +47,8 @@ public class BreezeArmorItem extends ArmorItem {
                             ParticleTypes.GUST_EMITTER_SMALL,
                             ParticleTypes.GUST_EMITTER_LARGE,
                             SoundEvents.WIND_CHARGE_BURST
-                    );
+            );
+            stack.hurtAndBreak(1, player, EquipmentSlot.FEET);
         }
     }
-
 }

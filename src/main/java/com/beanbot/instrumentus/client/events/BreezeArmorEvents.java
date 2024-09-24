@@ -6,6 +6,7 @@ import com.mojang.blaze3d.platform.InputConstants;
 import net.minecraft.client.Minecraft;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
@@ -14,7 +15,7 @@ import net.neoforged.neoforge.client.event.InputEvent;
 
 @SuppressWarnings("unused")
 @EventBusSubscriber(modid = Instrumentus.MODID, value = Dist.CLIENT)
-public class KeyInputEvent {
+public class BreezeArmorEvents {
 
     @SubscribeEvent
     public static void onKeyInput(InputEvent.Key event) {
@@ -23,14 +24,13 @@ public class KeyInputEvent {
             return;
         Player player = mc.player;
         Level level = mc.level;
-        if(event.getAction() == InputConstants.PRESS && event.getKey() == InputConstants.KEY_SPACE) {
-            if(player.getItemBySlot(EquipmentSlot.FEET).getItem() instanceof BreezeArmorItem armorItem) {
+        if(event.getAction() == InputConstants.PRESS && mc.options.keyJump.isDown()) {
+            ItemStack stack = player.getItemBySlot(EquipmentSlot.FEET);
+            if(stack.getItem() instanceof BreezeArmorItem armorItem) {
                 if (!player.getCooldowns().isOnCooldown(armorItem)) {
-                    armorItem.doubleJump(player, level);
+                    armorItem.windJump(stack,player, level);
                 }
             }
         }
-
     }
-
 }

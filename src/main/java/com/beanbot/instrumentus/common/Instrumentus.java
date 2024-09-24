@@ -44,8 +44,7 @@ public class Instrumentus {
     public static final ModContainer MOD_CONTAINER = ModLoadingContext.get().getActiveContainer();
 
 
-    public Instrumentus(IEventBus instrumentusEventBus, @SuppressWarnings("unused") Dist dist)
-    {
+    public Instrumentus(IEventBus instrumentusEventBus, @SuppressWarnings("unused") Dist dist) {
         InstrumentusCreativeModeTab.register(instrumentusEventBus);
 
         Config.register(MOD_CONTAINER);
@@ -57,43 +56,43 @@ public class Instrumentus {
 
         InstrumentusArmorMaterials.register(instrumentusEventBus);
 
-        if (Config.SHEARS.get())
-            InstrumentusItems.SHEARS.register(instrumentusEventBus);
+//        if (Config.SHEARS.get())
+        InstrumentusItems.SHEARS.register(instrumentusEventBus);
 
-        if (Config.SICKLES.get())
-            InstrumentusItems.SICKLES.register(instrumentusEventBus);
+//        if (Config.SICKLES.get())
+        InstrumentusItems.SICKLES.register(instrumentusEventBus);
 
-        if (Config.PAXELS.get())
-            InstrumentusItems.PAXELS.register(instrumentusEventBus);
+//        if (Config.PAXELS.get())
+        InstrumentusItems.PAXELS.register(instrumentusEventBus);
 
-        if (Config.HAMMERS.get())
-            InstrumentusItems.HAMMERS.register(instrumentusEventBus);
+//        if (Config.HAMMERS.get())
+        InstrumentusItems.HAMMERS.register(instrumentusEventBus);
 
-        if (Config.ENERGIZED.get()) {
-            InstrumentusItems.ENERGIZED.register(instrumentusEventBus);
-            InstrumentusBlocks.ENERGIZED.register(instrumentusEventBus);
-        }
+//        if (Config.ENERGIZED.get()) {
+        InstrumentusItems.ENERGIZED.register(instrumentusEventBus);
+        InstrumentusBlocks.ENERGIZED.register(instrumentusEventBus);
+//        }
 
-        if (Config.KNIVES.get())
-            InstrumentusItems.KNIVES.register(instrumentusEventBus);
+//        if (Config.KNIVES.get())
+        InstrumentusItems.KNIVES.register(instrumentusEventBus);
 
-        if (Config.SOULCOPPER.get()) {
-            InstrumentusItems.SOULCOPPER.register(instrumentusEventBus);
-            InstrumentusBlocks.SOULCOPPER.register(instrumentusEventBus);
-        }
-        if (Config.COPPER_TOOLS.get())
-            InstrumentusItems.COPPER.register(instrumentusEventBus);
+//        if (Config.SOULCOPPER.get()) {
+        InstrumentusItems.SOULCOPPER.register(instrumentusEventBus);
+        InstrumentusBlocks.SOULCOPPER.register(instrumentusEventBus);
+//        }
+//        if (Config.COPPER_TOOLS.get())
+        InstrumentusItems.COPPER.register(instrumentusEventBus);
 
-        if (Config.BRUSHES.get())
-            InstrumentusItems.BRUSHES.register(instrumentusEventBus);
+//        if (Config.BRUSHES.get())
+        InstrumentusItems.BRUSHES.register(instrumentusEventBus);
 
-        if (Config.EXCAVATORS.get())
-            InstrumentusItems.EXCAVATORS.register(instrumentusEventBus);
+//        if (Config.EXCAVATORS.get())
+        InstrumentusItems.EXCAVATORS.register(instrumentusEventBus);
 
-        if (Config.UTILITIES.get()) {
-            InstrumentusItems.UTIL.register(instrumentusEventBus);
-            InstrumentusBlocks.UTIL.register(instrumentusEventBus);
-        }
+//        if (Config.UTILITIES.get()) {
+        InstrumentusItems.UTIL.register(instrumentusEventBus);
+        InstrumentusBlocks.UTIL.register(instrumentusEventBus);
+//        }
 
         instrumentusEventBus.addListener(this::addCreative);
 
@@ -121,14 +120,15 @@ public class Instrumentus {
     private void addCreative(BuildCreativeModeTabContentsEvent event) {
         InstrumentusCreativeModeTabPopulate.populate(event);
     }
+
     private void attachCapabilities(RegisterCapabilitiesEvent event) {
         event.registerItem(Capabilities.EnergyStorage.ITEM, (itemStack, context) -> {
-            int capacity = 20000;
-            if (itemStack.getItem() instanceof IEnergyItem energyItem) {
-                capacity = energyItem.getMaxCapacity();
-            }
-            return new EnergyItemstack(capacity, itemStack);
-        },
+                    int capacity = 20000;
+                    if (itemStack.getItem() instanceof IEnergyItem energyItem) {
+                        capacity = energyItem.getMaxCapacity();
+                    }
+                    return new EnergyItemstack(capacity, itemStack);
+                },
                 InstrumentusItems.ENERGIZED_AXE.get(),
                 InstrumentusItems.ENERGIZED_PICKAXE.get(),
                 InstrumentusItems.ENERGIZED_SHOVEL.get(),
@@ -154,6 +154,8 @@ public class Instrumentus {
     }
 
     @SuppressWarnings("unused")
-    public static Instrumentus getInstance() { return instance; }
+    public static Instrumentus getInstance() {
+        return instance;
+    }
 
 }
