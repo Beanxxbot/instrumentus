@@ -2,7 +2,8 @@
   "entries": [
     "instrumentus:plant_fiber_from_grass",
     "instrumentus:ominous_vault_loot",
-    "instrumentus:vault_loot"
+    "instrumentus:vault_loot",
+    "instrumentus:plant_fiber_from_tall_grass"
   ],
   "replace": false
 }
