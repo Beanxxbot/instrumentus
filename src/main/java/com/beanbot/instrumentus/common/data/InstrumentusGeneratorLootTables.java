@@ -75,7 +75,7 @@ public class InstrumentusGeneratorLootTables extends LootTableProvider {
             List<Block> knownBlocks = new ArrayList<>();
             knownBlocks.addAll(InstrumentusBlocks.ENERGIZED.getEntries().stream().map(DeferredHolder::get).toList());
             knownBlocks.addAll(InstrumentusBlocks.SOULCOPPER.getEntries().stream().map(DeferredHolder::get).toList());
-            knownBlocks.addAll(InstrumentusBlocks.UTIL.getEntries().stream().map(DeferredHolder::get).toList());
+            knownBlocks.addAll(InstrumentusBlocks.FIRING.getEntries().stream().map(DeferredHolder::get).toList());
             return knownBlocks;
         }
     }

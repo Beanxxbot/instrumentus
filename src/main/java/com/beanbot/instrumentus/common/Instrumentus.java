@@ -2,6 +2,7 @@ package com.beanbot.instrumentus.common;
 
 import com.beanbot.instrumentus.client.ToolRenderEvents;
 import com.beanbot.instrumentus.client.inventory.recipebook.RecipeBookExtensionClientHelper;
+import com.beanbot.instrumentus.common.data.conditions.InstrumentusConditions;
 import com.beanbot.instrumentus.common.inventory.InstrumentusMenus;
 import com.beanbot.instrumentus.client.particles.InstrumentusParticles;
 import com.beanbot.instrumentus.client.renderer.CopperSoulCampfireRenderer;
@@ -49,6 +50,8 @@ public class Instrumentus {
 
         Config.register(MOD_CONTAINER);
 
+        InstrumentusConditions.register(instrumentusEventBus);
+
         NeoForge.EVENT_BUS.register(new EntityStruckByLightningEventHook());
 
         LOGGER.debug("Yo Yo Yo It's Ya Boi, Instrumentus but on NeoForge");
@@ -56,43 +59,22 @@ public class Instrumentus {
 
         InstrumentusArmorMaterials.register(instrumentusEventBus);
 
-//        if (Config.SHEARS.get())
+        //TODO: Remove feature-based registration due to new config system
         InstrumentusItems.SHEARS.register(instrumentusEventBus);
-
-//        if (Config.SICKLES.get())
         InstrumentusItems.SICKLES.register(instrumentusEventBus);
-
-//        if (Config.PAXELS.get())
         InstrumentusItems.PAXELS.register(instrumentusEventBus);
-
-//        if (Config.HAMMERS.get())
         InstrumentusItems.HAMMERS.register(instrumentusEventBus);
-
-//        if (Config.ENERGIZED.get()) {
         InstrumentusItems.ENERGIZED.register(instrumentusEventBus);
         InstrumentusBlocks.ENERGIZED.register(instrumentusEventBus);
-//        }
-
-//        if (Config.KNIVES.get())
         InstrumentusItems.KNIVES.register(instrumentusEventBus);
-
-//        if (Config.SOULCOPPER.get()) {
         InstrumentusItems.SOULCOPPER.register(instrumentusEventBus);
         InstrumentusBlocks.SOULCOPPER.register(instrumentusEventBus);
-//        }
-//        if (Config.COPPER_TOOLS.get())
         InstrumentusItems.COPPER.register(instrumentusEventBus);
-
-//        if (Config.BRUSHES.get())
         InstrumentusItems.BRUSHES.register(instrumentusEventBus);
-
-//        if (Config.EXCAVATORS.get())
         InstrumentusItems.EXCAVATORS.register(instrumentusEventBus);
-
-//        if (Config.UTILITIES.get()) {
         InstrumentusItems.UTIL.register(instrumentusEventBus);
-        InstrumentusBlocks.UTIL.register(instrumentusEventBus);
-//        }
+        InstrumentusItems.FIRING.register(instrumentusEventBus);
+        InstrumentusBlocks.FIRING.register(instrumentusEventBus);
 
         instrumentusEventBus.addListener(this::addCreative);
 

@@ -1,4 +1,10 @@
 {
+  "neoforge:conditions": [
+    {
+      "type": "instrumentus:config_feature_enabled",
+      "feature": "SHEARS"
+    }
+  ],
   "parent": "minecraft:recipes/root",
   "criteria": {
     "has_netherite_ingot": {

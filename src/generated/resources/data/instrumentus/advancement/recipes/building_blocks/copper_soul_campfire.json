@@ -1,4 +1,10 @@
 {
+  "neoforge:conditions": [
+    {
+      "type": "instrumentus:config_feature_enabled",
+      "feature": "SOULCOPPER"
+    }
+  ],
   "parent": "minecraft:recipes/root",
   "criteria": {
     "has_soul_campfire": {

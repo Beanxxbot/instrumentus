@@ -1,4 +1,10 @@
 {
+  "neoforge:conditions": [
+    {
+      "type": "instrumentus:config_feature_enabled",
+      "feature": "KNIVES"
+    }
+  ],
   "parent": "minecraft:recipes/root",
   "criteria": {
     "has_diamond": {

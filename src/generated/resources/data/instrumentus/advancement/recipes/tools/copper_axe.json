@@ -1,11 +1,17 @@
 {
+  "neoforge:conditions": [
+    {
+      "type": "instrumentus:config_feature_enabled",
+      "feature": "COPPER_TOOLS"
+    }
+  ],
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_furnace": {
+    "has_copper_ingot": {
       "conditions": {
         "items": [
           {
-            "items": "minecraft:bricks"
+            "items": "minecraft:copper_ingot"
           }
         ]
       },
@@ -21,7 +27,7 @@
   "requirements": [
     [
       "has_the_recipe",
-      "has_furnace"
+      "has_copper_ingot"
     ]
   ],
   "rewards": {
