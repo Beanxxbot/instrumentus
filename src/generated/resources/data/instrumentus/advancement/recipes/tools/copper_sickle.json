@@ -1,4 +1,14 @@
 {
+  "neoforge:conditions": [
+    {
+      "type": "instrumentus:config_feature_enabled",
+      "feature": "COPPER_TOOLS"
+    },
+    {
+      "type": "instrumentus:config_feature_enabled",
+      "feature": "SICKLES"
+    }
+  ],
   "parent": "minecraft:recipes/root",
   "criteria": {
     "has_copper_ingot": {

@@ -1,4 +1,10 @@
 {
+  "neoforge:conditions": [
+    {
+      "type": "instrumentus:config_feature_enabled",
+      "feature": "PAXELS"
+    }
+  ],
   "type": "minecraft:smithing_transform",
   "addition": {
     "item": "minecraft:netherite_ingot"

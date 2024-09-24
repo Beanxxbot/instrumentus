@@ -1,4 +1,14 @@
 {
+  "neoforge:conditions": [
+    {
+      "type": "instrumentus:config_feature_enabled",
+      "feature": "ENERGIZED"
+    },
+    {
+      "type": "instrumentus:config_feature_enabled",
+      "feature": "KNIVES"
+    }
+  ],
   "type": "minecraft:crafting_shaped",
   "category": "equipment",
   "group": "instrumentus",

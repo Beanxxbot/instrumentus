@@ -1,4 +1,10 @@
 {
+  "neoforge:conditions": [
+    {
+      "type": "instrumentus:config_feature_enabled",
+      "feature": "BRUSHES"
+    }
+  ],
   "parent": "minecraft:recipes/root",
   "criteria": {
     "has_planks": {

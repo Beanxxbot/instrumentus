@@ -21,6 +21,7 @@ public class InstrumentusItems {
     public static final DeferredRegister.Items COPPER = DeferredRegister.createItems(Instrumentus.MODID);
     public static final DeferredRegister.Items BRUSHES = DeferredRegister.createItems(Instrumentus.MODID);
     public static final DeferredRegister.Items EXCAVATORS = DeferredRegister.createItems(Instrumentus.MODID);
+    public static final DeferredRegister.Items FIRING = DeferredRegister.createItems(Instrumentus.MODID);
     public static final DeferredRegister.Items UTIL = DeferredRegister.createItems(Instrumentus.MODID);
 
     public static final DeferredHolder<Item, InstrumentusShearsItem> WOODEN_SHEARS = SHEARS.register("wooden_shears", () -> new InstrumentusShearsItem(Tiers.WOOD));
@@ -112,7 +113,7 @@ public class InstrumentusItems {
     public static final DeferredHolder<Item, ExcavatorItem> DIAMOND_EXCAVATOR = EXCAVATORS.register("diamond_excavator", () -> new ExcavatorItem(Tiers.DIAMOND, 1, -3.0f));
     public static final DeferredHolder<Item, ExcavatorItem> NETHERITE_EXCAVATOR = EXCAVATORS.register("netherite_excavator", () -> new ExcavatorItem(Tiers.NETHERITE, 1, -3.0f));
 
-    public static final DeferredHolder<Item, BlockItem> KILN_BLOCK_ITEM = UTIL.registerSimpleBlockItem(InstrumentusBlocks.KILN);
+    public static final DeferredHolder<Item, BlockItem> KILN_BLOCK_ITEM = FIRING.registerSimpleBlockItem(InstrumentusBlocks.KILN);
 
     public static final DeferredHolder<Item, BreezeArmorItem> BREEZE_ARMOR_BOOTS = UTIL.register("breeze_boots", () -> new BreezeArmorItem(ArmorItem.Type.BOOTS));
 

@@ -1,4 +1,10 @@
 {
+  "neoforge:conditions": [
+    {
+      "type": "instrumentus:config_feature_enabled",
+      "feature": "EXCAVATORS"
+    }
+  ],
   "type": "minecraft:smithing_transform",
   "addition": {
     "item": "minecraft:netherite_ingot"

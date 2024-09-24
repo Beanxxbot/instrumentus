@@ -1,4 +1,10 @@
 {
+  "neoforge:conditions": [
+    {
+      "type": "instrumentus:config_feature_enabled",
+      "feature": "SOULCOPPER"
+    }
+  ],
   "type": "minecraft:crafting_shaped",
   "category": "building",
   "group": "instrumentus",
