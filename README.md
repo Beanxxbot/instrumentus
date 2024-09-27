@@ -11,6 +11,10 @@ If you are looking to make content additions, please contact me directly via Cur
 
 Contributions must be done through pull requests. I will not accept any other form of contribution.
 
+## Community
+
+If you're looking to chat with the developer(s), other users of the mod, ask questions, or generally discuss Instrumentus, feel free to join our [Discord Server](https://discord.gg/juqD5hbD9B)
+
 ## Wiki
 
 If you're looking for a wiki, please consult the fancy new [Modded Minecraft Wiki](https://moddedmc.org), you can find the Instrumentus page [here](https://moddedmc.org/en/mod/instrumentus)
