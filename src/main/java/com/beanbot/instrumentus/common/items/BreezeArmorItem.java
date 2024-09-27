@@ -48,6 +48,7 @@ public class BreezeArmorItem extends ArmorItem {
                             ParticleTypes.GUST_EMITTER_LARGE,
                             SoundEvents.WIND_CHARGE_BURST
             );
+            windCharge.discard();
             stack.hurtAndBreak(1, player, EquipmentSlot.FEET);
         }
     }
