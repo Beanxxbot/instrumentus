@@ -40,7 +40,7 @@ public record FeatureEnabledCondition(ConfigFeature feature) implements IConditi
         BRUSHES(() -> Config.BRUSHES),
         EXCAVATORS(() -> Config.EXCAVATORS),
         FIRING(() -> Config.FIRING),
-        UTILITIES(() -> Config.UTIL);
+        EXPERIMENTAL(() -> Config.EXPERIMENTAL);
 
         public static final Codec<ConfigFeature> CODEC = StringRepresentable.fromEnum(ConfigFeature::values);
 

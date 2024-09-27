@@ -18,6 +18,7 @@ import com.beanbot.instrumentus.common.creative.InstrumentusCreativeModeTab;
 import com.beanbot.instrumentus.common.creative.InstrumentusCreativeModeTabPopulate;
 import com.beanbot.instrumentus.common.items.datacomponents.InstrumentusDataComponents;
 import com.beanbot.instrumentus.common.items.interfaces.IEnergyItem;
+import com.beanbot.instrumentus.common.network.PacketHandler;
 import com.beanbot.instrumentus.common.recipe.InstrumentusRecipes;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderers;
 import net.neoforged.api.distmarker.Dist;
@@ -54,6 +55,7 @@ public class Instrumentus {
 
         NeoForge.EVENT_BUS.register(new EntityStruckByLightningEventHook());
 
+        instrumentusEventBus.addListener(PacketHandler::registerNetworking);
         LOGGER.debug("Yo Yo Yo It's Ya Boi, Instrumentus but on NeoForge");
         InstrumentusParticles.PARTICLE_TYPES.register(instrumentusEventBus);
 
