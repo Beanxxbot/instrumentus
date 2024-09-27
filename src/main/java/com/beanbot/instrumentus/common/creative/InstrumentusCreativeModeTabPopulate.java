@@ -191,6 +191,10 @@ public class InstrumentusCreativeModeTabPopulate {
                     event.accept(fullExcavator);
                 }
             }
+
+            if (Config.EXPERIMENTAL.get()) {
+                event.accept(InstrumentusItems.BREEZE_ARMOR_BOOTS.get());
+            }
         }
     }
 }
