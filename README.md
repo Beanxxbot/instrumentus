@@ -28,3 +28,4 @@ Any of my mods may be recorded and posted in any videos or other formats on all 
 ## Forge (Legacy) Disclaimer
 
 Starting with version 1.20.4-2.4.2, Instrumentus will exclusively be releasing feature and Minecraft Version updates on NeoForge. Please _**do not ask me**_ to port the mod to a later version of forge. I will consider PRs for later forge updates, please do not Fork and redistribute as a Forge mod, I would rather it all be included under the Instrumentus name. If someone is interested in regularly maintaining the forge version, feel free to reach out, but due to my feelings on the whole Forge-NeoForge situation, I'll only be working on NeoForge.
+ 
