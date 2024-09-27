@@ -2,6 +2,7 @@ package com.beanbot.instrumentus.client.events;
 
 import com.beanbot.instrumentus.common.Instrumentus;
 import com.beanbot.instrumentus.common.items.BreezeArmorItem;
+import com.beanbot.instrumentus.common.network.data.WindJumpPayload;
 import com.mojang.blaze3d.platform.InputConstants;
 import net.minecraft.client.Minecraft;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -12,10 +13,11 @@ import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.client.event.InputEvent;
+import net.neoforged.neoforge.network.PacketDistributor;
 
 @SuppressWarnings("unused")
 @EventBusSubscriber(modid = Instrumentus.MODID, value = Dist.CLIENT)
-public class BreezeArmorEvents {
+public class InputEvents {
 
     @SubscribeEvent
     public static void onKeyInput(InputEvent.Key event) {
@@ -28,7 +30,7 @@ public class BreezeArmorEvents {
             ItemStack stack = player.getItemBySlot(EquipmentSlot.FEET);
             if(stack.getItem() instanceof BreezeArmorItem armorItem) {
                 if (!player.getCooldowns().isOnCooldown(armorItem)) {
-                    armorItem.windJump(stack,player, level);
+                    PacketDistributor.sendToServer(new WindJumpPayload());
                 }
             }
         }
