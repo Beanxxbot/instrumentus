@@ -1,6 +1,6 @@
 package com.beanbot.instrumentus.common;
 
-import com.beanbot.instrumentus.client.ToolRenderEvents;
+import com.beanbot.instrumentus.client.events.ToolRenderEvents;
 import com.beanbot.instrumentus.client.inventory.recipebook.RecipeBookExtensionClientHelper;
 import com.beanbot.instrumentus.common.data.conditions.InstrumentusConditions;
 import com.beanbot.instrumentus.common.inventory.InstrumentusMenus;
