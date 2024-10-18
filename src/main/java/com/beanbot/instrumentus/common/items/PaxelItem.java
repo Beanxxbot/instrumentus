@@ -1,5 +1,5 @@
 package com.beanbot.instrumentus.common.items;
-import com.beanbot.instrumentus.common.data.InstrumentusGeneratorBlockTags;
+import com.beanbot.instrumentus.common.data.generator.InstrumentusGeneratorBlockTags;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
