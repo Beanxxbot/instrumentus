@@ -1,6 +1,10 @@
 {
   "values": [
     "instrumentus:raw_soulcopper_block",
-    "instrumentus:soulcopper_block"
+    "instrumentus:soulcopper_block",
+    "instrumentus:cut_soulcopper",
+    "instrumentus:soulcopper_grate",
+    "instrumentus:soulcopper_trapdoor",
+    "instrumentus:soulcopper_door"
   ]
 }
