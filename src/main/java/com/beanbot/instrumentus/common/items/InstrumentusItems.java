@@ -22,7 +22,7 @@ public class InstrumentusItems {
     public static final DeferredRegister.Items BRUSHES = DeferredRegister.createItems(Instrumentus.MODID);
     public static final DeferredRegister.Items EXCAVATORS = DeferredRegister.createItems(Instrumentus.MODID);
     public static final DeferredRegister.Items FIRING = DeferredRegister.createItems(Instrumentus.MODID);
-    public static final DeferredRegister.Items UTIL = DeferredRegister.createItems(Instrumentus.MODID);
+    public static final DeferredRegister.Items MISC = DeferredRegister.createItems(Instrumentus.MODID);
 
     public static final DeferredHolder<Item, InstrumentusShearsItem> WOODEN_SHEARS = SHEARS.register("wooden_shears", () -> new InstrumentusShearsItem(Tiers.WOOD));
     public static final DeferredHolder<Item, InstrumentusShearsItem> STONE_SHEARS = SHEARS.register("stone_shears", () -> new InstrumentusShearsItem(Tiers.STONE));
@@ -72,6 +72,10 @@ public class InstrumentusItems {
     public static final DeferredHolder<Item, BlockItem> RAW_SOULCOPPER_BLOCK = SOULCOPPER.register("raw_soulcopper_block", () -> new BlockItem(InstrumentusBlocks.RAW_SOULCOPPER_BLOCK.get(), new Item.Properties().stacksTo(64)));
     public static final DeferredHolder<Item, BlockItem> SOULCOPPER_BLOCK = SOULCOPPER.register("soulcopper_block", () -> new BlockItem(InstrumentusBlocks.SOULCOPPER_BLOCK.get(), new Item.Properties().stacksTo(64)));
     public static final DeferredHolder<Item, BurnerItem> SOULCOPPER_BURNER = SOULCOPPER.register("soulcopper_burner", BurnerItem::new);
+    public static final DeferredHolder<Item, BlockItem> CUT_SOULCOPPER_ITEM = SOULCOPPER.register("cut_soulcopper", () -> new BlockItem(InstrumentusBlocks.CUT_SOULCOPPER.get(), new Item.Properties().stacksTo(64)));
+    public static final DeferredHolder<Item, BlockItem> SOULCOPPER_GRATE_ITEM = SOULCOPPER.register("soulcopper_grate", () -> new BlockItem(InstrumentusBlocks.SOULCOPPER_GRATE.get(), new Item.Properties().stacksTo(64)));
+    public static final DeferredHolder<Item, BlockItem> SOULCOPPER_DOOR_ITEM = SOULCOPPER.register("soulcopper_door", () -> new BlockItem(InstrumentusBlocks.SOULCOPPER_DOOR.get(), new Item.Properties().stacksTo(64)));
+    public static final DeferredHolder<Item, BlockItem> SOULCOPPER_TRAPDOOR_ITEM = SOULCOPPER.register("soulcopper_trapdoor", () -> new BlockItem(InstrumentusBlocks.SOULCOPPER_TRAPDOOR.get(), new Item.Properties().stacksTo(64)));
     @SuppressWarnings("unused")
     public static final DeferredHolder<Item, BlockItem> COPPER_SOUL_FLAME_LIGHT_ITEM = SOULCOPPER.register("copper_soul_fire_flame", () -> new BlockItem(InstrumentusBlocks.COPPER_SOUL_FLAME_LIGHT.get(), new Item.Properties()));
     public static final DeferredHolder<Item, BlockItem> COPPER_SOUL_CAMPFIRE_BLOCK_ITEM = SOULCOPPER.register("copper_soul_campfire", () -> new BlockItem(InstrumentusBlocks.COPPER_SOUL_CAMPFIRE.get(), new Item.Properties().stacksTo(64)));
@@ -115,6 +119,7 @@ public class InstrumentusItems {
 
     public static final DeferredHolder<Item, BlockItem> KILN_BLOCK_ITEM = FIRING.registerSimpleBlockItem(InstrumentusBlocks.KILN);
 
-    public static final DeferredHolder<Item, BreezeArmorItem> BREEZE_ARMOR_BOOTS = UTIL.register("breeze_boots", () -> new BreezeArmorItem(ArmorItem.Type.BOOTS));
+    public static final DeferredHolder<Item, BreezeArmorItem> BREEZE_ARMOR_BOOTS = MISC.register("breeze_boots", () -> new BreezeArmorItem(ArmorItem.Type.BOOTS));
+    public static final DeferredHolder<Item, BlockItem> WIND_BLOWER = MISC.registerSimpleBlockItem(InstrumentusBlocks.WIND_BLOWER);
 
 }
