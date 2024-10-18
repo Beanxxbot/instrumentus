@@ -1,4 +1,4 @@
-package com.beanbot.instrumentus.client;
+package com.beanbot.instrumentus.client.events;
 
 import com.beanbot.instrumentus.common.items.ExcavatorItem;
 import com.beanbot.instrumentus.common.items.HammerItem;

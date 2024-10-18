@@ -23,6 +23,7 @@ public class Config {
     public static ModConfigSpec.BooleanValue BRUSHES;
     public static ModConfigSpec.BooleanValue EXCAVATORS;
     public static ModConfigSpec.BooleanValue FIRING;
+    public static ModConfigSpec.BooleanValue TRIAL;
     public static ModConfigSpec.BooleanValue EXPERIMENTAL;
 
     public static void register(ModContainer container){
@@ -83,6 +84,9 @@ public class Config {
 
         FIRING = COMMON_BUILDER.comment("Enable the Kiln, which is a furnace variant that can be used to smelt the miscellaneous items that the Blast Furnace and Smoker do not smelt.")
                 .define("enable_firing", true);
+
+        TRIAL = COMMON_BUILDER.comment("Enable the Tools of the Trials - Items and blocks that are crafted using items and blocks from the Trial Chambers, and following a theme around the Breeze")
+                .define("enable_trial", true);
 
         EXPERIMENTAL = COMMON_BUILDER.comment("Category for experimental features that are not yet fully tested, complete, or may be removed in the future. Use at your own risk!")
                 .define("enable_experimental", false);

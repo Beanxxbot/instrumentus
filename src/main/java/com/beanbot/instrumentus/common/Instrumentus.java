@@ -1,8 +1,10 @@
 package com.beanbot.instrumentus.common;
 
-import com.beanbot.instrumentus.client.ToolRenderEvents;
+import com.beanbot.instrumentus.client.events.ToolRenderEvents;
 import com.beanbot.instrumentus.client.inventory.recipebook.RecipeBookExtensionClientHelper;
+import com.beanbot.instrumentus.common.data.attachments.InstrumentusDataAttachments;
 import com.beanbot.instrumentus.common.data.conditions.InstrumentusConditions;
+import com.beanbot.instrumentus.common.events.WindBlowerPhantomPrevention;
 import com.beanbot.instrumentus.common.inventory.InstrumentusMenus;
 import com.beanbot.instrumentus.client.particles.InstrumentusParticles;
 import com.beanbot.instrumentus.client.renderer.CopperSoulCampfireRenderer;
@@ -54,6 +56,7 @@ public class Instrumentus {
         InstrumentusConditions.register(instrumentusEventBus);
 
         NeoForge.EVENT_BUS.register(new EntityStruckByLightningEventHook());
+        NeoForge.EVENT_BUS.register(new WindBlowerPhantomPrevention());
 
         instrumentusEventBus.addListener(PacketHandler::registerNetworking);
         LOGGER.debug("Yo Yo Yo It's Ya Boi, Instrumentus but on NeoForge");
@@ -74,7 +77,8 @@ public class Instrumentus {
         InstrumentusItems.COPPER.register(instrumentusEventBus);
         InstrumentusItems.BRUSHES.register(instrumentusEventBus);
         InstrumentusItems.EXCAVATORS.register(instrumentusEventBus);
-        InstrumentusItems.UTIL.register(instrumentusEventBus);
+        InstrumentusItems.MISC.register(instrumentusEventBus);
+        InstrumentusBlocks.MISC.register(instrumentusEventBus);
         InstrumentusItems.FIRING.register(instrumentusEventBus);
         InstrumentusBlocks.FIRING.register(instrumentusEventBus);
 
@@ -84,6 +88,8 @@ public class Instrumentus {
         instrumentusEventBus.addListener(this::registerRecipeBookCategories);
 
         InstrumentusBlockEntities.register(instrumentusEventBus);
+
+        InstrumentusDataAttachments.register(instrumentusEventBus);
 
         InstrumentusRecipes.register(instrumentusEventBus);
 

@@ -1,0 +1,37 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "instrumentus:config_feature_enabled",
+      "feature": "TRIAL"
+    }
+  ],
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "group": "instrumentus",
+  "key": {
+    "B": {
+      "item": "minecraft:breeze_rod"
+    },
+    "C": {
+      "item": "minecraft:waxed_cut_copper"
+    },
+    "D": {
+      "item": "minecraft:dispenser"
+    },
+    "S": {
+      "item": "minecraft:daylight_detector"
+    },
+    "T": {
+      "item": "minecraft:chiseled_tuff_bricks"
+    }
+  },
+  "pattern": [
+    "TDT",
+    "CSC",
+    "TBT"
+  ],
+  "result": {
+    "count": 1,
+    "id": "instrumentus:wind_blower"
+  }
+}

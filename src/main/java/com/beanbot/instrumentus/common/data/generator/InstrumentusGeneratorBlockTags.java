@@ -1,4 +1,4 @@
-package com.beanbot.instrumentus.common.data;
+package com.beanbot.instrumentus.common.data.generator;
 
 import com.beanbot.instrumentus.common.Instrumentus;
 import com.beanbot.instrumentus.common.blocks.InstrumentusBlocks;
@@ -34,12 +34,21 @@ public class InstrumentusGeneratorBlockTags extends BlockTagsProvider {
                 .add(InstrumentusBlocks.SOULCOPPER_BLOCK.get())
                 .add(InstrumentusBlocks.ENERGIZED_BLOCK.get())
                 .add(InstrumentusBlocks.SOULCOPPER_LANTERN.get())
-                .add(InstrumentusBlocks.KILN.get());
+                .add(InstrumentusBlocks.KILN.get())
+                .add(InstrumentusBlocks.CUT_SOULCOPPER.get())
+                .add(InstrumentusBlocks.SOULCOPPER_GRATE.get())
+                .add(InstrumentusBlocks.SOULCOPPER_TRAPDOOR.get())
+                .add(InstrumentusBlocks.SOULCOPPER_DOOR.get())
+                .add(InstrumentusBlocks.WIND_BLOWER.get());
         this.tag(BlockTags.MINEABLE_WITH_AXE)
                 .add(InstrumentusBlocks.COPPER_SOUL_CAMPFIRE.get());
         this.tag(BlockTags.NEEDS_IRON_TOOL)
                 .add(InstrumentusBlocks.RAW_SOULCOPPER_BLOCK.get())
-                .add(InstrumentusBlocks.SOULCOPPER_BLOCK.get());
+                .add(InstrumentusBlocks.SOULCOPPER_BLOCK.get())
+                .add(InstrumentusBlocks.CUT_SOULCOPPER.get())
+                .add(InstrumentusBlocks.SOULCOPPER_GRATE.get())
+                .add(InstrumentusBlocks.SOULCOPPER_TRAPDOOR.get())
+                .add(InstrumentusBlocks.SOULCOPPER_DOOR.get());
 
     }
 }

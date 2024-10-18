@@ -4,6 +4,11 @@
     "instrumentus:soulcopper_block",
     "instrumentus:energy_block",
     "instrumentus:copper_soul_lantern",
-    "instrumentus:kiln"
+    "instrumentus:kiln",
+    "instrumentus:cut_soulcopper",
+    "instrumentus:soulcopper_grate",
+    "instrumentus:soulcopper_trapdoor",
+    "instrumentus:soulcopper_door",
+    "instrumentus:wind_blower"
   ]
 }

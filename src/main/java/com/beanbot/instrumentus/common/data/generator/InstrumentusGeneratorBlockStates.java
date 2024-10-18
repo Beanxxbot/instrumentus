@@ -1,8 +1,9 @@
-package com.beanbot.instrumentus.common.data;
+package com.beanbot.instrumentus.common.data.generator;
 
 import com.beanbot.instrumentus.common.Instrumentus;
 import com.beanbot.instrumentus.common.blocks.InstrumentusBlocks;
 import com.beanbot.instrumentus.common.blocks.KilnBlock;
+import com.beanbot.instrumentus.common.blocks.WindBlowerBlock;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.core.Direction;
 import net.minecraft.data.PackOutput;
@@ -28,14 +29,59 @@ public class InstrumentusGeneratorBlockStates extends BlockStateProvider {
         simpleBlock(InstrumentusBlocks.COPPER_SOUL_FLAME_LIGHT.get(), models().cubeAll(InstrumentusBlocks.COPPER_SOUL_FLAME_LIGHT.getId().getPath(), blockTexture(InstrumentusBlocks.COPPER_SOUL_FLAME_LIGHT.get())).renderType(RenderType.CUTOUT.name));
         simpleBlock(InstrumentusBlocks.SOULCOPPER_TORCH.get(), models().torch(InstrumentusBlocks.SOULCOPPER_TORCH.getId().getPath(), modLoc("block/copper_soul_torch")).renderType(RenderType.CUTOUT.name));
         horizontalBlock(InstrumentusBlocks.SOULCOPPER_WALL_TORCH.get(), models().torchWall(InstrumentusBlocks.SOULCOPPER_WALL_TORCH.getId().getPath(), modLoc("block/copper_soul_torch")).renderType(RenderType.CUTOUT.name), 90);
+        simpleBlock(InstrumentusBlocks.CUT_SOULCOPPER.get(), models().cubeAll(InstrumentusBlocks.CUT_SOULCOPPER.getId().getPath(), blockTexture(InstrumentusBlocks.CUT_SOULCOPPER.get())));
+        simpleBlock(InstrumentusBlocks.SOULCOPPER_GRATE.get(), models().cubeAll(InstrumentusBlocks.SOULCOPPER_GRATE.getId().getPath(), blockTexture(InstrumentusBlocks.SOULCOPPER_GRATE.get())).renderType(RenderType.CUTOUT.name));
+        doorBlockWithRenderType(InstrumentusBlocks.SOULCOPPER_DOOR.get(), Objects.requireNonNull(InstrumentusBlocks.SOULCOPPER_DOOR.getId()).getPath(), modLoc("block/soulcopper_door_bottom"), modLoc("block/soulcopper_door_top"), RenderType.CUTOUT.name);
+        trapdoorBlockWithRenderType(InstrumentusBlocks.SOULCOPPER_TRAPDOOR.get(), modLoc("block/soulcopper_trapdoor"), true, RenderType.CUTOUT.name);
 
-
+        getVariantBuilder(InstrumentusBlocks.WIND_BLOWER.get()).forAllStates(s -> {
+            ModelFile model;
+            int charge = s.getValue(WindBlowerBlock.BLOWER_CHARGE);
+            if (charge == 0) {
+                model = models().cubeBottomTop(
+                        Objects.requireNonNull(InstrumentusBlocks.WIND_BLOWER.getId()).getPath(),
+                        modLoc("block/" + InstrumentusBlocks.WIND_BLOWER.getId().getPath() + "_side0"),
+                        modLoc("block/" + InstrumentusBlocks.WIND_BLOWER.getId().getPath() + "_bottom"),
+                        modLoc("block/" + InstrumentusBlocks.WIND_BLOWER.getId().getPath() + "_top")
+                ).renderType("solid");
+            } else if (charge == 1) {
+                model = models().cubeBottomTop(
+                        Objects.requireNonNull(InstrumentusBlocks.WIND_BLOWER.getId()).getPath() + "_1",
+                        modLoc("block/" + InstrumentusBlocks.WIND_BLOWER.getId().getPath() + "_side1"),
+                        modLoc("block/" + InstrumentusBlocks.WIND_BLOWER.getId().getPath() + "_bottom"),
+                        modLoc("block/" + InstrumentusBlocks.WIND_BLOWER.getId().getPath() + "_top")
+                ).renderType("solid");
+            } else if (charge == 2) {
+                model = models().cubeBottomTop(
+                        Objects.requireNonNull(InstrumentusBlocks.WIND_BLOWER.getId()).getPath() + "_2",
+                        modLoc("block/" + InstrumentusBlocks.WIND_BLOWER.getId().getPath() + "_side2"),
+                        modLoc("block/" + InstrumentusBlocks.WIND_BLOWER.getId().getPath() + "_bottom"),
+                        modLoc("block/" + InstrumentusBlocks.WIND_BLOWER.getId().getPath() + "_top")
+                ).renderType("solid");
+            } else if (charge == 3) {
+                model = models().cubeBottomTop(
+                        Objects.requireNonNull(InstrumentusBlocks.WIND_BLOWER.getId()).getPath() + "_3",
+                        modLoc("block/" + InstrumentusBlocks.WIND_BLOWER.getId().getPath() + "_side3"),
+                        modLoc("block/" + InstrumentusBlocks.WIND_BLOWER.getId().getPath() + "_bottom"),
+                        modLoc("block/" + InstrumentusBlocks.WIND_BLOWER.getId().getPath() + "_top")
+                ).renderType("solid");
+            } else {
+                model = models().cubeBottomTop(
+                        Objects.requireNonNull(InstrumentusBlocks.WIND_BLOWER.getId()).getPath() + "_4",
+                        modLoc("block/" + InstrumentusBlocks.WIND_BLOWER.getId().getPath() + "_side4"),
+                        modLoc("block/" + InstrumentusBlocks.WIND_BLOWER.getId().getPath() + "_bottom"),
+                        modLoc("block/" + InstrumentusBlocks.WIND_BLOWER.getId().getPath() + "_top")
+                ).renderType("solid");
+            }
+            return ConfiguredModel.builder()
+                    .modelFile(model).build();
+        });
 
         getVariantBuilder(InstrumentusBlocks.KILN.get()).forAllStates(s -> {
             ModelFile model;
             boolean active = s.getValue(KilnBlock.LIT);
             Direction dir = s.getValue(BlockStateProperties.HORIZONTAL_FACING);
-            if(active) {
+            if (active) {
                 model = models().orientableWithBottom(
                         Objects.requireNonNull(InstrumentusBlocks.KILN.getId()).getPath() + "_on",
                         modLoc("block/" + InstrumentusBlocks.KILN.getId().getPath() + "_side"),
@@ -69,8 +115,8 @@ public class InstrumentusGeneratorBlockStates extends BlockStateProvider {
             } else {
                 model = models().getExistingFile(mcLoc("block/campfire_off"));
             }
-           return ConfiguredModel.builder()
-                   .modelFile(model).build();
+            return ConfiguredModel.builder()
+                    .modelFile(model).build();
         });
 
         getVariantBuilder(InstrumentusBlocks.SOULCOPPER_LANTERN.get()).forAllStates(s -> {
