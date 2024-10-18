@@ -1,4 +1,4 @@
-package com.beanbot.instrumentus.common.data;
+package com.beanbot.instrumentus.common.data.generator;
 
 import com.beanbot.instrumentus.common.Instrumentus;
 import com.beanbot.instrumentus.common.blocks.InstrumentusBlocks;
@@ -69,6 +69,10 @@ public class InstrumentusGeneratorLanguage extends LanguageProvider {
         addBlock(InstrumentusBlocks.SOULCOPPER_TORCH, "Soulcopper Torch");
         addBlock(InstrumentusBlocks.SOULCOPPER_LANTERN, "Soulcopper Lantern");
         addItem(InstrumentusItems.SOULCOPPER_BURNER, "Soulcopper Burner");
+        addBlock(InstrumentusBlocks.CUT_SOULCOPPER, "Cut Soulcopper");
+        addBlock(InstrumentusBlocks.SOULCOPPER_GRATE, "Soulcopper Grate");
+        addBlock(InstrumentusBlocks.SOULCOPPER_TRAPDOOR, "Soulcopper Trapdoor");
+        addBlock(InstrumentusBlocks.SOULCOPPER_DOOR, "Soulcopper Door");
 
         addItem(InstrumentusItems.WOODEN_KNIFE, "Wooden Knife");
         addItem(InstrumentusItems.STONE_KNIFE, "Stone Knife");
@@ -107,6 +111,8 @@ public class InstrumentusGeneratorLanguage extends LanguageProvider {
 
         addBlock(InstrumentusBlocks.KILN, "Kiln");
         add(Instrumentus.MODID + ".container.kiln", "Kiln");
+
+        addBlock(InstrumentusBlocks.WIND_BLOWER, "Wind Blower");
 
         add(Instrumentus.MODID + ".lore.no_energy", "No Energy");
         add(Instrumentus.MODID + ".lore.energy", "%d FE/%d FE");

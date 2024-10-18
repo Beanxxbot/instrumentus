@@ -1,4 +1,4 @@
-package com.beanbot.instrumentus.common.data;
+package com.beanbot.instrumentus.common.data.generator;
 
 import com.beanbot.instrumentus.common.Instrumentus;
 import com.beanbot.instrumentus.common.blocks.InstrumentusBlocks;
@@ -62,6 +62,11 @@ public class InstrumentusGeneratorLootTables extends LootTableProvider {
             dropSelf(InstrumentusBlocks.RAW_SOULCOPPER_BLOCK.get());
             dropSelf(InstrumentusBlocks.SOULCOPPER_BLOCK.get());
             dropSelf(InstrumentusBlocks.KILN.get());
+            dropSelf(InstrumentusBlocks.CUT_SOULCOPPER.get());
+            dropSelf(InstrumentusBlocks.SOULCOPPER_GRATE.get());
+            dropSelf(InstrumentusBlocks.SOULCOPPER_TRAPDOOR.get());
+            dropSelf(InstrumentusBlocks.SOULCOPPER_DOOR.get());
+            dropSelf(InstrumentusBlocks.WIND_BLOWER.get());
 
             add(InstrumentusBlocks.COPPER_SOUL_CAMPFIRE.get(),
                     silkTouchDispatchTable -> this.createSilkTouchDispatchTable(
@@ -76,6 +81,7 @@ public class InstrumentusGeneratorLootTables extends LootTableProvider {
             knownBlocks.addAll(InstrumentusBlocks.ENERGIZED.getEntries().stream().map(DeferredHolder::get).toList());
             knownBlocks.addAll(InstrumentusBlocks.SOULCOPPER.getEntries().stream().map(DeferredHolder::get).toList());
             knownBlocks.addAll(InstrumentusBlocks.FIRING.getEntries().stream().map(DeferredHolder::get).toList());
+            knownBlocks.addAll(InstrumentusBlocks.MISC.getEntries().stream().map(DeferredHolder::get).toList());
             return knownBlocks;
         }
     }

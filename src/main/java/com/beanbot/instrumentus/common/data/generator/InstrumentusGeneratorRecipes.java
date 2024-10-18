@@ -1,4 +1,4 @@
-package com.beanbot.instrumentus.common.data;
+package com.beanbot.instrumentus.common.data.generator;
 
 import com.beanbot.instrumentus.common.Instrumentus;
 import com.beanbot.instrumentus.common.blocks.InstrumentusBlocks;
@@ -14,6 +14,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.item.crafting.StonecutterRecipe;
 import net.minecraft.world.level.block.Blocks;
 import net.neoforged.neoforge.common.Tags;
 import org.jetbrains.annotations.NotNull;
@@ -38,7 +39,20 @@ public class InstrumentusGeneratorRecipes extends RecipeProvider {
                 .define('C', Items.WIND_CHARGE)
                 .group("instrumentus")
                 .unlockedBy("has_breeze_rod", InventoryChangeTrigger.TriggerInstance.hasItems(Items.WIND_CHARGE))
-                .save(consumer.withConditions(new FeatureEnabledCondition((FeatureEnabledCondition.ConfigFeature.EXPERIMENTAL))));
+                .save(consumer.withConditions(new FeatureEnabledCondition((FeatureEnabledCondition.ConfigFeature.TRIAL))));
+        //Wind Blower
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, InstrumentusBlocks.WIND_BLOWER.get())
+                .pattern("TDT")
+                .pattern("CSC")
+                .pattern("TBT")
+                .define('T', Blocks.CHISELED_TUFF_BRICKS)
+                .define('C', Blocks.WAXED_CUT_COPPER)
+                .define('S', Blocks.DAYLIGHT_DETECTOR)
+                .define('B', Items.BREEZE_ROD)
+                .define('D', Blocks.DISPENSER)
+                .group("instrumentus")
+                .unlockedBy("has_breeze_rod", InventoryChangeTrigger.TriggerInstance.hasItems(Items.BREEZE_ROD))
+                .save(consumer.withConditions(new FeatureEnabledCondition(FeatureEnabledCondition.ConfigFeature.TRIAL)));
         //Kiln
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC, InstrumentusBlocks.KILN.get().asItem())
                 .pattern("BBB")
@@ -909,6 +923,42 @@ public class InstrumentusGeneratorRecipes extends RecipeProvider {
                 )
                 .group("instrumentus")
                 .unlockedBy("has_raw_copper", InventoryChangeTrigger.TriggerInstance.hasItems(Items.RAW_COPPER_BLOCK))
+                .save(consumer.withConditions(new FeatureEnabledCondition(FeatureEnabledCondition.ConfigFeature.SOULCOPPER)));
+        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, InstrumentusBlocks.CUT_SOULCOPPER.get(), 4)
+                .pattern("SS")
+                .pattern("SS")
+                .define('S', InstrumentusBlocks.SOULCOPPER_BLOCK.get())
+                .group("instrumentus")
+                .unlockedBy("has_soulcopper", InventoryChangeTrigger.TriggerInstance.hasItems(InstrumentusBlocks.SOULCOPPER_BLOCK.get()))
+                .save(consumer.withConditions(new FeatureEnabledCondition(FeatureEnabledCondition.ConfigFeature.SOULCOPPER)));
+        SingleItemRecipeBuilder.stonecutting(Ingredient.of(InstrumentusBlocks.SOULCOPPER_BLOCK.get()), RecipeCategory.BUILDING_BLOCKS, InstrumentusBlocks.CUT_SOULCOPPER.get(), 4)
+                .unlockedBy("has_soulcopper", InventoryChangeTrigger.TriggerInstance.hasItems(InstrumentusBlocks.SOULCOPPER_BLOCK.get()))
+                .save(consumer.withConditions(new FeatureEnabledCondition(FeatureEnabledCondition.ConfigFeature.SOULCOPPER)), "cut_soulcopper_from_stonecutting");
+        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, InstrumentusBlocks.SOULCOPPER_GRATE.get(), 4)
+                .pattern(" S ")
+                .pattern("S S")
+                .pattern(" S ")
+                .define('S', InstrumentusBlocks.SOULCOPPER_BLOCK.get())
+                .group("instrumentus")
+                .unlockedBy("has_soulcopper", InventoryChangeTrigger.TriggerInstance.hasItems(InstrumentusBlocks.SOULCOPPER_BLOCK.get()))
+                .save(consumer.withConditions(new FeatureEnabledCondition(FeatureEnabledCondition.ConfigFeature.SOULCOPPER)));
+        SingleItemRecipeBuilder.stonecutting(Ingredient.of(InstrumentusBlocks.SOULCOPPER_BLOCK.get()), RecipeCategory.BUILDING_BLOCKS, InstrumentusBlocks.SOULCOPPER_GRATE.get(), 4)
+                .unlockedBy("has_soulcopper", InventoryChangeTrigger.TriggerInstance.hasItems(InstrumentusBlocks.SOULCOPPER_BLOCK.get()))
+                .save(consumer.withConditions(new FeatureEnabledCondition(FeatureEnabledCondition.ConfigFeature.SOULCOPPER)), "soulcopper_grate_from_stonecutting");
+        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, InstrumentusBlocks.SOULCOPPER_TRAPDOOR.get(), 2)
+                .pattern("SSS")
+                .pattern("SSS")
+                .define('S', InstrumentusItems.SOULCOPPER_INGOT.get())
+                .group("instrumentus")
+                .unlockedBy("has_soulcopper", InventoryChangeTrigger.TriggerInstance.hasItems(InstrumentusItems.SOULCOPPER_INGOT.get()))
+                .save(consumer.withConditions(new FeatureEnabledCondition(FeatureEnabledCondition.ConfigFeature.SOULCOPPER)));
+        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, InstrumentusBlocks.SOULCOPPER_DOOR.get(), 3)
+                .pattern("SS")
+                .pattern("SS")
+                .pattern("SS")
+                .define('S', InstrumentusItems.SOULCOPPER_INGOT.get())
+                .group("instrumentus")
+                .unlockedBy("has_soulcopper", InventoryChangeTrigger.TriggerInstance.hasItems(InstrumentusItems.SOULCOPPER_INGOT.get()))
                 .save(consumer.withConditions(new FeatureEnabledCondition(FeatureEnabledCondition.ConfigFeature.SOULCOPPER)));
 
         //Excavators

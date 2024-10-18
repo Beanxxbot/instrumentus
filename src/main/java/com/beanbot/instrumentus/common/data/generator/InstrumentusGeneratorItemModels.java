@@ -1,4 +1,4 @@
-package com.beanbot.instrumentus.common.data;
+package com.beanbot.instrumentus.common.data.generator;
 
 import com.beanbot.instrumentus.common.Instrumentus;
 import com.beanbot.instrumentus.common.items.InstrumentusItems;
@@ -42,8 +42,14 @@ public class InstrumentusGeneratorItemModels extends ItemModelProvider {
         withExistingParent(InstrumentusItems.COPPER_SOUL_FLAME_LIGHT_ITEM.getId().getPath(), modLoc("block/copper_soul_fire_flame"));
         singleTexture(InstrumentusItems.SOULCOPPER_BURNER.getId().getPath(), mcLoc("item/handheld"), "layer0", modLoc("item/soulcopper_burner"));
         singleTexture(InstrumentusItems.BREEZE_ARMOR_BOOTS.getId().getPath(), mcLoc("item/generated"), "layer0", modLoc("item/breeze_boots"));
+        singleTexture(InstrumentusItems.SOULCOPPER_DOOR_ITEM.getId().getPath(), mcLoc("item/generated"), "layer0", modLoc("item/soulcopper_door"));
+        withExistingParent(InstrumentusItems.CUT_SOULCOPPER_ITEM.getId().getPath(), modLoc("block/cut_soulcopper"));
+        withExistingParent(InstrumentusItems.SOULCOPPER_GRATE_ITEM.getId().getPath(), modLoc("block/soulcopper_grate"));
+        withExistingParent(InstrumentusItems.SOULCOPPER_GRATE_ITEM.getId().getPath(), modLoc("block/soulcopper_grate"));
+        withExistingParent(InstrumentusItems.SOULCOPPER_TRAPDOOR_ITEM.getId().getPath(), modLoc("block/soulcopper_trapdoor_bottom"));
 
         withExistingParent(InstrumentusItems.KILN_BLOCK_ITEM.getId().getPath(), modLoc("block/kiln"));
+        withExistingParent(InstrumentusItems.WIND_BLOWER.getId().getPath(), modLoc("block/wind_blower"));
 
         registerTools();
     }

@@ -1,4 +1,4 @@
-package com.beanbot.instrumentus.common.data;
+package com.beanbot.instrumentus.common.data.generator;
 
 import com.beanbot.instrumentus.common.Instrumentus;
 import com.beanbot.instrumentus.common.items.InstrumentusItems;
