@@ -1,0 +1,25 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "instrumentus:config_feature_enabled",
+      "feature": "SOULCOPPER"
+    }
+  ],
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "group": "instrumentus",
+  "key": {
+    "S": {
+      "item": "instrumentus:soulcopper_block"
+    }
+  },
+  "pattern": [
+    " S ",
+    "S S",
+    " S "
+  ],
+  "result": {
+    "count": 4,
+    "id": "instrumentus:soulcopper_grate"
+  }
+}

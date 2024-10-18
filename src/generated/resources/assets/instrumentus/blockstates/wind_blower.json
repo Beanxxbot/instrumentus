@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "blower_charges=0": {
+      "model": "instrumentus:block/wind_blower"
+    },
+    "blower_charges=1": {
+      "model": "instrumentus:block/wind_blower_1"
+    },
+    "blower_charges=2": {
+      "model": "instrumentus:block/wind_blower_2"
+    },
+    "blower_charges=3": {
+      "model": "instrumentus:block/wind_blower_3"
+    },
+    "blower_charges=4": {
+      "model": "instrumentus:block/wind_blower_4"
+    }
+  }
+}
