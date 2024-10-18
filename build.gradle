@@ -172,12 +172,17 @@ wiki {
 publishMods {
     file = jar.archiveFile
     version = project.version
-    changelog = ""
+    changelog = providers.fileContents {
+        file(providers.gradleProperty("INSTRUMENTUS_CHANGELOG"))
+    }.getAsText()
     type = STABLE
+    displayName = file.map {it.asFile.name}
     modLoaders.add("neoforge")
 
     curseforge {
-        accessToken = providers.environmentVariable("CURSEFORGE_API_KEY")
+
+        announcementTitle = "CurseForge Download"
+        accessToken = providers.gradleProperty("CURSEFORGE_API_KEY")
         projectId = "231242"
         minecraftVersionRange {
             start = "1.21"
@@ -193,11 +198,25 @@ publishMods {
     }
 
     modrinth {
-        accessToken = providers.environmentVariable("MODRINTH_PAT")
+
+        announcementTitle = "Modrinth Download"
+        accessToken = providers.gradleProperty("MODRINTH_PAT")
         projectId = "ZSHoSQwH"
         minecraftVersionRange {
             start = "1.21"
             end = "1.21.1"
         }
+    }
+
+    discord {
+
+        webhookUrl = providers.gradleProperty("DISCORD_WEBHOOK_INSTRUMENTUS")
+        dryRunWebhookUrl = providers.gradleProperty("DISCORD_TEST")
+
+        username = "Instrumentus Releases"
+
+        content = changelog.map { "# Instrumentus Has been Updated! \n" + it }
+
+        setPlatforms(publishMods.platforms.curseforge, publishMods.platforms.modrinth)
     }
 }
