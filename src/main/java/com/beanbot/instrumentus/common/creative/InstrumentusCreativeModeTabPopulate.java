@@ -1,5 +1,6 @@
 package com.beanbot.instrumentus.common.creative;
 
+import com.beanbot.instrumentus.common.blocks.InstrumentusBlocks;
 import com.beanbot.instrumentus.common.config.Config;
 import com.beanbot.instrumentus.common.items.InstrumentusItems;
 import net.minecraft.world.item.ItemStack;
@@ -130,10 +131,14 @@ public class InstrumentusCreativeModeTabPopulate {
 
             if (Config.SOULCOPPER.get()) {
                 event.accept(InstrumentusItems.SOULCOPPER_PICKAXE.get());
-                event.accept(InstrumentusItems.SOULCOPPER_INGOT.get());
-                event.accept(InstrumentusItems.SOULCOPPER_BLOCK.get());
                 event.accept(InstrumentusItems.RAW_SOULCOPPER.get());
                 event.accept(InstrumentusItems.RAW_SOULCOPPER_BLOCK.get());
+                event.accept(InstrumentusItems.SOULCOPPER_INGOT.get());
+                event.accept(InstrumentusItems.SOULCOPPER_BLOCK.get());
+                event.accept(InstrumentusItems.CUT_SOULCOPPER_ITEM.get());
+                event.accept(InstrumentusItems.SOULCOPPER_GRATE_ITEM.get());
+                event.accept(InstrumentusItems.SOULCOPPER_TRAPDOOR_ITEM.get());
+                event.accept(InstrumentusItems.SOULCOPPER_DOOR_ITEM.get());
                 event.accept(InstrumentusItems.COPPER_SOUL_CAMPFIRE_BLOCK_ITEM.get());
                 event.accept(InstrumentusItems.SOULCOPPER_TORCH_ITEM.get());
                 event.accept(InstrumentusItems.SOULCOPPER_LANTERN_ITEM.get());
@@ -192,8 +197,13 @@ public class InstrumentusCreativeModeTabPopulate {
                 }
             }
 
-            if (Config.EXPERIMENTAL.get()) {
+            if (Config.TRIAL.get()) {
                 event.accept(InstrumentusItems.BREEZE_ARMOR_BOOTS.get());
+                event.accept(InstrumentusBlocks.WIND_BLOWER.get());
+            }
+
+            if (Config.EXPERIMENTAL.get()) {
+
             }
         }
     }
