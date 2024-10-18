@@ -3,6 +3,7 @@ plugins {
     id 'maven-publish'
     id 'net.neoforged.moddev' version '1.0.21'
     id 'org.sinytra.wiki.toolkit' version '0.1.10'
+    id 'me.modmuss50.mod-publish-plugin' version'0.7.4'
 }
 
 tasks.named('wrapper', Wrapper).configure {
@@ -164,6 +165,39 @@ wiki {
         instrumentus {
             root = file('docs/instrumentus')
             exportedAssetNamespaces = ['instrumentus']
+        }
+    }
+}
+
+publishMods {
+    file = jar.archiveFile
+    version = project.version
+    changelog = ""
+    type = STABLE
+    modLoaders.add("neoforge")
+
+    curseforge {
+        accessToken = providers.environmentVariable("CURSEFORGE_API_KEY")
+        projectId = "231242"
+        minecraftVersionRange {
+            start = "1.21"
+            end = "1.21.1"
+        }
+
+        javaVersions.add(JavaVersion.VERSION_21)
+
+        clientRequired = true
+        serverRequired = true
+
+        projectSlug = "instrumentus"
+    }
+
+    modrinth {
+        accessToken = providers.environmentVariable("MODRINTH_PAT")
+        projectId = "ZSHoSQwH"
+        minecraftVersionRange {
+            start = "1.21"
+            end = "1.21.1"
         }
     }
 }
