@@ -29,7 +29,7 @@ public class InputEvents {
         if(event.getAction() == InputConstants.PRESS && mc.options.keyJump.isDown()) {
             ItemStack stack = player.getItemBySlot(EquipmentSlot.FEET);
             if(stack.getItem() instanceof BreezeArmorItem armorItem) {
-                if (!player.getCooldowns().isOnCooldown(armorItem)) {
+                if (!player.getCooldowns().isOnCooldown(armorItem) && !player.isCreative()) {
                     PacketDistributor.sendToServer(new WindJumpPayload());
                 }
             }
