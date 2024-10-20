@@ -66,7 +66,7 @@ public class InstrumentusGeneratorLootTables extends LootTableProvider {
             dropSelf(InstrumentusBlocks.CUT_SOULCOPPER.get());
             dropSelf(InstrumentusBlocks.SOULCOPPER_GRATE.get());
             dropSelf(InstrumentusBlocks.SOULCOPPER_TRAPDOOR.get());
-            dropSelf(InstrumentusBlocks.SOULCOPPER_DOOR.get());
+            add(InstrumentusBlocks.SOULCOPPER_DOOR.get(), createDoorTable(InstrumentusBlocks.SOULCOPPER_DOOR.get()));
             dropSelf(InstrumentusBlocks.WIND_BLOWER.get());
 
             add(InstrumentusBlocks.COPPER_SOUL_CAMPFIRE.get(),
