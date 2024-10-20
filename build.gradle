@@ -178,6 +178,7 @@ publishMods {
     type = STABLE
     displayName = file.map {it.asFile.name}
     modLoaders.add("neoforge")
+    dryRun = true
 
     curseforge {
 
@@ -215,7 +216,7 @@ publishMods {
 
         username = "Instrumentus Releases"
 
-        content = changelog.map { "# Instrumentus Has been Updated! \n" + it }
+        content = changelog.map { "# Instrumentus Has been Updated! \n<@&1289306018840449065> \n" + it }
 
         setPlatforms(publishMods.platforms.curseforge, publishMods.platforms.modrinth)
     }
