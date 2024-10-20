@@ -1,0 +1,20 @@
+name: Remove outdated labels
+on:
+  # https://github.community/t/github-actions-are-severely-limited-on-prs/18179/15
+  pull_request_target:
+    types:
+      - closed
+  issues:
+    types:
+      - closed
+jobs:
+  remove-closed-issue-labels:
+    name: Remove closed issue labels
+    if: github.event.issue.state == 'closed'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: mondeja/remove-labels-gh-action@v2
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          labels: |
+            unreleased fixed
