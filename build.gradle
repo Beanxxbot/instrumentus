@@ -178,7 +178,6 @@ publishMods {
     type = STABLE
     displayName = file.map {it.asFile.name}
     modLoaders.add("neoforge")
-    dryRun = true
 
     curseforge {
 
