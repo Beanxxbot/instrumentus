@@ -2,6 +2,7 @@ package com.beanbot.instrumentus.common.data.generator;
 
 import com.beanbot.instrumentus.common.Instrumentus;
 import com.beanbot.instrumentus.common.blocks.InstrumentusBlocks;
+import com.beanbot.instrumentus.common.data.loot.functions.SetItemCountWithFeatureEnabledFunction;
 import com.beanbot.instrumentus.common.items.InstrumentusItems;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.Registries;
@@ -91,29 +92,29 @@ public class InstrumentusGeneratorLootTables extends LootTableProvider {
         public void generate(BiConsumer<ResourceKey<LootTable>, LootTable.Builder> builder) {
             LootPool.Builder commonPool = LootPool.lootPool();
             commonPool.setRolls(UniformGenerator.between(0, 1))
-                    .add(createEntry(InstrumentusItems.COPPER_SWORD.get(), 2, 1, 1))
-                    .add(createEntry(InstrumentusItems.COPPER_PAXEL.get(), 2, 1, 1))
-                    .add(createEntry(InstrumentusItems.RAW_SOULCOPPER.get(), 4, 4, 8));
+                    .add(createEntry(InstrumentusItems.COPPER_SWORD.get(), 2, 1, 1, SetItemCountWithFeatureEnabledFunction.ConfigFeature.COPPER_TOOLS))
+                    .add(createEntry(InstrumentusItems.COPPER_PAXEL.get(), 2, 1, 1, SetItemCountWithFeatureEnabledFunction.ConfigFeature.COPPER_TOOLS))
+                    .add(createEntry(InstrumentusItems.RAW_SOULCOPPER.get(), 4, 4, 8, SetItemCountWithFeatureEnabledFunction.ConfigFeature.SOULCOPPER));
             LootTable.Builder commonTable = LootTable.lootTable();
             commonTable.withPool(commonPool);
             builder.accept(lootResourceKey("custom/common_vault_loot"), commonTable);
 
             LootPool.Builder rarePool = LootPool.lootPool();
             rarePool.setRolls(UniformGenerator.between(0, 1))
-                    .add(enchantedTool(InstrumentusItems.IRON_PAXEL.get(), 1))
-                    .add(enchantedTool(InstrumentusItems.IRON_HAMMER.get(), 1))
-                    .add(createEntry(InstrumentusItems.RAW_SOULCOPPER_BLOCK.get(), 2, 1, 3))
-                    .add(createEntry(InstrumentusItems.SOULCOPPER_INGOT.get(), 3, 4, 6));
+                    .add(enchantedTool(InstrumentusItems.IRON_PAXEL.get(), 1, SetItemCountWithFeatureEnabledFunction.ConfigFeature.PAXELS))
+                    .add(enchantedTool(InstrumentusItems.IRON_HAMMER.get(), 1, SetItemCountWithFeatureEnabledFunction.ConfigFeature.HAMMERS))
+                    .add(createEntry(InstrumentusItems.RAW_SOULCOPPER_BLOCK.get(), 2, 1, 3, SetItemCountWithFeatureEnabledFunction.ConfigFeature.SOULCOPPER))
+                    .add(createEntry(InstrumentusItems.SOULCOPPER_INGOT.get(), 3, 4, 6, SetItemCountWithFeatureEnabledFunction.ConfigFeature.SOULCOPPER));
             LootTable.Builder rareTable = LootTable.lootTable();
             rareTable.withPool(rarePool);
             builder.accept(lootResourceKey("custom/rare_vault_loot"), rareTable);
 
             LootPool.Builder uniquePool = LootPool.lootPool();
             uniquePool.setRolls(UniformGenerator.between(0, 1))
-                    .add(enchantedTool(InstrumentusItems.DIAMOND_PAXEL.get(), 1))
-                    .add(enchantedTool(InstrumentusItems.DIAMOND_HAMMER.get(), 1))
-                    .add(createEntry(InstrumentusItems.SOULCOPPER_BURNER.get(), 3, 1, 1))
-                    .add(createEntry(InstrumentusItems.ENERGIZED_INGOT.get(), 2, 2, 3));
+                    .add(enchantedTool(InstrumentusItems.DIAMOND_PAXEL.get(), 1, SetItemCountWithFeatureEnabledFunction.ConfigFeature.PAXELS))
+                    .add(enchantedTool(InstrumentusItems.DIAMOND_HAMMER.get(), 1, SetItemCountWithFeatureEnabledFunction.ConfigFeature.HAMMERS))
+                    .add(createEntry(InstrumentusItems.SOULCOPPER_BURNER.get(), 3, 1, 1, SetItemCountWithFeatureEnabledFunction.ConfigFeature.SOULCOPPER))
+                    .add(createEntry(InstrumentusItems.ENERGIZED_INGOT.get(), 2, 2, 3, SetItemCountWithFeatureEnabledFunction.ConfigFeature.ENERGIZED));
             LootTable.Builder uniqueTable = LootTable.lootTable();
             uniqueTable.withPool(uniquePool);
             builder.accept(lootResourceKey("custom/unique_vault_loot"), uniqueTable);
@@ -125,6 +126,12 @@ public class InstrumentusGeneratorLootTables extends LootTableProvider {
                     .apply(EnchantRandomlyFunction.randomApplicableEnchantment(provider));
         }
 
+        private LootPoolEntryContainer.Builder<?> enchantedTool(ItemLike item, @SuppressWarnings("SameParameterValue") int weight, SetItemCountWithFeatureEnabledFunction.ConfigFeature feature) {
+            return createEntry(new ItemStack(item), weight)
+                    .apply(SetItemCountWithFeatureEnabledFunction.setCountWithFeatureEnabled(ConstantValue.exactly(1), feature))
+                    .apply(EnchantRandomlyFunction.randomApplicableEnchantment(provider));
+        }
+
         private LootPoolEntryContainer.Builder<?> createEntry(ItemLike item, @SuppressWarnings("unused") int weight, int min, int max) {
             return createEntry(new ItemStack(item), 1)
                     .apply(SetItemCountFunction.setCount(UniformGenerator.between(min, max)));
@@ -133,6 +140,16 @@ public class InstrumentusGeneratorLootTables extends LootTableProvider {
         private LootPoolSingletonContainer.Builder<?> createEntry(ItemStack item, int weight) {
             return LootItem.lootTableItem(item.getItem()).setWeight(weight);
         }
+
+        private LootPoolEntryContainer.Builder<?> createEntry(ItemLike item, int weight, int min, int max, SetItemCountWithFeatureEnabledFunction.ConfigFeature feature) {
+            return createEntry(new ItemStack(item), weight)
+                    .apply(SetItemCountWithFeatureEnabledFunction.setCountWithFeatureEnabled(UniformGenerator.between(min, max), feature));
+        }
+
+        private LootPoolEntryContainer.Builder<?> createEntry(ItemLike item, int weight, SetItemCountWithFeatureEnabledFunction.ConfigFeature feature) {
+            return createEntry(new ItemStack(item), weight)
+                    .apply(SetItemCountWithFeatureEnabledFunction.setCountWithFeatureEnabled(ConstantValue.exactly( 1), feature));
+        }
     }
 
     private record CustomOminousVaultLootProvider(HolderLookup.Provider provider) implements LootTableSubProvider {
@@ -140,27 +157,27 @@ public class InstrumentusGeneratorLootTables extends LootTableProvider {
         public void generate(BiConsumer<ResourceKey<LootTable>, LootTable.Builder> builder) {
             LootPool.Builder commonPool = LootPool.lootPool();
             commonPool.setRolls(UniformGenerator.between(0, 1))
-                    .add(createEntry(InstrumentusItems.ENERGIZED_INGOT.get(), 4, 2, 6))
-                    .add(createEntry(InstrumentusItems.SOULCOPPER_BLOCK.get(), 3, 1, 2));
+                    .add(createEntry(InstrumentusItems.ENERGIZED_INGOT.get(), 4, 2, 6, SetItemCountWithFeatureEnabledFunction.ConfigFeature.ENERGIZED))
+                    .add(createEntry(InstrumentusItems.SOULCOPPER_BLOCK.get(), 3, 1, 2, SetItemCountWithFeatureEnabledFunction.ConfigFeature.SOULCOPPER));
             LootTable.Builder commonTable = LootTable.lootTable();
             commonTable.withPool(commonPool);
             builder.accept(lootResourceKey("custom/common_ominous_vault_loot"), commonTable);
 
             LootPool.Builder rarePool = LootPool.lootPool();
             rarePool.setRolls(UniformGenerator.between(0, 1))
-                    .add(createEntry(InstrumentusItems.ENERGIZED_PAXEL.get(), 2, 1, 1))
-                    .add(createEntry(InstrumentusItems.NETHERITE_SICKLE.get(), 3, 1, 1))
-                    .add(enchantedTool(InstrumentusItems.ENERGIZED_PICKAXE.get(), 1));
+                    .add(createEntry(InstrumentusItems.ENERGIZED_PAXEL.get(), 2, 1, 1, SetItemCountWithFeatureEnabledFunction.ConfigFeature.ENERGIZED))
+                    .add(createEntry(InstrumentusItems.NETHERITE_SICKLE.get(), 3, 1, 1, SetItemCountWithFeatureEnabledFunction.ConfigFeature.SICKLES))
+                    .add(enchantedTool(InstrumentusItems.ENERGIZED_PICKAXE.get(), 1, SetItemCountWithFeatureEnabledFunction.ConfigFeature.ENERGIZED));
             LootTable.Builder rareTable = LootTable.lootTable();
             rareTable.withPool(rarePool);
             builder.accept(lootResourceKey("custom/rare_ominous_vault_loot"), rareTable);
 
             LootPool.Builder uniquePool = LootPool.lootPool();
             uniquePool.setRolls(UniformGenerator.between(0, 1))
-                    .add(enchantedTool(InstrumentusItems.ENERGIZED_PAXEL.get(), 1))
-                    .add(createEntry(InstrumentusItems.ENERGIZED_BLOCK.get(), 3, 1, 2))
-                    .add(createEntry(InstrumentusItems.SOULCOPPER_BLOCK.get(), 4, 1, 2))
-                    .add(enchantedTool(InstrumentusItems.NETHERITE_PAXEL.get(), 2));
+                    .add(enchantedTool(InstrumentusItems.ENERGIZED_PAXEL.get(), 1, SetItemCountWithFeatureEnabledFunction.ConfigFeature.ENERGIZED))
+                    .add(createEntry(InstrumentusItems.ENERGIZED_BLOCK.get(), 3, 1, 2, SetItemCountWithFeatureEnabledFunction.ConfigFeature.ENERGIZED))
+                    .add(createEntry(InstrumentusItems.SOULCOPPER_BLOCK.get(), 4, 1, 2, SetItemCountWithFeatureEnabledFunction.ConfigFeature.SOULCOPPER))
+                    .add(enchantedTool(InstrumentusItems.NETHERITE_PAXEL.get(), 2, SetItemCountWithFeatureEnabledFunction.ConfigFeature.PAXELS));
             LootTable.Builder uniqueTable = LootTable.lootTable();
             uniqueTable.withPool(uniquePool);
             builder.accept(lootResourceKey("custom/unique_ominous_vault_loot"), uniqueTable);
@@ -172,6 +189,12 @@ public class InstrumentusGeneratorLootTables extends LootTableProvider {
                     .apply(EnchantRandomlyFunction.randomApplicableEnchantment(provider));
         }
 
+        private LootPoolEntryContainer.Builder<?> enchantedTool(ItemLike item, @SuppressWarnings("SameParameterValue") int weight, SetItemCountWithFeatureEnabledFunction.ConfigFeature feature) {
+            return createEntry(new ItemStack(item), weight)
+                    .apply(SetItemCountWithFeatureEnabledFunction.setCountWithFeatureEnabled(ConstantValue.exactly(1), feature))
+                    .apply(EnchantRandomlyFunction.randomApplicableEnchantment(provider));
+        }
+
         private LootPoolEntryContainer.Builder<?> createEntry(ItemLike item, @SuppressWarnings("unused") int weight, int min, int max) {
             return createEntry(new ItemStack(item), 1)
                     .apply(SetItemCountFunction.setCount(UniformGenerator.between(min, max)));
@@ -179,6 +202,11 @@ public class InstrumentusGeneratorLootTables extends LootTableProvider {
 
         private LootPoolSingletonContainer.Builder<?> createEntry(ItemStack item, int weight) {
             return LootItem.lootTableItem(item.getItem()).setWeight(weight);
+        }
+
+        private LootPoolEntryContainer.Builder<?> createEntry(ItemLike item, int weight, int min, int max, SetItemCountWithFeatureEnabledFunction.ConfigFeature feature) {
+            return createEntry(new ItemStack(item), weight)
+                .apply(SetItemCountWithFeatureEnabledFunction.setCountWithFeatureEnabled(UniformGenerator.between(min, max), feature));
         }
     }
 

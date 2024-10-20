@@ -1,4 +1,4 @@
-package com.beanbot.instrumentus.common.events.loot;
+package com.beanbot.instrumentus.common.data.loot;
 
 import com.beanbot.instrumentus.common.Instrumentus;
 import com.google.common.base.Suppliers;
@@ -22,12 +22,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Supplier;
 
-public class ToolsInTrialVaultsModifier extends LootModifier {
-    public static final Supplier<MapCodec<ToolsInTrialVaultsModifier>> CODEC = Suppliers.memoize(
+public class ToolsInOminousTrialVaultsModifier extends LootModifier {
+    public static final Supplier<MapCodec<ToolsInOminousTrialVaultsModifier>> CODEC = Suppliers.memoize(
             () -> RecordCodecBuilder.mapCodec(
-            inst -> codecStart(inst).apply(inst, ToolsInTrialVaultsModifier::new)));
+            inst -> codecStart(inst).apply(inst, ToolsInOminousTrialVaultsModifier::new)));
 
-    public ToolsInTrialVaultsModifier(LootItemCondition[] conditions) {
+    public ToolsInOminousTrialVaultsModifier(LootItemCondition[] conditions) {
         super(conditions);
     }
 
@@ -59,7 +59,7 @@ public class ToolsInTrialVaultsModifier extends LootModifier {
         }
 
         private static LootPool buildLootPool(String name) {
-            ResourceKey<LootTable> key = ResourceKey.create(Registries.LOOT_TABLE, ResourceLocation.fromNamespaceAndPath(Instrumentus.MODID, "custom/" + name + "_vault_loot"));
+            ResourceKey<LootTable> key = ResourceKey.create(Registries.LOOT_TABLE, ResourceLocation.fromNamespaceAndPath(Instrumentus.MODID, "custom/" + name + "_ominous_vault_loot"));
             return LootPool.lootPool()
                     .add(NestedLootTable.lootTableReference(key).setWeight(1))
                     .name("instrumentus_custom_" + name)

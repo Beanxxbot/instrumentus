@@ -4,6 +4,7 @@ import com.beanbot.instrumentus.client.events.ToolRenderEvents;
 import com.beanbot.instrumentus.client.inventory.recipebook.RecipeBookExtensionClientHelper;
 import com.beanbot.instrumentus.common.data.attachments.InstrumentusDataAttachments;
 import com.beanbot.instrumentus.common.data.conditions.InstrumentusConditions;
+import com.beanbot.instrumentus.common.data.loot.functions.InstrumentusLootFunctions;
 import com.beanbot.instrumentus.common.events.WindBlowerPhantomPrevention;
 import com.beanbot.instrumentus.common.inventory.InstrumentusMenus;
 import com.beanbot.instrumentus.client.particles.InstrumentusParticles;
@@ -13,7 +14,7 @@ import com.beanbot.instrumentus.common.blocks.entities.InstrumentusBlockEntities
 import com.beanbot.instrumentus.common.capability.EnergyItemstack;
 import com.beanbot.instrumentus.common.config.Config;
 import com.beanbot.instrumentus.common.events.EntityStruckByLightningEventHook;
-import com.beanbot.instrumentus.common.events.loot.InstrumentusLootModifiers;
+import com.beanbot.instrumentus.common.data.loot.InstrumentusLootModifiers;
 import com.beanbot.instrumentus.common.items.InstrumentusArmorMaterials;
 import com.beanbot.instrumentus.common.items.InstrumentusItems;
 import com.beanbot.instrumentus.common.creative.InstrumentusCreativeModeTab;
@@ -54,6 +55,7 @@ public class Instrumentus {
         Config.register(MOD_CONTAINER);
 
         InstrumentusConditions.register(instrumentusEventBus);
+        InstrumentusLootFunctions.register(instrumentusEventBus);
 
         NeoForge.EVENT_BUS.register(new EntityStruckByLightningEventHook());
         NeoForge.EVENT_BUS.register(new WindBlowerPhantomPrevention());
