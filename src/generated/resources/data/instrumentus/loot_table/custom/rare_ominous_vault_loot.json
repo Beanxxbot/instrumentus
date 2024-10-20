@@ -14,10 +14,12 @@
                 "max": 1.0,
                 "min": 1.0
               },
-              "function": "minecraft:set_count"
+              "feature": "ENERGIZED",
+              "function": "instrumentus:set_item_count_with_feature_enabled"
             }
           ],
-          "name": "instrumentus:energy_paxel"
+          "name": "instrumentus:energy_paxel",
+          "weight": 2
         },
         {
           "type": "minecraft:item",
@@ -29,10 +31,12 @@
                 "max": 1.0,
                 "min": 1.0
               },
-              "function": "minecraft:set_count"
+              "feature": "SICKLES",
+              "function": "instrumentus:set_item_count_with_feature_enabled"
             }
           ],
-          "name": "instrumentus:netherite_sickle"
+          "name": "instrumentus:netherite_sickle",
+          "weight": 3
         },
         {
           "type": "minecraft:item",
@@ -40,7 +44,8 @@
             {
               "add": false,
               "count": 1.0,
-              "function": "minecraft:set_count"
+              "feature": "ENERGIZED",
+              "function": "instrumentus:set_item_count_with_feature_enabled"
             },
             {
               "function": "minecraft:enchant_randomly",

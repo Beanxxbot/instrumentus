@@ -1,4 +1,4 @@
-package com.beanbot.instrumentus.common.events.loot;
+package com.beanbot.instrumentus.common.data.loot;
 
 import com.google.common.base.Suppliers;
 import com.mojang.serialization.MapCodec;

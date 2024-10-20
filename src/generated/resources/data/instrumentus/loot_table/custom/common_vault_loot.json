@@ -14,10 +14,12 @@
                 "max": 1.0,
                 "min": 1.0
               },
-              "function": "minecraft:set_count"
+              "feature": "COPPER_TOOLS",
+              "function": "instrumentus:set_item_count_with_feature_enabled"
             }
           ],
-          "name": "instrumentus:copper_sword"
+          "name": "instrumentus:copper_sword",
+          "weight": 2
         },
         {
           "type": "minecraft:item",
@@ -29,10 +31,12 @@
                 "max": 1.0,
                 "min": 1.0
               },
-              "function": "minecraft:set_count"
+              "feature": "COPPER_TOOLS",
+              "function": "instrumentus:set_item_count_with_feature_enabled"
             }
           ],
-          "name": "instrumentus:copper_paxel"
+          "name": "instrumentus:copper_paxel",
+          "weight": 2
         },
         {
           "type": "minecraft:item",
@@ -44,10 +48,12 @@
                 "max": 8.0,
                 "min": 4.0
               },
-              "function": "minecraft:set_count"
+              "feature": "SOULCOPPER",
+              "function": "instrumentus:set_item_count_with_feature_enabled"
             }
           ],
-          "name": "instrumentus:raw_soulcopper"
+          "name": "instrumentus:raw_soulcopper",
+          "weight": 4
         }
       ],
       "rolls": {
