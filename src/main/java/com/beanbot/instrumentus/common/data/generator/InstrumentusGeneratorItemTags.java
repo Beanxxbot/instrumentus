@@ -1,14 +1,15 @@
 package com.beanbot.instrumentus.common.data.generator;
 
 import com.beanbot.instrumentus.common.Instrumentus;
-import com.beanbot.instrumentus.common.items.InstrumentusItems;
+import com.beanbot.instrumentus.common.items.*;
+import com.beanbot.instrumentus.common.items.interfaces.IEnergyItem;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.tags.ItemTagsProvider;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.TagKey;
-import net.minecraft.world.item.Item;
+import net.minecraft.world.item.*;
 import net.neoforged.neoforge.common.data.BlockTagsProvider;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
 import org.checkerframework.checker.nullness.qual.Nullable;
@@ -28,13 +29,12 @@ public class InstrumentusGeneratorItemTags extends ItemTagsProvider {
     protected void addTags(HolderLookup.@NotNull Provider provider) {
         addTools();
 
-        for (var knife : InstrumentusItems.KNIVES.getEntries()) {
-            tag(TOOLS_KNIVES)
-                    .add(knife.get());
+        for (var knife : InstrumentusItems.ITEMS_REGISTRAR.getEntries()) {
+            if (knife.get() instanceof KnifeItem) {
+                tag(TOOLS_KNIVES)
+                        .add(knife.get());
+            }
         }
-        tag(TOOLS_KNIVES)
-                .add(InstrumentusItems.COPPER_KNIFE.get())
-                .add(InstrumentusItems.ENERGIZED_KNIFE.get());
     }
 
     public void addTools() {
@@ -48,76 +48,44 @@ public class InstrumentusGeneratorItemTags extends ItemTagsProvider {
         tag(ItemTags.FOOT_ARMOR_ENCHANTABLE).add(InstrumentusItems.BREEZE_ARMOR_BOOTS.get());
         tag(ItemTags.DURABILITY_ENCHANTABLE).add(InstrumentusItems.BREEZE_ARMOR_BOOTS.get());
 
-        for (var tool : InstrumentusItems.SHEARS.getEntries()) {
-            tag(ItemTags.MINING_ENCHANTABLE)
-                    .add(tool.get());
-            tag(ItemTags.DURABILITY_ENCHANTABLE)
-                    .add(tool.get());
-        }
-        for (var tool : InstrumentusItems.SICKLES.getEntries()) {
-            tag(ItemTags.MINING_ENCHANTABLE)
-                    .add(tool.get());
-            tag(ItemTags.MINING_LOOT_ENCHANTABLE)
-                    .add(tool.get());
-            tag(ItemTags.DURABILITY_ENCHANTABLE)
-                    .add(tool.get());
-        }
-        for (var tool : InstrumentusItems.PAXELS.getEntries()) {
-            tag(ItemTags.MINING_ENCHANTABLE)
-                    .add(tool.get());
-            tag(ItemTags.MINING_LOOT_ENCHANTABLE)
-                    .add(tool.get());
-            tag(ItemTags.DURABILITY_ENCHANTABLE)
-                    .add(tool.get());
-        }
-        for (var tool : InstrumentusItems.HAMMERS.getEntries()) {
-            tag(ItemTags.MINING_ENCHANTABLE)
-                    .add(tool.get());
-            tag(ItemTags.MINING_LOOT_ENCHANTABLE)
-                    .add(tool.get());
-            tag(ItemTags.DURABILITY_ENCHANTABLE)
-                    .add(tool.get());
-        }
-        for (var tool : InstrumentusItems.KNIVES.getEntries()) {
-            if (tool != InstrumentusItems.PLANT_FIBER) {
-                tag(ItemTags.DURABILITY_ENCHANTABLE)
-                        .add(tool.get());
-            }
-        }
-        for (var tool : InstrumentusItems.ENERGIZED.getEntries()) {
-            if (tool != InstrumentusItems.ENERGIZED_INGOT || tool != InstrumentusItems.ENERGIZED_BLOCK || tool != InstrumentusItems.CARBON_ROD) {
-                tag(ItemTags.DURABILITY_ENCHANTABLE)
-                        .add(tool.get());
-                if (tool != InstrumentusItems.ENERGIZED_LIGHTNING_ROD) {
+        for (var tool : InstrumentusItems.ITEMS_REGISTRAR.getEntries()) {
+            if (tool.get() instanceof DiggerItem diggerTool) {
+                if (diggerTool instanceof ExcavatorItem || diggerTool instanceof ShovelItem) {
                     tag(ItemTags.MINING_ENCHANTABLE)
-                            .add(tool.get());
-                    if (tool != InstrumentusItems.ENERGIZED_SHOVEL || tool != InstrumentusItems.ENERGIZED_KNIFE || tool != InstrumentusItems.ENERGIZED_SHEARS || tool != InstrumentusItems.ENERGIZED_EXCAVATOR) {
+                            .add(diggerTool);
+                    tag(ItemTags.DURABILITY_ENCHANTABLE)
+                            .add(diggerTool);
+                } else if (diggerTool instanceof IEnergyItem) {
+                    tag(ItemTags.DURABILITY_ENCHANTABLE)
+                            .add(diggerTool);
+                    tag(ItemTags.MINING_ENCHANTABLE)
+                            .add(diggerTool);
+                    if (diggerTool != InstrumentusItems.ENERGIZED_SHOVEL.get()) {
                         tag(ItemTags.MINING_LOOT_ENCHANTABLE)
-                                .add(tool.get());
+                                .add(diggerTool);
                     }
-                }
-            }
-        }
-        for (var tool : InstrumentusItems.COPPER.getEntries()) {
-            tag(ItemTags.DURABILITY_ENCHANTABLE)
-                    .add(tool.get());
-            if (tool != InstrumentusItems.COPPER_SWORD) {
-                tag(ItemTags.MINING_ENCHANTABLE)
-                        .add(tool.get());
-                if (tool != InstrumentusItems.COPPER_SHOVEL || tool != InstrumentusItems.COPPER_KNIFE || tool != InstrumentusItems.COPPER_SHEARS || tool != InstrumentusItems.COPPER_EXCAVATOR) {
+                } else {
+                    tag(ItemTags.MINING_ENCHANTABLE)
+                            .add(diggerTool);
                     tag(ItemTags.MINING_LOOT_ENCHANTABLE)
-                            .add(tool.get());
+                            .add(diggerTool);
+                    tag(ItemTags.DURABILITY_ENCHANTABLE)
+                            .add(diggerTool);
                 }
-            } else {
+            } else if (tool.get() instanceof ShearsItem shearsTool) {
+                tag(ItemTags.MINING_ENCHANTABLE)
+                        .add(shearsTool);
+                tag(ItemTags.DURABILITY_ENCHANTABLE)
+                        .add(shearsTool);
+            } else if (tool.get() instanceof KnifeItem knifeTool) {
+                tag(ItemTags.DURABILITY_ENCHANTABLE)
+                        .add(knifeTool);
+            } else if (tool.get() instanceof SwordItem swordTool) {
+                tag(ItemTags.DURABILITY_ENCHANTABLE)
+                        .add(swordTool);
                 tag(ItemTags.SWORD_ENCHANTABLE)
-                        .add(tool.get());
+                        .add(swordTool);
             }
-        }
-        for (var tool : InstrumentusItems.EXCAVATORS.getEntries()) {
-            tag(ItemTags.MINING_ENCHANTABLE)
-                    .add(tool.get());
-            tag(ItemTags.DURABILITY_ENCHANTABLE)
-                    .add(tool.get());
         }
     }
 }
