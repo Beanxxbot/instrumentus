@@ -66,23 +66,8 @@ public class Instrumentus {
 
         InstrumentusArmorMaterials.register(instrumentusEventBus);
 
-        //TODO: Remove feature-based registration due to new config system
-        InstrumentusItems.SHEARS.register(instrumentusEventBus);
-        InstrumentusItems.SICKLES.register(instrumentusEventBus);
-        InstrumentusItems.PAXELS.register(instrumentusEventBus);
-        InstrumentusItems.HAMMERS.register(instrumentusEventBus);
-        InstrumentusItems.ENERGIZED.register(instrumentusEventBus);
-        InstrumentusBlocks.ENERGIZED.register(instrumentusEventBus);
-        InstrumentusItems.KNIVES.register(instrumentusEventBus);
-        InstrumentusItems.SOULCOPPER.register(instrumentusEventBus);
-        InstrumentusBlocks.SOULCOPPER.register(instrumentusEventBus);
-        InstrumentusItems.COPPER.register(instrumentusEventBus);
-        InstrumentusItems.BRUSHES.register(instrumentusEventBus);
-        InstrumentusItems.EXCAVATORS.register(instrumentusEventBus);
-        InstrumentusItems.MISC.register(instrumentusEventBus);
-        InstrumentusBlocks.MISC.register(instrumentusEventBus);
-        InstrumentusItems.FIRING.register(instrumentusEventBus);
-        InstrumentusBlocks.FIRING.register(instrumentusEventBus);
+        InstrumentusItems.ITEMS_REGISTRAR.register(instrumentusEventBus);
+        InstrumentusBlocks.BLOCKS_REGISTER.register(instrumentusEventBus);
 
         instrumentusEventBus.addListener(this::addCreative);
 
