@@ -29,8 +29,8 @@ import java.util.function.Consumer;
 import java.util.function.Predicate;
 
 public class EnergyHoeItem extends DiggerItem implements IItemLightningChargeable, IEnergyItem {
-    public EnergyHoeItem(Tier tier, float attackDamageIn, float attackSpeedIn) {
-        super(tier, BlockTags.MINEABLE_WITH_HOE, new Item.Properties().attributes(AxeItem.createAttributes(tier, attackDamageIn, attackSpeedIn)).durability(0).stacksTo(1).fireResistant());;
+    public EnergyHoeItem(ToolMaterial toolMaterial, float attackDamageIn, float attackSpeedIn) {
+        super(toolMaterial, BlockTags.MINEABLE_WITH_HOE, attackDamageIn, attackSpeedIn, toolMaterial.applyToolProperties(new Item.Properties().durability(0).stacksTo(1).fireResistant(), BlockTags.MINEABLE_WITH_HOE, attackDamageIn, attackSpeedIn));;
     }
 
     @Override
@@ -57,7 +57,7 @@ public class EnergyHoeItem extends DiggerItem implements IItemLightningChargeabl
                     }
                 }
 
-                return InteractionResult.sidedSuccess(level.isClientSide);
+                return InteractionResult.SUCCESS;
             } else {
                 return InteractionResult.PASS;
             }

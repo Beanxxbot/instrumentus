@@ -51,8 +51,8 @@ public class BurnerItem extends Item {
     }
 
     @Override
-    public @NotNull UseAnim getUseAnimation(@NotNull ItemStack stack) {
-        return UseAnim.BRUSH;
+    public @NotNull ItemUseAnimation getUseAnimation(@NotNull ItemStack stack) {
+        return ItemUseAnimation.BRUSH;
     }
 
     @Override

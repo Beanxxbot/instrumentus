@@ -59,6 +59,7 @@ public class InstrumentusGeneratorLootTables extends LootTableProvider {
             add(InstrumentusBlocks.COPPER_SOUL_FLAME_LIGHT.get(), noDrop());
             dropSelf(InstrumentusBlocks.SOULCOPPER_LANTERN.get());
             dropSelf(InstrumentusBlocks.SOULCOPPER_TORCH.get());
+            dropOther(InstrumentusBlocks.SOULCOPPER_WALL_TORCH.get(), InstrumentusBlocks.SOULCOPPER_TORCH.get());
             dropSelf(InstrumentusBlocks.ENERGIZED_BLOCK.get());
             dropSelf(InstrumentusBlocks.RAW_SOULCOPPER_BLOCK.get());
             dropSelf(InstrumentusBlocks.SOULCOPPER_BLOCK.get());

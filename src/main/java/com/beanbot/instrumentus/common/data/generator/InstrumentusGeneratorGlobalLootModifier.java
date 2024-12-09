@@ -8,8 +8,12 @@ import com.beanbot.instrumentus.common.data.loot.ToolsInTrialVaultsModifier;
 import com.beanbot.instrumentus.common.items.InstrumentusItems;
 import net.minecraft.advancements.critereon.ItemPredicate;
 import net.minecraft.core.HolderLookup;
+import net.minecraft.core.HolderSet;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.ItemTags;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Blocks;
 
 import net.minecraft.world.level.storage.loot.predicates.*;
@@ -20,8 +24,11 @@ import net.neoforged.neoforge.common.loot.LootTableIdCondition;
 import java.util.concurrent.CompletableFuture;
 
 public class InstrumentusGeneratorGlobalLootModifier extends GlobalLootModifierProvider {
+    public HolderLookup.Provider lookupProvider;
+
     public InstrumentusGeneratorGlobalLootModifier(PackOutput output, CompletableFuture<HolderLookup.Provider> lookupProvider) {
         super(output, lookupProvider, Instrumentus.MODID);
+        this.lookupProvider = lookupProvider.join();
     }
 
     @Override
@@ -29,14 +36,14 @@ public class InstrumentusGeneratorGlobalLootModifier extends GlobalLootModifierP
         add("plant_fiber_from_grass", new PlantFiberFromGrassModifier(
                 new LootItemCondition[]{
                         AnyOfCondition.anyOf(
-                                MatchTool.toolMatches(ItemPredicate.Builder.item().of(InstrumentusGeneratorItemTags.TOOLS_KNIVES))).build(),
+                                MatchTool.toolMatches(ItemPredicate.Builder.item().of(lookupProvider.lookupOrThrow(InstrumentusGeneratorItemTags.TOOLS_KNIVES.registry())))).build(),
                         LootItemBlockStatePropertyCondition.hasBlockStateProperties(Blocks.SHORT_GRASS).build()
                 }, InstrumentusItems.PLANT_FIBER.get()));
 
         add("plant_fiber_from_tall_grass", new PlantFiberFromGrassModifier(
                 new LootItemCondition[]{
                         AnyOfCondition.anyOf(
-                                MatchTool.toolMatches(ItemPredicate.Builder.item().of(InstrumentusGeneratorItemTags.TOOLS_KNIVES))).build(),
+                                MatchTool.toolMatches(ItemPredicate.Builder.item().of(lookupProvider.lookupOrThrow(InstrumentusGeneratorItemTags.TOOLS_KNIVES.registry())))).build(),
                         LootItemBlockStatePropertyCondition.hasBlockStateProperties(Blocks.TALL_GRASS).build()
                 }, InstrumentusItems.PLANT_FIBER.get()));
 

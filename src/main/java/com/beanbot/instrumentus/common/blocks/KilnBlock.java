@@ -1,11 +1,15 @@
 package com.beanbot.instrumentus.common.blocks;
 
+import com.beanbot.instrumentus.common.Instrumentus;
 import com.beanbot.instrumentus.common.blocks.entities.KilnBlockEntity;
 import com.beanbot.instrumentus.common.blocks.entities.InstrumentusBlockEntities;
 import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.RandomSource;
@@ -13,16 +17,18 @@ import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.AbstractFurnaceBlock;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 
 public class KilnBlock extends AbstractFurnaceBlock {
     public static final MapCodec<KilnBlock> CODEC = simpleCodec(KilnBlock::new);
 
-    public KilnBlock(Properties pProperties) {
-        super(pProperties);
+    public KilnBlock(BlockBehaviour.Properties properties) {
+        super(properties);
     }
 
     @Override

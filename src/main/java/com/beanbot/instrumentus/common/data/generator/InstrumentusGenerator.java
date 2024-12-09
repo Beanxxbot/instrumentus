@@ -19,7 +19,7 @@ public class InstrumentusGenerator {
         PackOutput output = generator.getPackOutput();
         CompletableFuture<HolderLookup.Provider> lookupProvider = event.getLookupProvider();
 
-        generator.addProvider(event.includeServer(), new InstrumentusGeneratorRecipes(output, lookupProvider));
+        generator.addProvider(event.includeServer(), new InstrumentusGeneratorRecipes.Runner(output, lookupProvider));
         generator.addProvider(event.includeServer(), new InstrumentusGeneratorLootTables(output, event.getLookupProvider()));
 
         InstrumentusGeneratorBlockTags blockTags = new InstrumentusGeneratorBlockTags(output, lookupProvider, event.getExistingFileHelper());

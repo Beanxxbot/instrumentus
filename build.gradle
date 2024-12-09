@@ -100,13 +100,13 @@ configurations {
 
 dependencies {
 
-    compileOnly("mezz.jei:jei-${minecraft_version}-common-api:${jei_version}")
-    compileOnly("mezz.jei:jei-${minecraft_version}-neoforge-api:${jei_version}")
-    runtimeOnly("mezz.jei:jei-${minecraft_version}-neoforge:${jei_version}")
+//    compileOnly("mezz.jei:jei-${minecraft_version}-common-api:${jei_version}")
+//    compileOnly("mezz.jei:jei-${minecraft_version}-neoforge-api:${jei_version}")
+//    runtimeOnly("mezz.jei:jei-${minecraft_version}-neoforge:${jei_version}")
 
-    runtimeOnly("org.sinytra:item-asset-export-neoforge:1.0.2+1.21")
+//    runtimeOnly("org.sinytra:item-asset-export-neoforge:1.0.2+1.21")
 
-    implementation "curse.maven:jade-324717:${jade_id}"
+//    implementation "curse.maven:jade-324717:${jade_id}"
 
     // For more info:
     // http://www.gradle.org/docs/current/userguide/artifact_dependencies_tutorial.html

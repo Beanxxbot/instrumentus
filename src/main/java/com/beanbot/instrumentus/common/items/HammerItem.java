@@ -23,18 +23,18 @@ import org.jetbrains.annotations.NotNull;
 
 public class HammerItem extends DiggerItem {
 
-    protected Tier tier;
+    protected ToolMaterial material;
 
-    public HammerItem(Tier tier, float attackDamageIn, float attackSpeedIn){
-        super(tier, BlockTags.MINEABLE_WITH_PICKAXE, generateItemProperties(tier, attackDamageIn, attackSpeedIn));
-        this.tier = tier;
+    public HammerItem(ToolMaterial toolMaterial, float attackDamageIn, float attackSpeedIn){
+        super(toolMaterial, BlockTags.MINEABLE_WITH_PICKAXE, attackDamageIn, attackSpeedIn,generateItemProperties(toolMaterial, attackDamageIn, attackSpeedIn));
+        this.material = toolMaterial;
     }
 
-    private static Item.Properties generateItemProperties(Tier tier, float attackDamageIn, float attackSpeedIn) {
-        if (tier == Tiers.NETHERITE || tier == InstrumentusItemTiers.ENERGIZED) {
-            return new Item.Properties().attributes(HammerItem.createAttributes(tier, attackDamageIn, attackSpeedIn)).stacksTo(1).fireResistant();
+    private static Item.Properties generateItemProperties(ToolMaterial toolMaterial, float attackDamageIn, float attackSpeedIn) {
+        if (toolMaterial == ToolMaterial.NETHERITE || toolMaterial == InstrumentusToolMaterials.ENERGIZED) {
+            return new Item.Properties().stacksTo(1).fireResistant();
         }
-        return new Item.Properties().attributes(HammerItem.createAttributes(tier, attackDamageIn, attackSpeedIn)).stacksTo(1);
+        return new Item.Properties().stacksTo(1);
     }
 
     @Override
@@ -50,7 +50,7 @@ public class HammerItem extends DiggerItem {
         boolean isPickaxeable = state.is(BlockTags.MINEABLE_WITH_PICKAXE);
         int r = isPickaxeable ? 0 : 2;
 
-        if(tier == Tiers.WOOD || tier == Tiers.STONE || tier == Tiers.IRON || tier == InstrumentusItemTiers.COPPER || tier == Tiers.GOLD || tier == Tiers.DIAMOND || tier == Tiers.NETHERITE || tier == InstrumentusItemTiers.ENERGIZED){
+        if(material == ToolMaterial.WOOD || material == ToolMaterial.STONE || material == ToolMaterial.IRON || material == InstrumentusToolMaterials.COPPER || material == ToolMaterial.GOLD || material == ToolMaterial.DIAMOND || material == ToolMaterial.NETHERITE || material == InstrumentusToolMaterials.ENERGIZED){
             r = 1;
         }
 

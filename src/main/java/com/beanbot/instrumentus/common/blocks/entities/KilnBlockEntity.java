@@ -8,6 +8,7 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.entity.AbstractFurnaceBlockEntity;
+import net.minecraft.world.level.block.entity.FuelValues;
 import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.NotNull;
 
@@ -22,8 +23,8 @@ public class KilnBlockEntity extends AbstractFurnaceBlockEntity {
     }
 
     @Override
-    protected int getBurnDuration(ItemStack fuel) {
-        return super.getBurnDuration(fuel) / 2;
+    protected int getBurnDuration(FuelValues values,ItemStack fuel) {
+        return super.getBurnDuration(values,fuel) / 2;
     }
 
     @Override

@@ -17,9 +17,9 @@ import javax.annotation.Nullable;
 import java.util.List;
 
 public class EnergyPickaxeItem extends DiggerItem implements IItemLightningChargeable, IEnergyItem {
-    public EnergyPickaxeItem(Tier tier, int attackDamageIn, float attackSpeedIn) {
-        super(tier,  BlockTags.MINEABLE_WITH_PICKAXE,
-                new Item.Properties().attributes(PickaxeItem.createAttributes(tier, attackDamageIn, attackSpeedIn)).durability(0).stacksTo(1).fireResistant());
+    public EnergyPickaxeItem(ToolMaterial tier, int attackDamageIn, float attackSpeedIn) {
+        super(tier,  BlockTags.MINEABLE_WITH_PICKAXE, attackDamageIn, attackSpeedIn,
+                new Item.Properties().durability(0).stacksTo(1).fireResistant());
     }
 
     @Override

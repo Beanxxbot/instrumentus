@@ -3,9 +3,9 @@ package com.beanbot.instrumentus.common.recipe;
 import com.beanbot.instrumentus.common.Instrumentus;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.crafting.AbstractCookingRecipe;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
-import net.minecraft.world.item.crafting.SimpleCookingSerializer;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
@@ -24,7 +24,7 @@ public class InstrumentusRecipes {
     public static final Supplier<RecipeType<KilnRecipe>> FIRING =
             RECIPE_TYPES.register("firing", () -> RecipeType.simple(ResourceLocation.fromNamespaceAndPath(Instrumentus.MODID, "firing")));
     public static final Supplier<RecipeSerializer<KilnRecipe>> FIRING_SERIALIZER =
-            RECIPE_SERIALIZERS.register("firing", () -> new SimpleCookingSerializer<>(KilnRecipe::new, 100));
+            RECIPE_SERIALIZERS.register("firing", () -> new AbstractCookingRecipe.Serializer<>(KilnRecipe::new, 100));
 
     public static void register(IEventBus eventBus){
         RECIPE_TYPES.register(eventBus);

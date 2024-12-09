@@ -8,6 +8,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 import net.neoforged.neoforge.common.data.BlockTagsProvider;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
 import org.jetbrains.annotations.NotNull;
@@ -18,6 +19,7 @@ import java.util.concurrent.CompletableFuture;
 public class InstrumentusGeneratorBlockTags extends BlockTagsProvider {
 
     public static final TagKey<Block> MINEABLE_WITH_PAXEL = BlockTags.create(ResourceLocation.fromNamespaceAndPath("c", "mineable/paxel"));
+    public static final TagKey<Block> MINEABLE_WITH_KNIFE = BlockTags.create(ResourceLocation.fromNamespaceAndPath("c", "mineable/knife"));
 
     public InstrumentusGeneratorBlockTags(PackOutput output, CompletableFuture<HolderLookup.Provider> lookupProvider, @Nullable ExistingFileHelper helper) {
         super(output, lookupProvider, Instrumentus.MODID, helper);
@@ -28,6 +30,10 @@ public class InstrumentusGeneratorBlockTags extends BlockTagsProvider {
         //noinspection unchecked
         this.tag(MINEABLE_WITH_PAXEL)
             .addTags(BlockTags.MINEABLE_WITH_PICKAXE, BlockTags.MINEABLE_WITH_AXE, BlockTags.MINEABLE_WITH_SHOVEL);
+
+        this.tag(MINEABLE_WITH_KNIFE)
+                .add(Blocks.SHORT_GRASS)
+                .add(Blocks.TALL_GRASS);
 
         this.tag(BlockTags.MINEABLE_WITH_PICKAXE)
                 .add(InstrumentusBlocks.RAW_SOULCOPPER_BLOCK.get())

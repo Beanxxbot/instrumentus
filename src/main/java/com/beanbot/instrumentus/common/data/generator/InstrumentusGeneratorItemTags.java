@@ -9,6 +9,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.Items;
 import net.neoforged.neoforge.common.data.BlockTagsProvider;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
 import org.checkerframework.checker.nullness.qual.Nullable;
@@ -19,6 +20,9 @@ import java.util.concurrent.CompletableFuture;
 public class InstrumentusGeneratorItemTags extends ItemTagsProvider {
 
     public static final TagKey<Item> TOOLS_KNIVES = ItemTags.create(ResourceLocation.fromNamespaceAndPath("instrumentus", "tools/knives"));
+    public static final TagKey<Item> COPPER_TOOL_MATERIALS = ItemTags.create(ResourceLocation.fromNamespaceAndPath(Instrumentus.MODID, "copper_tool_materials"));
+    public static final TagKey<Item> ENERGIZED_TOOL_MATERIALS = ItemTags.create(ResourceLocation.fromNamespaceAndPath(Instrumentus.MODID, "energized_tool_materials"));
+    public static final TagKey<Item> REPAIRS_BREEZE_ARMOR = ItemTags.create(ResourceLocation.fromNamespaceAndPath(Instrumentus.MODID, "repairs_breeze_armor"));
 
     public InstrumentusGeneratorItemTags(PackOutput output, CompletableFuture<HolderLookup.Provider> lookupProvider, BlockTagsProvider blockTags, @Nullable ExistingFileHelper helper) {
         super(output, lookupProvider, blockTags.contentsGetter(), Instrumentus.MODID, helper);
@@ -35,6 +39,15 @@ public class InstrumentusGeneratorItemTags extends ItemTagsProvider {
         tag(TOOLS_KNIVES)
                 .add(InstrumentusItems.COPPER_KNIFE.get())
                 .add(InstrumentusItems.ENERGIZED_KNIFE.get());
+
+        tag(COPPER_TOOL_MATERIALS)
+                .add(Items.COPPER_INGOT);
+
+        tag(ENERGIZED_TOOL_MATERIALS)
+                .add(InstrumentusItems.ENERGIZED_INGOT.get());
+
+        tag(REPAIRS_BREEZE_ARMOR)
+                .add(Items.BREEZE_ROD);
     }
 
     public void addTools() {

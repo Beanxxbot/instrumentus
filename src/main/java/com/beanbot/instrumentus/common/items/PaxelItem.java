@@ -25,23 +25,23 @@ public class PaxelItem extends DiggerItem {
 
     private static final ItemAbility PAXEL_DIG = ItemAbility.get("paxel_dig");
 
-    protected Tier material;
+    protected ToolMaterial material;
 
     public static final Set<ItemAbility> DEFAULT_PAXEL_ACTIONS = Set.of(
             AXE_DIG, AXE_STRIP, AXE_SCRAPE, AXE_WAX_OFF,
             SHOVEL_DIG, SHOVEL_FLATTEN,
             PICKAXE_DIG);
 
-    public PaxelItem(Tier tier, float attackDamageIn, float attackSpeedIn) {
-        super(tier, InstrumentusGeneratorBlockTags.MINEABLE_WITH_PAXEL, generateItemProperties(tier, attackDamageIn, attackSpeedIn));
+    public PaxelItem(ToolMaterial tier, float attackDamageIn, float attackSpeedIn) {
+        super(tier, InstrumentusGeneratorBlockTags.MINEABLE_WITH_PAXEL, attackDamageIn, attackSpeedIn,generateItemProperties(tier, attackDamageIn, attackSpeedIn));
         this.material = tier;
     }
 
-    private static Item.Properties generateItemProperties(Tier tier, float attackDamageIn, float attackSpeedIn) {
-        if (tier == Tiers.NETHERITE || tier == InstrumentusItemTiers.ENERGIZED) {
-            return new Item.Properties().attributes(AxeItem.createAttributes(tier, attackDamageIn, attackSpeedIn)).stacksTo(1).fireResistant();
+    private static Item.Properties generateItemProperties(ToolMaterial toolMaterial, float attackDamageIn, float attackSpeedIn) {
+        if (toolMaterial == ToolMaterial.NETHERITE || toolMaterial == InstrumentusToolMaterials.ENERGIZED) {
+            return new Item.Properties().stacksTo(1).fireResistant();
         }
-        return new Item.Properties().attributes(AxeItem.createAttributes(tier, attackDamageIn, attackSpeedIn)).stacksTo(1);
+        return new Item.Properties().stacksTo(1);
     }
 
     @Override
@@ -51,7 +51,7 @@ public class PaxelItem extends DiggerItem {
 
     @Override
     public float getDestroySpeed(@Nonnull ItemStack stack, @Nonnull BlockState state) {
-        return super.getDestroySpeed(stack, state) == 1 ? 1 : material.getSpeed();
+        return super.getDestroySpeed(stack, state) == 1 ? 1 : material.speed();
     }
 
     @Nonnull
@@ -91,7 +91,7 @@ public class PaxelItem extends DiggerItem {
                 stack.hurtAndBreak(1, player, context.getItemInHand().getEquipmentSlot());
             }
         }
-        return InteractionResult.sidedSuccess(world.isClientSide);
+        return InteractionResult.SUCCESS;
     }
 
     @Nullable

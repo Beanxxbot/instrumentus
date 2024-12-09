@@ -1,8 +1,13 @@
 package com.beanbot.instrumentus.common.blocks;
 
 import com.beanbot.instrumentus.client.particles.InstrumentusParticles;
+import com.beanbot.instrumentus.common.Instrumentus;
+import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.SimpleParticleType;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
@@ -15,6 +20,7 @@ import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
 public class CopperSoulFlameLight extends Block {
+    public static String ID = "copper_soul_fire_flame";
 
     protected static final VoxelShape SHAPE = Block.box(6.0D, 6.0D, 6.0D, 10.0D, 10.0D, 10.0D);
 
@@ -25,7 +31,13 @@ public class CopperSoulFlameLight extends Block {
                         .noCollission()
                         .destroyTime(0.0f)
                         .lightLevel(e -> 14)
+                        .setId(ResourceKey.create(Registries.BLOCK, ResourceLocation.fromNamespaceAndPath(Instrumentus.MODID, ID)))
         );
+    }
+
+    @Override
+    public MapCodec<CopperSoulFlameLight> codec() {
+        return null;
     }
     /**
      * @param state blockState
@@ -54,7 +66,7 @@ public class CopperSoulFlameLight extends Block {
     }
 
     @Override
-    public boolean propagatesSkylightDown(BlockState state, BlockGetter reader, BlockPos pos){
+    public boolean propagatesSkylightDown(BlockState state){
         return true;
     }
 

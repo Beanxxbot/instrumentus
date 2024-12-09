@@ -17,19 +17,19 @@ import net.neoforged.neoforge.event.level.BlockEvent;
 
 public class SickleItem extends DiggerItem
 {
-    protected Tier tier;
+    protected ToolMaterial tier;
 
-    public SickleItem(Tier tier) {
-        super(tier, BlockTags.LEAVES, generateItemProperties(tier, 0, -1.9f));
+    public SickleItem(ToolMaterial tier) {
+        super(tier, BlockTags.LEAVES, 0, -1.9f, generateItemProperties(tier, 0, -1.9f));
         this.tier = tier;
 
     }
 
-    private static Item.Properties generateItemProperties(Tier tier, float attackDamageIn, float attackSpeedIn) {
-        if (tier == Tiers.NETHERITE || tier == InstrumentusItemTiers.ENERGIZED) {
-            return new Item.Properties().attributes(SickleItem.createAttributes(tier, attackDamageIn, attackSpeedIn)).stacksTo(1).fireResistant();
+    private static Item.Properties generateItemProperties(ToolMaterial toolMaterial, float attackDamageIn, float attackSpeedIn) {
+        if (toolMaterial == ToolMaterial.NETHERITE || toolMaterial == InstrumentusToolMaterials.ENERGIZED) {
+            return new Item.Properties().stacksTo(1).fireResistant();
         }
-        return new Item.Properties().attributes(SickleItem.createAttributes(tier, attackDamageIn, attackSpeedIn)).stacksTo(1);
+        return new Item.Properties().stacksTo(1);
     }
 
     @Override
@@ -43,17 +43,17 @@ public class SickleItem extends DiggerItem
         int radius = isLeaves ? 0 : 2;
         int height = isLeaves ? 0 : 2;
 
-        if(tier == Tiers.WOOD || tier == Tiers.STONE)
+        if(tier == ToolMaterial.WOOD || tier == ToolMaterial.STONE)
         {
             radius = 1;
             height = 1;
         }
-        if(tier == Tiers.IRON || tier == Tiers.GOLD || tier == InstrumentusItemTiers.COPPER || tier == Tiers.DIAMOND)
+        if(tier == ToolMaterial.IRON || tier == ToolMaterial.GOLD || tier == InstrumentusToolMaterials.COPPER || tier == ToolMaterial.DIAMOND)
         {
             radius = 2;
             height = 2;
         }
-        if(tier == Tiers.NETHERITE || tier == InstrumentusItemTiers.ENERGIZED)
+        if(tier == ToolMaterial.NETHERITE || tier == InstrumentusToolMaterials.ENERGIZED)
         {
             radius = 3;
             height = 3;

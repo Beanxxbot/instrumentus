@@ -5,33 +5,6 @@
       "name": "INSTRUMENTUS_FIRING",
       "constructor": "()V",
       "parameters": []
-    },
-    {
-      "enum": "net/minecraft/client/RecipeBookCategories",
-      "name": "INSTRUMENTUS_FIRING_CATEGORY_SEARCH",
-      "constructor": "(Ljava/util/function/Supplier;)V",
-      "parameters": {
-        "class": "com/beanbot/instrumentus/client/inventory/recipebook/RecipeBookExtensionClientHelper",
-        "field": "FIRING_SEARCH_ENUM_PARAMS"
-      }
-    },
-    {
-      "enum": "net/minecraft/client/RecipeBookCategories",
-      "name": "INSTRUMENTUS_FIRING_CATEGORY_BLOCKS",
-      "constructor": "(Ljava/util/function/Supplier;)V",
-      "parameters": {
-        "class": "com/beanbot/instrumentus/client/inventory/recipebook/RecipeBookExtensionClientHelper",
-        "field": "FIRING_BLOCKS_ENUM_PARAMS"
-      }
-    },
-    {
-      "enum": "net/minecraft/client/RecipeBookCategories",
-      "name": "INSTRUMENTUS_FIRING_CATEGORY_MISC",
-      "constructor": "(Ljava/util/function/Supplier;)V",
-      "parameters": {
-        "class": "com/beanbot/instrumentus/client/inventory/recipebook/RecipeBookExtensionClientHelper",
-        "field": "FIRING_MISC_ENUM_PARAMS"
-      }
     }
   ]
 }

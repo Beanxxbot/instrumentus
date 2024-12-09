@@ -24,11 +24,11 @@ import org.jetbrains.annotations.NotNull;
 import java.util.List;
 
 public class EnergyExcavatorItem extends ExcavatorItem implements IItemLightningChargeable, IEnergyItem {
-    protected Tier tier;
+    protected ToolMaterial material;
 
-    public EnergyExcavatorItem(Tier tier, float attackDamageIn, float attackSpeedIn){
-        super(tier, attackSpeedIn, attackDamageIn);
-        this.tier = tier;
+    public EnergyExcavatorItem(ToolMaterial toolMaterial, float attackDamageIn, float attackSpeedIn){
+        super(toolMaterial, attackSpeedIn, attackDamageIn);
+        this.material = toolMaterial;
     }
 
     @Override
@@ -41,7 +41,7 @@ public class EnergyExcavatorItem extends ExcavatorItem implements IItemLightning
 
         int r = isStone ? 0 : 2;
 
-        if(tier == Tiers.WOOD || tier == Tiers.STONE || tier == Tiers.IRON || tier == Tiers.GOLD || tier == Tiers.DIAMOND || tier == Tiers.NETHERITE || tier == InstrumentusItemTiers.ENERGIZED){
+        if(material == ToolMaterial.WOOD || material == ToolMaterial.STONE || material == ToolMaterial.IRON || material == ToolMaterial.GOLD || material == ToolMaterial.DIAMOND || material == ToolMaterial.NETHERITE || material == InstrumentusToolMaterials.ENERGIZED){
             r = 1;
         }
         stack.hurtAndBreak(1, entity, EquipmentSlot.MAINHAND);

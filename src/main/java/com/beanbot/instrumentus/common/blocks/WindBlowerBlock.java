@@ -1,13 +1,16 @@
 package com.beanbot.instrumentus.common.blocks;
 
+import com.beanbot.instrumentus.common.Instrumentus;
 import com.beanbot.instrumentus.common.data.attachments.InstrumentusDataAttachments;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -28,12 +31,12 @@ public class WindBlowerBlock extends Block {
     public static final IntegerProperty BLOWER_CHARGE = IntegerProperty.create("blower_charges", MIN_CHARGES, MAX_CHARGES);
 
     public WindBlowerBlock() {
-        super(Properties.of().sound(SoundType.POLISHED_TUFF).strength(2.0f).noOcclusion());
+        super(Properties.of().sound(SoundType.POLISHED_TUFF).strength(2.0f).noOcclusion().setId(ResourceKey.create(Registries.BLOCK, ResourceLocation.fromNamespaceAndPath(Instrumentus.MODID, "wind_blower"))));
         this.registerDefaultState(this.stateDefinition.any().setValue(BLOWER_CHARGE, Integer.valueOf(0)));
     }
 
     @Override
-    protected ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
+    protected InteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
         if (stack.is(Items.BREEZE_ROD) && state.getValue(BLOWER_CHARGE) < 4) {
             BlockState blockState = state.setValue(BLOWER_CHARGE, state.getValue(BLOWER_CHARGE) + 1);
             level.setBlock(pos, blockState, 3);
@@ -50,13 +53,13 @@ public class WindBlowerBlock extends Block {
             }
             level.addParticle(ParticleTypes.WHITE_SMOKE, pos.getX() + 0.5, pos.getY() + 1.25, pos.getZ() + 0.5, 0, 0, 0);
             stack.consume(1, player);
-            return ItemInteractionResult.sidedSuccess(level.isClientSide);
+            return InteractionResult.SUCCESS;
         } else if(stack.is(Items.IRON_INGOT)) {
-            return ItemInteractionResult.sidedSuccess(level.isClientSide);
+            return InteractionResult.SUCCESS;
         } else {
             return hand == InteractionHand.MAIN_HAND && player.getItemInHand(InteractionHand.OFF_HAND).is(Items.BREEZE_ROD) && state.getValue(BLOWER_CHARGE) < 4
-                    ? ItemInteractionResult.SKIP_DEFAULT_BLOCK_INTERACTION
-                    : ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
+                    ? InteractionResult.PASS
+                    : InteractionResult.TRY_WITH_EMPTY_HAND;
         }
     }
 
@@ -69,7 +72,7 @@ public class WindBlowerBlock extends Block {
                 return InteractionResult.PASS;
             }
             player.setData(InstrumentusDataAttachments.BOUND_WIND_BLOWER, hitResult.getBlockPos());
-            return InteractionResult.SUCCESS;
+            return InteractionResult.SUCCESS_SERVER;
         }
     }
 

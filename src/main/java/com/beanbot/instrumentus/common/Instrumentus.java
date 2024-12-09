@@ -1,7 +1,7 @@
 package com.beanbot.instrumentus.common;
 
 import com.beanbot.instrumentus.client.events.ToolRenderEvents;
-import com.beanbot.instrumentus.client.inventory.recipebook.RecipeBookExtensionClientHelper;
+import com.beanbot.instrumentus.client.inventory.recipebook.categories.InstrumentusRecipeBookCategories;
 import com.beanbot.instrumentus.common.data.attachments.InstrumentusDataAttachments;
 import com.beanbot.instrumentus.common.data.conditions.InstrumentusConditions;
 import com.beanbot.instrumentus.common.data.loot.functions.InstrumentusLootFunctions;
@@ -33,7 +33,6 @@ import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
-import net.neoforged.neoforge.client.event.RegisterRecipeBookCategoriesEvent;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent;
 import org.apache.logging.log4j.LogManager;
@@ -64,8 +63,6 @@ public class Instrumentus {
         LOGGER.debug("Yo Yo Yo It's Ya Boi, Instrumentus but on NeoForge");
         InstrumentusParticles.PARTICLE_TYPES.register(instrumentusEventBus);
 
-        InstrumentusArmorMaterials.register(instrumentusEventBus);
-
         //TODO: Remove feature-based registration due to new config system
         InstrumentusItems.SHEARS.register(instrumentusEventBus);
         InstrumentusItems.SICKLES.register(instrumentusEventBus);
@@ -87,13 +84,12 @@ public class Instrumentus {
         instrumentusEventBus.addListener(this::addCreative);
 
         InstrumentusMenus.register(instrumentusEventBus);
-        instrumentusEventBus.addListener(this::registerRecipeBookCategories);
+        InstrumentusRecipes.register(instrumentusEventBus);
+        InstrumentusRecipeBookCategories.register(instrumentusEventBus);
 
         InstrumentusBlockEntities.register(instrumentusEventBus);
 
         InstrumentusDataAttachments.register(instrumentusEventBus);
-
-        InstrumentusRecipes.register(instrumentusEventBus);
 
         InstrumentusLootModifiers.register(instrumentusEventBus);
 
@@ -139,10 +135,6 @@ public class Instrumentus {
     private void setupClient(final FMLClientSetupEvent event) {
         BlockEntityRenderers.register(InstrumentusBlockEntities.COPPER_SOUL_CAMPFIRE_BLOCK_ENTITY.get(), CopperSoulCampfireRenderer::new);
         NeoForge.EVENT_BUS.register(ToolRenderEvents.class);
-    }
-
-    private void registerRecipeBookCategories(RegisterRecipeBookCategoriesEvent event) {
-        RecipeBookExtensionClientHelper.init(event);
     }
 
     @SuppressWarnings("unused")

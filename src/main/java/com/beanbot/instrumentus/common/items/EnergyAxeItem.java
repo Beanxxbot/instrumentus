@@ -27,8 +27,12 @@ import java.util.List;
 import java.util.Optional;
 
 public class EnergyAxeItem extends DiggerItem implements IItemLightningChargeable, IEnergyItem {
-    public EnergyAxeItem(Tier tier, float attackDamageIn, float attackSpeedIn) {
-        super(tier, BlockTags.MINEABLE_WITH_AXE, new Item.Properties().attributes(AxeItem.createAttributes(tier, attackDamageIn, attackSpeedIn)).durability(0).stacksTo(1).fireResistant());
+    public EnergyAxeItem(ToolMaterial toolMaterial, float attackDamageIn, float attackSpeedIn) {
+        super(toolMaterial,
+        BlockTags.MINEABLE_WITH_AXE,
+        attackDamageIn,
+        attackSpeedIn,
+        toolMaterial.applyToolProperties(new Item.Properties().durability(0).stacksTo(1).fireResistant(), BlockTags.MINEABLE_WITH_AXE, attackDamageIn, attackSpeedIn));
     }
 
     @Override
@@ -54,7 +58,7 @@ public class EnergyAxeItem extends DiggerItem implements IItemLightningChargeabl
                 energyStorage.extractEnergy(getMaxTransferRate() - 24, false);
             }
 
-            return InteractionResult.sidedSuccess(level.isClientSide);
+            return InteractionResult.SUCCESS;
         }
     }
 

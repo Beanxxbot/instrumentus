@@ -5,6 +5,7 @@ import com.beanbot.instrumentus.common.items.interfaces.IItemLightningChargeable
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.network.chat.Component;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -23,7 +24,7 @@ import java.util.List;
 
 public class EnergyShearsItem extends InstrumentusShearsItem implements IItemLightningChargeable, IEnergyItem {
 
-    public EnergyShearsItem(Tier material) {
+    public EnergyShearsItem(ToolMaterial material) {
         super(material);
     }
 
@@ -38,7 +39,7 @@ public class EnergyShearsItem extends InstrumentusShearsItem implements IItemLig
             BlockPos pos = BlockPos.containing(entity.position());
             if (target.isShearable(playerIn, stack, entity.level(), pos)) {
                 target.onSheared(playerIn, stack, entity.level(), pos)
-                        .forEach(drop -> target.spawnShearedDrop(entity.level(), pos, drop));
+                        .forEach(drop -> target.spawnShearedDrop((ServerLevel) entity.level(), pos, drop));
                 entity.gameEvent(GameEvent.SHEAR, playerIn);
                 if (!(energyStorage == null)) {
                     energyStorage.extractEnergy(getMaxTransferRate() - 24, false);

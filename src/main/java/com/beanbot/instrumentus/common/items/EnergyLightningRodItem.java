@@ -10,6 +10,7 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntitySpawnReason;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
@@ -50,7 +51,7 @@ public class EnergyLightningRodItem extends Item implements IItemLightningCharge
                 IEnergyStorage energyStorage = stack.getCapability(Capabilities.EnergyStorage.ITEM);
                 if(!(energyStorage == null)) {
                     if (energyStorage.getEnergyStored() > 4999) {
-                        Entity lightningBolt = EntityType.LIGHTNING_BOLT.create(level);
+                        Entity lightningBolt = EntityType.LIGHTNING_BOLT.create(level, EntitySpawnReason.TRIGGERED);
                         lightningBolt.moveTo(context.getClickedPos().getX(), context.getClickedPos().getY(), context.getClickedPos().getZ());
                         level.playSound(player, blockpos, SoundEvents.RESPAWN_ANCHOR_CHARGE, SoundSource.BLOCKS, 1.0F, 1.0F);
                         level.addFreshEntity(lightningBolt);

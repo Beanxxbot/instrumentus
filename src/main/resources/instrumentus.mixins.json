@@ -1,0 +1,11 @@
+{
+  "required": true,
+  "package": "com.beanbot.instrumentus.mixin",
+  "compatibilityLevel": "JAVA_21",
+  "mixins": [
+    "MixinRecipeManager"
+  ],
+  "client": [
+  ],
+  "minVersion": "0.8"
+}

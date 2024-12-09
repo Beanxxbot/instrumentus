@@ -23,11 +23,11 @@ import java.util.List;
 
 public class EnergySickleItem extends SickleItem implements IItemLightningChargeable, IEnergyItem {
 
-    protected Tier tier;
+    protected ToolMaterial material;
 
-    public EnergySickleItem(Tier tier) {
-        super(tier);
-        this.tier = tier;
+    public EnergySickleItem(ToolMaterial toolMaterial) {
+        super(toolMaterial);
+        this.material = toolMaterial;
     }
 
     @Override
@@ -40,17 +40,17 @@ public class EnergySickleItem extends SickleItem implements IItemLightningCharge
         int radius = isLeaves ? 0 : 2;
         int height = isLeaves ? 0 : 2;
 
-        if(tier == Tiers.WOOD || tier == Tiers.STONE)
+        if(material == ToolMaterial.WOOD || material == ToolMaterial.STONE)
         {
             radius = 1;
             height = 1;
         }
-        if(tier == Tiers.IRON || tier == Tiers.GOLD || tier == Tiers.DIAMOND)
+        if(material == ToolMaterial.IRON || material == ToolMaterial.GOLD || material == ToolMaterial.DIAMOND)
         {
             radius = 2;
             height = 2;
         }
-        if(tier == Tiers.NETHERITE || tier == InstrumentusItemTiers.ENERGIZED)
+        if(material == ToolMaterial.NETHERITE || material == InstrumentusToolMaterials.ENERGIZED)
         {
             radius = 3;
             height = 3;

@@ -14,18 +14,18 @@ import net.minecraft.world.level.Level;
 public class SoulcopperPickaxeItem extends DiggerItem {
 
 
-    protected Tier material;
+    protected ToolMaterial material;
 
-    public SoulcopperPickaxeItem(Tier tier, int attackDamageIn, float attackSpeedIn) {
-        super(tier, BlockTags.MINEABLE_WITH_PICKAXE, generateItemProperties(tier, attackDamageIn, attackSpeedIn));
-        this.material = tier;
+    public SoulcopperPickaxeItem(ToolMaterial toolMaterial, int attackDamageIn, float attackSpeedIn) {
+        super(toolMaterial, BlockTags.MINEABLE_WITH_PICKAXE, attackDamageIn, attackSpeedIn, generateItemProperties(toolMaterial, attackDamageIn, attackSpeedIn));
+        this.material = toolMaterial;
     }
 
-    private static Item.Properties generateItemProperties(Tier tier, float attackDamageIn, float attackSpeedIn) {
-        if (tier == Tiers.NETHERITE) {
-            return new Item.Properties().attributes(PickaxeItem.createAttributes(tier, attackDamageIn, attackSpeedIn)).stacksTo(1).fireResistant().durability(tier.getUses());
+    private static Item.Properties generateItemProperties(ToolMaterial toolMaterial, float attackDamageIn, float attackSpeedIn) {
+        if (toolMaterial == ToolMaterial.NETHERITE || toolMaterial == InstrumentusToolMaterials.ENERGIZED) {
+            return new Item.Properties().stacksTo(1).fireResistant();
         }
-        return new Item.Properties().attributes(PickaxeItem.createAttributes(tier, attackDamageIn, attackSpeedIn)).stacksTo(1).durability(tier.getUses());
+        return new Item.Properties().stacksTo(1);
     }
 
     @Override

@@ -89,5 +89,6 @@
   "item.instrumentus.wooden_knife": "Wooden Knife",
   "item.instrumentus.wooden_paxel": "Wooden Paxel",
   "item.instrumentus.wooden_shears": "Wooden Shears",
-  "item.instrumentus.wooden_sickle": "Wooden Sickle"
+  "item.instrumentus.wooden_sickle": "Wooden Sickle",
+  "instrumentus.gui.recipebook.toggleRecipes.kiln": "Showing Fireable"
 }
