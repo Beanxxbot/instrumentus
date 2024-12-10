@@ -33,18 +33,6 @@ public class InstrumentusJEIIntegration implements IModPlugin {
         return ResourceLocation.fromNamespaceAndPath("instrumentus", "jei_plugin");
     }
 
-    private static final IIngredientSubtypeInterpreter<ItemStack> INSTRUMENTUS_ENERGY_INTERPRETER = (stack, context) -> {
-        IEnergyStorage energyStorage = stack.getCapability(Capabilities.EnergyStorage.ITEM);
-        if (energyStorage == null) return IIngredientSubtypeInterpreter.NONE;
-        int maxEnergy = energyStorage.getMaxEnergyStored();
-        return String.valueOf(maxEnergy);
-    };
-
-    @Override
-    public void registerItemSubtypes(ISubtypeRegistration registration) {
-        registration.registerSubtypeInterpreter(InstrumentusItems.ENERGIZED_AXE.get().asItem(), INSTRUMENTUS_ENERGY_INTERPRETER);
-    }
-
     @Override
     public void registerCategories(IRecipeCategoryRegistration registration) {
         IJeiHelpers jeiHelpers = registration.getJeiHelpers();
@@ -54,12 +42,6 @@ public class InstrumentusJEIIntegration implements IModPlugin {
                 new FiringRecipeCategory(guiHelper)
         );
         Instrumentus.LOGGER.info("Registered JEI Categories");
-    }
-
-    @Override
-    public void registerRecipeCatalysts(IRecipeCatalystRegistration registration) {
-        registration.addRecipeCatalyst(new ItemStack(InstrumentusBlocks.COPPER_SOUL_CAMPFIRE.get().asItem()), CopperSoulCampfireCookingRecipeCategory.TYPE);
-        registration.addRecipeCatalyst(new ItemStack(InstrumentusBlocks.KILN.get().asItem()), FiringRecipeCategory.TYPE);
     }
 
     @Override
@@ -73,5 +55,11 @@ public class InstrumentusJEIIntegration implements IModPlugin {
 
         registration.addRecipes(CopperSoulCampfireCookingRecipeCategory.TYPE, copperSoulCampfireRecipes);
         registration.addRecipes(FiringRecipeCategory.TYPE, firingRecipes);
+    }
+
+    @Override
+    public void registerRecipeCatalysts(IRecipeCatalystRegistration registration) {
+        registration.addRecipeCatalyst(new ItemStack(InstrumentusBlocks.COPPER_SOUL_CAMPFIRE.get().asItem()), CopperSoulCampfireCookingRecipeCategory.TYPE);
+        registration.addRecipeCatalyst(new ItemStack(InstrumentusBlocks.KILN.get().asItem()), FiringRecipeCategory.TYPE);
     }
 }
