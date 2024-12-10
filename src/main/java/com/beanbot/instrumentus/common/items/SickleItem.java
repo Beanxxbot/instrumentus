@@ -37,8 +37,8 @@ public class SickleItem extends DiggerItem
         if(state.getBlock() == null || world.getBlockState(pos).getBlock() == Blocks.AIR)
             return false;
 
-        boolean isLeaves;
-        isLeaves = state.is(BlockTags.LEAVES);
+        boolean isLeaves = state.is(BlockTags.LEAVES);
+        boolean isCrops = state.is(BlockTags.CROPS);
 
         int radius = isLeaves ? 0 : 2;
         int height = isLeaves ? 0 : 2;
@@ -63,15 +63,13 @@ public class SickleItem extends DiggerItem
         int numberTrimmed = 0;
 
 
-        if(isLeaves && !entity.isCrouching())
-        {
+        if(isLeaves && !entity.isCrouching()) {
             numberTrimmed += trim(stack, entity, world, pos, height, radius, TrimType.TRIM_LEAVES, false, 40);
-        }
-        else
-        {
+        } else if (isCrops && !entity.isCrouching()) {
+            numberTrimmed += trim(stack, entity, world, pos, 0, 1, TrimType.TRIM_CROPS, false, 40);
+        } else {
             numberTrimmed += trim(stack, entity, world, pos, height, radius, TrimType.TRIM_GRASS_AND_FLOWERS, true, 70);
-            if (world.random.nextInt(3) == 0)
-            {
+            if (world.random.nextInt(3) == 0) {
                 numberTrimmed += trim(stack, entity, world, pos, height, radius - 1, TrimType.TRIM_GRASS_AND_FLOWERS, false, 0);
             }
         }
@@ -107,7 +105,7 @@ public class SickleItem extends DiggerItem
 
     public enum TrimType
     {
-        TRIM_GRASS_AND_FLOWERS, TRIM_LEAVES;
+        TRIM_GRASS_AND_FLOWERS, TRIM_CROPS,TRIM_LEAVES;
 
         public boolean trimAtPos(Level world, BlockPos pos, LivingEntity entity, ItemStack item)
         {
@@ -124,6 +122,15 @@ public class SickleItem extends DiggerItem
                     {
                         state.getBlock().playerDestroy(world, (Player) entity, pos, state,  blockEntity, item);
                         state.getBlock().popExperience((ServerLevel) world, pos, event.getState().getExpDrop(world, pos, blockEntity, entity, item));
+                        world.removeBlock(pos, false);
+                        return true;
+                    }
+                    return false;
+
+                case TRIM_CROPS:
+                    if(state.is(BlockTags.CROPS))
+                    {
+                        state.getBlock().playerDestroy(world, (Player) entity, pos, state, blockEntity, item);
                         world.removeBlock(pos, false);
                         return true;
                     }
