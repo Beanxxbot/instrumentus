@@ -95,7 +95,7 @@ public class KnifeItem extends TieredItem {
                                 level.playSound(player, blockPos, SoundEvents.BUCKET_FILL_LAVA, SoundSource.BLOCKS, 3.0f, 2.0f);
                             }
                         } else {
-                            level.playSound(player, blockPos, SoundEvents.WOLF_ARMOR_CRACK, SoundSource.BLOCKS, 0.2f, 1.0f);
+                            level.playSound(player, blockPos, SoundEvents.WOLF_ARMOR_CRACK, SoundSource.BLOCKS, 0.05f, 1.0f);
                         }
                     }
                     return;
