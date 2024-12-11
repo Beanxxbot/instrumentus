@@ -79,10 +79,7 @@ public class InstrumentusGeneratorLootTables extends LootTableProvider {
         @Override
         protected @NotNull Iterable<Block> getKnownBlocks() {
             List<Block> knownBlocks = new ArrayList<>();
-            knownBlocks.addAll(InstrumentusBlocks.ENERGIZED.getEntries().stream().map(DeferredHolder::get).toList());
-            knownBlocks.addAll(InstrumentusBlocks.SOULCOPPER.getEntries().stream().map(DeferredHolder::get).toList());
-            knownBlocks.addAll(InstrumentusBlocks.FIRING.getEntries().stream().map(DeferredHolder::get).toList());
-            knownBlocks.addAll(InstrumentusBlocks.MISC.getEntries().stream().map(DeferredHolder::get).toList());
+            knownBlocks.addAll(InstrumentusBlocks.BLOCKS_REGISTER.getEntries().stream().map(DeferredHolder::get).toList());
             return knownBlocks;
         }
     }

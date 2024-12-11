@@ -1,9 +1,15 @@
 package com.beanbot.instrumentus.common.data.generator;
 
 import com.beanbot.instrumentus.common.Instrumentus;
+import com.beanbot.instrumentus.common.items.EnergyBrushItem;
+import com.beanbot.instrumentus.common.items.InstrumentusBrushItem;
 import com.beanbot.instrumentus.common.items.InstrumentusItems;
+import com.beanbot.instrumentus.common.items.InstrumentusShearsItem;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.BrushItem;
+import net.minecraft.world.item.DiggerItem;
+import net.minecraft.world.item.TieredItem;
 import net.neoforged.neoforge.client.model.generators.ItemModelProvider;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
 
@@ -51,62 +57,29 @@ public class InstrumentusGeneratorItemModels extends ItemModelProvider {
         withExistingParent(InstrumentusItems.KILN_BLOCK_ITEM.getId().getPath(), modLoc("block/kiln"));
         withExistingParent(InstrumentusItems.WIND_BLOWER.getId().getPath(), modLoc("block/wind_blower"));
 
+        singleTexture(InstrumentusItems.PLANT_FIBER.getId().getPath(), mcLoc("item/generated"), "layer0", modLoc("item/plant_fiber"));
+
         registerTools();
     }
 
     public void registerTools() {
-        for (var tool : InstrumentusItems.SHEARS.getEntries()) {
-            ResourceLocation modelPath = modLoc("item/" + tool.getId().getPath());
-            getBuilder(tool.getId().getPath())
-                    .parent(getExistingFile(mcLoc("item/generated")))
-                    .texture("layer0", modelPath);
-        }
-        for (var tool : InstrumentusItems.SICKLES.getEntries()) {
-            ResourceLocation modelPath = modLoc("item/" + tool.getId().getPath());
-            getBuilder(tool.getId().getPath())
-                    .parent(getExistingFile(mcLoc("item/handheld")))
-                    .texture("layer0", modelPath);
-        }
-        for (var tool : InstrumentusItems.PAXELS.getEntries()) {
-            ResourceLocation modelPath = modLoc("item/" + tool.getId().getPath());
-            getBuilder(tool.getId().getPath())
-                    .parent(getExistingFile(mcLoc("item/handheld")))
-                    .texture("layer0", modelPath);
-        }
-        for (var tool : InstrumentusItems.HAMMERS.getEntries()) {
-            ResourceLocation modelPath = modLoc("item/" + tool.getId().getPath());
-            getBuilder(tool.getId().getPath())
-                    .parent(getExistingFile(mcLoc("item/handheld")))
-                    .texture("layer0", modelPath);
-        }
-        for (var tool : InstrumentusItems.KNIVES.getEntries()) {
-            if (tool == InstrumentusItems.PLANT_FIBER) {
-                singleTexture(InstrumentusItems.PLANT_FIBER.getId().getPath(), mcLoc("item/generated"), "layer0", modLoc("item/plant_fiber"));
-            }
-            else {
+        for (var tool : InstrumentusItems.ITEMS_REGISTRAR.getEntries()) {
+            if (tool.get() instanceof TieredItem) {
                 ResourceLocation modelPath = modLoc("item/" + tool.getId().getPath());
                 getBuilder(tool.getId().getPath())
                         .parent(getExistingFile(mcLoc("item/handheld")))
                         .texture("layer0", modelPath);
+            } else if (tool.get() instanceof InstrumentusShearsItem) {
+                ResourceLocation modelPath = modLoc("item/" + tool.getId().getPath());
+                getBuilder(tool.getId().getPath())
+                        .parent(getExistingFile(mcLoc("item/generated")))
+                        .texture("layer0", modelPath);
+            } else if (tool.get() instanceof InstrumentusBrushItem || tool.get() instanceof EnergyBrushItem) {
+                ResourceLocation modelPath = modLoc("item/" + tool.getId().getPath());
+                getBuilder(tool.getId().getPath())
+                        .parent(getExistingFile(mcLoc("item/brush")))
+                        .texture("layer0", modelPath);
             }
-        }
-        for (var tool : InstrumentusItems.COPPER.getEntries()) {
-            ResourceLocation modelPath = modLoc("item/" + tool.getId().getPath());
-            getBuilder(tool.getId().getPath())
-                    .parent(getExistingFile(mcLoc("item/handheld")))
-                    .texture("layer0", modelPath);
-        }
-        for (var tool : InstrumentusItems.BRUSHES.getEntries()) {
-            ResourceLocation modelPath = modLoc("item/" + tool.getId().getPath());
-            getBuilder(tool.getId().getPath())
-                    .parent(getExistingFile(mcLoc("item/handheld")))
-                    .texture("layer0", modelPath);
-        }
-        for (var tool : InstrumentusItems.EXCAVATORS.getEntries()) {
-            ResourceLocation modelPath = modLoc("item/" + tool.getId().getPath());
-            getBuilder(tool.getId().getPath())
-                    .parent(getExistingFile(mcLoc("item/handheld")))
-                    .texture("layer0", modelPath);
         }
     }
 }
