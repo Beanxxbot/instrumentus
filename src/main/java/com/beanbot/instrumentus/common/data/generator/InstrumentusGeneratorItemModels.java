@@ -53,6 +53,10 @@ public class InstrumentusGeneratorItemModels extends ItemModelProvider {
         withExistingParent(InstrumentusItems.SOULCOPPER_GRATE_ITEM.getId().getPath(), modLoc("block/soulcopper_grate"));
         withExistingParent(InstrumentusItems.SOULCOPPER_GRATE_ITEM.getId().getPath(), modLoc("block/soulcopper_grate"));
         withExistingParent(InstrumentusItems.SOULCOPPER_TRAPDOOR_ITEM.getId().getPath(), modLoc("block/soulcopper_trapdoor_bottom"));
+        stairs(InstrumentusItems.CUT_SOULCOPPER_STAIRS_ITEM.getId().getPath(), modLoc("block/cut_soulcopper"), modLoc("block/cut_soulcopper"), modLoc("block/cut_soulcopper"));
+        slab(InstrumentusItems.CUT_SOULCOPPER_SLAB_ITEM.getId().getPath(), modLoc("block/cut_soulcopper"), modLoc("block/cut_soulcopper"), modLoc("block/cut_soulcopper"));
+        withExistingParent(InstrumentusItems.CHISELED_SOULCOPPER_ITEM.getId().getPath(), modLoc("block/chiseled_soulcopper"));
+        withExistingParent(InstrumentusItems.SOULCOPPER_BULB_ITEM.getId().getPath(), modLoc("block/soulcopper_bulb"));
 
         withExistingParent(InstrumentusItems.KILN_BLOCK_ITEM.getId().getPath(), modLoc("block/kiln"));
         withExistingParent(InstrumentusItems.WIND_BLOWER.getId().getPath(), modLoc("block/wind_blower"));

@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=bottom": {
+      "model": "instrumentus:block/soulcopper_slab"
+    },
+    "type=double": {
+      "model": "instrumentus:block/cut_soulcopper"
+    },
+    "type=top": {
+      "model": "instrumentus:block/soulcopper_slab_top"
+    }
+  }
+}

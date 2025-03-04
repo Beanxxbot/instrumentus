@@ -47,9 +47,9 @@ public class InstrumentusItems {
     //Energized
     public static final DeferredHolder<Item, EnergyPickaxeItem> ENERGIZED_PICKAXE = ITEMS_REGISTRAR.register("energy_pickaxe", () -> new EnergyPickaxeItem(InstrumentusItemTiers.ENERGIZED, 1, -2.8f));
     public static final DeferredHolder<Item, EnergyShovelItem> ENERGIZED_SHOVEL = ITEMS_REGISTRAR.register("energy_shovel", () -> new EnergyShovelItem(InstrumentusItemTiers.ENERGIZED, 1, -2.8f));
-    public static final DeferredHolder<Item, EnergyAxeItem> ENERGIZED_AXE = ITEMS_REGISTRAR.register("energy_axe", () -> new EnergyAxeItem(InstrumentusItemTiers.ENERGIZED, 1, -2.8f));
+    public static final DeferredHolder<Item, EnergyAxeItem> ENERGIZED_AXE = ITEMS_REGISTRAR.register("energy_axe", () -> new EnergyAxeItem(InstrumentusItemTiers.ENERGIZED, 5.0f, -3.0f));
     public static final DeferredHolder<Item, EnergyHoeItem> ENERGIZED_HOE = ITEMS_REGISTRAR.register("energy_hoe", () -> new EnergyHoeItem(InstrumentusItemTiers.ENERGIZED, 1, -2.8f));
-    public static final DeferredHolder<Item, EnergyPaxelItem> ENERGIZED_PAXEL = ITEMS_REGISTRAR.register("energy_paxel", () -> new EnergyPaxelItem(InstrumentusItemTiers.ENERGIZED, 1, -2.8f));
+    public static final DeferredHolder<Item, EnergyPaxelItem> ENERGIZED_PAXEL = ITEMS_REGISTRAR.register("energy_paxel", () -> new EnergyPaxelItem(InstrumentusItemTiers.ENERGIZED, 5.0f, -3.0f));
     public static final DeferredHolder<Item, EnergyHammerItem> ENERGIZED_HAMMER = ITEMS_REGISTRAR.register("energy_hammer", () -> new EnergyHammerItem(InstrumentusItemTiers.ENERGIZED, 1, -2.8f));
     public static final DeferredHolder<Item, EnergySickleItem> ENERGIZED_SICKLE = ITEMS_REGISTRAR.register("energy_sickle", () -> new EnergySickleItem(InstrumentusItemTiers.ENERGIZED));
     public static final DeferredHolder<Item, EnergyShearsItem> ENERGIZED_SHEARS = ITEMS_REGISTRAR.register("energy_shears", () -> new EnergyShearsItem(InstrumentusItemTiers.ENERGIZED));
@@ -71,6 +71,10 @@ public class InstrumentusItems {
     public static final DeferredHolder<Item, BlockItem> SOULCOPPER_GRATE_ITEM = ITEMS_REGISTRAR.register("soulcopper_grate", () -> new BlockItem(InstrumentusBlocks.SOULCOPPER_GRATE.get(), new Item.Properties().stacksTo(64)));
     public static final DeferredHolder<Item, BlockItem> SOULCOPPER_DOOR_ITEM = ITEMS_REGISTRAR.register("soulcopper_door", () -> new BlockItem(InstrumentusBlocks.SOULCOPPER_DOOR.get(), new Item.Properties().stacksTo(64)));
     public static final DeferredHolder<Item, BlockItem> SOULCOPPER_TRAPDOOR_ITEM = ITEMS_REGISTRAR.register("soulcopper_trapdoor", () -> new BlockItem(InstrumentusBlocks.SOULCOPPER_TRAPDOOR.get(), new Item.Properties().stacksTo(64)));
+    public static final DeferredHolder<Item, BlockItem> CUT_SOULCOPPER_STAIRS_ITEM = ITEMS_REGISTRAR.register("cut_soulcopper_stairs", () -> new BlockItem(InstrumentusBlocks.CUT_SOULCOPPER_STAIRS.get(), new Item.Properties().stacksTo(64)));
+    public static final DeferredHolder<Item, BlockItem> CUT_SOULCOPPER_SLAB_ITEM = ITEMS_REGISTRAR.register("cut_soulcopper_slab", () -> new BlockItem(InstrumentusBlocks.CUT_SOULCOPPER_SLAB.get(), new Item.Properties().stacksTo(64)));
+    public static final DeferredHolder<Item, BlockItem> CHISELED_SOULCOPPER_ITEM = ITEMS_REGISTRAR.register("chiseled_soulcopper", () -> new BlockItem(InstrumentusBlocks.CHISELED_SOULCOPPER.get(), new Item.Properties().stacksTo(64)));
+    public static final DeferredHolder<Item, BlockItem> SOULCOPPER_BULB_ITEM = ITEMS_REGISTRAR.register("soulcopper_bulb", () -> new BlockItem(InstrumentusBlocks.SOULCOPPER_BULB.get(), new Item.Properties().stacksTo(64)));
     @SuppressWarnings("unused")
     public static final DeferredHolder<Item, BlockItem> COPPER_SOUL_FLAME_LIGHT_ITEM = ITEMS_REGISTRAR.register("copper_soul_fire_flame", () -> new BlockItem(InstrumentusBlocks.COPPER_SOUL_FLAME_LIGHT.get(), new Item.Properties()));
     public static final DeferredHolder<Item, BlockItem> COPPER_SOUL_CAMPFIRE_BLOCK_ITEM = ITEMS_REGISTRAR.register("copper_soul_campfire", () -> new BlockItem(InstrumentusBlocks.COPPER_SOUL_CAMPFIRE.get(), new Item.Properties().stacksTo(64)));
@@ -92,7 +96,7 @@ public class InstrumentusItems {
     public static final DeferredHolder<Item, AxeItem> COPPER_AXE = ITEMS_REGISTRAR.register("copper_axe", () -> new AxeItem(InstrumentusItemTiers.COPPER, new Item.Properties().attributes(AxeItem.createAttributes(InstrumentusItemTiers.COPPER, 6.0f, -3.0f))));
     public static final DeferredHolder<Item, HoeItem> COPPER_HOE = ITEMS_REGISTRAR.register("copper_hoe", () -> new HoeItem(InstrumentusItemTiers.COPPER, new Item.Properties().attributes(HoeItem.createAttributes(InstrumentusItemTiers.COPPER, 1, -2.8f))));
     public static final DeferredHolder<Item, SwordItem> COPPER_SWORD = ITEMS_REGISTRAR.register("copper_sword", () -> new SwordItem(InstrumentusItemTiers.COPPER, new Item.Properties().attributes(SwordItem.createAttributes(InstrumentusItemTiers.COPPER, 4, -2.4f))));
-    public static final DeferredHolder<Item, PaxelItem> COPPER_PAXEL = ITEMS_REGISTRAR.register("copper_paxel", () -> new PaxelItem(InstrumentusItemTiers.COPPER, 1, -2.8f));
+    public static final DeferredHolder<Item, PaxelItem> COPPER_PAXEL = ITEMS_REGISTRAR.register("copper_paxel", () -> new PaxelItem(InstrumentusItemTiers.COPPER, 6.0f, -3.0f));
     public static final DeferredHolder<Item, HammerItem> COPPER_HAMMER = ITEMS_REGISTRAR.register("copper_hammer", () -> new HammerItem(InstrumentusItemTiers.COPPER, 1, -2.8f));
     public static final DeferredHolder<Item, SickleItem> COPPER_SICKLE = ITEMS_REGISTRAR.register("copper_sickle", () -> new SickleItem(InstrumentusItemTiers.COPPER));
     public static final DeferredHolder<Item, InstrumentusShearsItem> COPPER_SHEARS = ITEMS_REGISTRAR.register("copper_shears", () -> new InstrumentusShearsItem(InstrumentusItemTiers.COPPER));
@@ -117,7 +121,7 @@ public class InstrumentusItems {
     public static final DeferredHolder<Item, ExcavatorItem> NETHERITE_EXCAVATOR = ITEMS_REGISTRAR.register("netherite_excavator", () -> new ExcavatorItem(Tiers.NETHERITE, 1, -3.0f));
 
     //Kiln
-    public static final DeferredHolder<Item, BlockItem> KILN_BLOCK_ITEM = ITEMS_REGISTRAR.registerSimpleBlockItem(InstrumentusBlocks.KILN);
+    public static final DeferredHolder<Item, KilnBlockItem> KILN_BLOCK_ITEM = ITEMS_REGISTRAR.register("kiln", () -> new KilnBlockItem(InstrumentusBlocks.KILN.get(), new Item.Properties().stacksTo(64)));
 
     //Trial Tools
     public static final DeferredHolder<Item, BreezeArmorItem> BREEZE_ARMOR_BOOTS = ITEMS_REGISTRAR.register("breeze_boots", () -> new BreezeArmorItem(ArmorItem.Type.BOOTS));

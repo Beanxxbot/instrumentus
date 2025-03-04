@@ -1,0 +1,16 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "instrumentus:config_feature_enabled",
+      "feature": "SOULCOPPER"
+    }
+  ],
+  "type": "minecraft:stonecutting",
+  "ingredient": {
+    "item": "instrumentus:soulcopper_block"
+  },
+  "result": {
+    "count": 4,
+    "id": "instrumentus:chiseled_soulcopper"
+  }
+}

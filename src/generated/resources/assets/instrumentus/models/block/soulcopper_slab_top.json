@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/slab_top",
+  "textures": {
+    "bottom": "instrumentus:block/cut_soulcopper",
+    "side": "instrumentus:block/cut_soulcopper",
+    "top": "instrumentus:block/cut_soulcopper"
+  }
+}

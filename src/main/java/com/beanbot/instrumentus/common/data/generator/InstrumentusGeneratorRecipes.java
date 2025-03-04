@@ -919,7 +919,7 @@ public class InstrumentusGeneratorRecipes extends RecipeProvider {
                         ResourceLocation.fromNamespaceAndPath(Instrumentus.MODID, "raw_copper_block_to_raw_soulcopper"),
                         Ingredient.of(Items.RAW_COPPER_BLOCK.getDefaultInstance()),
                         InstrumentusItems.RAW_SOULCOPPER.get().getDefaultInstance(),
-                        1200
+                        300
                 )
                 .group("instrumentus")
                 .unlockedBy("has_raw_copper", InventoryChangeTrigger.TriggerInstance.hasItems(Items.RAW_COPPER_BLOCK))
@@ -934,6 +934,55 @@ public class InstrumentusGeneratorRecipes extends RecipeProvider {
         SingleItemRecipeBuilder.stonecutting(Ingredient.of(InstrumentusBlocks.SOULCOPPER_BLOCK.get()), RecipeCategory.BUILDING_BLOCKS, InstrumentusBlocks.CUT_SOULCOPPER.get(), 4)
                 .unlockedBy("has_soulcopper", InventoryChangeTrigger.TriggerInstance.hasItems(InstrumentusBlocks.SOULCOPPER_BLOCK.get()))
                 .save(consumer.withConditions(new FeatureEnabledCondition(FeatureEnabledCondition.ConfigFeature.SOULCOPPER)), "cut_soulcopper_from_stonecutting");
+        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, InstrumentusBlocks.CUT_SOULCOPPER_STAIRS.get(), 4)
+                .pattern("S  ")
+                .pattern("SS ")
+                .pattern("SSS")
+                .define('S', InstrumentusBlocks.CUT_SOULCOPPER.get())
+                .group("instrumentus")
+                .unlockedBy("has_soulcopper", InventoryChangeTrigger.TriggerInstance.hasItems(InstrumentusBlocks.CUT_SOULCOPPER.get()))
+                .save(consumer.withConditions(new FeatureEnabledCondition(FeatureEnabledCondition.ConfigFeature.SOULCOPPER)));
+        SingleItemRecipeBuilder.stonecutting(Ingredient.of(InstrumentusBlocks.SOULCOPPER_BLOCK.get()), RecipeCategory.BUILDING_BLOCKS, InstrumentusBlocks.CUT_SOULCOPPER_STAIRS.get(), 4)
+                .unlockedBy("has_soulcopper", InventoryChangeTrigger.TriggerInstance.hasItems(InstrumentusBlocks.SOULCOPPER_BLOCK.get()))
+                .save(consumer.withConditions(new FeatureEnabledCondition(FeatureEnabledCondition.ConfigFeature.SOULCOPPER)), "cut_soulcopper_stairs_from_stonecutting_notcut");
+        SingleItemRecipeBuilder.stonecutting(Ingredient.of(InstrumentusBlocks.CUT_SOULCOPPER.get()), RecipeCategory.BUILDING_BLOCKS, InstrumentusBlocks.CUT_SOULCOPPER_STAIRS.get(), 1)
+                .unlockedBy("has_soulcopper", InventoryChangeTrigger.TriggerInstance.hasItems(InstrumentusBlocks.CUT_SOULCOPPER.get()))
+                .save(consumer.withConditions(new FeatureEnabledCondition(FeatureEnabledCondition.ConfigFeature.SOULCOPPER)), "cut_soulcopper_stairs_from_stonecutting_cut");
+        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, InstrumentusBlocks.CUT_SOULCOPPER_SLAB.get(), 3)
+                .pattern("SSS")
+                .define('S', InstrumentusBlocks.CUT_SOULCOPPER.get())
+                .group("instrumentus")
+                .unlockedBy("has_soulcopper", InventoryChangeTrigger.TriggerInstance.hasItems(InstrumentusBlocks.CUT_SOULCOPPER.get()))
+                .save(consumer.withConditions(new FeatureEnabledCondition(FeatureEnabledCondition.ConfigFeature.SOULCOPPER)));
+        SingleItemRecipeBuilder.stonecutting(Ingredient.of(InstrumentusBlocks.SOULCOPPER_BLOCK.get()), RecipeCategory.BUILDING_BLOCKS, InstrumentusBlocks.CUT_SOULCOPPER_SLAB.get(), 8)
+                .unlockedBy("has_soulcopper", InventoryChangeTrigger.TriggerInstance.hasItems(InstrumentusBlocks.SOULCOPPER_BLOCK.get()))
+                .save(consumer.withConditions(new FeatureEnabledCondition(FeatureEnabledCondition.ConfigFeature.SOULCOPPER)), "cut_soulcopper_slab_from_stonecutting_notcut");
+        SingleItemRecipeBuilder.stonecutting(Ingredient.of(InstrumentusBlocks.CUT_SOULCOPPER.get()), RecipeCategory.BUILDING_BLOCKS, InstrumentusBlocks.CUT_SOULCOPPER_SLAB.get(), 2)
+                .unlockedBy("has_soulcopper", InventoryChangeTrigger.TriggerInstance.hasItems(InstrumentusBlocks.CUT_SOULCOPPER.get()))
+                .save(consumer.withConditions(new FeatureEnabledCondition(FeatureEnabledCondition.ConfigFeature.SOULCOPPER)), "cut_soulcopper_slab_from_stonecutting_cut");
+        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, InstrumentusBlocks.CHISELED_SOULCOPPER.get(), 1)
+                .pattern("S")
+                .pattern("S")
+                .define('S', InstrumentusBlocks.CUT_SOULCOPPER_SLAB.get())
+                .group("instrumentus")
+                .unlockedBy("has_soulcopper", InventoryChangeTrigger.TriggerInstance.hasItems(InstrumentusBlocks.CUT_SOULCOPPER_SLAB.get()))
+                .save(consumer.withConditions(new FeatureEnabledCondition(FeatureEnabledCondition.ConfigFeature.SOULCOPPER)));
+        SingleItemRecipeBuilder.stonecutting(Ingredient.of(InstrumentusBlocks.SOULCOPPER_BLOCK.get()), RecipeCategory.BUILDING_BLOCKS, InstrumentusBlocks.CHISELED_SOULCOPPER.get(), 4)
+                .unlockedBy("has_soulcopper", InventoryChangeTrigger.TriggerInstance.hasItems(InstrumentusBlocks.SOULCOPPER_BLOCK.get()))
+                .save(consumer.withConditions(new FeatureEnabledCondition(FeatureEnabledCondition.ConfigFeature.SOULCOPPER)), "chiseled_soulcopper_from_stonecutting_notcut");
+        SingleItemRecipeBuilder.stonecutting(Ingredient.of(InstrumentusBlocks.CUT_SOULCOPPER.get()), RecipeCategory.BUILDING_BLOCKS, InstrumentusBlocks.CHISELED_SOULCOPPER.get(), 1)
+                .unlockedBy("has_soulcopper", InventoryChangeTrigger.TriggerInstance.hasItems(InstrumentusBlocks.CUT_SOULCOPPER.get()))
+                .save(consumer.withConditions(new FeatureEnabledCondition(FeatureEnabledCondition.ConfigFeature.SOULCOPPER)), "chiseled_soulcopper_from_stonecutting_cut");
+        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, InstrumentusBlocks.SOULCOPPER_BULB.get(), 4)
+                .pattern(" S ")
+                .pattern("SBS")
+                .pattern(" R ")
+                .define('S', InstrumentusBlocks.SOULCOPPER_BLOCK.get())
+                .define('B', Items.BLAZE_ROD)
+                .define('R', Items.REDSTONE)
+                .group("instrumentus")
+                .unlockedBy("has_soulcopper", InventoryChangeTrigger.TriggerInstance.hasItems(InstrumentusBlocks.SOULCOPPER_BLOCK.get()))
+                .save(consumer.withConditions(new FeatureEnabledCondition(FeatureEnabledCondition.ConfigFeature.SOULCOPPER)));
         ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, InstrumentusBlocks.SOULCOPPER_GRATE.get(), 4)
                 .pattern(" S ")
                 .pattern("S S")

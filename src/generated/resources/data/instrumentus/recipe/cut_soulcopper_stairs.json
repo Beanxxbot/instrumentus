@@ -1,0 +1,25 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "instrumentus:config_feature_enabled",
+      "feature": "SOULCOPPER"
+    }
+  ],
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "group": "instrumentus",
+  "key": {
+    "S": {
+      "item": "instrumentus:cut_soulcopper"
+    }
+  },
+  "pattern": [
+    "S  ",
+    "SS ",
+    "SSS"
+  ],
+  "result": {
+    "count": 4,
+    "id": "instrumentus:cut_soulcopper_stairs"
+  }
+}

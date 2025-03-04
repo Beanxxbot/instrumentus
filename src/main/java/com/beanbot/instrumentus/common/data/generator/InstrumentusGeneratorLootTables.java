@@ -68,6 +68,10 @@ public class InstrumentusGeneratorLootTables extends LootTableProvider {
             dropSelf(InstrumentusBlocks.SOULCOPPER_TRAPDOOR.get());
             add(InstrumentusBlocks.SOULCOPPER_DOOR.get(), createDoorTable(InstrumentusBlocks.SOULCOPPER_DOOR.get()));
             dropSelf(InstrumentusBlocks.WIND_BLOWER.get());
+            dropSelf(InstrumentusBlocks.CUT_SOULCOPPER_STAIRS.get());
+            dropSelf(InstrumentusBlocks.CUT_SOULCOPPER_SLAB.get());
+            dropSelf(InstrumentusBlocks.CHISELED_SOULCOPPER.get());
+            dropSelf(InstrumentusBlocks.SOULCOPPER_BULB.get());
 
             add(InstrumentusBlocks.COPPER_SOUL_CAMPFIRE.get(),
                     silkTouchDispatchTable -> this.createSilkTouchDispatchTable(
