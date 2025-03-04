@@ -73,6 +73,10 @@ public class InstrumentusGeneratorLanguage extends LanguageProvider {
         addBlock(InstrumentusBlocks.SOULCOPPER_GRATE, "Soulcopper Grate");
         addBlock(InstrumentusBlocks.SOULCOPPER_TRAPDOOR, "Soulcopper Trapdoor");
         addBlock(InstrumentusBlocks.SOULCOPPER_DOOR, "Soulcopper Door");
+        addBlock(InstrumentusBlocks.CUT_SOULCOPPER_STAIRS, "Cut Soulcopper Stairs");
+        addBlock(InstrumentusBlocks.CUT_SOULCOPPER_SLAB, "Cut Soulcopper Slab");
+        addBlock(InstrumentusBlocks.CHISELED_SOULCOPPER, "Chiseled Soulcopper");
+        addBlock(InstrumentusBlocks.SOULCOPPER_BULB, "Soulcopper Bulb");
 
         addItem(InstrumentusItems.WOODEN_KNIFE, "Wooden Knife");
         addItem(InstrumentusItems.STONE_KNIFE, "Stone Knife");
@@ -113,6 +117,7 @@ public class InstrumentusGeneratorLanguage extends LanguageProvider {
         add(Instrumentus.MODID + ".container.kiln", "Kiln");
 
         addBlock(InstrumentusBlocks.WIND_BLOWER, "Wind Blower");
+        add(Instrumentus.MODID + ".tooltip.bound_wind_blower", "Bound Wind Blower: %s");
 
         add(Instrumentus.MODID + ".lore.no_energy", "No Energy");
         add(Instrumentus.MODID + ".lore.energy", "%d FE/%d FE");
@@ -120,5 +125,69 @@ public class InstrumentusGeneratorLanguage extends LanguageProvider {
         add(Instrumentus.MODID + ".coppersoulcampfirecookingrecipe.title", "Copper-fueled Soul Campfire Cooking");
 
         add(Instrumentus.MODID + ".creativetab", "Instrumentus");
+
+        add(Instrumentus.MODID + ".ponder.paxel_mining.header", "Paxel Mining");
+        add(Instrumentus.MODID + ".ponder.paxel_mining.text_1", "Paxels can be used to mine Shovel Blocks...");
+        add(Instrumentus.MODID + ".ponder.paxel_mining.text_2", "Pickaxe Blocks...");
+        add(Instrumentus.MODID + ".ponder.paxel_mining.text_3", "and Axe Blocks!");
+
+        add(Instrumentus.MODID + ".ponder.paxel_stripping_pathing.header", "Paxel Stripping and Pathing");
+        add(Instrumentus.MODID + ".ponder.paxel_stripping_pathing.text_1", "Paxels can also perform the secondary actions that Axes and Shovels do.");
+
+        add(Instrumentus.MODID + ".ponder.sickle_mining.header", "Sickle Mining");
+        add(Instrumentus.MODID + ".ponder.sickle_mining.text_1", "Sickles can be used to harvest large areas of leaves and vegetation in a large area.");
+
+        add(Instrumentus.MODID + ".ponder.sickle_mining_upgraded.header", "Better Sickle Mining");
+        add(Instrumentus.MODID + ".ponder.sickle_mining_upgraded.text_1", "Better Sickles have a larger area of effect.");
+
+        add(Instrumentus.MODID + ".ponder.sickle_vegetation_harvesting.header", "Sickle Harvesting");
+        add(Instrumentus.MODID + ".ponder.sickle_vegetation_harvesting.text_1", "Sickles can also be used to harvest vegetation in an area.");
+        add(Instrumentus.MODID + ".ponder.sickle_vegetation_harvesting.text_2", "Sickles will only harvest fully grown crops.");
+
+        add(Instrumentus.MODID + ".ponder.wind_blower.header", "Wind Blower");
+        add(Instrumentus.MODID + ".ponder.wind_blower.text_1", "This is a Wind Blower, designed to prevent Phantoms from spawning.");
+        add(Instrumentus.MODID + ".ponder.wind_blower.text_2", "When right clicked, the Wind Blower will be bound to the player.");
+        add(Instrumentus.MODID + ".ponder.wind_blower.text_3", "When right clicked with a Breeze Rod, the Wind Blower will gain one charge. It can hold up to 4 charges.");
+        add(Instrumentus.MODID + ".ponder.wind_blower.text_4", "When Phantoms attempt to spawn on a player, if they have a charged Wind Blower Bound, they will be prevented from spawning.");
+
+        add(Instrumentus.MODID + ".ponder.energized_lightning_rod.header", "Charging Energized Tools");
+        add(Instrumentus.MODID + ".ponder.energized_lightning_rod.text_1", "Energized Tools can be charged using any modded Forge Energy Charger.");
+        add(Instrumentus.MODID + ".ponder.energized_lightning_rod.text_2", "When an Energized Tool is struck by Lightning, it will be fully charged!");
+        add(Instrumentus.MODID + ".ponder.energized_lightning_rod.text_3", "0 FE/20,000 FE");
+        add(Instrumentus.MODID + ".ponder.energized_lightning_rod.text_4", "20,000 FE/20,000 FE");
+        add(Instrumentus.MODID + ".ponder.energized_lightning_rod.text_5", "Lightning can be induced using an Energized Di-Emerald Lightning Rod on a Lightning Rod Block. This consumes FE from the Tool.");
+
+        add(Instrumentus.MODID + ".ponder.soulcopper_smelting.header", "Smelting Raw Copper into Raw Soulcopper");
+        add(Instrumentus.MODID + ".ponder.soulcopper_smelting.text_1", "Raw Copper can be smelted into Raw Soulcopper using a Copper-Fueled Soul Campfire.");
+        add(Instrumentus.MODID + ".ponder.soulcopper_smelting.text_2", "To get Raw Soulcopper, you can use a Copper-Fueled Soul Campfire to smelt Raw Copper Blocks.");
+        add(Instrumentus.MODID + ".ponder.soulcopper_smelting.text_3", "After a short while, Raw Soulcopper will be produced.");
+        add(Instrumentus.MODID + ".ponder.soulcopper_smelting.text_4", "This Raw Soulcopper can be used to craft a few different things, or be smelted into Soulcopper Ingots in a Blast Furnace.");
+
+        add(Instrumentus.MODID + ".tooltip.press_shift", "Press [SHIFT] for more information");
+
+        add(Instrumentus.MODID + ".tooltip.shears_1", "Can be used for shearing sheep,");
+        add(Instrumentus.MODID + ".tooltip.shears_2", "harvesting plants, and breaking cobwebs.");
+
+        add(Instrumentus.MODID + ".tooltip.hammer_1", "3x3 Area Pickaxe");
+
+        add(Instrumentus.MODID + ".tooltip.excavator_1", "3x3 Area Shovel");
+
+        add(Instrumentus.MODID + ".tooltip.knife_1", "Destroying tall grass drops plant fiber");
+        add(Instrumentus.MODID + ".tooltip.knife_2", "which can be crafted into string");
+
+        add(Instrumentus.MODID + ".tooltip.wind_boots_1", "Jump again while in the air");
+        add(Instrumentus.MODID + ".tooltip.wind_boots_2", "to double jump!");
+
+        add(Instrumentus.MODID + ".tooltip.kiln_1", "Smelts building materials with the");
+        add(Instrumentus.MODID + ".tooltip.kiln_2", "same efficiency as a blast furnace.");
+
+        add(Instrumentus.MODID + ".tooltip.soulcopper_pickaxe_1", "Right click to spend one durability");
+        add(Instrumentus.MODID + ".tooltip.soulcopper_pickaxe_2", "and place a light source");
+
+        add(Instrumentus.MODID + ".tooltip.soulcopper_burner_1", "Use on any copper block");
+        add(Instrumentus.MODID + ".tooltip.soulcopper_burner_2", "to quickly oxidize it.");
+
+        add(Instrumentus.MODID + ".tooltip.brush_1", "A brush with a durability");
+        add(Instrumentus.MODID + ".tooltip.brush_2", "matching it's material.");
     }
 }

@@ -2,6 +2,8 @@ package com.beanbot.instrumentus.common.items;
 
 import com.beanbot.instrumentus.common.items.interfaces.IEnergyItem;
 import com.beanbot.instrumentus.common.items.interfaces.IItemLightningChargeable;
+import net.minecraft.ChatFormatting;
+import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
@@ -127,6 +129,17 @@ public class EnergyExcavatorItem extends ExcavatorItem implements IItemLightning
     @Override
     public void appendHoverText(@NotNull ItemStack stack, Item.@NotNull TooltipContext context, @NotNull List<Component> tooltip, @NotNull TooltipFlag flagIn){
         addTooltip(stack, context, tooltip, flagIn);
+
+        Component press = Component.translatable("instrumentus.tooltip.press_shift").withStyle(ChatFormatting.GRAY);
+        Component empty = Component.literal("");
+        Component pressed1 = Component.translatable("instrumentus.tooltip.excavator_1").withStyle(ChatFormatting.GRAY);
+        if (Screen.hasShiftDown()) {
+            tooltip.add(press);
+            tooltip.add(empty);
+            tooltip.add(pressed1);
+        } else {
+            tooltip.add(press);
+        }
     }
 
     @Override

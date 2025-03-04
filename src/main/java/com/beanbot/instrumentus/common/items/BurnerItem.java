@@ -1,9 +1,12 @@
 package com.beanbot.instrumentus.common.items;
 
 import com.beanbot.instrumentus.client.particles.InstrumentusParticles;
+import net.minecraft.ChatFormatting;
+import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.SimpleParticleType;
+import net.minecraft.network.chat.Component;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -27,6 +30,7 @@ import net.neoforged.neoforge.common.ItemAbilities;
 import net.neoforged.neoforge.common.ItemAbility;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.List;
 import java.util.Objects;
 
 public class BurnerItem extends Item {
@@ -43,6 +47,22 @@ public class BurnerItem extends Item {
         }
 
         return InteractionResult.CONSUME;
+    }
+
+    @Override
+    public void appendHoverText(ItemStack stack, Item.TooltipContext context, List<Component> tooltip, TooltipFlag flag) {
+        Component press = Component.translatable("instrumentus.tooltip.press_shift").withStyle(ChatFormatting.GRAY);
+        Component empty = Component.literal("");
+        Component pressed1 = Component.translatable("instrumentus.tooltip.soulcopper_burner_1").withStyle(ChatFormatting.GRAY);
+        Component pressed2 = Component.translatable("instrumentus.tooltip.soulcopper_burner_2").withStyle(ChatFormatting.GRAY);
+        if (Screen.hasShiftDown()) {
+            tooltip.add(press);
+            tooltip.add(empty);
+            tooltip.add(pressed1);
+            tooltip.add(pressed2);
+        } else {
+            tooltip.add(press);
+        }
     }
 
     private HitResult calculateHitResult(Player player) {
