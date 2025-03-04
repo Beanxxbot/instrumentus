@@ -7,7 +7,7 @@
         {
           "condition": "minecraft:match_tool",
           "predicate": {
-            "items": "#instrumentus:tools/knives"
+            "items": "#c:tools/knives"
           }
         }
       ]

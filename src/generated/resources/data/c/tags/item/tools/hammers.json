@@ -1,0 +1,12 @@
+{
+  "values": [
+    "instrumentus:wooden_hammer",
+    "instrumentus:stone_hammer",
+    "instrumentus:iron_hammer",
+    "instrumentus:golden_hammer",
+    "instrumentus:diamond_hammer",
+    "instrumentus:netherite_hammer",
+    "instrumentus:energy_hammer",
+    "instrumentus:copper_hammer"
+  ]
+}
