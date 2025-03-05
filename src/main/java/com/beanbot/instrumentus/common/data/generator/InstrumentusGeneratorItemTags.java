@@ -19,7 +19,13 @@ import java.util.concurrent.CompletableFuture;
 
 public class InstrumentusGeneratorItemTags extends ItemTagsProvider {
 
-    public static final TagKey<Item> TOOLS_KNIVES = ItemTags.create(ResourceLocation.fromNamespaceAndPath("instrumentus", "tools/knives"));
+    public static final TagKey<Item> TOOLS_KNIVES = ItemTags.create(ResourceLocation.fromNamespaceAndPath("c", "tools/knives"));
+    public static final TagKey<Item> TOOLS_SHEARS = ItemTags.create(ResourceLocation.fromNamespaceAndPath("c", "tools/shears"));
+    public static final TagKey<Item> TOOLS_SICKLES = ItemTags.create(ResourceLocation.fromNamespaceAndPath("c", "tools/sickles"));
+    public static final TagKey<Item> TOOLS_HAMMERS = ItemTags.create(ResourceLocation.fromNamespaceAndPath("c", "tools/hammers"));
+    public static final TagKey<Item> TOOLS_BRUSHES = ItemTags.create(ResourceLocation.fromNamespaceAndPath("c", "tools/brushes"));
+    public static final TagKey<Item> TOOLS_MINING_TOOLS = ItemTags.create(ResourceLocation.fromNamespaceAndPath("c", "tools/mining_tools"));
+
 
     public InstrumentusGeneratorItemTags(PackOutput output, CompletableFuture<HolderLookup.Provider> lookupProvider, BlockTagsProvider blockTags, @Nullable ExistingFileHelper helper) {
         super(output, lookupProvider, blockTags.contentsGetter(), Instrumentus.MODID, helper);
@@ -27,17 +33,43 @@ public class InstrumentusGeneratorItemTags extends ItemTagsProvider {
 
     @Override
     protected void addTags(HolderLookup.@NotNull Provider provider) {
-        addTools();
+        addToolEnchantments();
 
-        for (var knife : InstrumentusItems.ITEMS_REGISTRAR.getEntries()) {
-            if (knife.get() instanceof KnifeItem) {
+        for (var item : InstrumentusItems.ITEMS_REGISTRAR.getEntries()) {
+            if (item.get() instanceof KnifeItem knife) {
                 tag(TOOLS_KNIVES)
-                        .add(knife.get());
+                        .add(knife);
+            }
+            else if (item.get() instanceof InstrumentusShearsItem shears) {
+                tag(TOOLS_SHEARS)
+                        .add(shears);
+            }
+            else if (item.get() instanceof SickleItem sickle) {
+                tag(TOOLS_SICKLES)
+                        .add(sickle);
+            }
+            else if (item.get() instanceof HammerItem hammer) {
+                tag(TOOLS_HAMMERS)
+                        .add(hammer);
+                tag(TOOLS_MINING_TOOLS)
+                        .add(hammer);
+            }
+            else if (item.get() instanceof InstrumentusBrushItem brush) {
+                tag(TOOLS_BRUSHES)
+                        .add(brush);
+            }
+            else if (item.get() instanceof PickaxeItem pickaxeItem) {
+                tag(TOOLS_MINING_TOOLS)
+                        .add(pickaxeItem);
+            }
+            else if (item.get() instanceof SoulcopperPickaxeItem pickaxeItem) {
+                tag(TOOLS_MINING_TOOLS)
+                        .add(pickaxeItem);
             }
         }
     }
 
-    public void addTools() {
+    public void addToolEnchantments() {
         tag(ItemTags.MINING_LOOT_ENCHANTABLE)
                 .add(InstrumentusItems.SOULCOPPER_PICKAXE.get());
         tag(ItemTags.MINING_ENCHANTABLE)

@@ -2,6 +2,8 @@ package com.beanbot.instrumentus.common.items;
 
 import com.beanbot.instrumentus.common.items.interfaces.IEnergyItem;
 import com.beanbot.instrumentus.common.items.interfaces.IItemLightningChargeable;
+import net.minecraft.ChatFormatting;
+import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.network.chat.Component;
@@ -32,20 +34,20 @@ public class EnergyShearsItem extends InstrumentusShearsItem implements IItemLig
         if (entity.level().isClientSide) return InteractionResult.PASS;
         if (entity instanceof IShearable) {
             IEnergyStorage energyStorage = stack.getCapability(Capabilities.EnergyStorage.ITEM);
-            if(!(energyStorage == null)){
-                if(!(energyStorage.getEnergyStored() > 0)) return InteractionResult.PASS;
-            IShearable target = (IShearable) entity;
-            BlockPos pos = BlockPos.containing(entity.position());
-            if (target.isShearable(playerIn, stack, entity.level(), pos)) {
-                target.onSheared(playerIn, stack, entity.level(), pos)
-                        .forEach(drop -> target.spawnShearedDrop(entity.level(), pos, drop));
-                entity.gameEvent(GameEvent.SHEAR, playerIn);
-                if (!(energyStorage == null)) {
-                    energyStorage.extractEnergy(getMaxTransferRate() - 24, false);
+            if (!(energyStorage == null)) {
+                if (!(energyStorage.getEnergyStored() > 0)) return InteractionResult.PASS;
+                IShearable target = (IShearable) entity;
+                BlockPos pos = BlockPos.containing(entity.position());
+                if (target.isShearable(playerIn, stack, entity.level(), pos)) {
+                    target.onSheared(playerIn, stack, entity.level(), pos)
+                            .forEach(drop -> target.spawnShearedDrop(entity.level(), pos, drop));
+                    entity.gameEvent(GameEvent.SHEAR, playerIn);
+                    if (!(energyStorage == null)) {
+                        energyStorage.extractEnergy(getMaxTransferRate() - 24, false);
+                    }
                 }
+                return InteractionResult.SUCCESS;
             }
-            return InteractionResult.SUCCESS;
-        }
         }
         return InteractionResult.PASS;
     }
@@ -69,39 +71,52 @@ public class EnergyShearsItem extends InstrumentusShearsItem implements IItemLig
     }
 
     @Override
-    public boolean hurtEnemy(ItemStack stack, LivingEntity target, LivingEntity attacker){
+    public boolean hurtEnemy(ItemStack stack, LivingEntity target, LivingEntity attacker) {
         return energyDamageEnemy(stack, target, attacker);
     }
 
     @Override
-    public float getDestroySpeed(ItemStack stack, BlockState state){
+    public float getDestroySpeed(ItemStack stack, BlockState state) {
         IEnergyStorage energyStorage = stack.getCapability(Capabilities.EnergyStorage.ITEM);
-        if(energyStorage == null) return 0.0F;
-        if(!(energyStorage.getEnergyStored() > 0)) return 0.0F;
+        if (energyStorage == null) return 0.0F;
+        if (!(energyStorage.getEnergyStored() > 0)) return 0.0F;
         return super.getDestroySpeed(stack, state);
     }
 
     @Override
-    public void appendHoverText(ItemStack stack, Item.TooltipContext context, List<Component> tooltip, TooltipFlag flagIn){
+    public void appendHoverText(ItemStack stack, Item.TooltipContext context, List<Component> tooltip, TooltipFlag flagIn) {
         addTooltip(stack, context, tooltip, flagIn);
+        Component press = Component.translatable("instrumentus.tooltip.press_shift").withStyle(ChatFormatting.GRAY);
+        Component empty = Component.literal("");
+        Component pressed1 = Component.translatable("instrumentus.tooltip.shears_1").withStyle(ChatFormatting.GRAY);
+        Component pressed2 = Component.translatable("instrumentus.tooltip.shears_2").withStyle(ChatFormatting.GRAY);
+        if (Screen.hasShiftDown()) {
+            tooltip.add(press);
+            tooltip.add(empty);
+            tooltip.add(pressed1);
+            tooltip.add(pressed2);
+        } else {
+            tooltip.add(press);
+        }
     }
 
     @Override
-    public int getBarWidth(ItemStack stack){
+    public int getBarWidth(ItemStack stack) {
         return getEnergyBarWidth(stack);
     }
 
     @Override
-    public int getBarColor(ItemStack stack){
+    public int getBarColor(ItemStack stack) {
         return getEnergyBarColor(stack);
     }
 
     @Override
-    public boolean isDamaged(ItemStack stack){
+    public boolean isDamaged(ItemStack stack) {
         return isEnergyBelowZero(stack);
     }
+
     @Override
-    public boolean isBarVisible(ItemStack stack){
+    public boolean isBarVisible(ItemStack stack) {
         return isEnergyBarVisible(stack);
     }
 }

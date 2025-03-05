@@ -1,0 +1,10 @@
+{
+  "values": [
+    "instrumentus:wooden_brush",
+    "instrumentus:stone_brush",
+    "instrumentus:iron_brush",
+    "instrumentus:golden_brush",
+    "instrumentus:diamond_brush",
+    "instrumentus:netherite_brush"
+  ]
+}

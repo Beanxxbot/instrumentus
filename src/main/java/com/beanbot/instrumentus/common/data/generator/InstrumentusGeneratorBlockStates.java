@@ -33,6 +33,10 @@ public class InstrumentusGeneratorBlockStates extends BlockStateProvider {
         simpleBlock(InstrumentusBlocks.SOULCOPPER_GRATE.get(), models().cubeAll(InstrumentusBlocks.SOULCOPPER_GRATE.getId().getPath(), blockTexture(InstrumentusBlocks.SOULCOPPER_GRATE.get())).renderType(RenderType.CUTOUT.name));
         doorBlockWithRenderType(InstrumentusBlocks.SOULCOPPER_DOOR.get(), Objects.requireNonNull(InstrumentusBlocks.SOULCOPPER_DOOR.getId()).getPath(), modLoc("block/soulcopper_door_bottom"), modLoc("block/soulcopper_door_top"), RenderType.CUTOUT.name);
         trapdoorBlockWithRenderType(InstrumentusBlocks.SOULCOPPER_TRAPDOOR.get(), modLoc("block/soulcopper_trapdoor"), true, RenderType.CUTOUT.name);
+        stairsBlock(InstrumentusBlocks.CUT_SOULCOPPER_STAIRS.get(), InstrumentusBlocks.CUT_SOULCOPPER_STAIRS.getId().getPath(), modLoc("block/cut_soulcopper"));
+        slabBlock(InstrumentusBlocks.CUT_SOULCOPPER_SLAB.get(), modLoc("block/cut_soulcopper"), modLoc("block/cut_soulcopper"));
+        simpleBlock(InstrumentusBlocks.CHISELED_SOULCOPPER.get(), models().cubeAll(InstrumentusBlocks.CHISELED_SOULCOPPER.getId().getPath(), blockTexture(InstrumentusBlocks.CHISELED_SOULCOPPER.get())));
+        simpleBlock(InstrumentusBlocks.SOULCOPPER_BULB.get(), models().cubeAll(InstrumentusBlocks.SOULCOPPER_BULB.getId().getPath(), blockTexture(InstrumentusBlocks.SOULCOPPER_BULB.get())));
 
         getVariantBuilder(InstrumentusBlocks.WIND_BLOWER.get()).forAllStates(s -> {
             ModelFile model;

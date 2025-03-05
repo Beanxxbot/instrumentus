@@ -3,6 +3,7 @@ package com.beanbot.instrumentus.common.blocks;
 import com.beanbot.instrumentus.common.data.attachments.InstrumentusDataAttachments;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.network.chat.Component;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
@@ -38,7 +39,10 @@ public class WindBlowerBlock extends Block {
             BlockState blockState = state.setValue(BLOWER_CHARGE, state.getValue(BLOWER_CHARGE) + 1);
             level.setBlock(pos, blockState, 3);
             level.gameEvent(GameEvent.BLOCK_CHANGE, pos, GameEvent.Context.of(player, blockState));
-            player.setData(InstrumentusDataAttachments.BOUND_WIND_BLOWER, hitResult.getBlockPos());
+            if (!player.getData(InstrumentusDataAttachments.BOUND_WIND_BLOWER).equals(hitResult.getBlockPos())) {
+                player.setData(InstrumentusDataAttachments.BOUND_WIND_BLOWER, hitResult.getBlockPos());
+                player.displayClientMessage(Component.translatable("instrumentus.tooltip.bound_wind_blower", String.format("%s", hitResult.getBlockPos().toShortString())), true);
+            }
             if (state.getValue(BLOWER_CHARGE) == 0) {
                 level.playLocalSound(pos, SoundEvents.BREEZE_CHARGE, SoundSource.BLOCKS, 1.0f, 0.5f, false);
             } else if (state.getValue(BLOWER_CHARGE) == 1) {
@@ -51,7 +55,9 @@ public class WindBlowerBlock extends Block {
             level.addParticle(ParticleTypes.WHITE_SMOKE, pos.getX() + 0.5, pos.getY() + 1.25, pos.getZ() + 0.5, 0, 0, 0);
             stack.consume(1, player);
             return ItemInteractionResult.sidedSuccess(level.isClientSide);
-        } else if(stack.is(Items.IRON_INGOT)) {
+        } else if(!player.getData(InstrumentusDataAttachments.BOUND_WIND_BLOWER).equals(hitResult.getBlockPos())) {
+            player.setData(InstrumentusDataAttachments.BOUND_WIND_BLOWER, hitResult.getBlockPos());
+            player.displayClientMessage(Component.translatable("instrumentus.tooltip.bound_wind_blower", String.format("%s", hitResult.getBlockPos().toShortString())), true);
             return ItemInteractionResult.sidedSuccess(level.isClientSide);
         } else {
             return hand == InteractionHand.MAIN_HAND && player.getItemInHand(InteractionHand.OFF_HAND).is(Items.BREEZE_ROD) && state.getValue(BLOWER_CHARGE) < 4

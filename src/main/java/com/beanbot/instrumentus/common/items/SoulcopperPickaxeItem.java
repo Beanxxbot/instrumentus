@@ -1,14 +1,19 @@
 package com.beanbot.instrumentus.common.items;
 
 import com.beanbot.instrumentus.common.blocks.InstrumentusBlocks;
+import net.minecraft.ChatFormatting;
+import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.network.chat.Component;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.*;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
+
+import java.util.List;
 
 
 public class SoulcopperPickaxeItem extends DiggerItem {
@@ -26,6 +31,22 @@ public class SoulcopperPickaxeItem extends DiggerItem {
             return new Item.Properties().attributes(PickaxeItem.createAttributes(tier, attackDamageIn, attackSpeedIn)).stacksTo(1).fireResistant().durability(tier.getUses());
         }
         return new Item.Properties().attributes(PickaxeItem.createAttributes(tier, attackDamageIn, attackSpeedIn)).stacksTo(1).durability(tier.getUses());
+    }
+
+    @Override
+    public void appendHoverText(ItemStack stack, Item.TooltipContext context, List<Component> tooltip, TooltipFlag flag) {
+        Component press = Component.translatable("instrumentus.tooltip.press_shift").withStyle(ChatFormatting.GRAY);
+        Component empty = Component.literal("");
+        Component pressed1 = Component.translatable("instrumentus.tooltip.soulcopper_pickaxe_1").withStyle(ChatFormatting.GRAY);
+        Component pressed2 = Component.translatable("instrumentus.tooltip.soulcopper_pickaxe_2").withStyle(ChatFormatting.GRAY);
+        if (Screen.hasShiftDown()) {
+            tooltip.add(press);
+            tooltip.add(empty);
+            tooltip.add(pressed1);
+            tooltip.add(pressed2);
+        } else {
+            tooltip.add(press);
+        }
     }
 
     @Override

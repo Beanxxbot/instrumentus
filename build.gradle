@@ -33,6 +33,21 @@ repositories {
             includeGroup "curse.maven"
         }
     }
+    // Create
+    maven {
+        url 'https://raw.githubusercontent.com/Fuzss/modresources/main/maven/'
+    }
+    maven {
+        url 'https://maven.createmod.net'
+    }
+    maven {
+        url 'https://mvn.devos.one/snapshots'
+    }
+
+    //Curios
+    maven {
+        url 'https://maven.theillusivec4.top/'
+    }
 }
 
 base {
@@ -59,23 +74,26 @@ neoForge {
             client()
 
             systemProperty 'neoforge.enabledGameTestNamespaces', project.mod_id
+            programArgument '-mixin.config=create.mixins.json'
         }
 
         server {
             server()
             programArgument '--nogui'
             systemProperty 'neoforge.enabledGameTestNamespaces', project.mod_id
+            programArgument '-mixin.config=create.mixins.json'
         }
 
         gameTestServer {
             type = "gameTestServer"
             systemProperty 'neoforge.enabledGameTestNamespaces', project.mod_id
+            programArgument '-mixin.config=create.mixins.json'
         }
 
         data {
             data()
 
-            programArguments.addAll '--mod', project.mod_id, '--all', '--output', file('src/generated/resources/').getAbsolutePath(), '--existing', file('src/main/resources/').getAbsolutePath()
+            programArguments.addAll '--mod', project.mod_id, '--all', '--output', file('src/generated/resources/').getAbsolutePath(), '--existing', file('src/main/resources/').getAbsolutePath(), '-mixin.config=create.mixins.json'
         }
 
         configureEach {
@@ -107,6 +125,17 @@ dependencies {
     runtimeOnly("org.sinytra:item-asset-export-neoforge:1.0.2+1.21")
 
     implementation "curse.maven:jade-324717:${jade_id}"
+
+    runtimeOnly "top.theillusivec4.curios:curios-neoforge:${curios_version}+${minecraft_version}"
+    compileOnly "top.theillusivec4.curios:curios-neoforge:${curios_version}+${minecraft_version}:api"
+
+    jarJar "net.createmod.ponder:Ponder-NeoForge-${minecraft_version}:${ponder_version}"
+
+    implementation("com.simibubi.create:create-${minecraft_version}:${create_version}:slim") { transitive = false }
+    implementation("net.createmod.ponder:Ponder-NeoForge-${minecraft_version}:${ponder_version}")
+    compileOnly("dev.engine-room.flywheel:flywheel-neoforge-api-${minecraft_version}:${flywheel_version}")
+    jarJar(runtimeOnly("dev.engine-room.flywheel:flywheel-neoforge-${minecraft_version}:${flywheel_version}"))
+    implementation("com.tterrag.registrate:Registrate:${registrate_version}")
 
     // For more info:
     // http://www.gradle.org/docs/current/userguide/artifact_dependencies_tutorial.html

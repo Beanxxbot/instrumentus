@@ -1,0 +1,24 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "instrumentus:config_feature_enabled",
+      "feature": "SOULCOPPER"
+    }
+  ],
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "group": "instrumentus",
+  "key": {
+    "S": {
+      "item": "instrumentus:cut_soulcopper_slab"
+    }
+  },
+  "pattern": [
+    "S",
+    "S"
+  ],
+  "result": {
+    "count": 1,
+    "id": "instrumentus:chiseled_soulcopper"
+  }
+}

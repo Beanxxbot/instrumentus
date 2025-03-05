@@ -30,7 +30,7 @@ import javax.annotation.Nullable;
 import java.util.List;
 
 public class EnergyPaxelItem extends PaxelItem implements IItemLightningChargeable, IEnergyItem {
-    public EnergyPaxelItem(Tier material, int attackDamageIn, float attackSpeedIn) {
+    public EnergyPaxelItem(Tier material, float attackDamageIn, float attackSpeedIn) {
         super(material, attackDamageIn, attackSpeedIn);
     }
 

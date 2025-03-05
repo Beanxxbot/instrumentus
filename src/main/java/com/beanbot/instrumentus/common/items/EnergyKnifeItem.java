@@ -2,6 +2,8 @@ package com.beanbot.instrumentus.common.items;
 
 import com.beanbot.instrumentus.common.items.interfaces.IEnergyItem;
 import com.beanbot.instrumentus.common.items.interfaces.IItemLightningChargeable;
+import net.minecraft.ChatFormatting;
+import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.LivingEntity;
@@ -58,6 +60,19 @@ public class EnergyKnifeItem extends KnifeItem implements IItemLightningChargeab
     @Override
     public void appendHoverText(ItemStack stack, Item.TooltipContext context, List<Component> tooltip, TooltipFlag flagIn){
         addTooltip(stack, context, tooltip, flagIn);
+
+        Component press = Component.translatable("instrumentus.tooltip.press_shift").withStyle(ChatFormatting.GRAY);
+        Component empty = Component.literal("");
+        Component pressed1 = Component.translatable("instrumentus.tooltip.knife_1").withStyle(ChatFormatting.GRAY);
+        Component pressed2 = Component.translatable("instrumentus.tooltip.knife_2").withStyle(ChatFormatting.GRAY);
+        if (Screen.hasShiftDown()) {
+            tooltip.add(press);
+            tooltip.add(empty);
+            tooltip.add(pressed1);
+            tooltip.add(pressed2);
+        } else {
+            tooltip.add(press);
+        }
     }
 
     @Override

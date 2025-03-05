@@ -135,10 +135,14 @@ public class InstrumentusCreativeModeTabPopulate {
                 event.accept(InstrumentusItems.RAW_SOULCOPPER_BLOCK.get());
                 event.accept(InstrumentusItems.SOULCOPPER_INGOT.get());
                 event.accept(InstrumentusItems.SOULCOPPER_BLOCK.get());
-                event.accept(InstrumentusItems.CUT_SOULCOPPER_ITEM.get());
+                event.accept(InstrumentusItems.CHISELED_SOULCOPPER_ITEM.get());
                 event.accept(InstrumentusItems.SOULCOPPER_GRATE_ITEM.get());
-                event.accept(InstrumentusItems.SOULCOPPER_TRAPDOOR_ITEM.get());
+                event.accept(InstrumentusItems.CUT_SOULCOPPER_ITEM.get());
+                event.accept(InstrumentusItems.CUT_SOULCOPPER_STAIRS_ITEM.get());
+                event.accept(InstrumentusItems.CUT_SOULCOPPER_SLAB_ITEM.get());
                 event.accept(InstrumentusItems.SOULCOPPER_DOOR_ITEM.get());
+                event.accept(InstrumentusItems.SOULCOPPER_TRAPDOOR_ITEM.get());
+                event.accept(InstrumentusItems.SOULCOPPER_BULB_ITEM.get());
                 event.accept(InstrumentusItems.COPPER_SOUL_CAMPFIRE_BLOCK_ITEM.get());
                 event.accept(InstrumentusItems.SOULCOPPER_TORCH_ITEM.get());
                 event.accept(InstrumentusItems.SOULCOPPER_LANTERN_ITEM.get());

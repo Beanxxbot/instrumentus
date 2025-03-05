@@ -1,6 +1,8 @@
 package com.beanbot.instrumentus.common.data.generator;
 
+import com.beanbot.instrumentus.client.ponder.InstrumentusPonderPlugin;
 import com.beanbot.instrumentus.common.Instrumentus;
+import net.createmod.ponder.foundation.PonderIndex;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.PackOutput;
@@ -9,6 +11,7 @@ import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.data.event.GatherDataEvent;
 
 import java.util.concurrent.CompletableFuture;
+import java.util.function.BiConsumer;
 
 @SuppressWarnings("unused")
 @EventBusSubscriber(modid = Instrumentus.MODID, bus = EventBusSubscriber.Bus.MOD)
@@ -33,4 +36,10 @@ public class InstrumentusGenerator {
         generator.addProvider(event.includeServer(), new InstrumentusGeneratorGlobalLootModifier(output, event.getLookupProvider()));
         generator.addProvider(event.includeClient(), new InstrumentusGeneratorLanguage(output));
     }
+
+//    private static void providerPonderLang(BiConsumer<String, String> consumer) {
+//        PonderIndex.addPlugin(new InstrumentusPonderPlugin());
+//
+//        PonderIndex.getLangAccess().provideLang(Instrumentus.MODID, consumer);
+//    }
 }

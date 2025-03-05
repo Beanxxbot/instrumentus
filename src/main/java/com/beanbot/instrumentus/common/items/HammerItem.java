@@ -1,7 +1,10 @@
 package com.beanbot.instrumentus.common.items;
 
+import net.minecraft.ChatFormatting;
+import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -21,6 +24,8 @@ import net.neoforged.neoforge.common.ItemAbilities;
 import net.neoforged.neoforge.event.level.BlockEvent;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.List;
+
 public class HammerItem extends DiggerItem {
 
     protected Tier tier;
@@ -35,6 +40,20 @@ public class HammerItem extends DiggerItem {
             return new Item.Properties().attributes(HammerItem.createAttributes(tier, attackDamageIn, attackSpeedIn)).stacksTo(1).fireResistant();
         }
         return new Item.Properties().attributes(HammerItem.createAttributes(tier, attackDamageIn, attackSpeedIn)).stacksTo(1);
+    }
+
+    @Override
+    public void appendHoverText(ItemStack stack, Item.TooltipContext context, List<Component> tooltip, TooltipFlag flag) {
+        Component press = Component.translatable("instrumentus.tooltip.press_shift").withStyle(ChatFormatting.GRAY);
+        Component empty = Component.literal("");
+        Component pressed1 = Component.translatable("instrumentus.tooltip.hammer_1").withStyle(ChatFormatting.GRAY);
+        if (Screen.hasShiftDown()) {
+            tooltip.add(press);
+            tooltip.add(empty);
+            tooltip.add(pressed1);
+        } else {
+            tooltip.add(press);
+        }
     }
 
     @Override
