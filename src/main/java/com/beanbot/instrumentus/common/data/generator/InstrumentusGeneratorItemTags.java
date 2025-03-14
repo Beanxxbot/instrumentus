@@ -19,7 +19,8 @@ import java.util.concurrent.CompletableFuture;
 
 public class InstrumentusGeneratorItemTags extends ItemTagsProvider {
 
-    public static final TagKey<Item> TOOLS_KNIVES = ItemTags.create(ResourceLocation.fromNamespaceAndPath("c", "tools/knives"));
+    public static final TagKey<Item> TOOLS_COMMON_KNIVES = ItemTags.create(ResourceLocation.fromNamespaceAndPath("c", "tools/knives"));
+    public static final TagKey<Item> TOOLS_KNIVES = ItemTags.create(ResourceLocation.fromNamespaceAndPath("c", "knives"));
     public static final TagKey<Item> TOOLS_SHEARS = ItemTags.create(ResourceLocation.fromNamespaceAndPath("c", "tools/shears"));
     public static final TagKey<Item> TOOLS_SICKLES = ItemTags.create(ResourceLocation.fromNamespaceAndPath("c", "tools/sickles"));
     public static final TagKey<Item> TOOLS_HAMMERS = ItemTags.create(ResourceLocation.fromNamespaceAndPath("c", "tools/hammers"));
@@ -37,6 +38,8 @@ public class InstrumentusGeneratorItemTags extends ItemTagsProvider {
 
         for (var item : InstrumentusItems.ITEMS_REGISTRAR.getEntries()) {
             if (item.get() instanceof KnifeItem knife) {
+                tag(TOOLS_COMMON_KNIVES)
+                        .add(knife);
                 tag(TOOLS_KNIVES)
                         .add(knife);
             }
@@ -96,6 +99,19 @@ public class InstrumentusGeneratorItemTags extends ItemTagsProvider {
                         tag(ItemTags.MINING_LOOT_ENCHANTABLE)
                                 .add(diggerTool);
                     }
+                    if (diggerTool == InstrumentusItems.ENERGIZED_AXE.get() || diggerTool == InstrumentusItems.ENERGIZED_PAXEL.get()) {
+                        tag(ItemTags.SHARP_WEAPON_ENCHANTABLE)
+                                .add(diggerTool);
+                    }
+                } else if (diggerTool instanceof PaxelItem || diggerTool == InstrumentusItems.COPPER_AXE.get()) {
+                    tag(ItemTags.SHARP_WEAPON_ENCHANTABLE)
+                            .add(diggerTool);
+                    tag(ItemTags.MINING_ENCHANTABLE)
+                            .add(diggerTool);
+                    tag(ItemTags.MINING_LOOT_ENCHANTABLE)
+                            .add(diggerTool);
+                    tag(ItemTags.DURABILITY_ENCHANTABLE)
+                            .add(diggerTool);
                 } else {
                     tag(ItemTags.MINING_ENCHANTABLE)
                             .add(diggerTool);
