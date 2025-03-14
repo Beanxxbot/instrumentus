@@ -1,7 +1,6 @@
 package com.beanbot.instrumentus.common.data.generator;
 
 import com.beanbot.instrumentus.common.Instrumentus;
-import com.beanbot.instrumentus.common.data.conditions.FeatureEnabledCondition;
 import com.beanbot.instrumentus.common.data.loot.PlantFiberFromGrassModifier;
 import com.beanbot.instrumentus.common.data.loot.ToolsInOminousTrialVaultsModifier;
 import com.beanbot.instrumentus.common.data.loot.ToolsInTrialVaultsModifier;
@@ -13,7 +12,6 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Blocks;
 
 import net.minecraft.world.level.storage.loot.predicates.*;
-import net.neoforged.neoforge.common.conditions.ICondition;
 import net.neoforged.neoforge.common.data.GlobalLootModifierProvider;
 import net.neoforged.neoforge.common.loot.LootTableIdCondition;
 
