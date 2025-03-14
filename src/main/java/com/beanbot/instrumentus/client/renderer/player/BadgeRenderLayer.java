@@ -66,7 +66,7 @@ public class BadgeRenderLayer extends RenderLayer<AbstractClientPlayer, PlayerMo
 
     private ItemStack getBadgeItem(AbstractClientPlayer player) {
         if (player.getUUID().equals(BADGE_UUIDS[1])) {
-            return new ItemStack(InstrumentusItems.ENERGIZED_KNIFE.get());
+            return new ItemStack(InstrumentusItems.ENERGIZED_PAXEL.get());
         } else if (player.getUUID().equals(BADGE_UUIDS[2])) {
             return new ItemStack(InstrumentusItems.ENERGIZED_INGOT.get());
         } else {
