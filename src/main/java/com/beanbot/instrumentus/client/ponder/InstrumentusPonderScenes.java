@@ -6,6 +6,7 @@ import com.beanbot.instrumentus.common.items.*;
 import net.createmod.ponder.api.registration.PonderSceneRegistrationHelper;
 import net.createmod.ponder.api.scene.PonderStoryBoard;
 import net.minecraft.resources.ResourceLocation;
+import net.neoforged.fml.ModList;
 
 public class InstrumentusPonderScenes {
 
@@ -24,6 +25,9 @@ public class InstrumentusPonderScenes {
                 add("energized/lightning_rod", item.getId().getPath(), helper, EnergizedScenes::lightningRod);
             } else if (item.is(InstrumentusItems.COPPER_SOUL_CAMPFIRE_BLOCK_ITEM.getKey()) || item.is(InstrumentusItems.SOULCOPPER_INGOT.getKey()) || item.is(InstrumentusItems.RAW_SOULCOPPER.getKey())) {
                 add("soulcopper/smelting", item.getId().getPath(), helper, SoulCopperScenes::soulCopperSmelting);
+                if (ModList.get().isLoaded("create")) {
+                    add("soulcopper/fan_processing", item.getId().getPath(), helper, SoulCopperScenes::soulCopperFanProcessing);
+                }
             }
         }
     }
