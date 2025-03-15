@@ -9,7 +9,7 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.*;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.common.NeoForge;
@@ -32,13 +32,33 @@ public class SickleItem extends DiggerItem
         return new Item.Properties().attributes(SickleItem.createAttributes(tier, attackDamageIn, attackSpeedIn)).stacksTo(1);
     }
 
+    private static boolean isGrownCrop(BlockState state) {
+        if (state.is(BlockTags.CROPS)) {
+            if (state.is(Blocks.PITCHER_CROP)) {
+                int maxAge = PitcherCropBlock.MAX_AGE;
+                return state.getValue(PitcherCropBlock.AGE) == maxAge;
+            }
+            if (state.is(Blocks.PUMPKIN_STEM) || state.is(Blocks.MELON_STEM)) {
+                int maxAge = StemBlock.MAX_AGE;
+                return state.getValue(StemBlock.AGE) == maxAge;
+            }
+            CropBlock cropBlock = (CropBlock) state.getBlock();
+            int maxAge = cropBlock.getMaxAge();
+            if (state.is(Blocks.BEETROOTS)) {
+                return state.getValue(BeetrootBlock.AGE) == maxAge;
+            }
+            return state.getValue(CropBlock.AGE) == maxAge;
+        }
+        return false;
+    }
+
     @Override
     public boolean mineBlock(ItemStack stack, Level world, BlockState state, BlockPos pos, LivingEntity entity) {
         if(state.getBlock() == null || world.getBlockState(pos).getBlock() == Blocks.AIR)
             return false;
 
         boolean isLeaves = state.is(BlockTags.LEAVES);
-        boolean isCrops = state.is(BlockTags.CROPS);
+        boolean isCrops = state.is(BlockTags.CROPS) && isGrownCrop(state);
 
         int radius = isLeaves ? 0 : 2;
         int height = isLeaves ? 0 : 2;
@@ -128,7 +148,7 @@ public class SickleItem extends DiggerItem
                     return false;
 
                 case TRIM_CROPS:
-                    if(state.is(BlockTags.CROPS))
+                    if(state.is(BlockTags.CROPS) && isGrownCrop(state))
                     {
                         state.getBlock().playerDestroy(world, (Player) entity, pos, state, blockEntity, item);
                         world.removeBlock(pos, false);

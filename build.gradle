@@ -64,30 +64,22 @@ neoForge {
         minecraftVersion = project.parchment_minecraft_version
     }
 
-    // This line is optional. Access Transformers are automatically detected
-    // accessTransformers = project.files('src/main/resources/META-INF/accesstransformer.cfg')
-
-    // Default run configurations.
-    // These can be tweaked, removed, or duplicated as needed.
     runs {
         client {
             client()
 
             systemProperty 'neoforge.enabledGameTestNamespaces', project.mod_id
-            programArgument '-mixin.config=create.mixins.json'
         }
 
         server {
             server()
             programArgument '--nogui'
             systemProperty 'neoforge.enabledGameTestNamespaces', project.mod_id
-            programArgument '-mixin.config=create.mixins.json'
         }
 
         gameTestServer {
             type = "gameTestServer"
             systemProperty 'neoforge.enabledGameTestNamespaces', project.mod_id
-            programArgument '-mixin.config=create.mixins.json'
         }
 
         data {
@@ -154,7 +146,9 @@ var generateModMetadata = tasks.register("generateModMetadata", ProcessResources
             mod_license            : mod_license,
             mod_version            : mod_version,
             mod_authors            : mod_authors,
-            mod_description        : mod_description
+            mod_description        : mod_description,
+            create_version         : create_version,
+            flywheel_version_range : flywheel_version_range
     ]
     inputs.properties replaceProperties
     expand replaceProperties
