@@ -1,8 +1,7 @@
-package com.beanbot.instrumentus.client.jei;
+package com.beanbot.instrumentus.compat.jei;
 
 import com.beanbot.instrumentus.common.Instrumentus;
 import com.beanbot.instrumentus.common.blocks.InstrumentusBlocks;
-import com.beanbot.instrumentus.common.items.InstrumentusItems;
 import com.beanbot.instrumentus.common.recipe.CopperSoulCampfireRecipe;
 import com.beanbot.instrumentus.common.recipe.KilnRecipe;
 import com.beanbot.instrumentus.common.recipe.InstrumentusRecipes;
@@ -10,18 +9,14 @@ import mezz.jei.api.IModPlugin;
 import mezz.jei.api.JeiPlugin;
 import mezz.jei.api.helpers.IGuiHelper;
 import mezz.jei.api.helpers.IJeiHelpers;
-import mezz.jei.api.ingredients.subtypes.IIngredientSubtypeInterpreter;
 import mezz.jei.api.registration.IRecipeCatalystRegistration;
 import mezz.jei.api.registration.IRecipeCategoryRegistration;
 import mezz.jei.api.registration.IRecipeRegistration;
-import mezz.jei.api.registration.ISubtypeRegistration;
 import net.minecraft.client.Minecraft;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.item.crafting.RecipeManager;
-import net.neoforged.neoforge.capabilities.Capabilities;
-import net.neoforged.neoforge.energy.IEnergyStorage;
 
 import java.util.List;
 import java.util.stream.Collectors;
