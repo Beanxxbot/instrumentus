@@ -30,8 +30,8 @@ public class CopperSoulCampfireBlockEntity extends BlockEntity implements Cleara
     private static final int BURN_COOL_SPEED = 2;
     private static final int NUM_SLOTS = 4;
     private final NonNullList<ItemStack> items = NonNullList.withSize(4, ItemStack.EMPTY);
-    private final int[] cookingProgress = new int[4];
-    private final int[] cookingTime = new int[4];
+    public final int[] cookingProgress = new int[4];
+    public final int[] cookingTime = new int[4];
     private final RecipeManager.CachedCheck<SingleRecipeInput, CopperSoulCampfireRecipe> quickCheck;
     public CopperSoulCampfireBlockEntity(BlockPos pPos, BlockState pBlockState) {
         super(InstrumentusBlockEntities.COPPER_SOUL_CAMPFIRE_BLOCK_ENTITY.get(), pPos, pBlockState);

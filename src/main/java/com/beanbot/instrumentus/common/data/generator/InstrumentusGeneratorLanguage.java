@@ -163,6 +163,10 @@ public class InstrumentusGeneratorLanguage extends LanguageProvider {
         add(Instrumentus.MODID + ".ponder.soulcopper_smelting.text_3", "After a short while, Raw Soulcopper will be produced.");
         add(Instrumentus.MODID + ".ponder.soulcopper_smelting.text_4", "This Raw Soulcopper can be used to craft a few different things, or be smelted into Soulcopper Ingots in a Blast Furnace.");
 
+        add(Instrumentus.MODID + ".ponder.soulcopper_fan_processing.header", "Copper-fueled Soul Campfire Fan Processing");
+        add(Instrumentus.MODID + ".ponder.soulcopper_fan_processing.text_1", "Copper-fueled Soul Campfires can be put in front of Create Fans to process items, similar to other Fan Catalysts.");
+        add(Instrumentus.MODID + ".ponder.soulcopper_fan_processing.text_2", "Just wait a little bit of time, and you'll have Raw Soulcopper smelted with the Create mod!");
+
         add(Instrumentus.MODID + ".tooltip.press_shift", "Press [SHIFT] for more information");
 
         add(Instrumentus.MODID + ".tooltip.shears_1", "Can be used for shearing sheep,");
@@ -172,8 +176,8 @@ public class InstrumentusGeneratorLanguage extends LanguageProvider {
 
         add(Instrumentus.MODID + ".tooltip.excavator_1", "3x3 Area Shovel");
 
-        add(Instrumentus.MODID + ".tooltip.knife_1", "Destroying tall grass drops plant fiber");
-        add(Instrumentus.MODID + ".tooltip.knife_2", "which can be crafted into string");
+        add(Instrumentus.MODID + ".tooltip.knife_1", "Destroying tall grass drops plant fiber.");
+        add(Instrumentus.MODID + ".tooltip.knife_2", "Use on Glow Lichen to harvest slime.");
 
         add(Instrumentus.MODID + ".tooltip.wind_boots_1", "Jump again while in the air");
         add(Instrumentus.MODID + ".tooltip.wind_boots_2", "to double jump!");
@@ -189,5 +193,7 @@ public class InstrumentusGeneratorLanguage extends LanguageProvider {
 
         add(Instrumentus.MODID + ".tooltip.brush_1", "A brush with a durability");
         add(Instrumentus.MODID + ".tooltip.brush_2", "matching it's material.");
+
+        add(Instrumentus.MODID + ".jade.wind_blower_charge", "Charge: %s");
     }
 }

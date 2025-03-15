@@ -22,7 +22,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @JeiPlugin
-public class InstrumentusJEIIntegration implements IModPlugin {
+public class InstrumentusJEIPlugin implements IModPlugin {
     @Override
     public ResourceLocation getPluginUid() {
         return ResourceLocation.fromNamespaceAndPath("instrumentus", "jei_plugin");
