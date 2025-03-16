@@ -102,7 +102,7 @@ public class Instrumentus {
 
     private void attachCapabilities(RegisterCapabilitiesEvent event) {
         event.registerItem(Capabilities.EnergyStorage.ITEM, (itemStack, context) -> {
-                    int capacity = 20000;
+                    int capacity = 1;
                     if (itemStack.getItem() instanceof IEnergyItem energyItem) {
                         capacity = energyItem.getMaxCapacity();
                     }
