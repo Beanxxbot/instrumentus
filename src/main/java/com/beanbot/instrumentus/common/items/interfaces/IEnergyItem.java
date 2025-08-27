@@ -70,7 +70,7 @@ public interface IEnergyItem {
     }
 
     default int getMaxCapacity() {
-        return 20000;
+        return 50000 ;
     }
 
     default int getMaxTransferRate() {

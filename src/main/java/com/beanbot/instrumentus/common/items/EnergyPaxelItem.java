@@ -34,6 +34,11 @@ public class EnergyPaxelItem extends PaxelItem implements IItemLightningChargeab
         super(material, attackDamageIn, attackSpeedIn);
     }
 
+    @Override
+    public int getMaxCapacity() {
+        return 80000;
+    }
+
     @Nonnull
     @Override
     public InteractionResult useOn(UseOnContext context) {

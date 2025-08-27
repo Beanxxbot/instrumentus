@@ -140,7 +140,6 @@ public class ExcavatorItem extends DiggerItem {
                 default -> {
                     if (state.is(BlockTags.MINEABLE_WITH_SHOVEL) && state.canHarvestBlock(level, pos, (Player) entity)) {
                         state.getBlock().playerDestroy(level, (Player) entity, pos, state, blockEntity, item);
-                        state.getBlock().popExperience((ServerLevel) level, pos, event.getState().getExpDrop(level, pos, blockEntity, entity, item));
                         level.removeBlock(pos, false);
                         yield true;
                     }

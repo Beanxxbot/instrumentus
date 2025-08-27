@@ -5,6 +5,7 @@ import com.beanbot.instrumentus.common.items.interfaces.IItemLightningChargeable
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.tags.BlockTags;
@@ -12,10 +13,12 @@ import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.*;
+import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.common.NeoForge;
@@ -34,14 +37,17 @@ public class EnergyExcavatorItem extends ExcavatorItem implements IItemLightning
     }
 
     @Override
+    public int getMaxCapacity() {
+        return 80000;
+    }
+
+    @Override
     public boolean mineBlock(@NotNull ItemStack stack, @NotNull Level level, BlockState state, @NotNull BlockPos pos, @NotNull LivingEntity entity){
         //noinspection ConstantValue
-        if(state.getBlock() == null || level.getBlockState(pos).getBlock() == Blocks.AIR)
-            return false;
+        if (state.getBlock() == null || level.getBlockState(pos).getBlock() == Blocks.AIR) return false;
 
-        boolean isStone = state.is(BlockTags.MINEABLE_WITH_SHOVEL);
-
-        int r = isStone ? 0 : 2;
+        boolean isShovelable = state.is(BlockTags.MINEABLE_WITH_SHOVEL);
+        int r = isShovelable ? 0 : 2;
 
         if(tier == Tiers.WOOD || tier == Tiers.STONE || tier == Tiers.IRON || tier == Tiers.GOLD || tier == Tiers.DIAMOND || tier == Tiers.NETHERITE || tier == InstrumentusItemTiers.ENERGIZED){
             r = 1;
@@ -50,7 +56,7 @@ public class EnergyExcavatorItem extends ExcavatorItem implements IItemLightning
 
         int numberTrimmed = 0;
 
-        if(isStone && !entity.isCrouching())
+        if(isShovelable && !entity.isCrouching())
         {
             numberTrimmed += trim(stack, entity, level, pos, r, TrimType.TRIM_EARTH);
         }
@@ -59,9 +65,12 @@ public class EnergyExcavatorItem extends ExcavatorItem implements IItemLightning
 
     public int trim(ItemStack stack, LivingEntity entity, Level level, BlockPos blockPos, int r, TrimType trimType){
         int numberTrimmed = 0;
-        Vec3 look = entity.getLookAngle();
+        Player player = (Player) entity;
 
-        if(look.x >= -1 && look.x <= -0.75 || look.x <= 1 && look.x >= 0.75) {
+        BlockHitResult blockHitResult = new BlockHitResult(new Vec3(player.getX(), player.getY(), player.getZ()), getPlayerPOVHitResult(level, player, ClipContext.Fluid.NONE).getDirection(), blockPos, false);
+        Direction blockFaceMined = blockHitResult.getDirection();
+
+        if(blockFaceMined == Direction.EAST || blockFaceMined == Direction.WEST/*look.x >= -1 && look.x <= -0.75 || look.x <= 1 && look.x >= 0.75*/) {
             for (int dz = -r; dz <= r; dz++) {
                 for (int dy = -r; dy <= r; dy++) {
                     if (dy == 0 && dz == 0)
@@ -77,7 +86,7 @@ public class EnergyExcavatorItem extends ExcavatorItem implements IItemLightning
                     }
                 }
             }
-        } else if(look.z >= -1 && look.z <= -0.75 || look.z <= 1 && look.z >= 0.75) {
+        } else if(blockFaceMined == Direction.NORTH || blockFaceMined == Direction.SOUTH/*look.z >= -1 && look.z <= -0.75 || look.z <= 1 && look.z >= 0.75*/) {
             for (int dx = -r; dx <= r; dx++) {
                 for (int dy = -r; dy <= r; dy++) {
                     if (dy == 0 && dx == 0)
@@ -93,7 +102,7 @@ public class EnergyExcavatorItem extends ExcavatorItem implements IItemLightning
                     }
                 }
             }
-        } else if (look.y >= -1 && look.y <= -0.75 || look.y <= 1 && look.y >= 0.75) {
+        } else if (blockFaceMined == Direction.UP || blockFaceMined == Direction.DOWN /*look.y >= -1 && look.y <= -0.75 || look.y <= 1 && look.y >= 0.75*/) {
             for (int dx = -r; dx <= r; dx++) {
                 for (int dz = -r; dz <= r; dz++) {
                     if (dz == 0 && dx == 0)
@@ -177,7 +186,6 @@ public class EnergyExcavatorItem extends ExcavatorItem implements IItemLightning
                 default -> {
                     if (state.is(BlockTags.MINEABLE_WITH_SHOVEL) && state.canHarvestBlock(world, pos, (Player) entity)) {
                         state.getBlock().playerDestroy(world, (Player) entity, pos, state, blockEntity, item);
-                        state.getBlock().popExperience((ServerLevel) world, pos, event.getState().getExpDrop(world, pos, blockEntity, entity, item));
                         world.removeBlock(pos, false);
                         yield true;
                     }
