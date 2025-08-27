@@ -186,7 +186,6 @@ public class EnergyExcavatorItem extends ExcavatorItem implements IItemLightning
                 default -> {
                     if (state.is(BlockTags.MINEABLE_WITH_SHOVEL) && state.canHarvestBlock(world, pos, (Player) entity)) {
                         state.getBlock().playerDestroy(world, (Player) entity, pos, state, blockEntity, item);
-                        state.getBlock().popExperience((ServerLevel) world, pos, event.getState().getExpDrop(world, pos, blockEntity, entity, item));
                         world.removeBlock(pos, false);
                         yield true;
                     }

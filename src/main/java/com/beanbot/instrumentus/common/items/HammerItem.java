@@ -4,6 +4,9 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.Registry;
+import net.minecraft.core.component.DataComponents;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.tags.BlockTags;
@@ -11,6 +14,9 @@ import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.*;
+import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
+import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
@@ -91,7 +97,7 @@ public class HammerItem extends DiggerItem {
         BlockHitResult blockHitResult = new BlockHitResult(new Vec3(player.getX(), player.getY(), player.getZ()), getPlayerPOVHitResult(level, player, ClipContext.Fluid.NONE).getDirection(), blockPos, false);
         Direction blockFaceMined = blockHitResult.getDirection();
 
-        if(blockFaceMined == Direction.EAST || blockFaceMined == Direction.WEST/*look.x >= -1 && look.x <= -0.75 || look.x <= 1 && look.x >= 0.75*/) {
+        if(blockFaceMined == Direction.EAST || blockFaceMined == Direction.WEST) {
             for (int dz = -r; dz <= r; dz++) {
                 for (int dy = -r; dy <= r; dy++) {
                     if (dy == 0 && dz == 0)
@@ -102,7 +108,7 @@ public class HammerItem extends DiggerItem {
                     }
                 }
             }
-        } else if(blockFaceMined == Direction.NORTH || blockFaceMined == Direction.SOUTH/*look.z >= -1 && look.z <= -0.75 || look.z <= 1 && look.z >= 0.75*/) {
+        } else if(blockFaceMined == Direction.NORTH || blockFaceMined == Direction.SOUTH) {
             for (int dx = -r; dx <= r; dx++) {
                 for (int dy = -r; dy <= r; dy++) {
                     if (dy == 0 && dx == 0)
@@ -113,7 +119,7 @@ public class HammerItem extends DiggerItem {
                     }
                 }
             }
-        } else if (blockFaceMined == Direction.UP || blockFaceMined == Direction.DOWN /*look.y >= -1 && look.y <= -0.75 || look.y <= 1 && look.y >= 0.75*/) {
+        } else if (blockFaceMined == Direction.UP || blockFaceMined == Direction.DOWN) {
             for (int dx = -r; dx <= r; dx++) {
                 for (int dz = -r; dz <= r; dz++) {
                     if (dz == 0 && dx == 0)
@@ -144,7 +150,6 @@ public class HammerItem extends DiggerItem {
                 default -> {
                     if (state.is(BlockTags.MINEABLE_WITH_PICKAXE) && state.canHarvestBlock(level, pos, (Player) entity)) {
                         state.getBlock().playerDestroy(level, (Player) entity, pos, state, blockEntity, item);
-                        state.getBlock().popExperience((ServerLevel) level, pos, event.getState().getExpDrop(level, pos, blockEntity, entity, item));
                         level.removeBlock(pos, false);
                         yield true;
                     }
