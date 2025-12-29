@@ -93,7 +93,7 @@ public class InstrumentusFanProcessingTypes extends AllFanProcessingTypes {
                     .getRecipeFor(InstrumentusRecipes.COPPER_SOUL_CAMPFIRE_COOKING_TYPE.get(), new SingleRecipeInput(stack), level);
 
             if (recipe.isPresent())
-                return RecipeApplier.applyRecipeOn(level, stack, recipe.get());
+                return RecipeApplier.applyRecipeOn(level, stack, recipe.get().value(), false);
             return null;
         }
 
