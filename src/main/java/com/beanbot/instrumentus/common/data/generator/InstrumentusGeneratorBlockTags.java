@@ -9,7 +9,6 @@ import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.level.block.Block;
 import net.neoforged.neoforge.common.data.BlockTagsProvider;
-import net.neoforged.neoforge.common.data.ExistingFileHelper;
 import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nullable;
@@ -19,8 +18,8 @@ public class InstrumentusGeneratorBlockTags extends BlockTagsProvider {
 
     public static final TagKey<Block> MINEABLE_WITH_PAXEL = BlockTags.create(ResourceLocation.fromNamespaceAndPath("c", "mineable/paxel"));
 
-    public InstrumentusGeneratorBlockTags(PackOutput output, CompletableFuture<HolderLookup.Provider> lookupProvider, @Nullable ExistingFileHelper helper) {
-        super(output, lookupProvider, Instrumentus.MODID, helper);
+    public InstrumentusGeneratorBlockTags(PackOutput output, CompletableFuture<HolderLookup.Provider> lookupProvider) {
+        super(output, lookupProvider, Instrumentus.MODID);
     }
 
     @Override

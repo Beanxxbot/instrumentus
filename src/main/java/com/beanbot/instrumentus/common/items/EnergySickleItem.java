@@ -5,29 +5,24 @@ import com.beanbot.instrumentus.common.items.interfaces.IItemLightningChargeable
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Vec3i;
 import net.minecraft.network.chat.Component;
-import net.minecraft.server.level.ServerLevel;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.*;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.*;
-import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.capabilities.Capabilities;
-import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.energy.IEnergyStorage;
-import net.neoforged.neoforge.event.level.BlockEvent;
 
 import java.util.List;
 
 public class EnergySickleItem extends SickleItem implements IItemLightningChargeable, IEnergyItem {
 
-    protected Tier tier;
+    protected ToolMaterial toolMaterial;
 
-    public EnergySickleItem(Tier tier) {
-        super(tier);
-        this.tier = tier;
+    public EnergySickleItem(ToolMaterial toolMaterial, Item.Properties properties) {
+        super(toolMaterial, properties);
+        this.toolMaterial = toolMaterial;
     }
 
     private static boolean isGrownCrop(BlockState state) {
@@ -61,15 +56,15 @@ public class EnergySickleItem extends SickleItem implements IItemLightningCharge
         int radius = isLeaves ? 0 : 2;
         int height = isLeaves ? 0 : 2;
 
-        if (tier == Tiers.WOOD || tier == Tiers.STONE) {
+        if (toolMaterial == ToolMaterial.WOOD || toolMaterial == ToolMaterial.STONE) {
             radius = 1;
             height = 1;
         }
-        if (tier == Tiers.IRON || tier == Tiers.GOLD || tier == Tiers.DIAMOND) {
+        if (toolMaterial == ToolMaterial.IRON || toolMaterial == ToolMaterial.GOLD || toolMaterial == ToolMaterial.DIAMOND) {
             radius = 2;
             height = 2;
         }
-        if (tier == Tiers.NETHERITE || tier == InstrumentusItemTiers.ENERGIZED) {
+        if (toolMaterial == ToolMaterial.NETHERITE || toolMaterial == InstrumentusToolMaterials.ENERGIZED) {
             radius = 3;
             height = 3;
         }

@@ -1,8 +1,6 @@
 package com.beanbot.instrumentus.common;
 
 import com.beanbot.instrumentus.client.events.ToolRenderEvents;
-import com.beanbot.instrumentus.client.inventory.recipebook.RecipeBookExtensionClientHelper;
-import com.beanbot.instrumentus.client.ponder.InstrumentusPonderPlugin;
 import com.beanbot.instrumentus.common.data.attachments.InstrumentusDataAttachments;
 import com.beanbot.instrumentus.common.data.conditions.InstrumentusConditions;
 import com.beanbot.instrumentus.common.data.loot.functions.InstrumentusLootFunctions;
@@ -24,7 +22,7 @@ import com.beanbot.instrumentus.common.items.datacomponents.InstrumentusDataComp
 import com.beanbot.instrumentus.common.items.interfaces.IEnergyItem;
 import com.beanbot.instrumentus.common.network.PacketHandler;
 import com.beanbot.instrumentus.common.recipe.InstrumentusRecipes;
-import net.createmod.ponder.foundation.PonderIndex;
+//import net.createmod.ponder.foundation.PonderIndex;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderers;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.IEventBus;
@@ -35,7 +33,6 @@ import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
-import net.neoforged.neoforge.client.event.RegisterRecipeBookCategoriesEvent;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent;
 import org.apache.logging.log4j.LogManager;
@@ -66,15 +63,12 @@ public class Instrumentus {
         LOGGER.debug("Yo Yo Yo It's Ya Boi, Instrumentus but on NeoForge");
         InstrumentusParticles.PARTICLE_TYPES.register(instrumentusEventBus);
 
-        InstrumentusArmorMaterials.register(instrumentusEventBus);
-
         InstrumentusItems.ITEMS_REGISTRAR.register(instrumentusEventBus);
         InstrumentusBlocks.BLOCKS_REGISTER.register(instrumentusEventBus);
 
         instrumentusEventBus.addListener(this::addCreative);
 
         InstrumentusMenus.register(instrumentusEventBus);
-        instrumentusEventBus.addListener(this::registerRecipeBookCategories);
 
         InstrumentusBlockEntities.register(instrumentusEventBus);
 
@@ -125,12 +119,8 @@ public class Instrumentus {
 
     private void setupClient(final FMLClientSetupEvent event) {
         BlockEntityRenderers.register(InstrumentusBlockEntities.COPPER_SOUL_CAMPFIRE_BLOCK_ENTITY.get(), CopperSoulCampfireRenderer::new);
-        PonderIndex.addPlugin(new InstrumentusPonderPlugin());
+//        PonderIndex.addPlugin(new InstrumentusPonderPlugin());
         NeoForge.EVENT_BUS.register(ToolRenderEvents.class);
-    }
-
-    private void registerRecipeBookCategories(RegisterRecipeBookCategoriesEvent event) {
-        RecipeBookExtensionClientHelper.init(event);
     }
 
     @SuppressWarnings("unused")

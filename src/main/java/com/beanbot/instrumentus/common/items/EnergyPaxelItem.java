@@ -30,8 +30,8 @@ import javax.annotation.Nullable;
 import java.util.List;
 
 public class EnergyPaxelItem extends PaxelItem implements IItemLightningChargeable, IEnergyItem {
-    public EnergyPaxelItem(Tier material, float attackDamageIn, float attackSpeedIn) {
-        super(material, attackDamageIn, attackSpeedIn);
+    public EnergyPaxelItem(ToolMaterial material, float attackDamageIn, float attackSpeedIn, Item.Properties properties) {
+        super(material, attackDamageIn, attackSpeedIn, properties);
     }
 
     @Override
@@ -81,7 +81,7 @@ public class EnergyPaxelItem extends PaxelItem implements IItemLightningChargeab
                 }
             }
         }
-        return InteractionResult.sidedSuccess(world.isClientSide);
+        return InteractionResult.SUCCESS;
     }
 
     @Nullable

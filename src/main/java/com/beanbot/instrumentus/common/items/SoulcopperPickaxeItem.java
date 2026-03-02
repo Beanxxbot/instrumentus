@@ -19,18 +19,11 @@ import java.util.List;
 public class SoulcopperPickaxeItem extends DiggerItem {
 
 
-    protected Tier material;
+    protected ToolMaterial material;
 
-    public SoulcopperPickaxeItem(Tier tier, int attackDamageIn, float attackSpeedIn) {
-        super(tier, BlockTags.MINEABLE_WITH_PICKAXE, generateItemProperties(tier, attackDamageIn, attackSpeedIn));
-        this.material = tier;
-    }
-
-    private static Item.Properties generateItemProperties(Tier tier, float attackDamageIn, float attackSpeedIn) {
-        if (tier == Tiers.NETHERITE) {
-            return new Item.Properties().attributes(PickaxeItem.createAttributes(tier, attackDamageIn, attackSpeedIn)).stacksTo(1).fireResistant().durability(tier.getUses());
-        }
-        return new Item.Properties().attributes(PickaxeItem.createAttributes(tier, attackDamageIn, attackSpeedIn)).stacksTo(1).durability(tier.getUses());
+    public SoulcopperPickaxeItem(ToolMaterial toolMaterial, int attackDamageIn, float attackSpeedIn, Item.Properties properties) {
+        super(toolMaterial, BlockTags.MINEABLE_WITH_PICKAXE, attackDamageIn, attackSpeedIn, properties);
+        this.material = toolMaterial;
     }
 
     @Override

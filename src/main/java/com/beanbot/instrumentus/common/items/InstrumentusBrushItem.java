@@ -5,26 +5,27 @@ import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.*;
-import net.minecraft.world.item.Tiers;
 
 import java.util.List;
 
 public class InstrumentusBrushItem extends BrushItem {
 
-    protected Tier tier;
-    public InstrumentusBrushItem(Tier material) {
-        super(new Item.Properties().durability(material.getUses()));
-        this.tier = material;
+    protected ToolMaterial toolMaterial;
+    public InstrumentusBrushItem(ToolMaterial material, Item.Properties properties) {
+        super(properties);
+        this.toolMaterial = material;
     }
 
     @Override
     public int getUseDuration(ItemStack pStack, LivingEntity pEntity) {
-        return switch (tier) {
-            case Tiers.WOOD, Tiers.STONE -> 300;
-            case Tiers.IRON -> 150;
-            case Tiers.GOLD, Tiers.DIAMOND, Tiers.NETHERITE -> 50;
-            case null, default -> 200;
-        };
+        if (this.toolMaterial == ToolMaterial.WOOD || this.toolMaterial == ToolMaterial.STONE)
+            return 300;
+        else if (this.toolMaterial == ToolMaterial.IRON)
+            return 150;
+        else if (this.toolMaterial == ToolMaterial.GOLD || this.toolMaterial == ToolMaterial.DIAMOND || this.toolMaterial == ToolMaterial.NETHERITE)
+            return 50;
+        else
+            return 200;
     }
 
     @Override

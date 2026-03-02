@@ -7,7 +7,6 @@ import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
-import net.minecraft.server.level.ServerLevel;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
@@ -30,11 +29,11 @@ import java.util.List;
 
 public class EnergyHammerItem extends HammerItem implements IItemLightningChargeable, IEnergyItem {
 
-    protected Tier tier;
+    protected ToolMaterial toolMaterial;
 
-    public EnergyHammerItem(Tier tier, float attackDamageIn, float attackSpeedIn){
-        super(tier, attackSpeedIn, attackDamageIn);
-        this.tier = tier;
+    public EnergyHammerItem(ToolMaterial toolMaterial, float attackDamageIn, float attackSpeedIn, Item.Properties properties){
+        super(toolMaterial, attackSpeedIn, attackDamageIn, properties);
+        this.toolMaterial = toolMaterial;
     }
 
     @Override
@@ -50,7 +49,7 @@ public class EnergyHammerItem extends HammerItem implements IItemLightningCharge
         boolean isPickaxeable = state.is(BlockTags.MINEABLE_WITH_PICKAXE);
         int r = isPickaxeable ? 0 : 2;
 
-        if(tier == Tiers.WOOD || tier == Tiers.STONE || tier == Tiers.IRON || tier == Tiers.GOLD || tier == Tiers.DIAMOND || tier == Tiers.NETHERITE || tier == InstrumentusItemTiers.ENERGIZED){
+        if(toolMaterial == ToolMaterial.WOOD || toolMaterial == ToolMaterial.STONE || toolMaterial == ToolMaterial.IRON || toolMaterial == ToolMaterial.GOLD || toolMaterial == ToolMaterial.DIAMOND || toolMaterial == ToolMaterial.NETHERITE || toolMaterial == InstrumentusToolMaterials.ENERGIZED){
             r = 1;
         }
         stack.hurtAndBreak(1, entity, EquipmentSlot.MAINHAND);

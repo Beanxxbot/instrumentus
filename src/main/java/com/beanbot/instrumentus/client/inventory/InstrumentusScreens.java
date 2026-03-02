@@ -7,12 +7,12 @@ import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.client.event.RegisterMenuScreensEvent;
 
-@EventBusSubscriber(modid = Instrumentus.MODID, bus = EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
+@EventBusSubscriber(modid = Instrumentus.MODID, value = Dist.CLIENT)
 public class InstrumentusScreens {
 
     @SubscribeEvent
     public static void registerScreens(RegisterMenuScreensEvent event) {
-        event.register(InstrumentusMenus.KILN_MENU.get(), KilnScreen::new);
+        event.register(InstrumentusMenus.KILN_MENU, KilnScreen::new);
     }
 
 }

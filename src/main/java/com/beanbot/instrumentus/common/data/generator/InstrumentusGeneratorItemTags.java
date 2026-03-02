@@ -26,10 +26,13 @@ public class InstrumentusGeneratorItemTags extends ItemTagsProvider {
     public static final TagKey<Item> TOOLS_HAMMERS = ItemTags.create(ResourceLocation.fromNamespaceAndPath("c", "tools/hammers"));
     public static final TagKey<Item> TOOLS_BRUSHES = ItemTags.create(ResourceLocation.fromNamespaceAndPath("c", "tools/brushes"));
     public static final TagKey<Item> TOOLS_MINING_TOOLS = ItemTags.create(ResourceLocation.fromNamespaceAndPath("c", "tools/mining_tools"));
+    public static final TagKey<Item> COPPER_TOOL_MATERIALS = ItemTags.create(ResourceLocation.fromNamespaceAndPath("c", "tools/copper_tool_materials"));
+    public static final TagKey<Item> ENERGIZED_TOOL_MATERIALS = ItemTags.create(ResourceLocation.fromNamespaceAndPath("c", "tools/energized_tool_materials"));
+    public static final TagKey<Item> REPAIRS_BREEZE_ARMOR = ItemTags.create(ResourceLocation.fromNamespaceAndPath(Instrumentus.MODID, "tools/breeze_armor_materials"));
 
 
-    public InstrumentusGeneratorItemTags(PackOutput output, CompletableFuture<HolderLookup.Provider> lookupProvider, BlockTagsProvider blockTags, @Nullable ExistingFileHelper helper) {
-        super(output, lookupProvider, blockTags.contentsGetter(), Instrumentus.MODID, helper);
+    public InstrumentusGeneratorItemTags(PackOutput output, CompletableFuture<HolderLookup.Provider> lookupProvider, BlockTagsProvider blockTags) {
+        super(output, lookupProvider, blockTags.contentsGetter(), Instrumentus.MODID);
     }
 
     @Override
@@ -70,6 +73,12 @@ public class InstrumentusGeneratorItemTags extends ItemTagsProvider {
                         .add(pickaxeItem);
             }
         }
+
+        tag(COPPER_TOOL_MATERIALS)
+                .add(Items.COPPER_INGOT);
+
+        tag(ENERGIZED_TOOL_MATERIALS)
+                .add(InstrumentusItems.ENERGIZED_INGOT.get());
     }
 
     public void addToolEnchantments() {

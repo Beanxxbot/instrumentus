@@ -9,6 +9,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.core.particles.BlockParticleOption;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.chat.Component;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.network.ServerGamePacketListenerImpl;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
@@ -37,8 +38,8 @@ import javax.annotation.Nullable;
 import java.util.List;
 
 public class EnergyBrushItem extends BrushItem implements IItemLightningChargeable, IEnergyItem {
-    public EnergyBrushItem() {
-        super(new Item.Properties().durability(0).stacksTo(1).fireResistant());
+    public EnergyBrushItem(Item.Properties properties) {
+        super(properties);
     }
 
     @Override
@@ -80,7 +81,7 @@ public class EnergyBrushItem extends BrushItem implements IItemLightningChargeab
                             BlockEntity blockentity = pLevel.getBlockEntity(blockpos);
                             if (blockentity instanceof BrushableBlockEntity) {
                                 BrushableBlockEntity brushableblockentity = (BrushableBlockEntity)blockentity;
-                                boolean flag1 = brushableblockentity.brush(pLevel.getGameTime(), player, blockhitresult.getDirection());
+                                boolean flag1 = brushableblockentity.brush(pLevel.getGameTime(), (ServerLevel) pLevel, player, blockhitresult.getDirection(), pStack);
                                 if (flag1) {
                                     if (player != null) {
                                         IEnergyStorage energyStorage = pStack.getCapability(Capabilities.EnergyStorage.ITEM);

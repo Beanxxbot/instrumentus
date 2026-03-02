@@ -7,6 +7,7 @@ import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.network.chat.Component;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -25,8 +26,8 @@ import java.util.List;
 
 public class EnergyShearsItem extends InstrumentusShearsItem implements IItemLightningChargeable, IEnergyItem {
 
-    public EnergyShearsItem(Tier material) {
-        super(material);
+    public EnergyShearsItem(Item.Properties properties) {
+        super(properties);
     }
 
     @Override
@@ -39,11 +40,13 @@ public class EnergyShearsItem extends InstrumentusShearsItem implements IItemLig
                 IShearable target = (IShearable) entity;
                 BlockPos pos = BlockPos.containing(entity.position());
                 if (target.isShearable(playerIn, stack, entity.level(), pos)) {
-                    target.onSheared(playerIn, stack, entity.level(), pos)
-                            .forEach(drop -> target.spawnShearedDrop(entity.level(), pos, drop));
-                    entity.gameEvent(GameEvent.SHEAR, playerIn);
-                    if (!(energyStorage == null)) {
-                        energyStorage.extractEnergy(getMaxTransferRate() - 24, false);
+                    if (entity.level() instanceof ServerLevel serverLevel) {
+                        target.onSheared(playerIn, stack, entity.level(), pos)
+                                .forEach(drop -> target.spawnShearedDrop(serverLevel, pos, drop));
+                        entity.gameEvent(GameEvent.SHEAR, playerIn);
+                        if (!(energyStorage == null)) {
+                            energyStorage.extractEnergy(getMaxTransferRate() - 24, false);
+                        }
                     }
                 }
                 return InteractionResult.SUCCESS;

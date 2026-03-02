@@ -1,8 +1,10 @@
 plugins {
     id 'java-library'
     id 'maven-publish'
-    id 'net.neoforged.moddev' version '1.0.21'
+    //https://projects.neoforged.net/neoforged/ModDevGradle
+    id 'net.neoforged.moddev' version '2.0.134'
     id 'org.sinytra.wiki.toolkit' version '0.1.10'
+    //https://github.com/modmuss50/mod-publish-plugin
     id 'me.modmuss50.mod-publish-plugin' version'0.7.4'
 }
 
@@ -31,6 +33,13 @@ repositories {
         url 'https://www.cursemaven.com'
         content {
             includeGroup "curse.maven"
+        }
+    }
+    //Modrinth Maven (Jade)
+    maven {
+        url "https://api.modrinth.com/maven"
+        content {
+            includeGroup "maven.modrinth"
         }
     }
     // Create
@@ -83,7 +92,7 @@ neoForge {
         }
 
         data {
-            data()
+            clientData()
 
             programArguments.addAll '--mod', project.mod_id, '--all', '--output', file('src/generated/resources/').getAbsolutePath(), '--existing', file('src/main/resources/').getAbsolutePath(), '-mixin.config=create.mixins.json'
         }
@@ -114,20 +123,18 @@ dependencies {
     compileOnly("mezz.jei:jei-${minecraft_version}-neoforge-api:${jei_version}")
     runtimeOnly("mezz.jei:jei-${minecraft_version}-neoforge:${jei_version}")
 
-    runtimeOnly("org.sinytra:item-asset-export-neoforge:1.0.2+1.21")
-
-    implementation "curse.maven:jade-324717:${jade_id}"
-
+    //runtimeOnly("org.sinytra:item-asset-export-neoforge:1.0.2+1.21")
+    implementation "maven.modrinth:jade:${jade_version}"
     runtimeOnly "top.theillusivec4.curios:curios-neoforge:${curios_version}+${minecraft_version}"
     compileOnly "top.theillusivec4.curios:curios-neoforge:${curios_version}+${minecraft_version}:api"
 
-    jarJar "net.createmod.ponder:ponder-neoforge:${ponder_version}+mc${minecraft_version}"
+    //jarJar "net.createmod.ponder:ponder-neoforge:${ponder_version}+mc${minecraft_version}"
 
-    implementation("com.simibubi.create:create-${minecraft_version}:${create_version}:slim") { transitive = false }
-    implementation("net.createmod.ponder:ponder-neoforge:${ponder_version}+mc${minecraft_version}")
-    compileOnly("dev.engine-room.flywheel:flywheel-neoforge-api-${minecraft_version}:${flywheel_version}")
-    jarJar(runtimeOnly("dev.engine-room.flywheel:flywheel-neoforge-${minecraft_version}:${flywheel_version}"))
-    implementation("com.tterrag.registrate:Registrate:${registrate_version}")
+    //implementation("com.simibubi.create:create-${minecraft_version}:${create_version}:slim") { transitive = false }
+    //implementation("net.createmod.ponder:ponder-neoforge:${ponder_version}+mc${minecraft_version}")
+    //compileOnly("dev.engine-room.flywheel:flywheel-neoforge-api-${minecraft_version}:${flywheel_version}")
+    //jarJar(runtimeOnly("dev.engine-room.flywheel:flywheel-neoforge-${minecraft_version}:${flywheel_version}"))
+    //implementation("com.tterrag.registrate:Registrate:${registrate_version}")
 
     // For more info:
     // http://www.gradle.org/docs/current/userguide/artifact_dependencies_tutorial.html
@@ -176,12 +183,12 @@ tasks.withType(JavaCompile).configureEach {
     options.encoding = 'UTF-8'
 }
 
-idea {
-    module {
-        downloadSources = true
-        downloadJavadoc = true
-    }
-}
+//idea {
+//    module {
+//        downloadSources = true
+//        downloadJavadoc = true
+//    }
+//}
 
 wiki {
     docs {
@@ -203,43 +210,34 @@ publishMods {
     modLoaders.add("neoforge")
 
     curseforge {
-
         announcementTitle = "CurseForge Download"
         accessToken = providers.gradleProperty("CURSEFORGE_API_KEY")
         projectId = "231242"
         minecraftVersionRange {
-            start = "1.21"
-            end = "1.21.1"
+            start = "1.21.3"
+            end = "1.21.3"
         }
-
         javaVersions.add(JavaVersion.VERSION_21)
-
         clientRequired = true
         serverRequired = true
-
         projectSlug = "instrumentus"
     }
 
     modrinth {
-
         announcementTitle = "Modrinth Download"
         accessToken = providers.gradleProperty("MODRINTH_PAT")
         projectId = "ZSHoSQwH"
         minecraftVersionRange {
-            start = "1.21"
-            end = "1.21.1"
+            start = "1.21.3"
+            end = "1.21.3"
         }
     }
 
     discord {
-
         webhookUrl = providers.gradleProperty("DISCORD_WEBHOOK_INSTRUMENTUS")
         dryRunWebhookUrl = providers.gradleProperty("DISCORD_TEST")
-
         username = "Instrumentus Releases"
-
         content = changelog.map { "# Instrumentus Has been Updated! \n<@&1289306018840449065> \n" + it }
-
         setPlatforms(publishMods.platforms.curseforge, publishMods.platforms.modrinth)
     }
 }

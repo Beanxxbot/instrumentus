@@ -27,8 +27,8 @@ import java.util.List;
 
 public class EnergyShovelItem extends DiggerItem implements IItemLightningChargeable, IEnergyItem {
 
-    public EnergyShovelItem(Tier tier, float attackDamageIn, float attackSpeedIn) {
-        super(tier, BlockTags.MINEABLE_WITH_SHOVEL, new Item.Properties().attributes(ShovelItem.createAttributes(tier, attackDamageIn, attackSpeedIn)).durability(0).stacksTo(1).fireResistant());
+    public EnergyShovelItem(ToolMaterial toolMaterial, float attackDamageIn, float attackSpeedIn, Item.Properties properties) {
+        super(toolMaterial, BlockTags.MINEABLE_WITH_SHOVEL, attackDamageIn, attackSpeedIn, properties);
     }
 
     @Override
@@ -67,7 +67,7 @@ public class EnergyShovelItem extends DiggerItem implements IItemLightningCharge
                     }
                 }
 
-                return InteractionResult.sidedSuccess(world.isClientSide);
+                return InteractionResult.SUCCESS;
             } else {
                 return InteractionResult.PASS;
             }

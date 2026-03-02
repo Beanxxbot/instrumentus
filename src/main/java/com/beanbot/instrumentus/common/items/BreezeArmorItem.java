@@ -3,9 +3,12 @@ package com.beanbot.instrumentus.common.items;
 
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.core.Holder;
+import net.minecraft.core.HolderSet;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
+import net.minecraft.references.Blocks;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -15,9 +18,11 @@ import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.equipment.ArmorType;
 import net.minecraft.world.level.ExplosionDamageCalculator;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.SimpleExplosionDamageCalculator;
+import net.minecraft.world.level.block.Block;
 
 import java.util.List;
 import java.util.Optional;
@@ -25,12 +30,13 @@ import java.util.function.Function;
 
 
 public class BreezeArmorItem extends ArmorItem {
+
     private static final ExplosionDamageCalculator EXPLOSION_DAMAGE_CALCULATOR = new SimpleExplosionDamageCalculator(
-            true, false, Optional.of(0.7F), BuiltInRegistries.BLOCK.getTag(BlockTags.BLOCKS_WIND_CHARGE_EXPLOSIONS).map(Function.identity())
+            true, false, Optional.of(0.7F), BuiltInRegistries.BLOCK.get(BlockTags.BLOCKS_WIND_CHARGE_EXPLOSIONS).map(Function.identity())
     );
 
-    public BreezeArmorItem(Type pType) {
-        super(InstrumentusArmorMaterials.BREEZE_ARMOR_MATERIAL, pType, new Item.Properties().durability(pType.getDurability(33)));
+    public BreezeArmorItem(ArmorType pType, Item.Properties properties) {
+        super(InstrumentusArmorMaterials.BREEZE_ARMOR_MATERIAL, pType, properties);
     }
 
     @Override
@@ -51,7 +57,7 @@ public class BreezeArmorItem extends ArmorItem {
 
     public void windJump(ItemStack stack, Player player, Level level) {
         if (!player.onGround()) {
-            player.getCooldowns().addCooldown(this, 60);
+            player.getCooldowns().addCooldown(stack, 60);
             player.setIgnoreFallDamageFromCurrentImpulse(true);
             WindCharge windCharge = new WindCharge(player, level, player.position().x(), player.position().y(), player.position().z());
             level.addFreshEntity(windCharge);

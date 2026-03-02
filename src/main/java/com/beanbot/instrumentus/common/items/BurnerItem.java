@@ -35,8 +35,8 @@ import java.util.Objects;
 
 public class BurnerItem extends Item {
 
-    public BurnerItem() {
-        super(new Item.Properties().durability(300).stacksTo(1));
+    public BurnerItem(Item.Properties properties) {
+        super(properties);
     }
 
     @Override
@@ -71,8 +71,8 @@ public class BurnerItem extends Item {
     }
 
     @Override
-    public @NotNull UseAnim getUseAnimation(@NotNull ItemStack stack) {
-        return UseAnim.BRUSH;
+    public @NotNull ItemUseAnimation getUseAnimation(@NotNull ItemStack stack) {
+        return ItemUseAnimation.BRUSH;
     }
 
     @Override

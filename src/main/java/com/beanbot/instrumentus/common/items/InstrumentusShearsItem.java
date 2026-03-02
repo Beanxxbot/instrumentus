@@ -5,21 +5,20 @@ import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.*;
-import net.minecraft.world.level.Level;
 
 import java.util.List;
 
 public class InstrumentusShearsItem extends ShearsItem {
 
-    public InstrumentusShearsItem(Tier tier) {
-        super(generateItemProperties(tier));
+    public InstrumentusShearsItem(Item.Properties properties) {
+        super (properties);
     }
 
-    private static Item.Properties generateItemProperties(Tier tier) {
-        if (tier == Tiers.NETHERITE || tier == InstrumentusItemTiers.ENERGIZED) {
-            new Item.Properties().stacksTo(1).durability(Math.toIntExact(Math.round(tier.getUses() * 0.952))).component(DataComponents.TOOL, ShearsItem.createToolProperties()).fireResistant();
+    private static Item.Properties generateItemProperties(ToolMaterial toolMaterial) {
+        if (toolMaterial == ToolMaterial.NETHERITE || toolMaterial == InstrumentusToolMaterials.ENERGIZED) {
+            new Item.Properties().stacksTo(1).durability(Math.toIntExact(Math.round(toolMaterial.durability() * 0.952))).component(DataComponents.TOOL, ShearsItem.createToolProperties()).fireResistant();
         }
-        return new Item.Properties().stacksTo(1).durability(Math.toIntExact(Math.round(tier.getUses() * 0.952))).component(DataComponents.TOOL, ShearsItem.createToolProperties());
+        return new Item.Properties().stacksTo(1).durability(Math.toIntExact(Math.round(toolMaterial.durability() * 0.952))).component(DataComponents.TOOL, ShearsItem.createToolProperties());
     }
 
     @Override

@@ -10,14 +10,18 @@ import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.ItemRenderer;
 import net.minecraft.client.renderer.entity.RenderLayerParent;
 import net.minecraft.client.renderer.entity.layers.RenderLayer;
+import net.minecraft.client.renderer.entity.state.PlayerRenderState;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.api.distmarker.OnlyIn;
 
 import java.util.UUID;
 
-public class BadgeRenderLayer extends RenderLayer<AbstractClientPlayer, PlayerModel<AbstractClientPlayer>> {
+@OnlyIn(Dist.CLIENT)
+public class BadgeRenderLayer extends RenderLayer<PlayerRenderState, PlayerModel> {
     private final ItemRenderer itemRenderer = Minecraft.getInstance().getItemRenderer();
 
     public static final UUID[] BADGE_UUIDS = new UUID[]{
@@ -26,18 +30,24 @@ public class BadgeRenderLayer extends RenderLayer<AbstractClientPlayer, PlayerMo
             UUID.fromString("222a5c7c-b225-4a56-9767-d23f40647e24") /* Sirawesomeknight */,
             UUID.fromString("51cc3846-03ae-46d6-a5c4-a9ae923c1822" /* jakeyboydotgov */)};
 
-    public BadgeRenderLayer(RenderLayerParent<AbstractClientPlayer, PlayerModel<AbstractClientPlayer>> renderer) {
+    public static final String[] BADGE_NAMES = new String[]{
+            "Beanxxbot",
+            "Jakeson69",
+            "Sirawesomeknight",
+            "jakeyboydotgov"};
+
+    public BadgeRenderLayer(RenderLayerParent<PlayerRenderState, PlayerModel> renderer) {
         super(renderer);
     }
 
     @Override
-    public void render(PoseStack poseStack, MultiBufferSource buffer, int packedLight, AbstractClientPlayer player, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch) {
+    public void render(PoseStack poseStack, MultiBufferSource buffer, int packedLight, PlayerRenderState player, float partialTicks, float ageInTicks) {
         if (shouldRenderBadge(player)) {
             poseStack.pushPose();
 
             this.getParentModel().body.translateAndRotate(poseStack);
 
-            if (player.hasItemInSlot(EquipmentSlot.CHEST)) {
+            if (player.chestEquipment instanceof ItemStack) {
                 poseStack.translate(0.15, 0.15, -0.2);
             } else {
                 poseStack.translate(0.15, 0.15, -0.14);
@@ -49,25 +59,25 @@ public class BadgeRenderLayer extends RenderLayer<AbstractClientPlayer, PlayerMo
             poseStack.mulPose(Axis.YP.rotationDegrees(180f));
 
             ItemStack badgeItem = getBadgeItem(player);
-            itemRenderer.renderStatic(badgeItem, ItemDisplayContext.FIXED, packedLight, OverlayTexture.NO_OVERLAY, poseStack, buffer, player.level(), 0);
+            itemRenderer.renderStatic(badgeItem, ItemDisplayContext.FIXED, packedLight, OverlayTexture.NO_OVERLAY, poseStack, buffer, Minecraft.getInstance().level, 0);
 
             poseStack.popPose();
         }
     }
 
-    private boolean shouldRenderBadge(AbstractClientPlayer player) {
-        for (UUID badgeUuid : BADGE_UUIDS) {
-            if (player.getUUID().equals(badgeUuid)) {
+    private boolean shouldRenderBadge(PlayerRenderState player) {
+        for (String badgeName : BADGE_NAMES) {
+            if (player.name.equals(badgeName)) {
                 return true;
             }
         }
         return false;
     }
 
-    private ItemStack getBadgeItem(AbstractClientPlayer player) {
-        if (player.getUUID().equals(BADGE_UUIDS[1])) {
+    private ItemStack getBadgeItem(PlayerRenderState player) {
+        if (player.name.equals(BADGE_NAMES[1])) {
             return new ItemStack(InstrumentusItems.ENERGIZED_PAXEL.get());
-        } else if (player.getUUID().equals(BADGE_UUIDS[2])) {
+        } else if (player.name.equals(BADGE_NAMES[2])) {
             return new ItemStack(InstrumentusItems.ENERGIZED_INGOT.get());
         } else {
             return new ItemStack(InstrumentusItems.DIAMOND_PAXEL.get());

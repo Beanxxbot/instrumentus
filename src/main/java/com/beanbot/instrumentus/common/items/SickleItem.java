@@ -1,7 +1,10 @@
 package com.beanbot.instrumentus.common.items;
 
+import com.beanbot.instrumentus.common.helper.InstrumentusItemHelper;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Vec3i;
+import net.minecraft.core.component.DataComponentType;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -17,19 +20,11 @@ import net.neoforged.neoforge.event.level.BlockEvent;
 
 public class SickleItem extends DiggerItem
 {
-    protected Tier tier;
+    protected ToolMaterial toolMaterial;
 
-    public SickleItem(Tier tier) {
-        super(tier, BlockTags.LEAVES, generateItemProperties(tier, 0, -1.9f));
-        this.tier = tier;
-
-    }
-
-    private static Item.Properties generateItemProperties(Tier tier, float attackDamageIn, float attackSpeedIn) {
-        if (tier == Tiers.NETHERITE || tier == InstrumentusItemTiers.ENERGIZED) {
-            return new Item.Properties().attributes(SickleItem.createAttributes(tier, attackDamageIn, attackSpeedIn)).stacksTo(1).fireResistant();
-        }
-        return new Item.Properties().attributes(SickleItem.createAttributes(tier, attackDamageIn, attackSpeedIn)).stacksTo(1);
+    public SickleItem(ToolMaterial toolMaterial, Item.Properties properties) {
+        super(toolMaterial, BlockTags.LEAVES, 0, -1.9f, properties);
+        this.toolMaterial = toolMaterial;
     }
 
     private static boolean isGrownCrop(BlockState state) {
@@ -63,17 +58,17 @@ public class SickleItem extends DiggerItem
         int radius = isLeaves ? 0 : 2;
         int height = isLeaves ? 0 : 2;
 
-        if(tier == Tiers.WOOD || tier == Tiers.STONE)
+        if(toolMaterial == ToolMaterial.WOOD || toolMaterial == ToolMaterial.STONE)
         {
             radius = 1;
             height = 1;
         }
-        if(tier == Tiers.IRON || tier == Tiers.GOLD || tier == InstrumentusItemTiers.COPPER || tier == Tiers.DIAMOND)
+        if(toolMaterial == ToolMaterial.IRON || toolMaterial == ToolMaterial.GOLD || toolMaterial == InstrumentusToolMaterials.COPPER || toolMaterial == ToolMaterial.DIAMOND)
         {
             radius = 2;
             height = 2;
         }
-        if(tier == Tiers.NETHERITE || tier == InstrumentusItemTiers.ENERGIZED)
+        if(toolMaterial == ToolMaterial.NETHERITE || toolMaterial == InstrumentusToolMaterials.ENERGIZED)
         {
             radius = 3;
             height = 3;

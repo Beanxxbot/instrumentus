@@ -10,7 +10,6 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Tier;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
@@ -18,13 +17,12 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.energy.IEnergyStorage;
 
-import javax.annotation.Nullable;
 import java.util.List;
 
 public class EnergyKnifeItem extends KnifeItem implements IItemLightningChargeable, IEnergyItem {
 
-    public EnergyKnifeItem(Tier tier, int attackDamageIn, float attackSpeedIn) {
-        super(tier, attackDamageIn, attackSpeedIn);
+    public EnergyKnifeItem(Item.Properties properties) {
+        super(properties);
     }
 
     @Override

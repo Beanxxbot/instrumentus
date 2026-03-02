@@ -7,7 +7,6 @@ import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
-import net.minecraft.server.level.ServerLevel;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
@@ -29,11 +28,11 @@ import org.jetbrains.annotations.NotNull;
 import java.util.List;
 
 public class EnergyExcavatorItem extends ExcavatorItem implements IItemLightningChargeable, IEnergyItem {
-    protected Tier tier;
+    protected ToolMaterial toolMaterial;
 
-    public EnergyExcavatorItem(Tier tier, float attackDamageIn, float attackSpeedIn){
-        super(tier, attackSpeedIn, attackDamageIn);
-        this.tier = tier;
+    public EnergyExcavatorItem(ToolMaterial toolMaterial, float attackDamageIn, float attackSpeedIn, Item.Properties properties){
+        super(toolMaterial, attackSpeedIn, attackDamageIn, properties);
+        this.toolMaterial = toolMaterial;
     }
 
     @Override
@@ -49,7 +48,7 @@ public class EnergyExcavatorItem extends ExcavatorItem implements IItemLightning
         boolean isShovelable = state.is(BlockTags.MINEABLE_WITH_SHOVEL);
         int r = isShovelable ? 0 : 2;
 
-        if(tier == Tiers.WOOD || tier == Tiers.STONE || tier == Tiers.IRON || tier == Tiers.GOLD || tier == Tiers.DIAMOND || tier == Tiers.NETHERITE || tier == InstrumentusItemTiers.ENERGIZED){
+        if(toolMaterial == ToolMaterial.WOOD || toolMaterial == ToolMaterial.STONE || toolMaterial == ToolMaterial.IRON || toolMaterial == ToolMaterial.GOLD || toolMaterial == ToolMaterial.DIAMOND || toolMaterial == ToolMaterial.NETHERITE || toolMaterial == InstrumentusToolMaterials.ENERGIZED){
             r = 1;
         }
         stack.hurtAndBreak(1, entity, EquipmentSlot.MAINHAND);

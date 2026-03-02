@@ -4,19 +4,12 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.core.Registry;
-import net.minecraft.core.component.DataComponents;
-import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
-import net.minecraft.server.level.ServerLevel;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.*;
-import net.minecraft.world.item.enchantment.Enchantment;
-import net.minecraft.world.item.enchantment.EnchantmentHelper;
-import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
@@ -34,18 +27,11 @@ import java.util.List;
 
 public class HammerItem extends DiggerItem {
 
-    protected Tier tier;
+    protected ToolMaterial toolMaterial;
 
-    public HammerItem(Tier tier, float attackDamageIn, float attackSpeedIn){
-        super(tier, BlockTags.MINEABLE_WITH_PICKAXE, generateItemProperties(tier, attackDamageIn, attackSpeedIn));
-        this.tier = tier;
-    }
-
-    private static Item.Properties generateItemProperties(Tier tier, float attackDamageIn, float attackSpeedIn) {
-        if (tier == Tiers.NETHERITE || tier == InstrumentusItemTiers.ENERGIZED) {
-            return new Item.Properties().attributes(HammerItem.createAttributes(tier, attackDamageIn, attackSpeedIn)).stacksTo(1).fireResistant();
-        }
-        return new Item.Properties().attributes(HammerItem.createAttributes(tier, attackDamageIn, attackSpeedIn)).stacksTo(1);
+    public HammerItem(ToolMaterial toolMaterial, float attackDamageIn, float attackSpeedIn, Item.Properties properties){
+        super(toolMaterial, BlockTags.MINEABLE_WITH_PICKAXE, attackDamageIn, attackSpeedIn, properties);
+        this.toolMaterial = toolMaterial;
     }
 
     @Override
@@ -75,7 +61,7 @@ public class HammerItem extends DiggerItem {
         boolean isPickaxeable = state.is(BlockTags.MINEABLE_WITH_PICKAXE);
         int r = isPickaxeable ? 0 : 2;
 
-        if(tier == Tiers.WOOD || tier == Tiers.STONE || tier == Tiers.IRON || tier == InstrumentusItemTiers.COPPER || tier == Tiers.GOLD || tier == Tiers.DIAMOND || tier == Tiers.NETHERITE || tier == InstrumentusItemTiers.ENERGIZED){
+        if(toolMaterial == ToolMaterial.WOOD || toolMaterial == ToolMaterial.STONE || toolMaterial == ToolMaterial.IRON || toolMaterial == InstrumentusToolMaterials.COPPER || toolMaterial == ToolMaterial.GOLD || toolMaterial == ToolMaterial.DIAMOND || toolMaterial == ToolMaterial.NETHERITE || toolMaterial == InstrumentusToolMaterials.ENERGIZED){
             r = 1;
         }
 
