@@ -20,7 +20,6 @@ import java.util.concurrent.CompletableFuture;
 public class InstrumentusGeneratorItemTags extends ItemTagsProvider {
 
     public static final TagKey<Item> TOOLS_COMMON_KNIVES = ItemTags.create(ResourceLocation.fromNamespaceAndPath("c", "tools/knife"));
-    public static final TagKey<Item> TOOLS_KNIVES = ItemTags.create(ResourceLocation.fromNamespaceAndPath("c", "knives"));
     public static final TagKey<Item> TOOLS_SHEARS = ItemTags.create(ResourceLocation.fromNamespaceAndPath("c", "tools/shears"));
     public static final TagKey<Item> TOOLS_SICKLES = ItemTags.create(ResourceLocation.fromNamespaceAndPath("c", "tools/sickles"));
     public static final TagKey<Item> TOOLS_HAMMERS = ItemTags.create(ResourceLocation.fromNamespaceAndPath("c", "tools/hammers"));
@@ -39,8 +38,6 @@ public class InstrumentusGeneratorItemTags extends ItemTagsProvider {
         for (var item : InstrumentusItems.ITEMS_REGISTRAR.getEntries()) {
             if (item.get() instanceof KnifeItem knife) {
                 tag(TOOLS_COMMON_KNIVES)
-                        .add(knife);
-                tag(TOOLS_KNIVES)
                         .add(knife);
             }
             else if (item.get() instanceof InstrumentusShearsItem shears) {
