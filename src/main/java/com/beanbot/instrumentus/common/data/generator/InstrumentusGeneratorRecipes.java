@@ -8,39 +8,29 @@ import com.beanbot.instrumentus.common.data.conditions.FeatureEnabledCondition;
 import com.beanbot.instrumentus.common.items.InstrumentusItems;
 import net.minecraft.advancements.critereon.InventoryChangeTrigger;
 import net.minecraft.core.HolderLookup;
-import net.minecraft.core.registries.Registries;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.recipes.*;
-import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
-import net.minecraft.world.level.ItemLike;
+import net.minecraft.world.item.crafting.StonecutterRecipe;
 import net.minecraft.world.level.block.Blocks;
 import net.neoforged.neoforge.common.Tags;
+import org.jetbrains.annotations.NotNull;
 
-import javax.annotation.Nullable;
 import java.util.concurrent.CompletableFuture;
 
 public class InstrumentusGeneratorRecipes extends RecipeProvider {
 
-    RecipeOutput output;
-
-    protected InstrumentusGeneratorRecipes(HolderLookup.Provider registries, RecipeOutput output) {
-        super(registries, output);
-        this.output = output;
-    }
-
-    protected void conditionalNineBlockStorageRecipes(FeatureEnabledCondition condition, RecipeCategory unpackedCategory, ItemLike unpacked, RecipeCategory packedCategory, ItemLike packed, String packedName, @Nullable String packedGroup, String unpackedName, @Nullable String unpackedGroup) {
-        this.shapeless(unpackedCategory, unpacked, 9).requires(packed).group(unpackedGroup).unlockedBy(getHasName(packed), this.has(packed)).save(this.output.withConditions(condition), ResourceKey.create(Registries.RECIPE, ResourceLocation.parse(unpackedName)));
-        this.shaped(packedCategory, packed).define('#', unpacked).pattern("###").pattern("###").pattern("###").group(packedGroup).unlockedBy(getHasName(unpacked), this.has(unpacked)).save(this.output.withConditions(condition), ResourceKey.create(Registries.RECIPE, ResourceLocation.parse(packedName)));
+    public InstrumentusGeneratorRecipes(PackOutput output, CompletableFuture<HolderLookup.Provider> completableFuture) {
+        super(output, completableFuture);
     }
 
     @Override
-    protected void buildRecipes() {
+    protected void buildRecipes(@NotNull RecipeOutput consumer) {
         //Breeze Boots
-        ShapedRecipeBuilder.shaped(this.registries.lookupOrThrow(Registries.ITEM), RecipeCategory.COMBAT, InstrumentusItems.BREEZE_ARMOR_BOOTS.get())
+        ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, InstrumentusItems.BREEZE_ARMOR_BOOTS.get())
                 .pattern("R R")
                 .pattern("RBR")
                 .pattern("C C")
@@ -49,9 +39,9 @@ public class InstrumentusGeneratorRecipes extends RecipeProvider {
                 .define('C', Items.WIND_CHARGE)
                 .group("instrumentus")
                 .unlockedBy("has_breeze_rod", InventoryChangeTrigger.TriggerInstance.hasItems(Items.WIND_CHARGE))
-                .save(output.withConditions(new FeatureEnabledCondition((FeatureEnabledCondition.ConfigFeature.TRIAL))));
+                .save(consumer.withConditions(new FeatureEnabledCondition((FeatureEnabledCondition.ConfigFeature.TRIAL))));
         //Wind Blower
-        ShapedRecipeBuilder.shaped(this.registries.lookupOrThrow(Registries.ITEM), RecipeCategory.MISC, InstrumentusBlocks.WIND_BLOWER.get())
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, InstrumentusBlocks.WIND_BLOWER.get())
                 .pattern("TDT")
                 .pattern("CSC")
                 .pattern("TBT")
@@ -62,9 +52,9 @@ public class InstrumentusGeneratorRecipes extends RecipeProvider {
                 .define('D', Blocks.DISPENSER)
                 .group("instrumentus")
                 .unlockedBy("has_breeze_rod", InventoryChangeTrigger.TriggerInstance.hasItems(Items.BREEZE_ROD))
-                .save(output.withConditions(new FeatureEnabledCondition(FeatureEnabledCondition.ConfigFeature.TRIAL)));
+                .save(consumer.withConditions(new FeatureEnabledCondition(FeatureEnabledCondition.ConfigFeature.TRIAL)));
         //Kiln
-        ShapedRecipeBuilder.shaped(this.registries.lookupOrThrow(Registries.ITEM), RecipeCategory.MISC, InstrumentusBlocks.KILN.get().asItem())
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, InstrumentusBlocks.KILN.get().asItem())
                 .pattern("BBB")
                 .pattern("BFB")
                 .pattern("SLS")
@@ -74,215 +64,221 @@ public class InstrumentusGeneratorRecipes extends RecipeProvider {
                 .define('L', Blocks.BRICKS)
                 .group("instrumentus")
                 .unlockedBy("has_furnace", InventoryChangeTrigger.TriggerInstance.hasItems(Blocks.BRICKS.asItem()))
-                .save(output.withConditions(new FeatureEnabledCondition(FeatureEnabledCondition.ConfigFeature.FIRING)));
+                .save(consumer.withConditions(new FeatureEnabledCondition(FeatureEnabledCondition.ConfigFeature.FIRING)));
         KilnCookingRecipeBuilder.fireDefault(
-                        this.tag(ItemTags.SAND),
+                        Ingredient.of(ItemTags.LOGS_THAT_BURN),
+                        RecipeCategory.MISC,
+                        Items.CHARCOAL.getDefaultInstance())
+                .unlockedBy("has_charcoal", InventoryChangeTrigger.TriggerInstance.hasItems(Items.CHARCOAL))
+                .save(consumer);
+        KilnCookingRecipeBuilder.fireDefault(
+                        Ingredient.of(ItemTags.SAND),
                         RecipeCategory.BUILDING_BLOCKS,
                         Blocks.GLASS.asItem().getDefaultInstance())
                 .unlockedBy("has_sand", InventoryChangeTrigger.TriggerInstance.hasItems(Blocks.SAND.asItem()))
-                .save(output);
+                .save(consumer);
         KilnCookingRecipeBuilder.fireDefault(
                         Ingredient.of(Blocks.DEEPSLATE_TILES.asItem()),
                         RecipeCategory.BUILDING_BLOCKS,
                         Blocks.CRACKED_DEEPSLATE_TILES.asItem().getDefaultInstance())
                 .unlockedBy("has_deepslate_tiles", InventoryChangeTrigger.TriggerInstance.hasItems(Blocks.DEEPSLATE_TILES.asItem()))
-                .save(output);
+                .save(consumer);
         KilnCookingRecipeBuilder.fireDefault(
                         Ingredient.of(Blocks.PINK_TERRACOTTA.asItem()),
                         RecipeCategory.BUILDING_BLOCKS,
                         Blocks.PINK_GLAZED_TERRACOTTA.asItem().getDefaultInstance())
                 .unlockedBy("has_pink_terracotta", InventoryChangeTrigger.TriggerInstance.hasItems(Blocks.PINK_TERRACOTTA.asItem()))
-                .save(output);
+                .save(consumer);
         KilnCookingRecipeBuilder.fireDefault(
                         Ingredient.of(Blocks.BLUE_TERRACOTTA.asItem()),
                         RecipeCategory.BUILDING_BLOCKS,
                         Blocks.BLUE_GLAZED_TERRACOTTA.asItem().getDefaultInstance())
                 .unlockedBy("has_blue_terracotta", InventoryChangeTrigger.TriggerInstance.hasItems(Blocks.BLUE_TERRACOTTA.asItem()))
-                .save(output);
+                .save(consumer);
         KilnCookingRecipeBuilder.fireDefault(
                         Ingredient.of(Blocks.DEEPSLATE_BRICKS.asItem()),
                         RecipeCategory.BUILDING_BLOCKS,
                         Blocks.CRACKED_DEEPSLATE_BRICKS.asItem().getDefaultInstance())
                 .unlockedBy("has_deepslate_bricks", InventoryChangeTrigger.TriggerInstance.hasItems(Blocks.DEEPSLATE_BRICKS.asItem()))
-                .save(output);
+                .save(consumer);
         KilnCookingRecipeBuilder.fireDefault(
                         Ingredient.of(Blocks.CLAY.asItem()),
                         RecipeCategory.BUILDING_BLOCKS,
                         Blocks.TERRACOTTA.asItem().getDefaultInstance())
                 .unlockedBy("has_clay_block", InventoryChangeTrigger.TriggerInstance.hasItems(Blocks.CLAY.asItem()))
-                .save(output);
+                .save(consumer);
         KilnCookingRecipeBuilder.fireDefault(
                         Ingredient.of(Blocks.CYAN_TERRACOTTA.asItem()),
                         RecipeCategory.BUILDING_BLOCKS,
                         Blocks.CYAN_GLAZED_TERRACOTTA.asItem().getDefaultInstance())
                 .unlockedBy("has_cyan_terracotta", InventoryChangeTrigger.TriggerInstance.hasItems(Blocks.CYAN_TERRACOTTA.asItem()))
-                .save(output);
+                .save(consumer);
         KilnCookingRecipeBuilder.fireDefault(
                         Ingredient.of(Blocks.MAGENTA_TERRACOTTA.asItem()),
                         RecipeCategory.BUILDING_BLOCKS,
                         Blocks.MAGENTA_GLAZED_TERRACOTTA.asItem().getDefaultInstance())
                 .unlockedBy("has_magenta_terracotta", InventoryChangeTrigger.TriggerInstance.hasItems(Blocks.MAGENTA_TERRACOTTA.asItem()))
-                .save(output);
+                .save(consumer);
         KilnCookingRecipeBuilder.fireDefault(
                         Ingredient.of(Blocks.POLISHED_BLACKSTONE_BRICKS.asItem()),
                         RecipeCategory.BUILDING_BLOCKS,
                         Blocks.CRACKED_POLISHED_BLACKSTONE_BRICKS.asItem().getDefaultInstance())
                 .unlockedBy("has_polished_blackstone_bricks", InventoryChangeTrigger.TriggerInstance.hasItems(Blocks.POLISHED_BLACKSTONE_BRICKS.asItem()))
-                .save(output);
+                .save(consumer);
         KilnCookingRecipeBuilder.fireDefault(
                         Ingredient.of(Blocks.BROWN_TERRACOTTA.asItem()),
                         RecipeCategory.BUILDING_BLOCKS,
                         Blocks.BROWN_GLAZED_TERRACOTTA.asItem().getDefaultInstance())
                 .unlockedBy("has_brown_terracotta", InventoryChangeTrigger.TriggerInstance.hasItems(Blocks.BROWN_TERRACOTTA.asItem()))
-                .save(output);
+                .save(consumer);
         KilnCookingRecipeBuilder.fireDefault(
                         Ingredient.of(Blocks.BASALT.asItem()),
                         RecipeCategory.BUILDING_BLOCKS,
                         Blocks.SMOOTH_BASALT.asItem().getDefaultInstance())
                 .unlockedBy("has_basalt", InventoryChangeTrigger.TriggerInstance.hasItems(Blocks.BASALT.asItem()))
-                .save(output);
+                .save(consumer);
         KilnCookingRecipeBuilder.fireDefault(
                         Ingredient.of(Blocks.RED_SANDSTONE.asItem()),
                         RecipeCategory.BUILDING_BLOCKS,
                         Blocks.SMOOTH_RED_SANDSTONE.asItem().getDefaultInstance())
                 .unlockedBy("has_red_sandstone", InventoryChangeTrigger.TriggerInstance.hasItems(Blocks.RED_SANDSTONE.asItem()))
-                .save(output);
+                .save(consumer);
         KilnCookingRecipeBuilder.fireDefault(
                         Ingredient.of(Blocks.COBBLED_DEEPSLATE.asItem()),
                         RecipeCategory.BUILDING_BLOCKS,
                         Blocks.DEEPSLATE.asItem().getDefaultInstance())
                 .unlockedBy("has_cobbled_deepslate", InventoryChangeTrigger.TriggerInstance.hasItems(Blocks.COBBLED_DEEPSLATE.asItem()))
-                .save(output);
+                .save(consumer);
         KilnCookingRecipeBuilder.fireDefault(
                         Ingredient.of(Blocks.QUARTZ_BLOCK.asItem()),
                         RecipeCategory.BUILDING_BLOCKS,
                         Blocks.SMOOTH_QUARTZ.asItem().getDefaultInstance())
                 .unlockedBy("has_quartz_block", InventoryChangeTrigger.TriggerInstance.hasItems(Blocks.QUARTZ_BLOCK.asItem()))
-                .save(output);
+                .save(consumer);
         KilnCookingRecipeBuilder.fireDefault(
                         Ingredient.of(Blocks.SANDSTONE.asItem()),
                         RecipeCategory.BUILDING_BLOCKS,
                         Blocks.SMOOTH_SANDSTONE.asItem().getDefaultInstance())
                 .unlockedBy("has_sandstone", InventoryChangeTrigger.TriggerInstance.hasItems(Blocks.SANDSTONE.asItem()))
-                .save(output);
+                .save(consumer);
         KilnCookingRecipeBuilder.fireDefault(
                         Ingredient.of(Blocks.LIGHT_BLUE_TERRACOTTA.asItem()),
                         RecipeCategory.BUILDING_BLOCKS,
                         Blocks.LIGHT_BLUE_GLAZED_TERRACOTTA.asItem().getDefaultInstance())
                 .unlockedBy("has_light_blue_terracotta", InventoryChangeTrigger.TriggerInstance.hasItems(Blocks.LIGHT_BLUE_TERRACOTTA.asItem()))
-                .save(output);
+                .save(consumer);
         KilnCookingRecipeBuilder.fireDefault(
                         Ingredient.of(Blocks.PURPLE_TERRACOTTA.asItem()),
                         RecipeCategory.BUILDING_BLOCKS,
                         Blocks.PURPLE_GLAZED_TERRACOTTA.asItem().getDefaultInstance())
                 .unlockedBy("has_purple_terracotta", InventoryChangeTrigger.TriggerInstance.hasItems(Blocks.PURPLE_TERRACOTTA.asItem()))
-                .save(output);
+                .save(consumer);
         KilnCookingRecipeBuilder.fireDefault(
                         Ingredient.of(Blocks.STONE_BRICKS.asItem()),
                         RecipeCategory.BUILDING_BLOCKS,
                         Blocks.CRACKED_STONE_BRICKS.asItem().getDefaultInstance())
                 .unlockedBy("has_stone_bricks", InventoryChangeTrigger.TriggerInstance.hasItems(Blocks.STONE_BRICKS.asItem()))
-                .save(output);
+                .save(consumer);
         KilnCookingRecipeBuilder.fireDefault(
                         Ingredient.of(Blocks.GREEN_TERRACOTTA.asItem()),
                         RecipeCategory.BUILDING_BLOCKS,
                         Blocks.GREEN_GLAZED_TERRACOTTA.asItem().getDefaultInstance())
                 .unlockedBy("has_green_terracotta", InventoryChangeTrigger.TriggerInstance.hasItems(Blocks.GREEN_TERRACOTTA.asItem()))
-                .save(output);
+                .save(consumer);
         KilnCookingRecipeBuilder.fireDefault(
                         Ingredient.of(Blocks.CACTUS.asItem()),
                         RecipeCategory.MISC,
                         Items.GREEN_DYE.getDefaultInstance())
                 .unlockedBy("has_cactus", InventoryChangeTrigger.TriggerInstance.hasItems(Blocks.CACTUS.asItem()))
-                .save(output);
+                .save(consumer);
         KilnCookingRecipeBuilder.fireDefault(
                         Ingredient.of(Blocks.SEA_PICKLE.asItem()),
                         RecipeCategory.MISC,
                         Items.LIME_DYE.getDefaultInstance())
                 .unlockedBy("has_sea_pickle", InventoryChangeTrigger.TriggerInstance.hasItems(Blocks.SEA_PICKLE.asItem()))
-                .save(output);
+                .save(consumer);
         KilnCookingRecipeBuilder.fireDefault(
                         Ingredient.of(Blocks.ORANGE_TERRACOTTA.asItem()),
                         RecipeCategory.BUILDING_BLOCKS,
                         Blocks.ORANGE_GLAZED_TERRACOTTA.asItem().getDefaultInstance())
                 .unlockedBy("has_orange_terracotta", InventoryChangeTrigger.TriggerInstance.hasItems(Blocks.ORANGE_TERRACOTTA.asItem()))
-                .save(output);
+                .save(consumer);
         KilnCookingRecipeBuilder.fireDefault(
                         Ingredient.of(Blocks.GRAY_TERRACOTTA.asItem()),
                         RecipeCategory.BUILDING_BLOCKS,
                         Blocks.GRAY_GLAZED_TERRACOTTA.asItem().getDefaultInstance())
                 .unlockedBy("has_gray_terracotta", InventoryChangeTrigger.TriggerInstance.hasItems(Blocks.GRAY_TERRACOTTA.asItem()))
-                .save(output);
+                .save(consumer);
         KilnCookingRecipeBuilder.fireDefault(
                         Ingredient.of(Blocks.NETHERRACK.asItem()),
                         RecipeCategory.MISC,
                         Items.NETHER_BRICK.getDefaultInstance())
                 .unlockedBy("has_netherrack", InventoryChangeTrigger.TriggerInstance.hasItems(Blocks.NETHERRACK.asItem()))
-                .save(output);
+                .save(consumer);
         KilnCookingRecipeBuilder.fireDefault(
                         Ingredient.of(Blocks.BLACK_TERRACOTTA.asItem()),
                         RecipeCategory.BUILDING_BLOCKS,
                         Blocks.BLACK_GLAZED_TERRACOTTA.asItem().getDefaultInstance())
                 .unlockedBy("has_black_terracotta", InventoryChangeTrigger.TriggerInstance.hasItems(Blocks.BLACK_TERRACOTTA.asItem()))
-                .save(output);
+                .save(consumer);
         KilnCookingRecipeBuilder.fireDefault(
                         Ingredient.of(Items.CLAY_BALL),
                         RecipeCategory.MISC,
                         Items.BRICK.getDefaultInstance())
                 .unlockedBy("has_clay_ball", InventoryChangeTrigger.TriggerInstance.hasItems(Items.CLAY_BALL))
-                .save(output);
+                .save(consumer);
         KilnCookingRecipeBuilder.fireDefault(
                         Ingredient.of(Blocks.YELLOW_TERRACOTTA.asItem()),
                         RecipeCategory.BUILDING_BLOCKS,
                         Blocks.YELLOW_GLAZED_TERRACOTTA.asItem().getDefaultInstance())
                 .unlockedBy("has_yellow_terracotta", InventoryChangeTrigger.TriggerInstance.hasItems(Blocks.YELLOW_TERRACOTTA.asItem()))
-                .save(output);
+                .save(consumer);
         KilnCookingRecipeBuilder.fireDefault(
                         Ingredient.of(Blocks.COBBLESTONE.asItem()),
                         RecipeCategory.BUILDING_BLOCKS,
                         Blocks.STONE.asItem().getDefaultInstance())
                 .unlockedBy("has_cobblestone", InventoryChangeTrigger.TriggerInstance.hasItems(Blocks.COBBLESTONE.asItem()))
-                .save(output);
+                .save(consumer);
         KilnCookingRecipeBuilder.fireDefault(
                         Ingredient.of(Blocks.STONE.asItem()),
                         RecipeCategory.BUILDING_BLOCKS,
                         Blocks.SMOOTH_STONE.asItem().getDefaultInstance())
                 .unlockedBy("has_stone", InventoryChangeTrigger.TriggerInstance.hasItems(Blocks.STONE.asItem()))
-                .save(output);
+                .save(consumer);
         KilnCookingRecipeBuilder.fireDefault(
                         Ingredient.of(Blocks.LIGHT_GRAY_TERRACOTTA.asItem()),
                         RecipeCategory.BUILDING_BLOCKS,
                         Blocks.LIGHT_GRAY_GLAZED_TERRACOTTA.asItem().getDefaultInstance())
                 .unlockedBy("has_light_gray_terracotta", InventoryChangeTrigger.TriggerInstance.hasItems(Blocks.LIGHT_GRAY_TERRACOTTA.asItem()))
-                .save(output);
+                .save(consumer);
         KilnCookingRecipeBuilder.fireDefault(
                         Ingredient.of(Blocks.NETHER_BRICKS.asItem()),
                         RecipeCategory.BUILDING_BLOCKS,
                         Blocks.CRACKED_NETHER_BRICKS.asItem().getDefaultInstance())
                 .unlockedBy("has_nether_bricks", InventoryChangeTrigger.TriggerInstance.hasItems(Blocks.NETHER_BRICKS.asItem()))
-                .save(output);
+                .save(consumer);
         KilnCookingRecipeBuilder.fireDefault(
                         Ingredient.of(Blocks.RED_TERRACOTTA.asItem()),
                         RecipeCategory.BUILDING_BLOCKS,
                         Blocks.RED_GLAZED_TERRACOTTA.asItem().getDefaultInstance())
                 .unlockedBy("has_red_terracotta", InventoryChangeTrigger.TriggerInstance.hasItems(Blocks.RED_TERRACOTTA.asItem()))
-                .save(output);
+                .save(consumer);
         KilnCookingRecipeBuilder.fireDefault(
                         Ingredient.of(Blocks.WHITE_TERRACOTTA.asItem()),
                         RecipeCategory.BUILDING_BLOCKS,
                         Blocks.WHITE_GLAZED_TERRACOTTA.asItem().getDefaultInstance())
                 .unlockedBy("has_white_terracotta", InventoryChangeTrigger.TriggerInstance.hasItems(Blocks.WHITE_TERRACOTTA.asItem()))
-                .save(output);
+                .save(consumer);
         KilnCookingRecipeBuilder.fireDefault(
                         Ingredient.of(Blocks.LIME_TERRACOTTA.asItem()),
                         RecipeCategory.BUILDING_BLOCKS,
                         Blocks.LIME_GLAZED_TERRACOTTA.asItem().getDefaultInstance())
                 .unlockedBy("has_lime_terracotta", InventoryChangeTrigger.TriggerInstance.hasItems(Blocks.LIME_TERRACOTTA.asItem()))
-                .save(output);
+                .save(consumer);
 
         //Copper Tools
         Instrumentus.LOGGER.info("Registering Copper Tools Recipes");
-        ShapedRecipeBuilder.shaped(this.registries.lookupOrThrow(Registries.ITEM), RecipeCategory.TOOLS, InstrumentusItems.COPPER_AXE.get())
+        ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, InstrumentusItems.COPPER_AXE.get())
                 .pattern("XX")
                 .pattern("XS")
                 .pattern(" S")
@@ -290,8 +286,8 @@ public class InstrumentusGeneratorRecipes extends RecipeProvider {
                 .define('S', Items.STICK)
                 .group("instrumentus")
                 .unlockedBy("has_copper_ingot", InventoryChangeTrigger.TriggerInstance.hasItems(Items.COPPER_INGOT))
-                .save(output.withConditions(new FeatureEnabledCondition(FeatureEnabledCondition.ConfigFeature.COPPER_TOOLS)));
-        ShapedRecipeBuilder.shaped(this.registries.lookupOrThrow(Registries.ITEM), RecipeCategory.TOOLS, InstrumentusItems.COPPER_HAMMER.get())
+                .save(consumer.withConditions(new FeatureEnabledCondition(FeatureEnabledCondition.ConfigFeature.COPPER_TOOLS)));
+        ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, InstrumentusItems.COPPER_HAMMER.get())
                 .pattern("ABA")
                 .pattern(" S ")
                 .pattern(" S ")
@@ -300,8 +296,8 @@ public class InstrumentusGeneratorRecipes extends RecipeProvider {
                 .define('S', Items.STICK)
                 .group("instrumentus")
                 .unlockedBy("has_copper_block", InventoryChangeTrigger.TriggerInstance.hasItems(Items.COPPER_BLOCK))
-                .save(output.withConditions(new FeatureEnabledCondition(FeatureEnabledCondition.ConfigFeature.COPPER_TOOLS), new FeatureEnabledCondition(FeatureEnabledCondition.ConfigFeature.HAMMERS)));
-        ShapedRecipeBuilder.shaped(this.registries.lookupOrThrow(Registries.ITEM), RecipeCategory.TOOLS, InstrumentusItems.COPPER_HOE.get())
+                .save(consumer.withConditions(new FeatureEnabledCondition(FeatureEnabledCondition.ConfigFeature.COPPER_TOOLS), new FeatureEnabledCondition(FeatureEnabledCondition.ConfigFeature.HAMMERS)));
+        ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, InstrumentusItems.COPPER_HOE.get())
                 .pattern("XX")
                 .pattern(" S")
                 .pattern(" S")
@@ -309,8 +305,8 @@ public class InstrumentusGeneratorRecipes extends RecipeProvider {
                 .define('S', Items.STICK)
                 .group("instrumentus")
                 .unlockedBy("has_copper_ingot", InventoryChangeTrigger.TriggerInstance.hasItems(Items.COPPER_INGOT))
-                .save(output.withConditions(new FeatureEnabledCondition(FeatureEnabledCondition.ConfigFeature.COPPER_TOOLS)));
-        ShapedRecipeBuilder.shaped(this.registries.lookupOrThrow(Registries.ITEM), RecipeCategory.TOOLS, InstrumentusItems.COPPER_KNIFE.get())
+                .save(consumer.withConditions(new FeatureEnabledCondition(FeatureEnabledCondition.ConfigFeature.COPPER_TOOLS)));
+        ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, InstrumentusItems.COPPER_KNIFE.get())
                 .pattern(" XX")
                 .pattern("XX ")
                 .pattern("S  ")
@@ -318,8 +314,8 @@ public class InstrumentusGeneratorRecipes extends RecipeProvider {
                 .define('S', Items.STICK)
                 .group("instrumentus")
                 .unlockedBy("has_copper_ingot", InventoryChangeTrigger.TriggerInstance.hasItems(Items.COPPER_INGOT))
-                .save(output.withConditions(new FeatureEnabledCondition(FeatureEnabledCondition.ConfigFeature.COPPER_TOOLS)));
-        ShapedRecipeBuilder.shaped(this.registries.lookupOrThrow(Registries.ITEM), RecipeCategory.TOOLS, InstrumentusItems.COPPER_PAXEL.get())
+                .save(consumer.withConditions(new FeatureEnabledCondition(FeatureEnabledCondition.ConfigFeature.COPPER_TOOLS)));
+        ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, InstrumentusItems.COPPER_PAXEL.get())
                 .pattern("AVP")
                 .pattern(" S ")
                 .pattern(" S ")
@@ -329,8 +325,8 @@ public class InstrumentusGeneratorRecipes extends RecipeProvider {
                 .define('S', Items.STICK)
                 .group("instrumentus")
                 .unlockedBy("has_copper_pickaxe", InventoryChangeTrigger.TriggerInstance.hasItems(InstrumentusItems.COPPER_PICKAXE.get()))
-                .save(output.withConditions(new FeatureEnabledCondition(FeatureEnabledCondition.ConfigFeature.COPPER_TOOLS), new FeatureEnabledCondition(FeatureEnabledCondition.ConfigFeature.PAXELS)));
-        ShapedRecipeBuilder.shaped(this.registries.lookupOrThrow(Registries.ITEM), RecipeCategory.TOOLS, InstrumentusItems.COPPER_PICKAXE.get())
+                .save(consumer.withConditions(new FeatureEnabledCondition(FeatureEnabledCondition.ConfigFeature.COPPER_TOOLS), new FeatureEnabledCondition(FeatureEnabledCondition.ConfigFeature.PAXELS)));
+        ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, InstrumentusItems.COPPER_PICKAXE.get())
                 .pattern("XXX")
                 .pattern(" S ")
                 .pattern(" S ")
@@ -338,15 +334,15 @@ public class InstrumentusGeneratorRecipes extends RecipeProvider {
                 .define('S', Items.STICK)
                 .group("instrumentus")
                 .unlockedBy("has_copper_ingot", InventoryChangeTrigger.TriggerInstance.hasItems(Items.COPPER_INGOT))
-                .save(output.withConditions(new FeatureEnabledCondition(FeatureEnabledCondition.ConfigFeature.COPPER_TOOLS)));
-        ShapedRecipeBuilder.shaped(this.registries.lookupOrThrow(Registries.ITEM), RecipeCategory.TOOLS, InstrumentusItems.COPPER_SHEARS.get())
+                .save(consumer.withConditions(new FeatureEnabledCondition(FeatureEnabledCondition.ConfigFeature.COPPER_TOOLS)));
+        ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, InstrumentusItems.COPPER_SHEARS.get())
                 .pattern(" X")
                 .pattern("X ")
                 .define('X', Items.COPPER_INGOT)
                 .group("instrumentus")
                 .unlockedBy("has_copper_ingot", InventoryChangeTrigger.TriggerInstance.hasItems(Items.COPPER_INGOT))
-                .save(output.withConditions(new FeatureEnabledCondition(FeatureEnabledCondition.ConfigFeature.COPPER_TOOLS), new FeatureEnabledCondition(FeatureEnabledCondition.ConfigFeature.SHEARS)));
-        ShapedRecipeBuilder.shaped(this.registries.lookupOrThrow(Registries.ITEM), RecipeCategory.TOOLS, InstrumentusItems.COPPER_SHOVEL.get())
+                .save(consumer.withConditions(new FeatureEnabledCondition(FeatureEnabledCondition.ConfigFeature.COPPER_TOOLS), new FeatureEnabledCondition(FeatureEnabledCondition.ConfigFeature.SHEARS)));
+        ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, InstrumentusItems.COPPER_SHOVEL.get())
                 .pattern("X")
                 .pattern("S")
                 .pattern("S")
@@ -354,8 +350,8 @@ public class InstrumentusGeneratorRecipes extends RecipeProvider {
                 .define('S', Items.STICK)
                 .group("instrumentus")
                 .unlockedBy("has_copper_ingot", InventoryChangeTrigger.TriggerInstance.hasItems(Items.COPPER_INGOT))
-                .save(output.withConditions(new FeatureEnabledCondition(FeatureEnabledCondition.ConfigFeature.COPPER_TOOLS)));
-        ShapedRecipeBuilder.shaped(this.registries.lookupOrThrow(Registries.ITEM), RecipeCategory.TOOLS, InstrumentusItems.COPPER_SICKLE.get())
+                .save(consumer.withConditions(new FeatureEnabledCondition(FeatureEnabledCondition.ConfigFeature.COPPER_TOOLS)));
+        ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, InstrumentusItems.COPPER_SICKLE.get())
                 .pattern(" X ")
                 .pattern("  X")
                 .pattern("SX ")
@@ -363,8 +359,8 @@ public class InstrumentusGeneratorRecipes extends RecipeProvider {
                 .define('S', Items.STICK)
                 .group("instrumentus")
                 .unlockedBy("has_copper_ingot", InventoryChangeTrigger.TriggerInstance.hasItems(Items.COPPER_INGOT))
-                .save(output.withConditions(new FeatureEnabledCondition(FeatureEnabledCondition.ConfigFeature.COPPER_TOOLS), new FeatureEnabledCondition(FeatureEnabledCondition.ConfigFeature.SICKLES)));
-        ShapedRecipeBuilder.shaped(this.registries.lookupOrThrow(Registries.ITEM), RecipeCategory.TOOLS, InstrumentusItems.COPPER_SWORD.get())
+                .save(consumer.withConditions(new FeatureEnabledCondition(FeatureEnabledCondition.ConfigFeature.COPPER_TOOLS), new FeatureEnabledCondition(FeatureEnabledCondition.ConfigFeature.SICKLES)));
+        ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, InstrumentusItems.COPPER_SWORD.get())
                 .pattern("X")
                 .pattern("X")
                 .pattern("S")
@@ -372,8 +368,8 @@ public class InstrumentusGeneratorRecipes extends RecipeProvider {
                 .define('S', Items.STICK)
                 .group("instrumentus")
                 .unlockedBy("has_copper_ingot", InventoryChangeTrigger.TriggerInstance.hasItems(Items.COPPER_INGOT))
-                .save(output.withConditions(new FeatureEnabledCondition(FeatureEnabledCondition.ConfigFeature.COPPER_TOOLS)));
-        ShapedRecipeBuilder.shaped(this.registries.lookupOrThrow(Registries.ITEM), RecipeCategory.TOOLS, InstrumentusItems.COPPER_EXCAVATOR.get())
+                .save(consumer.withConditions(new FeatureEnabledCondition(FeatureEnabledCondition.ConfigFeature.COPPER_TOOLS)));
+        ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, InstrumentusItems.COPPER_EXCAVATOR.get())
                 .pattern("I")
                 .pattern("S")
                 .pattern("S")
@@ -381,11 +377,11 @@ public class InstrumentusGeneratorRecipes extends RecipeProvider {
                 .define('S', Items.STICK)
                 .group("instrumentus")
                 .unlockedBy("has_copper_block", InventoryChangeTrigger.TriggerInstance.hasItems(Items.COPPER_BLOCK))
-                .save(output.withConditions(new FeatureEnabledCondition(FeatureEnabledCondition.ConfigFeature.COPPER_TOOLS), new FeatureEnabledCondition(FeatureEnabledCondition.ConfigFeature.EXCAVATORS)));
+                .save(consumer.withConditions(new FeatureEnabledCondition(FeatureEnabledCondition.ConfigFeature.COPPER_TOOLS), new FeatureEnabledCondition(FeatureEnabledCondition.ConfigFeature.EXCAVATORS)));
 
         //Brushes
         Instrumentus.LOGGER.info("Registering Brushes Recipes");
-        ShapedRecipeBuilder.shaped(this.registries.lookupOrThrow(Registries.ITEM), RecipeCategory.TOOLS, InstrumentusItems.DIAMOND_BRUSH.get())
+        ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, InstrumentusItems.DIAMOND_BRUSH.get())
                 .pattern("F")
                 .pattern("I")
                 .pattern("S")
@@ -394,8 +390,8 @@ public class InstrumentusGeneratorRecipes extends RecipeProvider {
                 .define('S', Items.STICK)
                 .group("instrumentus")
                 .unlockedBy("has_diamond", InventoryChangeTrigger.TriggerInstance.hasItems(Items.DIAMOND))
-                .save(output.withConditions(new FeatureEnabledCondition(FeatureEnabledCondition.ConfigFeature.BRUSHES)));
-        ShapedRecipeBuilder.shaped(this.registries.lookupOrThrow(Registries.ITEM), RecipeCategory.TOOLS, InstrumentusItems.GOLDEN_BRUSH.get())
+                .save(consumer.withConditions(new FeatureEnabledCondition(FeatureEnabledCondition.ConfigFeature.BRUSHES)));
+        ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, InstrumentusItems.GOLDEN_BRUSH.get())
                 .pattern("F")
                 .pattern("I")
                 .pattern("S")
@@ -404,8 +400,8 @@ public class InstrumentusGeneratorRecipes extends RecipeProvider {
                 .define('S', Items.STICK)
                 .group("instrumentus")
                 .unlockedBy("has_gold", InventoryChangeTrigger.TriggerInstance.hasItems(Items.GOLD_INGOT))
-                .save(output.withConditions(new FeatureEnabledCondition(FeatureEnabledCondition.ConfigFeature.BRUSHES)));
-        ShapedRecipeBuilder.shaped(this.registries.lookupOrThrow(Registries.ITEM), RecipeCategory.TOOLS, InstrumentusItems.IRON_BRUSH.get())
+                .save(consumer.withConditions(new FeatureEnabledCondition(FeatureEnabledCondition.ConfigFeature.BRUSHES)));
+        ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, InstrumentusItems.IRON_BRUSH.get())
                 .pattern("F")
                 .pattern("I")
                 .pattern("S")
@@ -414,7 +410,7 @@ public class InstrumentusGeneratorRecipes extends RecipeProvider {
                 .define('S', Items.STICK)
                 .group("instrumentus")
                 .unlockedBy("has_iron", InventoryChangeTrigger.TriggerInstance.hasItems(Items.IRON_INGOT))
-                .save(output.withConditions(new FeatureEnabledCondition(FeatureEnabledCondition.ConfigFeature.BRUSHES)));
+                .save(consumer.withConditions(new FeatureEnabledCondition(FeatureEnabledCondition.ConfigFeature.BRUSHES)));
         SmithingTransformRecipeBuilder.smithing(
                         Ingredient.of(Items.NETHERITE_UPGRADE_SMITHING_TEMPLATE),
                         Ingredient.of(InstrumentusItems.DIAMOND_BRUSH.get()),
@@ -422,8 +418,8 @@ public class InstrumentusGeneratorRecipes extends RecipeProvider {
                         RecipeCategory.TOOLS,
                         InstrumentusItems.NETHERITE_BRUSH.get())
                 .unlocks("has_netherite_ingot", has(Items.NETHERITE_INGOT))
-                .save(output.withConditions(new FeatureEnabledCondition(FeatureEnabledCondition.ConfigFeature.BRUSHES)), "netherite_brush_smithing");
-        ShapedRecipeBuilder.shaped(this.registries.lookupOrThrow(Registries.ITEM), RecipeCategory.TOOLS, InstrumentusItems.STONE_BRUSH.get())
+                .save(consumer.withConditions(new FeatureEnabledCondition(FeatureEnabledCondition.ConfigFeature.BRUSHES)), "netherite_brush_smithing");
+        ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, InstrumentusItems.STONE_BRUSH.get())
                 .pattern("F")
                 .pattern("I")
                 .pattern("S")
@@ -432,8 +428,8 @@ public class InstrumentusGeneratorRecipes extends RecipeProvider {
                 .define('S', Items.STICK)
                 .group("instrumentus")
                 .unlockedBy("has_cobblestone", InventoryChangeTrigger.TriggerInstance.hasItems(Items.COBBLESTONE))
-                .save(output.withConditions(new FeatureEnabledCondition(FeatureEnabledCondition.ConfigFeature.BRUSHES)));
-        ShapedRecipeBuilder.shaped(this.registries.lookupOrThrow(Registries.ITEM), RecipeCategory.TOOLS, InstrumentusItems.WOODEN_BRUSH.get())
+                .save(consumer.withConditions(new FeatureEnabledCondition(FeatureEnabledCondition.ConfigFeature.BRUSHES)));
+        ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, InstrumentusItems.WOODEN_BRUSH.get())
                 .pattern("F")
                 .pattern("I")
                 .pattern("S")
@@ -442,11 +438,11 @@ public class InstrumentusGeneratorRecipes extends RecipeProvider {
                 .define('S', Items.STICK)
                 .group("instrumentus")
                 .unlockedBy("has_planks", InventoryChangeTrigger.TriggerInstance.hasItems(Items.OAK_PLANKS))
-                .save(output.withConditions(new FeatureEnabledCondition(FeatureEnabledCondition.ConfigFeature.BRUSHES)));
+                .save(consumer.withConditions(new FeatureEnabledCondition(FeatureEnabledCondition.ConfigFeature.BRUSHES)));
 
         //Hammers
         Instrumentus.LOGGER.info("Registering Hammers Recipes");
-        ShapedRecipeBuilder.shaped(this.registries.lookupOrThrow(Registries.ITEM), RecipeCategory.TOOLS, InstrumentusItems.DIAMOND_HAMMER.get())
+        ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, InstrumentusItems.DIAMOND_HAMMER.get())
                 .pattern("ABA")
                 .pattern(" S ")
                 .pattern(" S ")
@@ -455,8 +451,8 @@ public class InstrumentusGeneratorRecipes extends RecipeProvider {
                 .define('S', Items.STICK)
                 .group("instrumentus")
                 .unlockedBy("has_diamond_block", InventoryChangeTrigger.TriggerInstance.hasItems(Items.DIAMOND_BLOCK))
-                .save(output.withConditions(new FeatureEnabledCondition(FeatureEnabledCondition.ConfigFeature.HAMMERS)));
-        ShapedRecipeBuilder.shaped(this.registries.lookupOrThrow(Registries.ITEM), RecipeCategory.TOOLS, InstrumentusItems.GOLDEN_HAMMER.get())
+                .save(consumer.withConditions(new FeatureEnabledCondition(FeatureEnabledCondition.ConfigFeature.HAMMERS)));
+        ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, InstrumentusItems.GOLDEN_HAMMER.get())
                 .pattern("ABA")
                 .pattern(" S ")
                 .pattern(" S ")
@@ -465,8 +461,8 @@ public class InstrumentusGeneratorRecipes extends RecipeProvider {
                 .define('S', Items.STICK)
                 .group("instrumentus")
                 .unlockedBy("has_gold_block", InventoryChangeTrigger.TriggerInstance.hasItems(Items.GOLD_BLOCK))
-                .save(output.withConditions(new FeatureEnabledCondition(FeatureEnabledCondition.ConfigFeature.HAMMERS)));
-        ShapedRecipeBuilder.shaped(this.registries.lookupOrThrow(Registries.ITEM), RecipeCategory.TOOLS, InstrumentusItems.IRON_HAMMER.get())
+                .save(consumer.withConditions(new FeatureEnabledCondition(FeatureEnabledCondition.ConfigFeature.HAMMERS)));
+        ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, InstrumentusItems.IRON_HAMMER.get())
                 .pattern("ABA")
                 .pattern(" S ")
                 .pattern(" S ")
@@ -475,7 +471,7 @@ public class InstrumentusGeneratorRecipes extends RecipeProvider {
                 .define('S', Items.STICK)
                 .group("instrumentus")
                 .unlockedBy("has_iron", InventoryChangeTrigger.TriggerInstance.hasItems(Items.IRON_INGOT))
-                .save(output.withConditions(new FeatureEnabledCondition(FeatureEnabledCondition.ConfigFeature.HAMMERS)));
+                .save(consumer.withConditions(new FeatureEnabledCondition(FeatureEnabledCondition.ConfigFeature.HAMMERS)));
         SmithingTransformRecipeBuilder.smithing(
                         Ingredient.of(Items.NETHERITE_UPGRADE_SMITHING_TEMPLATE),
                         Ingredient.of(InstrumentusItems.DIAMOND_HAMMER.get()),
@@ -483,8 +479,8 @@ public class InstrumentusGeneratorRecipes extends RecipeProvider {
                         RecipeCategory.TOOLS,
                         InstrumentusItems.NETHERITE_HAMMER.get())
                 .unlocks("has_netherite_ingot", has(Items.NETHERITE_INGOT))
-                .save(output.withConditions(new FeatureEnabledCondition(FeatureEnabledCondition.ConfigFeature.HAMMERS)), "netherite_hammer_smithing");
-        ShapedRecipeBuilder.shaped(this.registries.lookupOrThrow(Registries.ITEM), RecipeCategory.TOOLS, InstrumentusItems.STONE_HAMMER.get())
+                .save(consumer.withConditions(new FeatureEnabledCondition(FeatureEnabledCondition.ConfigFeature.HAMMERS)), "netherite_hammer_smithing");
+        ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, InstrumentusItems.STONE_HAMMER.get())
                 .pattern("ABA")
                 .pattern(" S ")
                 .pattern(" S ")
@@ -493,8 +489,8 @@ public class InstrumentusGeneratorRecipes extends RecipeProvider {
                 .define('S', Items.STICK)
                 .group("instrumentus")
                 .unlockedBy("has_cobblestone", InventoryChangeTrigger.TriggerInstance.hasItems(Items.COBBLESTONE))
-                .save(output.withConditions(new FeatureEnabledCondition(FeatureEnabledCondition.ConfigFeature.HAMMERS)));
-        ShapedRecipeBuilder.shaped(this.registries.lookupOrThrow(Registries.ITEM), RecipeCategory.TOOLS, InstrumentusItems.WOODEN_HAMMER.get())
+                .save(consumer.withConditions(new FeatureEnabledCondition(FeatureEnabledCondition.ConfigFeature.HAMMERS)));
+        ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, InstrumentusItems.WOODEN_HAMMER.get())
                 .pattern("ABA")
                 .pattern(" S ")
                 .pattern(" S ")
@@ -503,11 +499,11 @@ public class InstrumentusGeneratorRecipes extends RecipeProvider {
                 .define('S', Items.STICK)
                 .group("instrumentus")
                 .unlockedBy("has_planks", InventoryChangeTrigger.TriggerInstance.hasItems(Items.OAK_PLANKS))
-                .save(output.withConditions(new FeatureEnabledCondition(FeatureEnabledCondition.ConfigFeature.HAMMERS)));
+                .save(consumer.withConditions(new FeatureEnabledCondition(FeatureEnabledCondition.ConfigFeature.HAMMERS)));
 
         //Knives
         Instrumentus.LOGGER.info("Registering Knives Recipes");
-        ShapedRecipeBuilder.shaped(this.registries.lookupOrThrow(Registries.ITEM), RecipeCategory.TOOLS, InstrumentusItems.DIAMOND_KNIFE.get())
+        ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, InstrumentusItems.DIAMOND_KNIFE.get())
                 .pattern(" XX")
                 .pattern("XX ")
                 .pattern("S  ")
@@ -515,8 +511,8 @@ public class InstrumentusGeneratorRecipes extends RecipeProvider {
                 .define('S', Items.STICK)
                 .group("instrumentus")
                 .unlockedBy("has_diamond", InventoryChangeTrigger.TriggerInstance.hasItems(Items.DIAMOND))
-                .save(output.withConditions(new FeatureEnabledCondition(FeatureEnabledCondition.ConfigFeature.KNIVES)));
-        ShapedRecipeBuilder.shaped(this.registries.lookupOrThrow(Registries.ITEM), RecipeCategory.TOOLS, InstrumentusItems.GOLDEN_KNIFE.get())
+                .save(consumer.withConditions(new FeatureEnabledCondition(FeatureEnabledCondition.ConfigFeature.KNIVES)));
+        ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, InstrumentusItems.GOLDEN_KNIFE.get())
                 .pattern(" XX")
                 .pattern("XX ")
                 .pattern("S  ")
@@ -524,8 +520,8 @@ public class InstrumentusGeneratorRecipes extends RecipeProvider {
                 .define('S', Items.STICK)
                 .group("instrumentus")
                 .unlockedBy("has_gold", InventoryChangeTrigger.TriggerInstance.hasItems(Items.GOLD_INGOT))
-                .save(output.withConditions(new FeatureEnabledCondition(FeatureEnabledCondition.ConfigFeature.KNIVES)));
-        ShapedRecipeBuilder.shaped(this.registries.lookupOrThrow(Registries.ITEM), RecipeCategory.TOOLS, InstrumentusItems.IRON_KNIFE.get())
+                .save(consumer.withConditions(new FeatureEnabledCondition(FeatureEnabledCondition.ConfigFeature.KNIVES)));
+        ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, InstrumentusItems.IRON_KNIFE.get())
                 .pattern(" XX")
                 .pattern("XX ")
                 .pattern("S  ")
@@ -533,7 +529,7 @@ public class InstrumentusGeneratorRecipes extends RecipeProvider {
                 .define('S', Items.STICK)
                 .group("instrumentus")
                 .unlockedBy("has_iron", InventoryChangeTrigger.TriggerInstance.hasItems(Items.IRON_INGOT))
-                .save(output.withConditions(new FeatureEnabledCondition(FeatureEnabledCondition.ConfigFeature.KNIVES)));
+                .save(consumer.withConditions(new FeatureEnabledCondition(FeatureEnabledCondition.ConfigFeature.KNIVES)));
         SmithingTransformRecipeBuilder.smithing(
                         Ingredient.of(Items.NETHERITE_UPGRADE_SMITHING_TEMPLATE),
                         Ingredient.of(InstrumentusItems.DIAMOND_KNIFE.get()),
@@ -541,8 +537,8 @@ public class InstrumentusGeneratorRecipes extends RecipeProvider {
                         RecipeCategory.TOOLS,
                         InstrumentusItems.NETHERITE_KNIFE.get())
                 .unlocks("has_netherite_ingot", has(Items.NETHERITE_INGOT))
-                .save(output.withConditions(new FeatureEnabledCondition(FeatureEnabledCondition.ConfigFeature.KNIVES)), "netherite_knife_smithing");
-        ShapedRecipeBuilder.shaped(this.registries.lookupOrThrow(Registries.ITEM), RecipeCategory.TOOLS, InstrumentusItems.STONE_KNIFE.get())
+                .save(consumer.withConditions(new FeatureEnabledCondition(FeatureEnabledCondition.ConfigFeature.KNIVES)), "netherite_knife_smithing");
+        ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, InstrumentusItems.STONE_KNIFE.get())
                 .pattern(" XX")
                 .pattern("XX ")
                 .pattern("S  ")
@@ -550,16 +546,16 @@ public class InstrumentusGeneratorRecipes extends RecipeProvider {
                 .define('S', Items.STICK)
                 .group("instrumentus")
                 .unlockedBy("has_cobblestone", InventoryChangeTrigger.TriggerInstance.hasItems(Items.COBBLESTONE))
-                .save(output.withConditions(new FeatureEnabledCondition(FeatureEnabledCondition.ConfigFeature.KNIVES)));
-        ShapedRecipeBuilder.shaped(this.registries.lookupOrThrow(Registries.ITEM), RecipeCategory.MISC, Items.STRING, 2)
+                .save(consumer.withConditions(new FeatureEnabledCondition(FeatureEnabledCondition.ConfigFeature.KNIVES)));
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, Items.STRING, 2)
                 .pattern(" X ")
                 .pattern("XXX")
                 .pattern(" X ")
                 .define('X', InstrumentusItems.PLANT_FIBER.get())
                 .group("instrumentus")
                 .unlockedBy("has_plant_fiber", InventoryChangeTrigger.TriggerInstance.hasItems(InstrumentusItems.PLANT_FIBER.get()))
-                .save(output.withConditions(new FeatureEnabledCondition(FeatureEnabledCondition.ConfigFeature.KNIVES)));
-        ShapedRecipeBuilder.shaped(this.registries.lookupOrThrow(Registries.ITEM), RecipeCategory.TOOLS, InstrumentusItems.WOODEN_KNIFE.get())
+                .save(consumer.withConditions(new FeatureEnabledCondition(FeatureEnabledCondition.ConfigFeature.KNIVES)));
+        ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, InstrumentusItems.WOODEN_KNIFE.get())
                 .pattern(" XX")
                 .pattern("XX ")
                 .pattern("S  ")
@@ -567,11 +563,11 @@ public class InstrumentusGeneratorRecipes extends RecipeProvider {
                 .define('S', Items.STICK)
                 .group("instrumentus")
                 .unlockedBy("has_planks", InventoryChangeTrigger.TriggerInstance.hasItems(Items.OAK_PLANKS))
-                .save(output.withConditions(new FeatureEnabledCondition(FeatureEnabledCondition.ConfigFeature.KNIVES)));
+                .save(consumer.withConditions(new FeatureEnabledCondition(FeatureEnabledCondition.ConfigFeature.KNIVES)));
 
         //Paxels
         Instrumentus.LOGGER.info("Registering Paxels Recipes");
-        ShapedRecipeBuilder.shaped(this.registries.lookupOrThrow(Registries.ITEM), RecipeCategory.TOOLS, InstrumentusItems.DIAMOND_PAXEL.get())
+        ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, InstrumentusItems.DIAMOND_PAXEL.get())
                 .pattern("AVP")
                 .pattern(" S ")
                 .pattern(" S ")
@@ -581,8 +577,8 @@ public class InstrumentusGeneratorRecipes extends RecipeProvider {
                 .define('S', Items.STICK)
                 .group("instrumentus")
                 .unlockedBy("has_diamond_pickaxe", InventoryChangeTrigger.TriggerInstance.hasItems(Items.DIAMOND_PICKAXE))
-                .save(output.withConditions(new FeatureEnabledCondition(FeatureEnabledCondition.ConfigFeature.PAXELS)));
-        ShapedRecipeBuilder.shaped(this.registries.lookupOrThrow(Registries.ITEM), RecipeCategory.TOOLS, InstrumentusItems.GOLDEN_PAXEL.get())
+                .save(consumer.withConditions(new FeatureEnabledCondition(FeatureEnabledCondition.ConfigFeature.PAXELS)));
+        ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, InstrumentusItems.GOLDEN_PAXEL.get())
                 .pattern("AVP")
                 .pattern(" S ")
                 .pattern(" S ")
@@ -592,8 +588,8 @@ public class InstrumentusGeneratorRecipes extends RecipeProvider {
                 .define('S', Items.STICK)
                 .group("instrumentus")
                 .unlockedBy("has_golden_pickaxe", InventoryChangeTrigger.TriggerInstance.hasItems(Items.GOLDEN_PICKAXE))
-                .save(output.withConditions(new FeatureEnabledCondition(FeatureEnabledCondition.ConfigFeature.PAXELS)));
-        ShapedRecipeBuilder.shaped(this.registries.lookupOrThrow(Registries.ITEM), RecipeCategory.TOOLS, InstrumentusItems.IRON_PAXEL.get())
+                .save(consumer.withConditions(new FeatureEnabledCondition(FeatureEnabledCondition.ConfigFeature.PAXELS)));
+        ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, InstrumentusItems.IRON_PAXEL.get())
                 .pattern("AVP")
                 .pattern(" S ")
                 .pattern(" S ")
@@ -603,7 +599,7 @@ public class InstrumentusGeneratorRecipes extends RecipeProvider {
                 .define('S', Items.STICK)
                 .group("instrumentus")
                 .unlockedBy("has_iron_pickaxe", InventoryChangeTrigger.TriggerInstance.hasItems(Items.IRON_PICKAXE))
-                .save(output.withConditions(new FeatureEnabledCondition(FeatureEnabledCondition.ConfigFeature.PAXELS)));
+                .save(consumer.withConditions(new FeatureEnabledCondition(FeatureEnabledCondition.ConfigFeature.PAXELS)));
         SmithingTransformRecipeBuilder.smithing(
                         Ingredient.of(Items.NETHERITE_UPGRADE_SMITHING_TEMPLATE),
                         Ingredient.of(InstrumentusItems.DIAMOND_PAXEL.get()),
@@ -611,8 +607,8 @@ public class InstrumentusGeneratorRecipes extends RecipeProvider {
                         RecipeCategory.TOOLS,
                         InstrumentusItems.NETHERITE_PAXEL.get())
                 .unlocks("has_netherite_ingot", has(Items.NETHERITE_INGOT))
-                .save(output.withConditions(new FeatureEnabledCondition(FeatureEnabledCondition.ConfigFeature.PAXELS)), "netherite_paxel_smithing");
-        ShapedRecipeBuilder.shaped(this.registries.lookupOrThrow(Registries.ITEM), RecipeCategory.TOOLS, InstrumentusItems.STONE_PAXEL.get())
+                .save(consumer.withConditions(new FeatureEnabledCondition(FeatureEnabledCondition.ConfigFeature.PAXELS)), "netherite_paxel_smithing");
+        ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, InstrumentusItems.STONE_PAXEL.get())
                 .pattern("AVP")
                 .pattern(" S ")
                 .pattern(" S ")
@@ -622,8 +618,8 @@ public class InstrumentusGeneratorRecipes extends RecipeProvider {
                 .define('S', Items.STICK)
                 .group("instrumentus")
                 .unlockedBy("has_cobblestone", InventoryChangeTrigger.TriggerInstance.hasItems(Items.COBBLESTONE))
-                .save(output.withConditions(new FeatureEnabledCondition(FeatureEnabledCondition.ConfigFeature.PAXELS)));
-        ShapedRecipeBuilder.shaped(this.registries.lookupOrThrow(Registries.ITEM), RecipeCategory.TOOLS, InstrumentusItems.WOODEN_PAXEL.get())
+                .save(consumer.withConditions(new FeatureEnabledCondition(FeatureEnabledCondition.ConfigFeature.PAXELS)));
+        ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, InstrumentusItems.WOODEN_PAXEL.get())
                 .pattern("AVP")
                 .pattern(" S ")
                 .pattern(" S ")
@@ -633,24 +629,24 @@ public class InstrumentusGeneratorRecipes extends RecipeProvider {
                 .define('S', Items.STICK)
                 .group("instrumentus")
                 .unlockedBy("has_planks", InventoryChangeTrigger.TriggerInstance.hasItems(Items.OAK_PLANKS))
-                .save(output.withConditions(new FeatureEnabledCondition(FeatureEnabledCondition.ConfigFeature.PAXELS)));
+                .save(consumer.withConditions(new FeatureEnabledCondition(FeatureEnabledCondition.ConfigFeature.PAXELS)));
 
         //Shears
         Instrumentus.LOGGER.info("Registering Shears Recipes");
-        ShapedRecipeBuilder.shaped(this.registries.lookupOrThrow(Registries.ITEM), RecipeCategory.TOOLS, InstrumentusItems.DIAMOND_SHEARS.get())
+        ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, InstrumentusItems.DIAMOND_SHEARS.get())
                 .pattern(" X")
                 .pattern("X ")
                 .define('X', Items.DIAMOND)
                 .group("instrumentus")
                 .unlockedBy("has_diamond", InventoryChangeTrigger.TriggerInstance.hasItems(Items.DIAMOND))
-                .save(output.withConditions(new FeatureEnabledCondition(FeatureEnabledCondition.ConfigFeature.SHEARS)));
-        ShapedRecipeBuilder.shaped(this.registries.lookupOrThrow(Registries.ITEM), RecipeCategory.TOOLS, InstrumentusItems.GOLDEN_SHEARS.get())
+                .save(consumer.withConditions(new FeatureEnabledCondition(FeatureEnabledCondition.ConfigFeature.SHEARS)));
+        ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, InstrumentusItems.GOLDEN_SHEARS.get())
                 .pattern(" X")
                 .pattern("X ")
                 .define('X', Items.GOLD_INGOT)
                 .group("instrumentus")
                 .unlockedBy("has_gold_ingot", InventoryChangeTrigger.TriggerInstance.hasItems(Items.GOLD_INGOT))
-                .save(output.withConditions(new FeatureEnabledCondition(FeatureEnabledCondition.ConfigFeature.SHEARS)));
+                .save(consumer.withConditions(new FeatureEnabledCondition(FeatureEnabledCondition.ConfigFeature.SHEARS)));
         SmithingTransformRecipeBuilder.smithing(
                         Ingredient.of(Items.NETHERITE_UPGRADE_SMITHING_TEMPLATE),
                         Ingredient.of(InstrumentusItems.DIAMOND_SHEARS.get()),
@@ -658,25 +654,25 @@ public class InstrumentusGeneratorRecipes extends RecipeProvider {
                         RecipeCategory.TOOLS,
                         InstrumentusItems.NETHERITE_SHEARS.get())
                 .unlocks("has_netherite_ingot", has(Items.NETHERITE_INGOT))
-                .save(output.withConditions(new FeatureEnabledCondition(FeatureEnabledCondition.ConfigFeature.SHEARS)), "netherite_shears_smithing");
-        ShapedRecipeBuilder.shaped(this.registries.lookupOrThrow(Registries.ITEM), RecipeCategory.TOOLS, InstrumentusItems.STONE_SHEARS.get())
+                .save(consumer.withConditions(new FeatureEnabledCondition(FeatureEnabledCondition.ConfigFeature.SHEARS)), "netherite_shears_smithing");
+        ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, InstrumentusItems.STONE_SHEARS.get())
                 .pattern(" X")
                 .pattern("X ")
                 .define('X', Tags.Items.COBBLESTONES)
                 .group("instrumentus")
                 .unlockedBy("has_cobblestone", InventoryChangeTrigger.TriggerInstance.hasItems(Items.COBBLESTONE))
-                .save(output.withConditions(new FeatureEnabledCondition(FeatureEnabledCondition.ConfigFeature.SHEARS)));
-        ShapedRecipeBuilder.shaped(this.registries.lookupOrThrow(Registries.ITEM), RecipeCategory.TOOLS, InstrumentusItems.WOODEN_SHEARS.get())
+                .save(consumer.withConditions(new FeatureEnabledCondition(FeatureEnabledCondition.ConfigFeature.SHEARS)));
+        ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, InstrumentusItems.WOODEN_SHEARS.get())
                 .pattern(" X")
                 .pattern("X ")
                 .define('X', ItemTags.PLANKS)
                 .group("instrumentus")
                 .unlockedBy("has_planks", InventoryChangeTrigger.TriggerInstance.hasItems(Items.OAK_PLANKS))
-                .save(output.withConditions(new FeatureEnabledCondition(FeatureEnabledCondition.ConfigFeature.SHEARS)));
+                .save(consumer.withConditions(new FeatureEnabledCondition(FeatureEnabledCondition.ConfigFeature.SHEARS)));
 
         //Sickles
         Instrumentus.LOGGER.info("Registering Sickles Recipes");
-        ShapedRecipeBuilder.shaped(this.registries.lookupOrThrow(Registries.ITEM), RecipeCategory.TOOLS, InstrumentusItems.DIAMOND_SICKLE.get())
+        ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, InstrumentusItems.DIAMOND_SICKLE.get())
                 .pattern(" X ")
                 .pattern("  X")
                 .pattern("SX ")
@@ -684,8 +680,8 @@ public class InstrumentusGeneratorRecipes extends RecipeProvider {
                 .define('S', Items.STICK)
                 .group("instrumentus")
                 .unlockedBy("has_diamond", InventoryChangeTrigger.TriggerInstance.hasItems(Items.DIAMOND))
-                .save(output.withConditions(new FeatureEnabledCondition(FeatureEnabledCondition.ConfigFeature.SICKLES)));
-        ShapedRecipeBuilder.shaped(this.registries.lookupOrThrow(Registries.ITEM), RecipeCategory.TOOLS, InstrumentusItems.GOLDEN_SICKLE.get())
+                .save(consumer.withConditions(new FeatureEnabledCondition(FeatureEnabledCondition.ConfigFeature.SICKLES)));
+        ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, InstrumentusItems.GOLDEN_SICKLE.get())
                 .pattern(" X ")
                 .pattern("  X")
                 .pattern("SX ")
@@ -693,8 +689,8 @@ public class InstrumentusGeneratorRecipes extends RecipeProvider {
                 .define('S', Items.STICK)
                 .group("instrumentus")
                 .unlockedBy("has_gold", InventoryChangeTrigger.TriggerInstance.hasItems(Items.GOLD_INGOT))
-                .save(output.withConditions(new FeatureEnabledCondition(FeatureEnabledCondition.ConfigFeature.SICKLES)));
-        ShapedRecipeBuilder.shaped(this.registries.lookupOrThrow(Registries.ITEM), RecipeCategory.TOOLS, InstrumentusItems.IRON_SICKLE.get())
+                .save(consumer.withConditions(new FeatureEnabledCondition(FeatureEnabledCondition.ConfigFeature.SICKLES)));
+        ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, InstrumentusItems.IRON_SICKLE.get())
                 .pattern(" X ")
                 .pattern("  X")
                 .pattern("SX ")
@@ -702,7 +698,7 @@ public class InstrumentusGeneratorRecipes extends RecipeProvider {
                 .define('S', Items.STICK)
                 .group("instrumentus")
                 .unlockedBy("has_iron", InventoryChangeTrigger.TriggerInstance.hasItems(Items.IRON_INGOT))
-                .save(output.withConditions(new FeatureEnabledCondition(FeatureEnabledCondition.ConfigFeature.SICKLES)));
+                .save(consumer.withConditions(new FeatureEnabledCondition(FeatureEnabledCondition.ConfigFeature.SICKLES)));
         SmithingTransformRecipeBuilder.smithing(
                         Ingredient.of(Items.NETHERITE_UPGRADE_SMITHING_TEMPLATE),
                         Ingredient.of(InstrumentusItems.DIAMOND_SICKLE.get()),
@@ -710,8 +706,8 @@ public class InstrumentusGeneratorRecipes extends RecipeProvider {
                         RecipeCategory.TOOLS,
                         InstrumentusItems.NETHERITE_SICKLE.get())
                 .unlocks("has_netherite_ingot", has(Items.NETHERITE_INGOT))
-                .save(output.withConditions(new FeatureEnabledCondition(FeatureEnabledCondition.ConfigFeature.SICKLES)), "netherite_sickle_smithing");
-        ShapedRecipeBuilder.shaped(this.registries.lookupOrThrow(Registries.ITEM), RecipeCategory.TOOLS, InstrumentusItems.STONE_SICKLE.get())
+                .save(consumer.withConditions(new FeatureEnabledCondition(FeatureEnabledCondition.ConfigFeature.SICKLES)), "netherite_sickle_smithing");
+        ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, InstrumentusItems.STONE_SICKLE.get())
                 .pattern(" X ")
                 .pattern("  X")
                 .pattern("SX ")
@@ -719,8 +715,8 @@ public class InstrumentusGeneratorRecipes extends RecipeProvider {
                 .define('S', Items.STICK)
                 .group("instrumentus")
                 .unlockedBy("has_cobblestone", InventoryChangeTrigger.TriggerInstance.hasItems(Items.COBBLESTONE))
-                .save(output.withConditions(new FeatureEnabledCondition(FeatureEnabledCondition.ConfigFeature.SICKLES)));
-        ShapedRecipeBuilder.shaped(this.registries.lookupOrThrow(Registries.ITEM), RecipeCategory.TOOLS, InstrumentusItems.WOODEN_SICKLE.get())
+                .save(consumer.withConditions(new FeatureEnabledCondition(FeatureEnabledCondition.ConfigFeature.SICKLES)));
+        ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, InstrumentusItems.WOODEN_SICKLE.get())
                 .pattern(" X ")
                 .pattern("  X")
                 .pattern("SX ")
@@ -728,11 +724,11 @@ public class InstrumentusGeneratorRecipes extends RecipeProvider {
                 .define('S', Items.STICK)
                 .group("instrumentus")
                 .unlockedBy("has_planks", InventoryChangeTrigger.TriggerInstance.hasItems(Items.OAK_PLANKS))
-                .save(output.withConditions(new FeatureEnabledCondition(FeatureEnabledCondition.ConfigFeature.SICKLES)));
+                .save(consumer.withConditions(new FeatureEnabledCondition(FeatureEnabledCondition.ConfigFeature.SICKLES)));
 
         //Energized
         Instrumentus.LOGGER.info("Registering Energized Recipes");
-        ShapedRecipeBuilder.shaped(this.registries.lookupOrThrow(Registries.ITEM), RecipeCategory.TOOLS, InstrumentusItems.CARBON_ROD.get())
+        ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, InstrumentusItems.CARBON_ROD.get())
                 .pattern("CCC")
                 .pattern("CSC")
                 .pattern("CCC")
@@ -740,8 +736,8 @@ public class InstrumentusGeneratorRecipes extends RecipeProvider {
                 .define('S', Items.STICK)
                 .group("instrumentus")
                 .unlockedBy("has_coal", InventoryChangeTrigger.TriggerInstance.hasItems(Items.COAL))
-                .save(output.withConditions(new FeatureEnabledCondition(FeatureEnabledCondition.ConfigFeature.ENERGIZED)));
-        ShapedRecipeBuilder.shaped(this.registries.lookupOrThrow(Registries.ITEM), RecipeCategory.TOOLS, InstrumentusItems.ENERGIZED_AXE.get())
+                .save(consumer.withConditions(new FeatureEnabledCondition(FeatureEnabledCondition.ConfigFeature.ENERGIZED)));
+        ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, InstrumentusItems.ENERGIZED_AXE.get())
                 .pattern("XX")
                 .pattern("XS")
                 .pattern(" S")
@@ -749,8 +745,8 @@ public class InstrumentusGeneratorRecipes extends RecipeProvider {
                 .define('S', InstrumentusItems.CARBON_ROD.get())
                 .group("instrumentus")
                 .unlockedBy("has_energized_ingot", InventoryChangeTrigger.TriggerInstance.hasItems(InstrumentusItems.ENERGIZED_INGOT.get()))
-                .save(output.withConditions(new FeatureEnabledCondition(FeatureEnabledCondition.ConfigFeature.ENERGIZED)));
-        ShapedRecipeBuilder.shaped(this.registries.lookupOrThrow(Registries.ITEM), RecipeCategory.TOOLS, InstrumentusItems.ENERGIZED_HOE.get())
+                .save(consumer.withConditions(new FeatureEnabledCondition(FeatureEnabledCondition.ConfigFeature.ENERGIZED)));
+        ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, InstrumentusItems.ENERGIZED_HOE.get())
                 .pattern("XX")
                 .pattern(" S")
                 .pattern(" S")
@@ -758,9 +754,9 @@ public class InstrumentusGeneratorRecipes extends RecipeProvider {
                 .define('S', InstrumentusItems.CARBON_ROD.get())
                 .group("instrumentus")
                 .unlockedBy("has_energized_ingot", InventoryChangeTrigger.TriggerInstance.hasItems(InstrumentusItems.ENERGIZED_INGOT.get()))
-                .save(output.withConditions(new FeatureEnabledCondition(FeatureEnabledCondition.ConfigFeature.ENERGIZED)));
-        conditionalNineBlockStorageRecipes(new FeatureEnabledCondition(FeatureEnabledCondition.ConfigFeature.ENERGIZED), RecipeCategory.MISC, InstrumentusItems.ENERGIZED_INGOT.get(), RecipeCategory.BUILDING_BLOCKS, InstrumentusItems.ENERGIZED_BLOCK.get(), InstrumentusItems.ENERGIZED_INGOT.get() + "_9x9", "instrumentus", InstrumentusItems.ENERGIZED_BLOCK.get() + "_9x9", "instrumentus");
-        ShapedRecipeBuilder.shaped(this.registries.lookupOrThrow(Registries.ITEM), RecipeCategory.TOOLS, InstrumentusItems.ENERGIZED_BRUSH.get())
+                .save(consumer.withConditions(new FeatureEnabledCondition(FeatureEnabledCondition.ConfigFeature.ENERGIZED)));
+        nineBlockStorageRecipes(consumer.withConditions(new FeatureEnabledCondition(FeatureEnabledCondition.ConfigFeature.ENERGIZED)), RecipeCategory.MISC, InstrumentusItems.ENERGIZED_INGOT.get(), RecipeCategory.BUILDING_BLOCKS, InstrumentusItems.ENERGIZED_BLOCK.get(), InstrumentusItems.ENERGIZED_INGOT.get() + "_9x9", "instrumentus", InstrumentusItems.ENERGIZED_BLOCK.get() + "_9x9", "instrumentus");
+        ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, InstrumentusItems.ENERGIZED_BRUSH.get())
                 .pattern("F")
                 .pattern("D")
                 .pattern("S")
@@ -769,8 +765,8 @@ public class InstrumentusGeneratorRecipes extends RecipeProvider {
                 .define('S', InstrumentusItems.CARBON_ROD.get())
                 .group("instrumentus")
                 .unlockedBy("has_energized_ingot", InventoryChangeTrigger.TriggerInstance.hasItems(InstrumentusItems.ENERGIZED_INGOT.get()))
-                .save(output.withConditions(new FeatureEnabledCondition(FeatureEnabledCondition.ConfigFeature.ENERGIZED), new FeatureEnabledCondition(FeatureEnabledCondition.ConfigFeature.BRUSHES)));
-        ShapedRecipeBuilder.shaped(this.registries.lookupOrThrow(Registries.ITEM), RecipeCategory.TOOLS, InstrumentusItems.ENERGIZED_HAMMER.get())
+                .save(consumer.withConditions(new FeatureEnabledCondition(FeatureEnabledCondition.ConfigFeature.ENERGIZED), new FeatureEnabledCondition(FeatureEnabledCondition.ConfigFeature.BRUSHES)));
+        ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, InstrumentusItems.ENERGIZED_HAMMER.get())
                 .pattern("ABA")
                 .pattern(" S ")
                 .pattern(" S ")
@@ -779,8 +775,8 @@ public class InstrumentusGeneratorRecipes extends RecipeProvider {
                 .define('S', InstrumentusItems.CARBON_ROD.get())
                 .group("instrumentus")
                 .unlockedBy("has_energized_block", InventoryChangeTrigger.TriggerInstance.hasItems(InstrumentusItems.ENERGIZED_BLOCK.get()))
-                .save(output.withConditions(new FeatureEnabledCondition(FeatureEnabledCondition.ConfigFeature.ENERGIZED), new FeatureEnabledCondition(FeatureEnabledCondition.ConfigFeature.HAMMERS)));
-        ShapedRecipeBuilder.shaped(this.registries.lookupOrThrow(Registries.ITEM), RecipeCategory.MISC, InstrumentusItems.ENERGIZED_INGOT.get(), 2)
+                .save(consumer.withConditions(new FeatureEnabledCondition(FeatureEnabledCondition.ConfigFeature.ENERGIZED), new FeatureEnabledCondition(FeatureEnabledCondition.ConfigFeature.HAMMERS)));
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, InstrumentusItems.ENERGIZED_INGOT.get(), 2)
                 .pattern("QEQ")
                 .pattern("DGD")
                 .pattern("QEQ")
@@ -790,8 +786,8 @@ public class InstrumentusGeneratorRecipes extends RecipeProvider {
                 .define('D', Items.DIAMOND)
                 .group("instrumentus")
                 .unlockedBy("has_quartz", InventoryChangeTrigger.TriggerInstance.hasItems(Items.QUARTZ))
-                .save(output.withConditions(new FeatureEnabledCondition(FeatureEnabledCondition.ConfigFeature.ENERGIZED)));
-        ShapedRecipeBuilder.shaped(this.registries.lookupOrThrow(Registries.ITEM), RecipeCategory.TOOLS, InstrumentusItems.ENERGIZED_KNIFE.get())
+                .save(consumer.withConditions(new FeatureEnabledCondition(FeatureEnabledCondition.ConfigFeature.ENERGIZED)));
+        ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, InstrumentusItems.ENERGIZED_KNIFE.get())
                 .pattern(" XX")
                 .pattern("XX ")
                 .pattern("S  ")
@@ -799,8 +795,8 @@ public class InstrumentusGeneratorRecipes extends RecipeProvider {
                 .define('S', InstrumentusItems.CARBON_ROD.get())
                 .group("instrumentus")
                 .unlockedBy("has_energy_ingot", InventoryChangeTrigger.TriggerInstance.hasItems(InstrumentusItems.ENERGIZED_INGOT.get()))
-                .save(output.withConditions(new FeatureEnabledCondition(FeatureEnabledCondition.ConfigFeature.ENERGIZED), new FeatureEnabledCondition(FeatureEnabledCondition.ConfigFeature.KNIVES)));
-        ShapedRecipeBuilder.shaped(this.registries.lookupOrThrow(Registries.ITEM), RecipeCategory.TOOLS, InstrumentusItems.ENERGIZED_LIGHTNING_ROD.get())
+                .save(consumer.withConditions(new FeatureEnabledCondition(FeatureEnabledCondition.ConfigFeature.ENERGIZED), new FeatureEnabledCondition(FeatureEnabledCondition.ConfigFeature.KNIVES)));
+        ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, InstrumentusItems.ENERGIZED_LIGHTNING_ROD.get())
                 .pattern(" B ")
                 .pattern("IRI")
                 .pattern(" C ")
@@ -810,8 +806,8 @@ public class InstrumentusGeneratorRecipes extends RecipeProvider {
                 .define('C', InstrumentusItems.CARBON_ROD.get())
                 .group("instrumentus")
                 .unlockedBy("has_energy_ingot", InventoryChangeTrigger.TriggerInstance.hasItems(InstrumentusItems.ENERGIZED_INGOT.get()))
-                .save(output.withConditions(new FeatureEnabledCondition(FeatureEnabledCondition.ConfigFeature.ENERGIZED)));
-        ShapedRecipeBuilder.shaped(this.registries.lookupOrThrow(Registries.ITEM), RecipeCategory.TOOLS, InstrumentusItems.ENERGIZED_PAXEL.get())
+                .save(consumer.withConditions(new FeatureEnabledCondition(FeatureEnabledCondition.ConfigFeature.ENERGIZED)));
+        ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, InstrumentusItems.ENERGIZED_PAXEL.get())
                 .pattern("AVP")
                 .pattern(" S ")
                 .pattern(" S ")
@@ -821,8 +817,8 @@ public class InstrumentusGeneratorRecipes extends RecipeProvider {
                 .define('S', InstrumentusItems.CARBON_ROD.get())
                 .group("instrumentus")
                 .unlockedBy("has_energy_pickaxe", InventoryChangeTrigger.TriggerInstance.hasItems(InstrumentusItems.ENERGIZED_PICKAXE.get()))
-                .save(output.withConditions(new FeatureEnabledCondition(FeatureEnabledCondition.ConfigFeature.ENERGIZED), new FeatureEnabledCondition(FeatureEnabledCondition.ConfigFeature.PAXELS)));
-        ShapedRecipeBuilder.shaped(this.registries.lookupOrThrow(Registries.ITEM), RecipeCategory.TOOLS, InstrumentusItems.ENERGIZED_PICKAXE.get())
+                .save(consumer.withConditions(new FeatureEnabledCondition(FeatureEnabledCondition.ConfigFeature.ENERGIZED), new FeatureEnabledCondition(FeatureEnabledCondition.ConfigFeature.PAXELS)));
+        ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, InstrumentusItems.ENERGIZED_PICKAXE.get())
                 .pattern("XXX")
                 .pattern(" S ")
                 .pattern(" S ")
@@ -830,15 +826,15 @@ public class InstrumentusGeneratorRecipes extends RecipeProvider {
                 .define('S', InstrumentusItems.CARBON_ROD.get())
                 .group("instrumentus")
                 .unlockedBy("has_energy_ingot", InventoryChangeTrigger.TriggerInstance.hasItems(InstrumentusItems.ENERGIZED_INGOT.get()))
-                .save(output.withConditions(new FeatureEnabledCondition(FeatureEnabledCondition.ConfigFeature.ENERGIZED)));
-        ShapedRecipeBuilder.shaped(this.registries.lookupOrThrow(Registries.ITEM), RecipeCategory.TOOLS, InstrumentusItems.ENERGIZED_SHEARS.get())
+                .save(consumer.withConditions(new FeatureEnabledCondition(FeatureEnabledCondition.ConfigFeature.ENERGIZED)));
+        ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, InstrumentusItems.ENERGIZED_SHEARS.get())
                 .pattern(" X")
                 .pattern("X ")
                 .define('X', InstrumentusItems.ENERGIZED_INGOT.get())
                 .group("instrumentus")
                 .unlockedBy("has_energy_ingot", InventoryChangeTrigger.TriggerInstance.hasItems(InstrumentusItems.ENERGIZED_INGOT.get()))
-                .save(output.withConditions(new FeatureEnabledCondition(FeatureEnabledCondition.ConfigFeature.ENERGIZED), new FeatureEnabledCondition(FeatureEnabledCondition.ConfigFeature.SHEARS)));
-        ShapedRecipeBuilder.shaped(this.registries.lookupOrThrow(Registries.ITEM), RecipeCategory.TOOLS, InstrumentusItems.ENERGIZED_SHOVEL.get())
+                .save(consumer.withConditions(new FeatureEnabledCondition(FeatureEnabledCondition.ConfigFeature.ENERGIZED), new FeatureEnabledCondition(FeatureEnabledCondition.ConfigFeature.SHEARS)));
+        ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, InstrumentusItems.ENERGIZED_SHOVEL.get())
                 .pattern("X")
                 .pattern("S")
                 .pattern("S")
@@ -846,8 +842,8 @@ public class InstrumentusGeneratorRecipes extends RecipeProvider {
                 .define('S', InstrumentusItems.CARBON_ROD.get())
                 .group("instrumentus")
                 .unlockedBy("has_energy_ingot", InventoryChangeTrigger.TriggerInstance.hasItems(InstrumentusItems.ENERGIZED_INGOT.get()))
-                .save(output.withConditions(new FeatureEnabledCondition(FeatureEnabledCondition.ConfigFeature.ENERGIZED)));
-        ShapedRecipeBuilder.shaped(this.registries.lookupOrThrow(Registries.ITEM), RecipeCategory.TOOLS, InstrumentusItems.ENERGIZED_SICKLE.get())
+                .save(consumer.withConditions(new FeatureEnabledCondition(FeatureEnabledCondition.ConfigFeature.ENERGIZED)));
+        ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, InstrumentusItems.ENERGIZED_SICKLE.get())
                 .pattern(" X ")
                 .pattern("  X")
                 .pattern("SX ")
@@ -855,8 +851,8 @@ public class InstrumentusGeneratorRecipes extends RecipeProvider {
                 .define('S', InstrumentusItems.CARBON_ROD.get())
                 .group("instrumentus")
                 .unlockedBy("has_energy_ingot", InventoryChangeTrigger.TriggerInstance.hasItems(InstrumentusItems.ENERGIZED_INGOT.get()))
-                .save(output.withConditions(new FeatureEnabledCondition(FeatureEnabledCondition.ConfigFeature.ENERGIZED), new FeatureEnabledCondition(FeatureEnabledCondition.ConfigFeature.SICKLES)));
-        ShapedRecipeBuilder.shaped(this.registries.lookupOrThrow(Registries.ITEM), RecipeCategory.TOOLS, InstrumentusItems.ENERGIZED_EXCAVATOR.get())
+                .save(consumer.withConditions(new FeatureEnabledCondition(FeatureEnabledCondition.ConfigFeature.ENERGIZED), new FeatureEnabledCondition(FeatureEnabledCondition.ConfigFeature.SICKLES)));
+        ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, InstrumentusItems.ENERGIZED_EXCAVATOR.get())
                 .pattern("I")
                 .pattern("S")
                 .pattern("S")
@@ -864,12 +860,12 @@ public class InstrumentusGeneratorRecipes extends RecipeProvider {
                 .define('S', InstrumentusItems.CARBON_ROD.get())
                 .group("instrumentus")
                 .unlockedBy("has_energized_block", InventoryChangeTrigger.TriggerInstance.hasItems(InstrumentusItems.ENERGIZED_BLOCK.get()))
-                .save(output.withConditions(new FeatureEnabledCondition(FeatureEnabledCondition.ConfigFeature.ENERGIZED), new FeatureEnabledCondition(FeatureEnabledCondition.ConfigFeature.EXCAVATORS)));
+                .save(consumer.withConditions(new FeatureEnabledCondition(FeatureEnabledCondition.ConfigFeature.ENERGIZED), new FeatureEnabledCondition(FeatureEnabledCondition.ConfigFeature.EXCAVATORS)));
 
 
         //Soulcopper
         Instrumentus.LOGGER.info("Registering Soulcopper Recipes");
-        ShapedRecipeBuilder.shaped(this.registries.lookupOrThrow(Registries.ITEM), RecipeCategory.BUILDING_BLOCKS, InstrumentusItems.SOULCOPPER_LANTERN_ITEM.get())
+        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, InstrumentusItems.SOULCOPPER_LANTERN_ITEM.get())
                 .pattern("XXX")
                 .pattern("XCX")
                 .pattern("XXX")
@@ -877,16 +873,16 @@ public class InstrumentusGeneratorRecipes extends RecipeProvider {
                 .define('C', InstrumentusItems.SOULCOPPER_TORCH_ITEM.get())
                 .group("instrumentus")
                 .unlockedBy("has_copper_soul_torch", InventoryChangeTrigger.TriggerInstance.hasItems(InstrumentusItems.SOULCOPPER_TORCH_ITEM.get()))
-                .save(output.withConditions(new FeatureEnabledCondition(FeatureEnabledCondition.ConfigFeature.SOULCOPPER)));
-        ShapedRecipeBuilder.shaped(this.registries.lookupOrThrow(Registries.ITEM), RecipeCategory.BUILDING_BLOCKS, InstrumentusItems.SOULCOPPER_TORCH_ITEM.get(), 4)
+                .save(consumer.withConditions(new FeatureEnabledCondition(FeatureEnabledCondition.ConfigFeature.SOULCOPPER)));
+        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, InstrumentusItems.SOULCOPPER_TORCH_ITEM.get(), 4)
                 .pattern("X")
                 .pattern("S")
                 .define('X', InstrumentusItems.RAW_SOULCOPPER.get())
                 .define('S', Items.STICK)
                 .group("instrumentus")
                 .unlockedBy("has_raw_soulcopper", InventoryChangeTrigger.TriggerInstance.hasItems(InstrumentusItems.RAW_SOULCOPPER.get()))
-                .save(output.withConditions(new FeatureEnabledCondition(FeatureEnabledCondition.ConfigFeature.SOULCOPPER)));
-        ShapedRecipeBuilder.shaped(this.registries.lookupOrThrow(Registries.ITEM), RecipeCategory.BUILDING_BLOCKS, InstrumentusItems.COPPER_SOUL_CAMPFIRE_BLOCK_ITEM.get())
+                .save(consumer.withConditions(new FeatureEnabledCondition(FeatureEnabledCondition.ConfigFeature.SOULCOPPER)));
+        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, InstrumentusItems.COPPER_SOUL_CAMPFIRE_BLOCK_ITEM.get())
                 .pattern(" S ")
                 .pattern("SFS")
                 .pattern("CCC")
@@ -895,9 +891,9 @@ public class InstrumentusGeneratorRecipes extends RecipeProvider {
                 .define('C', Items.RAW_COPPER_BLOCK)
                 .group("instrumentus")
                 .unlockedBy("has_soul_campfire", InventoryChangeTrigger.TriggerInstance.hasItems(Items.SOUL_CAMPFIRE))
-                .save(output.withConditions(new FeatureEnabledCondition(FeatureEnabledCondition.ConfigFeature.SOULCOPPER)));
-        conditionalNineBlockStorageRecipes(new FeatureEnabledCondition(FeatureEnabledCondition.ConfigFeature.SOULCOPPER), RecipeCategory.MISC, InstrumentusItems.RAW_SOULCOPPER.get(), RecipeCategory.BUILDING_BLOCKS, InstrumentusItems.RAW_SOULCOPPER_BLOCK.get(), InstrumentusItems.RAW_SOULCOPPER.get() + "_9x9", "instrumentus", InstrumentusItems.RAW_SOULCOPPER_BLOCK.get() + "_9x9", "instrumentus");
-        conditionalNineBlockStorageRecipes(new FeatureEnabledCondition(FeatureEnabledCondition.ConfigFeature.SOULCOPPER), RecipeCategory.MISC, InstrumentusItems.SOULCOPPER_INGOT.get(), RecipeCategory.BUILDING_BLOCKS, InstrumentusItems.SOULCOPPER_BLOCK.get(), InstrumentusItems.SOULCOPPER_INGOT.get() + "_9x9", "instrumentus", InstrumentusItems.SOULCOPPER_BLOCK.get() + "_9x9", "instrumentus");
+                .save(consumer.withConditions(new FeatureEnabledCondition(FeatureEnabledCondition.ConfigFeature.SOULCOPPER)));
+        nineBlockStorageRecipes(consumer.withConditions(new FeatureEnabledCondition(FeatureEnabledCondition.ConfigFeature.SOULCOPPER)), RecipeCategory.MISC, InstrumentusItems.RAW_SOULCOPPER.get(), RecipeCategory.BUILDING_BLOCKS, InstrumentusItems.RAW_SOULCOPPER_BLOCK.get(), InstrumentusItems.RAW_SOULCOPPER.get() + "_9x9", "instrumentus", InstrumentusItems.RAW_SOULCOPPER_BLOCK.get() + "_9x9", "instrumentus");
+        nineBlockStorageRecipes(consumer.withConditions(new FeatureEnabledCondition(FeatureEnabledCondition.ConfigFeature.SOULCOPPER)), RecipeCategory.MISC, InstrumentusItems.SOULCOPPER_INGOT.get(), RecipeCategory.BUILDING_BLOCKS, InstrumentusItems.SOULCOPPER_BLOCK.get(), InstrumentusItems.SOULCOPPER_INGOT.get() + "_9x9", "instrumentus", InstrumentusItems.SOULCOPPER_BLOCK.get() + "_9x9", "instrumentus");
         SimpleCookingRecipeBuilder.blasting(
                         Ingredient.of(InstrumentusItems.RAW_SOULCOPPER.get()),
                         RecipeCategory.MISC,
@@ -905,8 +901,8 @@ public class InstrumentusGeneratorRecipes extends RecipeProvider {
                         0.7f,
                         100)
                 .unlockedBy("has_raw_soulcopper", InventoryChangeTrigger.TriggerInstance.hasItems(InstrumentusItems.RAW_SOULCOPPER.get()))
-                .save(output.withConditions(new FeatureEnabledCondition(FeatureEnabledCondition.ConfigFeature.SOULCOPPER)));
-        ShapedRecipeBuilder.shaped(this.registries.lookupOrThrow(Registries.ITEM), RecipeCategory.TOOLS, InstrumentusItems.SOULCOPPER_PICKAXE.get())
+                .save(consumer.withConditions(new FeatureEnabledCondition(FeatureEnabledCondition.ConfigFeature.SOULCOPPER)));
+        ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, InstrumentusItems.SOULCOPPER_PICKAXE.get())
                 .pattern("XXX")
                 .pattern(" S ")
                 .pattern(" S ")
@@ -914,8 +910,8 @@ public class InstrumentusGeneratorRecipes extends RecipeProvider {
                 .define('S', Items.STICK)
                 .group("instrumentus")
                 .unlockedBy("has_soulcopper", InventoryChangeTrigger.TriggerInstance.hasItems(InstrumentusItems.SOULCOPPER_INGOT.get()))
-                .save(output.withConditions(new FeatureEnabledCondition(FeatureEnabledCondition.ConfigFeature.SOULCOPPER)));
-        ShapedRecipeBuilder.shaped(this.registries.lookupOrThrow(Registries.ITEM), RecipeCategory.TOOLS, InstrumentusItems.SOULCOPPER_BURNER.get())
+                .save(consumer.withConditions(new FeatureEnabledCondition(FeatureEnabledCondition.ConfigFeature.SOULCOPPER)));
+        ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, InstrumentusItems.SOULCOPPER_BURNER.get())
                 .pattern("CTC")
                 .pattern("CBC")
                 .pattern("CBC")
@@ -924,66 +920,66 @@ public class InstrumentusGeneratorRecipes extends RecipeProvider {
                 .define('B', Items.BLAZE_ROD)
                 .group("instrumentus")
                 .unlockedBy("has_soulcopper", InventoryChangeTrigger.TriggerInstance.hasItems(InstrumentusItems.SOULCOPPER_INGOT.get()))
-                .save(output.withConditions(new FeatureEnabledCondition(FeatureEnabledCondition.ConfigFeature.SOULCOPPER)));
+                .save(consumer.withConditions(new FeatureEnabledCondition(FeatureEnabledCondition.ConfigFeature.SOULCOPPER)));
         CopperSoulCampfireCookingRecipeBuilder.smelting(
                         ResourceLocation.fromNamespaceAndPath(Instrumentus.MODID, "raw_copper_block_to_raw_soulcopper"),
-                        Ingredient.of(Items.RAW_COPPER_BLOCK.asItem()),
+                        Ingredient.of(Items.RAW_COPPER_BLOCK.getDefaultInstance()),
                         InstrumentusItems.RAW_SOULCOPPER.get().getDefaultInstance(),
                         300
                 )
                 .group("instrumentus")
                 .unlockedBy("has_raw_copper", InventoryChangeTrigger.TriggerInstance.hasItems(Items.RAW_COPPER_BLOCK))
-                .save(output.withConditions(new FeatureEnabledCondition(FeatureEnabledCondition.ConfigFeature.SOULCOPPER)));
-        ShapedRecipeBuilder.shaped(this.registries.lookupOrThrow(Registries.ITEM), RecipeCategory.BUILDING_BLOCKS, InstrumentusBlocks.CUT_SOULCOPPER.get(), 4)
+                .save(consumer.withConditions(new FeatureEnabledCondition(FeatureEnabledCondition.ConfigFeature.SOULCOPPER)));
+        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, InstrumentusBlocks.CUT_SOULCOPPER.get(), 4)
                 .pattern("SS")
                 .pattern("SS")
                 .define('S', InstrumentusBlocks.SOULCOPPER_BLOCK.get())
                 .group("instrumentus")
                 .unlockedBy("has_soulcopper", InventoryChangeTrigger.TriggerInstance.hasItems(InstrumentusBlocks.SOULCOPPER_BLOCK.get()))
-                .save(output.withConditions(new FeatureEnabledCondition(FeatureEnabledCondition.ConfigFeature.SOULCOPPER)));
+                .save(consumer.withConditions(new FeatureEnabledCondition(FeatureEnabledCondition.ConfigFeature.SOULCOPPER)));
         SingleItemRecipeBuilder.stonecutting(Ingredient.of(InstrumentusBlocks.SOULCOPPER_BLOCK.get()), RecipeCategory.BUILDING_BLOCKS, InstrumentusBlocks.CUT_SOULCOPPER.get(), 4)
                 .unlockedBy("has_soulcopper", InventoryChangeTrigger.TriggerInstance.hasItems(InstrumentusBlocks.SOULCOPPER_BLOCK.get()))
-                .save(output.withConditions(new FeatureEnabledCondition(FeatureEnabledCondition.ConfigFeature.SOULCOPPER)), "cut_soulcopper_from_stonecutting");
-        ShapedRecipeBuilder.shaped(this.registries.lookupOrThrow(Registries.ITEM), RecipeCategory.BUILDING_BLOCKS, InstrumentusBlocks.CUT_SOULCOPPER_STAIRS.get(), 4)
+                .save(consumer.withConditions(new FeatureEnabledCondition(FeatureEnabledCondition.ConfigFeature.SOULCOPPER)), "cut_soulcopper_from_stonecutting");
+        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, InstrumentusBlocks.CUT_SOULCOPPER_STAIRS.get(), 4)
                 .pattern("S  ")
                 .pattern("SS ")
                 .pattern("SSS")
                 .define('S', InstrumentusBlocks.CUT_SOULCOPPER.get())
                 .group("instrumentus")
                 .unlockedBy("has_soulcopper", InventoryChangeTrigger.TriggerInstance.hasItems(InstrumentusBlocks.CUT_SOULCOPPER.get()))
-                .save(output.withConditions(new FeatureEnabledCondition(FeatureEnabledCondition.ConfigFeature.SOULCOPPER)));
+                .save(consumer.withConditions(new FeatureEnabledCondition(FeatureEnabledCondition.ConfigFeature.SOULCOPPER)));
         SingleItemRecipeBuilder.stonecutting(Ingredient.of(InstrumentusBlocks.SOULCOPPER_BLOCK.get()), RecipeCategory.BUILDING_BLOCKS, InstrumentusBlocks.CUT_SOULCOPPER_STAIRS.get(), 4)
                 .unlockedBy("has_soulcopper", InventoryChangeTrigger.TriggerInstance.hasItems(InstrumentusBlocks.SOULCOPPER_BLOCK.get()))
-                .save(output.withConditions(new FeatureEnabledCondition(FeatureEnabledCondition.ConfigFeature.SOULCOPPER)), "cut_soulcopper_stairs_from_stonecutting_notcut");
+                .save(consumer.withConditions(new FeatureEnabledCondition(FeatureEnabledCondition.ConfigFeature.SOULCOPPER)), "cut_soulcopper_stairs_from_stonecutting_notcut");
         SingleItemRecipeBuilder.stonecutting(Ingredient.of(InstrumentusBlocks.CUT_SOULCOPPER.get()), RecipeCategory.BUILDING_BLOCKS, InstrumentusBlocks.CUT_SOULCOPPER_STAIRS.get(), 1)
                 .unlockedBy("has_soulcopper", InventoryChangeTrigger.TriggerInstance.hasItems(InstrumentusBlocks.CUT_SOULCOPPER.get()))
-                .save(output.withConditions(new FeatureEnabledCondition(FeatureEnabledCondition.ConfigFeature.SOULCOPPER)), "cut_soulcopper_stairs_from_stonecutting_cut");
-        ShapedRecipeBuilder.shaped(this.registries.lookupOrThrow(Registries.ITEM), RecipeCategory.BUILDING_BLOCKS, InstrumentusBlocks.CUT_SOULCOPPER_SLAB.get(), 3)
+                .save(consumer.withConditions(new FeatureEnabledCondition(FeatureEnabledCondition.ConfigFeature.SOULCOPPER)), "cut_soulcopper_stairs_from_stonecutting_cut");
+        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, InstrumentusBlocks.CUT_SOULCOPPER_SLAB.get(), 3)
                 .pattern("SSS")
                 .define('S', InstrumentusBlocks.CUT_SOULCOPPER.get())
                 .group("instrumentus")
                 .unlockedBy("has_soulcopper", InventoryChangeTrigger.TriggerInstance.hasItems(InstrumentusBlocks.CUT_SOULCOPPER.get()))
-                .save(output.withConditions(new FeatureEnabledCondition(FeatureEnabledCondition.ConfigFeature.SOULCOPPER)));
+                .save(consumer.withConditions(new FeatureEnabledCondition(FeatureEnabledCondition.ConfigFeature.SOULCOPPER)));
         SingleItemRecipeBuilder.stonecutting(Ingredient.of(InstrumentusBlocks.SOULCOPPER_BLOCK.get()), RecipeCategory.BUILDING_BLOCKS, InstrumentusBlocks.CUT_SOULCOPPER_SLAB.get(), 8)
                 .unlockedBy("has_soulcopper", InventoryChangeTrigger.TriggerInstance.hasItems(InstrumentusBlocks.SOULCOPPER_BLOCK.get()))
-                .save(output.withConditions(new FeatureEnabledCondition(FeatureEnabledCondition.ConfigFeature.SOULCOPPER)), "cut_soulcopper_slab_from_stonecutting_notcut");
+                .save(consumer.withConditions(new FeatureEnabledCondition(FeatureEnabledCondition.ConfigFeature.SOULCOPPER)), "cut_soulcopper_slab_from_stonecutting_notcut");
         SingleItemRecipeBuilder.stonecutting(Ingredient.of(InstrumentusBlocks.CUT_SOULCOPPER.get()), RecipeCategory.BUILDING_BLOCKS, InstrumentusBlocks.CUT_SOULCOPPER_SLAB.get(), 2)
                 .unlockedBy("has_soulcopper", InventoryChangeTrigger.TriggerInstance.hasItems(InstrumentusBlocks.CUT_SOULCOPPER.get()))
-                .save(output.withConditions(new FeatureEnabledCondition(FeatureEnabledCondition.ConfigFeature.SOULCOPPER)), "cut_soulcopper_slab_from_stonecutting_cut");
-        ShapedRecipeBuilder.shaped(this.registries.lookupOrThrow(Registries.ITEM), RecipeCategory.BUILDING_BLOCKS, InstrumentusBlocks.CHISELED_SOULCOPPER.get(), 1)
+                .save(consumer.withConditions(new FeatureEnabledCondition(FeatureEnabledCondition.ConfigFeature.SOULCOPPER)), "cut_soulcopper_slab_from_stonecutting_cut");
+        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, InstrumentusBlocks.CHISELED_SOULCOPPER.get(), 1)
                 .pattern("S")
                 .pattern("S")
                 .define('S', InstrumentusBlocks.CUT_SOULCOPPER_SLAB.get())
                 .group("instrumentus")
                 .unlockedBy("has_soulcopper", InventoryChangeTrigger.TriggerInstance.hasItems(InstrumentusBlocks.CUT_SOULCOPPER_SLAB.get()))
-                .save(output.withConditions(new FeatureEnabledCondition(FeatureEnabledCondition.ConfigFeature.SOULCOPPER)));
+                .save(consumer.withConditions(new FeatureEnabledCondition(FeatureEnabledCondition.ConfigFeature.SOULCOPPER)));
         SingleItemRecipeBuilder.stonecutting(Ingredient.of(InstrumentusBlocks.SOULCOPPER_BLOCK.get()), RecipeCategory.BUILDING_BLOCKS, InstrumentusBlocks.CHISELED_SOULCOPPER.get(), 4)
                 .unlockedBy("has_soulcopper", InventoryChangeTrigger.TriggerInstance.hasItems(InstrumentusBlocks.SOULCOPPER_BLOCK.get()))
-                .save(output.withConditions(new FeatureEnabledCondition(FeatureEnabledCondition.ConfigFeature.SOULCOPPER)), "chiseled_soulcopper_from_stonecutting_notcut");
+                .save(consumer.withConditions(new FeatureEnabledCondition(FeatureEnabledCondition.ConfigFeature.SOULCOPPER)), "chiseled_soulcopper_from_stonecutting_notcut");
         SingleItemRecipeBuilder.stonecutting(Ingredient.of(InstrumentusBlocks.CUT_SOULCOPPER.get()), RecipeCategory.BUILDING_BLOCKS, InstrumentusBlocks.CHISELED_SOULCOPPER.get(), 1)
                 .unlockedBy("has_soulcopper", InventoryChangeTrigger.TriggerInstance.hasItems(InstrumentusBlocks.CUT_SOULCOPPER.get()))
-                .save(output.withConditions(new FeatureEnabledCondition(FeatureEnabledCondition.ConfigFeature.SOULCOPPER)), "chiseled_soulcopper_from_stonecutting_cut");
-        ShapedRecipeBuilder.shaped(this.registries.lookupOrThrow(Registries.ITEM), RecipeCategory.BUILDING_BLOCKS, InstrumentusBlocks.SOULCOPPER_BULB.get(), 4)
+                .save(consumer.withConditions(new FeatureEnabledCondition(FeatureEnabledCondition.ConfigFeature.SOULCOPPER)), "chiseled_soulcopper_from_stonecutting_cut");
+        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, InstrumentusBlocks.SOULCOPPER_BULB.get(), 4)
                 .pattern(" S ")
                 .pattern("SBS")
                 .pattern(" R ")
@@ -992,36 +988,36 @@ public class InstrumentusGeneratorRecipes extends RecipeProvider {
                 .define('R', Items.REDSTONE)
                 .group("instrumentus")
                 .unlockedBy("has_soulcopper", InventoryChangeTrigger.TriggerInstance.hasItems(InstrumentusBlocks.SOULCOPPER_BLOCK.get()))
-                .save(output.withConditions(new FeatureEnabledCondition(FeatureEnabledCondition.ConfigFeature.SOULCOPPER)));
-        ShapedRecipeBuilder.shaped(this.registries.lookupOrThrow(Registries.ITEM), RecipeCategory.BUILDING_BLOCKS, InstrumentusBlocks.SOULCOPPER_GRATE.get(), 4)
+                .save(consumer.withConditions(new FeatureEnabledCondition(FeatureEnabledCondition.ConfigFeature.SOULCOPPER)));
+        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, InstrumentusBlocks.SOULCOPPER_GRATE.get(), 4)
                 .pattern(" S ")
                 .pattern("S S")
                 .pattern(" S ")
                 .define('S', InstrumentusBlocks.SOULCOPPER_BLOCK.get())
                 .group("instrumentus")
                 .unlockedBy("has_soulcopper", InventoryChangeTrigger.TriggerInstance.hasItems(InstrumentusBlocks.SOULCOPPER_BLOCK.get()))
-                .save(output.withConditions(new FeatureEnabledCondition(FeatureEnabledCondition.ConfigFeature.SOULCOPPER)));
+                .save(consumer.withConditions(new FeatureEnabledCondition(FeatureEnabledCondition.ConfigFeature.SOULCOPPER)));
         SingleItemRecipeBuilder.stonecutting(Ingredient.of(InstrumentusBlocks.SOULCOPPER_BLOCK.get()), RecipeCategory.BUILDING_BLOCKS, InstrumentusBlocks.SOULCOPPER_GRATE.get(), 4)
                 .unlockedBy("has_soulcopper", InventoryChangeTrigger.TriggerInstance.hasItems(InstrumentusBlocks.SOULCOPPER_BLOCK.get()))
-                .save(output.withConditions(new FeatureEnabledCondition(FeatureEnabledCondition.ConfigFeature.SOULCOPPER)), "soulcopper_grate_from_stonecutting");
-        ShapedRecipeBuilder.shaped(this.registries.lookupOrThrow(Registries.ITEM), RecipeCategory.BUILDING_BLOCKS, InstrumentusBlocks.SOULCOPPER_TRAPDOOR.get(), 2)
+                .save(consumer.withConditions(new FeatureEnabledCondition(FeatureEnabledCondition.ConfigFeature.SOULCOPPER)), "soulcopper_grate_from_stonecutting");
+        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, InstrumentusBlocks.SOULCOPPER_TRAPDOOR.get(), 2)
                 .pattern("SSS")
                 .pattern("SSS")
                 .define('S', InstrumentusItems.SOULCOPPER_INGOT.get())
                 .group("instrumentus")
                 .unlockedBy("has_soulcopper", InventoryChangeTrigger.TriggerInstance.hasItems(InstrumentusItems.SOULCOPPER_INGOT.get()))
-                .save(output.withConditions(new FeatureEnabledCondition(FeatureEnabledCondition.ConfigFeature.SOULCOPPER)));
-        ShapedRecipeBuilder.shaped(this.registries.lookupOrThrow(Registries.ITEM), RecipeCategory.BUILDING_BLOCKS, InstrumentusBlocks.SOULCOPPER_DOOR.get(), 3)
+                .save(consumer.withConditions(new FeatureEnabledCondition(FeatureEnabledCondition.ConfigFeature.SOULCOPPER)));
+        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, InstrumentusBlocks.SOULCOPPER_DOOR.get(), 3)
                 .pattern("SS")
                 .pattern("SS")
                 .pattern("SS")
                 .define('S', InstrumentusItems.SOULCOPPER_INGOT.get())
                 .group("instrumentus")
                 .unlockedBy("has_soulcopper", InventoryChangeTrigger.TriggerInstance.hasItems(InstrumentusItems.SOULCOPPER_INGOT.get()))
-                .save(output.withConditions(new FeatureEnabledCondition(FeatureEnabledCondition.ConfigFeature.SOULCOPPER)));
+                .save(consumer.withConditions(new FeatureEnabledCondition(FeatureEnabledCondition.ConfigFeature.SOULCOPPER)));
 
         //Excavators
-        ShapedRecipeBuilder.shaped(this.registries.lookupOrThrow(Registries.ITEM), RecipeCategory.TOOLS, InstrumentusItems.WOODEN_EXCAVATOR.get())
+        ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, InstrumentusItems.WOODEN_EXCAVATOR.get())
                 .pattern("I")
                 .pattern("S")
                 .pattern("S")
@@ -1029,8 +1025,8 @@ public class InstrumentusGeneratorRecipes extends RecipeProvider {
                 .define('S', Items.STICK)
                 .group("instrumentus")
                 .unlockedBy("has_log", InventoryChangeTrigger.TriggerInstance.hasItems(Items.OAK_LOG))
-                .save(output.withConditions(new FeatureEnabledCondition(FeatureEnabledCondition.ConfigFeature.EXCAVATORS)));
-        ShapedRecipeBuilder.shaped(this.registries.lookupOrThrow(Registries.ITEM), RecipeCategory.TOOLS, InstrumentusItems.STONE_EXCAVATOR.get())
+                .save(consumer.withConditions(new FeatureEnabledCondition(FeatureEnabledCondition.ConfigFeature.EXCAVATORS)));
+        ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, InstrumentusItems.STONE_EXCAVATOR.get())
                 .pattern("I")
                 .pattern("S")
                 .pattern("S")
@@ -1038,8 +1034,8 @@ public class InstrumentusGeneratorRecipes extends RecipeProvider {
                 .define('S', Items.STICK)
                 .group("instrumentus")
                 .unlockedBy("has_stone", InventoryChangeTrigger.TriggerInstance.hasItems(Items.STONE))
-                .save(output.withConditions(new FeatureEnabledCondition(FeatureEnabledCondition.ConfigFeature.EXCAVATORS)));
-        ShapedRecipeBuilder.shaped(this.registries.lookupOrThrow(Registries.ITEM), RecipeCategory.TOOLS, InstrumentusItems.IRON_EXCAVATOR.get())
+                .save(consumer.withConditions(new FeatureEnabledCondition(FeatureEnabledCondition.ConfigFeature.EXCAVATORS)));
+        ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, InstrumentusItems.IRON_EXCAVATOR.get())
                 .pattern("I")
                 .pattern("S")
                 .pattern("S")
@@ -1047,8 +1043,8 @@ public class InstrumentusGeneratorRecipes extends RecipeProvider {
                 .define('S', Items.STICK)
                 .group("instrumentus")
                 .unlockedBy("has_iron_block", InventoryChangeTrigger.TriggerInstance.hasItems(Items.IRON_BLOCK))
-                .save(output.withConditions(new FeatureEnabledCondition(FeatureEnabledCondition.ConfigFeature.EXCAVATORS)));
-        ShapedRecipeBuilder.shaped(this.registries.lookupOrThrow(Registries.ITEM), RecipeCategory.TOOLS, InstrumentusItems.GOLDEN_EXCAVATOR.get())
+                .save(consumer.withConditions(new FeatureEnabledCondition(FeatureEnabledCondition.ConfigFeature.EXCAVATORS)));
+        ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, InstrumentusItems.GOLDEN_EXCAVATOR.get())
                 .pattern("I")
                 .pattern("S")
                 .pattern("S")
@@ -1056,8 +1052,8 @@ public class InstrumentusGeneratorRecipes extends RecipeProvider {
                 .define('S', Items.STICK)
                 .group("instrumentus")
                 .unlockedBy("has_gold_block", InventoryChangeTrigger.TriggerInstance.hasItems(Items.GOLD_BLOCK))
-                .save(output.withConditions(new FeatureEnabledCondition(FeatureEnabledCondition.ConfigFeature.EXCAVATORS)));
-        ShapedRecipeBuilder.shaped(this.registries.lookupOrThrow(Registries.ITEM), RecipeCategory.TOOLS, InstrumentusItems.DIAMOND_EXCAVATOR.get())
+                .save(consumer.withConditions(new FeatureEnabledCondition(FeatureEnabledCondition.ConfigFeature.EXCAVATORS)));
+        ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, InstrumentusItems.DIAMOND_EXCAVATOR.get())
                 .pattern("I")
                 .pattern("S")
                 .pattern("S")
@@ -1065,7 +1061,7 @@ public class InstrumentusGeneratorRecipes extends RecipeProvider {
                 .define('S', Items.STICK)
                 .group("instrumentus")
                 .unlockedBy("has_diamond_block", InventoryChangeTrigger.TriggerInstance.hasItems(Items.DIAMOND_BLOCK))
-                .save(output.withConditions(new FeatureEnabledCondition(FeatureEnabledCondition.ConfigFeature.EXCAVATORS)));
+                .save(consumer.withConditions(new FeatureEnabledCondition(FeatureEnabledCondition.ConfigFeature.EXCAVATORS)));
         SmithingTransformRecipeBuilder.smithing(
                         Ingredient.of(Items.NETHERITE_UPGRADE_SMITHING_TEMPLATE),
                         Ingredient.of(InstrumentusItems.DIAMOND_EXCAVATOR.get()),
@@ -1073,22 +1069,6 @@ public class InstrumentusGeneratorRecipes extends RecipeProvider {
                         RecipeCategory.TOOLS,
                         InstrumentusItems.NETHERITE_EXCAVATOR.get())
                 .unlocks("has_netherite_ingot", has(Items.NETHERITE_INGOT))
-                .save(output.withConditions(new FeatureEnabledCondition(FeatureEnabledCondition.ConfigFeature.EXCAVATORS)), "netherite_excavator_smithing");
-    }
-
-    public static class Runner extends RecipeProvider.Runner {
-        public Runner(PackOutput packOutput, CompletableFuture<HolderLookup.Provider> lookupProvider) {
-            super(packOutput, lookupProvider);
-        }
-
-        @Override
-        protected RecipeProvider createRecipeProvider(HolderLookup.Provider lookupProvider, RecipeOutput output) {
-            return new InstrumentusGeneratorRecipes(lookupProvider, output);
-        }
-
-        @Override
-        public String getName() {
-            return "Instrumentus Recipes";
-        }
+                .save(consumer.withConditions(new FeatureEnabledCondition(FeatureEnabledCondition.ConfigFeature.EXCAVATORS)), "netherite_excavator_smithing");
     }
 }
