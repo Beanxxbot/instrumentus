@@ -27,14 +27,14 @@ public class InstrumentusGeneratorGlobalLootModifier extends GlobalLootModifierP
         add("plant_fiber_from_grass", new PlantFiberFromGrassModifier(
                 new LootItemCondition[]{
                         AnyOfCondition.anyOf(
-                                MatchTool.toolMatches(ItemPredicate.Builder.item().of(InstrumentusGeneratorItemTags.TOOLS_KNIVES))).build(),
+                                MatchTool.toolMatches(ItemPredicate.Builder.item().of(InstrumentusGeneratorItemTags.TOOLS_COMMON_KNIVES))).build(),
                         LootItemBlockStatePropertyCondition.hasBlockStateProperties(Blocks.SHORT_GRASS).build()
                 }, InstrumentusItems.PLANT_FIBER.get()));
 
         add("plant_fiber_from_tall_grass", new PlantFiberFromGrassModifier(
                 new LootItemCondition[]{
                         AnyOfCondition.anyOf(
-                                MatchTool.toolMatches(ItemPredicate.Builder.item().of(InstrumentusGeneratorItemTags.TOOLS_KNIVES))).build(),
+                                MatchTool.toolMatches(ItemPredicate.Builder.item().of(InstrumentusGeneratorItemTags.TOOLS_COMMON_KNIVES))).build(),
                         LootItemBlockStatePropertyCondition.hasBlockStateProperties(Blocks.TALL_GRASS).build()
                 }, InstrumentusItems.PLANT_FIBER.get()));
 

@@ -39,7 +39,7 @@ public class EnergyHammerItem extends HammerItem implements IItemLightningCharge
 
     @Override
     public int getMaxCapacity() {
-        return 80000;
+        return 100000;
     }
 
     @Override

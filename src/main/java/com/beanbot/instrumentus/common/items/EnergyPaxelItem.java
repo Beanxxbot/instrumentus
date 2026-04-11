@@ -97,11 +97,13 @@ public class EnergyPaxelItem extends PaxelItem implements IItemLightningChargeab
         resultToSet = blockstate.getToolModifiedState(context, ItemAbilities.AXE_SCRAPE, false);
         if (resultToSet != null){
             world.playSound(player, blockpos, SoundEvents.AXE_SCRAPE, SoundSource.BLOCKS, 1.0f, 1.0f);
+            world.levelEvent(player, 3005, blockpos, 0);
             return resultToSet;
         }
         resultToSet = blockstate.getToolModifiedState(context, ItemAbilities.AXE_WAX_OFF, false);
         if (resultToSet != null){
             world.playSound(player, blockpos, SoundEvents.AXE_WAX_OFF, SoundSource.BLOCKS, 1.0f, 1.0f);
+            world.levelEvent(player, 3004, blockpos, 0);
             return resultToSet;
         }
         return null;

@@ -18,7 +18,7 @@ public class InstrumentusItemTiers {
 
     public static final Tier ENERGIZED = new SimpleTier(
             BlockTags.INCORRECT_FOR_NETHERITE_TOOL,
-            2031,
+            100000,
             9.0F,
             4.0F,
             15,
