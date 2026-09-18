@@ -66,6 +66,12 @@ public class InstrumentusGeneratorRecipes extends RecipeProvider {
                 .unlockedBy("has_furnace", InventoryChangeTrigger.TriggerInstance.hasItems(Blocks.BRICKS.asItem()))
                 .save(consumer.withConditions(new FeatureEnabledCondition(FeatureEnabledCondition.ConfigFeature.FIRING)));
         KilnCookingRecipeBuilder.fireDefault(
+                        Ingredient.of(ItemTags.LOGS_THAT_BURN),
+                        RecipeCategory.MISC,
+                        Items.CHARCOAL.getDefaultInstance())
+                .unlockedBy("has_charcoal", InventoryChangeTrigger.TriggerInstance.hasItems(Items.CHARCOAL))
+                .save(consumer);
+        KilnCookingRecipeBuilder.fireDefault(
                         Ingredient.of(ItemTags.SAND),
                         RecipeCategory.BUILDING_BLOCKS,
                         Blocks.GLASS.asItem().getDefaultInstance())

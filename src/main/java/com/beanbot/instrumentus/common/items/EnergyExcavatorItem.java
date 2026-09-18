@@ -38,7 +38,7 @@ public class EnergyExcavatorItem extends ExcavatorItem implements IItemLightning
 
     @Override
     public int getMaxCapacity() {
-        return 80000;
+        return 100000;
     }
 
     @Override
