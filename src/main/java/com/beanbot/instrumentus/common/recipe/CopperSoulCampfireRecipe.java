@@ -1,11 +1,11 @@
 package com.beanbot.instrumentus.common.recipe;
 
+import com.beanbot.instrumentus.client.inventory.recipebook.InstrumentusRecipeBookCategories;
 import com.beanbot.instrumentus.common.Instrumentus;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.core.HolderLookup;
-import net.minecraft.core.NonNullList;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
@@ -14,7 +14,6 @@ import net.minecraft.world.Container;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.*;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.Blocks;
 import org.jetbrains.annotations.NotNull;
 
 public class CopperSoulCampfireRecipe implements Recipe<SingleRecipeInput> {
@@ -44,8 +43,18 @@ public class CopperSoulCampfireRecipe implements Recipe<SingleRecipeInput> {
     }
 
     @Override
-    public RecipeType<?> getType() {
+    public RecipeType<? extends Recipe<SingleRecipeInput>> getType() {
         return InstrumentusRecipes.COPPER_SOUL_CAMPFIRE_COOKING_TYPE.get();
+    }
+
+    @Override
+    public PlacementInfo placementInfo() {
+        return PlacementInfo.create(this.input);
+    }
+
+    @Override
+    public RecipeBookCategory recipeBookCategory() {
+        return InstrumentusRecipeBookCategories.COPPER_SOUL_CAMPFIRE.get();
     }
 
     public int getCookingTime() {
@@ -53,42 +62,12 @@ public class CopperSoulCampfireRecipe implements Recipe<SingleRecipeInput> {
     }
 
     @Override
-    public ItemStack getToastSymbol() {
-        return new ItemStack(Blocks.SOUL_CAMPFIRE);
-    }
-
-    @Override
-    public @NotNull ItemStack getResultItem(HolderLookup.Provider holderProvider) {
-        return this.result;
-    }
-
-    public ItemStack getResultItem() {
-        return getResultItem(null);
-    }
-
-    @Override
-    public NonNullList<Ingredient> getIngredients() {
-        NonNullList<Ingredient> nonnulllist = NonNullList.create();
-        nonnulllist.add(this.input);
-        return nonnulllist;
-    }
-
-    @Override
     public boolean isSpecial() {
         return true;
     }
 
-    public ItemStack assemble(Container pContainer, RegistryAccess pRegistryAccess) {
-        return this.result.copy();
-    }
-
     @Override
-    public boolean canCraftInDimensions(int pWidth, int pHeight) {
-        return true;
-    }
-
-    @Override
-    public RecipeSerializer<?> getSerializer() {
+    public RecipeSerializer<? extends Recipe<SingleRecipeInput>> getSerializer() {
         return InstrumentusRecipes.COPPER_SOUL_CAMPFIRE_COOKING_SERIALIZER.get();
     }
 

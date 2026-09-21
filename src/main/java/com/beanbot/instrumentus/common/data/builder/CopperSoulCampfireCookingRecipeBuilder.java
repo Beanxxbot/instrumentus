@@ -9,13 +9,16 @@ import net.minecraft.advancements.Criterion;
 import net.minecraft.advancements.critereon.RecipeUnlockedTrigger;
 import net.minecraft.core.NonNullList;
 import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.data.recipes.RecipeBuilder;
 import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.data.recipes.RecipeOutput;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.item.crafting.Recipe;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -64,12 +67,12 @@ public class CopperSoulCampfireCookingRecipeBuilder implements RecipeBuilder {
     }
 
     public void save(@NotNull RecipeOutput recipeOutput) {
-        this.save(recipeOutput, ResourceLocation.fromNamespaceAndPath(Instrumentus.MODID, BuiltInRegistries.ITEM.getKey(this.output.getItem()).getPath() + "-copper_soul_campfire_cooking"));
+        this.save(recipeOutput, ResourceKey.create(Registries.RECIPE, ResourceLocation.fromNamespaceAndPath(Instrumentus.MODID, BuiltInRegistries.ITEM.getKey(this.output.getItem()).getPath() + "-copper_soul_campfire_cooking")));
     }
 
     @Override
-    public void save(RecipeOutput recipeOutput, @NotNull ResourceLocation pId) {
-        this.ensureValid(pId);
+    public void save(RecipeOutput recipeOutput, ResourceKey<Recipe<?>> pId) {
+        this.ensureValid(pId.location());
         Advancement.Builder advancementBuilder = recipeOutput.advancement()
                 .addCriterion("has_the_recipe", RecipeUnlockedTrigger.unlocked(pId))
                 .rewards(AdvancementRewards.Builder.recipe(pId))
@@ -81,7 +84,7 @@ public class CopperSoulCampfireCookingRecipeBuilder implements RecipeBuilder {
             this.output,
             this.cookingTime
         );
-        recipeOutput.accept(pId, copperSoulCampfireRecipe, advancementBuilder.build(pId.withPrefix("recipes/" + RecipeCategory.MISC.getFolderName() + "/")));
+        recipeOutput.accept(pId, copperSoulCampfireRecipe, advancementBuilder.build(pId.location().withPrefix("recipes/" + RecipeCategory.MISC.getFolderName() + "/")));
     }
 
     private void ensureValid(ResourceLocation pId) {

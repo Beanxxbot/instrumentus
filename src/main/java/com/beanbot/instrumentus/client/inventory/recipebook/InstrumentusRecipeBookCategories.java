@@ -12,6 +12,7 @@ public class InstrumentusRecipeBookCategories {
     public static final DeferredRegister<RecipeBookCategory> RECIPE_BOOK_CATEGORIES = DeferredRegister.create(Registries.RECIPE_BOOK_CATEGORY, Instrumentus.MODID);
 
     public static final Supplier<RecipeBookCategory> FIRING = RECIPE_BOOK_CATEGORIES.register("firing", RecipeBookCategory::new);
+    public static final Supplier<RecipeBookCategory> COPPER_SOUL_CAMPFIRE = RECIPE_BOOK_CATEGORIES.register("copper_soul_campfire", RecipeBookCategory::new);
 
     public static void register(IEventBus eventBus) {
         RECIPE_BOOK_CATEGORIES.register(eventBus);
