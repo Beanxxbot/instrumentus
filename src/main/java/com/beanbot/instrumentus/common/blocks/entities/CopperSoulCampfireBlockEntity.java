@@ -9,6 +9,7 @@ import net.minecraft.core.NonNullList;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.*;
@@ -49,7 +50,7 @@ public class CopperSoulCampfireBlockEntity extends BlockEntity implements Cleara
                 if (pBlockEntity.cookingProgress[i] >= pBlockEntity.cookingTime[i]) {
                     SingleRecipeInput singleRecipeInput = new SingleRecipeInput(itemstack);
                     ItemStack itemstack1 = pBlockEntity.quickCheck
-                            .getRecipeFor(singleRecipeInput, pLevel)
+                            .getRecipeFor(singleRecipeInput, (ServerLevel) pLevel)
                             .map(m -> m.value().assemble(singleRecipeInput, pLevel.registryAccess()))
                             .orElse(itemstack);
                     if (itemstack1.isItemEnabled(pLevel.enabledFeatures())) {
@@ -152,7 +153,7 @@ public class CopperSoulCampfireBlockEntity extends BlockEntity implements Cleara
     }
 
     public Optional<RecipeHolder<CopperSoulCampfireRecipe>> getCookableRecipe(ItemStack pStack) {
-        return this.items.stream().noneMatch(ItemStack::isEmpty) ? Optional.empty() : this.quickCheck.getRecipeFor(new SingleRecipeInput(pStack), this.level);
+        return this.items.stream().noneMatch(ItemStack::isEmpty) ? Optional.empty() : this.quickCheck.getRecipeFor(new SingleRecipeInput(pStack), (ServerLevel) this.level);
     }
 
     public boolean placeFood(@Nullable Entity pEntity, ItemStack pStack, int pCookTime) {
