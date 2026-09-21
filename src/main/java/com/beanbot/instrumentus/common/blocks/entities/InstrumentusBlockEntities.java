@@ -13,9 +13,9 @@ public class InstrumentusBlockEntities {
     public static final DeferredRegister<BlockEntityType<?>> BLOCK_ENTITIES = DeferredRegister.create(BuiltInRegistries.BLOCK_ENTITY_TYPE, Instrumentus.MODID);
 
     public static final Supplier<BlockEntityType<CopperSoulCampfireBlockEntity>> COPPER_SOUL_CAMPFIRE_BLOCK_ENTITY = BLOCK_ENTITIES.register("copper_soul_campfire_block_entity", () ->
-            BlockEntityType.Builder.of(CopperSoulCampfireBlockEntity::new, InstrumentusBlocks.COPPER_SOUL_CAMPFIRE.get()).build(null));
+            new BlockEntityType<>(CopperSoulCampfireBlockEntity::new, InstrumentusBlocks.COPPER_SOUL_CAMPFIRE.get()));
     public static final Supplier<BlockEntityType<KilnBlockEntity>> KILN_BLOCK_ENTITY = BLOCK_ENTITIES.register("kiln_block_entity", () ->
-            BlockEntityType.Builder.of(KilnBlockEntity::new, InstrumentusBlocks.KILN.get()).build(null));
+            new BlockEntityType<>(KilnBlockEntity::new, InstrumentusBlocks.KILN.get()));
 
     public static void register(IEventBus eventBus) {
         BLOCK_ENTITIES.register(eventBus);

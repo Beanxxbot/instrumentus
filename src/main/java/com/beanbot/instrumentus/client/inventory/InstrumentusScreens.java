@@ -12,7 +12,7 @@ public class InstrumentusScreens {
 
     @SubscribeEvent
     public static void registerScreens(RegisterMenuScreensEvent event) {
-        event.register(InstrumentusMenus.KILN_MENU, KilnScreen::new);
+        event.register(InstrumentusMenus.KILN_MENU.get(), KilnScreen::new);
     }
 
 }
