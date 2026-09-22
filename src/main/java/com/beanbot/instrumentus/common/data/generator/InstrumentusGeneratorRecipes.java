@@ -8,13 +8,16 @@ import com.beanbot.instrumentus.common.data.conditions.FeatureEnabledCondition;
 import com.beanbot.instrumentus.common.items.InstrumentusItems;
 import net.minecraft.advancements.critereon.InventoryChangeTrigger;
 import net.minecraft.core.HolderLookup;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.recipes.*;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.StonecutterRecipe;
+import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.block.Blocks;
 import net.neoforged.neoforge.common.Tags;
 import org.jetbrains.annotations.NotNull;
@@ -756,7 +759,7 @@ public class InstrumentusGeneratorRecipes extends RecipeProvider {
                 .group("instrumentus")
                 .unlockedBy("has_energized_ingot", InventoryChangeTrigger.TriggerInstance.hasItems(InstrumentusItems.ENERGIZED_INGOT.get()))
                 .save(consumer.withConditions(new FeatureEnabledCondition(FeatureEnabledCondition.ConfigFeature.ENERGIZED)));
-        nineBlockStorageRecipes(consumer.withConditions(new FeatureEnabledCondition(FeatureEnabledCondition.ConfigFeature.ENERGIZED)), RecipeCategory.MISC, InstrumentusItems.ENERGIZED_INGOT.get(), RecipeCategory.BUILDING_BLOCKS, InstrumentusItems.ENERGIZED_BLOCK.get(), InstrumentusItems.ENERGIZED_INGOT.get() + "_9x9", "instrumentus", InstrumentusItems.ENERGIZED_BLOCK.get() + "_9x9", "instrumentus");
+        nineBlockStorageRecipesConditional(consumer, FeatureEnabledCondition.ConfigFeature.ENERGIZED, RecipeCategory.MISC, InstrumentusItems.ENERGIZED_INGOT.get(), RecipeCategory.BUILDING_BLOCKS, InstrumentusItems.ENERGIZED_BLOCK.get(), InstrumentusItems.ENERGIZED_INGOT.get() + "_9x9", "instrumentus", InstrumentusItems.ENERGIZED_BLOCK.get() + "_9x9", "instrumentus");
         shaped(RecipeCategory.TOOLS, InstrumentusItems.ENERGIZED_BRUSH.get())
                 .pattern("F")
                 .pattern("D")
@@ -893,8 +896,8 @@ public class InstrumentusGeneratorRecipes extends RecipeProvider {
                 .group("instrumentus")
                 .unlockedBy("has_soul_campfire", InventoryChangeTrigger.TriggerInstance.hasItems(Items.SOUL_CAMPFIRE))
                 .save(consumer.withConditions(new FeatureEnabledCondition(FeatureEnabledCondition.ConfigFeature.SOULCOPPER)));
-        nineBlockStorageRecipes(consumer.withConditions(new FeatureEnabledCondition(FeatureEnabledCondition.ConfigFeature.SOULCOPPER)), RecipeCategory.MISC, InstrumentusItems.RAW_SOULCOPPER.get(), RecipeCategory.BUILDING_BLOCKS, InstrumentusItems.RAW_SOULCOPPER_BLOCK.get(), InstrumentusItems.RAW_SOULCOPPER.get() + "_9x9", "instrumentus", InstrumentusItems.RAW_SOULCOPPER_BLOCK.get() + "_9x9", "instrumentus");
-        nineBlockStorageRecipes(consumer.withConditions(new FeatureEnabledCondition(FeatureEnabledCondition.ConfigFeature.SOULCOPPER)), RecipeCategory.MISC, InstrumentusItems.SOULCOPPER_INGOT.get(), RecipeCategory.BUILDING_BLOCKS, InstrumentusItems.SOULCOPPER_BLOCK.get(), InstrumentusItems.SOULCOPPER_INGOT.get() + "_9x9", "instrumentus", InstrumentusItems.SOULCOPPER_BLOCK.get() + "_9x9", "instrumentus");
+        nineBlockStorageRecipesConditional(consumer, FeatureEnabledCondition.ConfigFeature.SOULCOPPER, RecipeCategory.MISC, InstrumentusItems.RAW_SOULCOPPER.get(), RecipeCategory.BUILDING_BLOCKS, InstrumentusItems.RAW_SOULCOPPER_BLOCK.get(), InstrumentusItems.RAW_SOULCOPPER.get() + "_9x9", "instrumentus", InstrumentusItems.RAW_SOULCOPPER_BLOCK.get() + "_9x9", "instrumentus");
+        nineBlockStorageRecipesConditional(consumer, FeatureEnabledCondition.ConfigFeature.SOULCOPPER, RecipeCategory.MISC, InstrumentusItems.SOULCOPPER_INGOT.get(), RecipeCategory.BUILDING_BLOCKS, InstrumentusItems.SOULCOPPER_BLOCK.get(), InstrumentusItems.SOULCOPPER_INGOT.get() + "_9x9", "instrumentus", InstrumentusItems.SOULCOPPER_BLOCK.get() + "_9x9", "instrumentus");
         SimpleCookingRecipeBuilder.blasting(
                         Ingredient.of(InstrumentusItems.RAW_SOULCOPPER.get()),
                         RecipeCategory.MISC,
@@ -924,7 +927,7 @@ public class InstrumentusGeneratorRecipes extends RecipeProvider {
                 .save(consumer.withConditions(new FeatureEnabledCondition(FeatureEnabledCondition.ConfigFeature.SOULCOPPER)));
         CopperSoulCampfireCookingRecipeBuilder.smelting(
                         ResourceLocation.fromNamespaceAndPath(Instrumentus.MODID, "raw_copper_block_to_raw_soulcopper"),
-                        Ingredient.of(Items.RAW_COPPER_BLOCK.getDefaultInstance()),
+                        Ingredient.of(Items.RAW_COPPER_BLOCK),
                         InstrumentusItems.RAW_SOULCOPPER.get().getDefaultInstance(),
                         300
                 )
@@ -1071,6 +1074,22 @@ public class InstrumentusGeneratorRecipes extends RecipeProvider {
                         InstrumentusItems.NETHERITE_EXCAVATOR.get())
                 .unlocks("has_netherite_ingot", has(Items.NETHERITE_INGOT))
                 .save(consumer.withConditions(new FeatureEnabledCondition(FeatureEnabledCondition.ConfigFeature.EXCAVATORS)), "netherite_excavator_smithing");
+    }
+
+    private void nineBlockStorageRecipesConditional(RecipeOutput output, FeatureEnabledCondition.ConfigFeature condition, RecipeCategory unpackedCategory, ItemLike unpacked, RecipeCategory packedCategory, ItemLike packed, String packedName, String packedGroup, String unpackedName, String unpackedGroup) {
+        this.shapeless(unpackedCategory, unpacked, 9)
+                .requires(packed)
+                .group(unpackedGroup)
+                .unlockedBy(getHasName(packed), this.has(packed))
+                .save(output.withConditions(new FeatureEnabledCondition(condition)), ResourceKey.create(Registries.RECIPE, ResourceLocation.parse(unpackedName)));
+        this.shaped(packedCategory, packed)
+                .define('#', unpacked)
+                .pattern("###")
+                .pattern("###")
+                .pattern("###")
+                .group(packedGroup)
+                .unlockedBy(getHasName(unpacked), this.has(unpacked))
+                .save(output.withConditions(new FeatureEnabledCondition(condition)), ResourceKey.create(Registries.RECIPE, ResourceLocation.parse(packedName)));
     }
 
     static class Runner extends RecipeProvider.Runner {
