@@ -11,7 +11,6 @@ import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.data.event.GatherDataEvent;
 
 import java.util.concurrent.CompletableFuture;
-import java.util.function.BiConsumer;
 
 @SuppressWarnings("unused")
 @EventBusSubscriber(modid = Instrumentus.MODID)
@@ -30,18 +29,9 @@ public class InstrumentusGenerator {
         InstrumentusGeneratorItemTags itemTags = new InstrumentusGeneratorItemTags(output, lookupProvider, blockTags);
         generator.addProvider(true, itemTags);
 
-        generator.addProvider(true, new InstrumentusGeneratorBlockStates(output, event.getExistingFileHelper()));
-        generator.addProvider(true, new InstrumentusGeneratorItemModels(output, event.getExistingFileHelper()));
-
         event.createProvider(InstrumentusModelProvider::new);
 
         generator.addProvider(true, new InstrumentusGeneratorGlobalLootModifier(output, event.getLookupProvider()));
         generator.addProvider(true, new InstrumentusGeneratorLanguage(output));
     }
-
-//    private static void providerPonderLang(BiConsumer<String, String> consumer) {
-//        PonderIndex.addPlugin(new InstrumentusPonderPlugin());
-//
-//        PonderIndex.getLangAccess().provideLang(Instrumentus.MODID, consumer);
-//    }
 }
