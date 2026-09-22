@@ -23,12 +23,13 @@ import java.util.concurrent.CompletableFuture;
 
 public class InstrumentusGeneratorRecipes extends RecipeProvider {
 
-    public InstrumentusGeneratorRecipes(PackOutput output, CompletableFuture<HolderLookup.Provider> completableFuture) {
-        super(output, completableFuture);
+    public InstrumentusGeneratorRecipes(HolderLookup.Provider registries, RecipeOutput output) {
+        super(registries, output);
     }
 
     @Override
-    protected void buildRecipes(@NotNull RecipeOutput consumer) {
+    protected void buildRecipes() {
+        RecipeOutput consumer = this.output;
         //Breeze Boots
         ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, InstrumentusItems.BREEZE_ARMOR_BOOTS.get())
                 .pattern("R R")
@@ -1071,4 +1072,22 @@ public class InstrumentusGeneratorRecipes extends RecipeProvider {
                 .unlocks("has_netherite_ingot", has(Items.NETHERITE_INGOT))
                 .save(consumer.withConditions(new FeatureEnabledCondition(FeatureEnabledCondition.ConfigFeature.EXCAVATORS)), "netherite_excavator_smithing");
     }
+
+    static class Runner extends RecipeProvider.Runner {
+
+        public Runner(PackOutput output, CompletableFuture<HolderLookup.Provider> lookupProvider) {
+            super(output, lookupProvider);
+        }
+        @Override
+        protected RecipeProvider createRecipeProvider(HolderLookup.Provider registries, RecipeOutput output) {
+            return new InstrumentusGeneratorRecipes(registries, output);
+        }
+
+        @Override
+        public String getName() {
+            return "Instrumentus Recipes";
+        }
+    }
 }
+
+
