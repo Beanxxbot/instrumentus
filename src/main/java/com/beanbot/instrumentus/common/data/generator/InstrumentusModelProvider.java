@@ -3,6 +3,7 @@ package com.beanbot.instrumentus.common.data.generator;
 import com.beanbot.instrumentus.common.Instrumentus;
 import com.beanbot.instrumentus.common.blocks.InstrumentusBlocks;
 import com.beanbot.instrumentus.common.blocks.WindBlowerBlock;
+import com.beanbot.instrumentus.common.items.InstrumentusItems;
 import net.minecraft.client.data.models.BlockModelGenerators;
 import net.minecraft.client.data.models.ItemModelGenerators;
 import net.minecraft.client.data.models.ModelProvider;
@@ -10,6 +11,7 @@ import net.minecraft.client.data.models.blockstates.*;
 import net.minecraft.client.data.models.model.*;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
@@ -63,6 +65,43 @@ public class InstrumentusModelProvider extends ModelProvider {
         blockModels.registerSimpleFlatItemModel(copperSoulCampfire);
 
         createBottomTopWithCharge(blockModels, itemModels, windBlower, WindBlowerBlock.BLOWER_CHARGE);
+
+        //Energized
+        generateFlatItemWithTexture(itemModels, ModelTemplates.FLAT_ITEM, InstrumentusItems.CARBON_ROD.get(), modLocation("item/carbon_rod"));
+        generateFlatItemWithTexture(itemModels, ModelTemplates.FLAT_HANDHELD_ITEM, InstrumentusItems.ENERGIZED_PICKAXE.get(), modLocation("item/energy_pickaxe"));
+        generateFlatItemWithTexture(itemModels, ModelTemplates.FLAT_HANDHELD_ITEM, InstrumentusItems.ENERGIZED_SHOVEL.get(), modLocation("item/energy_shovel"));
+        generateFlatItemWithTexture(itemModels, ModelTemplates.FLAT_HANDHELD_ITEM, InstrumentusItems.ENERGIZED_AXE.get(), modLocation("item/energy_axe"));
+        generateFlatItemWithTexture(itemModels, ModelTemplates.FLAT_ITEM, InstrumentusItems.ENERGIZED_HOE.get(), modLocation("item/energy_hoe"));
+        generateFlatItemWithTexture(itemModels, ModelTemplates.FLAT_HANDHELD_ITEM, InstrumentusItems.ENERGIZED_PAXEL.get(), modLocation("item/energy_paxel"));
+        generateFlatItemWithTexture(itemModels, ModelTemplates.FLAT_HANDHELD_ITEM, InstrumentusItems.ENERGIZED_HAMMER.get(), modLocation("item/energy_hammer"));
+        generateFlatItemWithTexture(itemModels, ModelTemplates.FLAT_HANDHELD_ITEM, InstrumentusItems.ENERGIZED_SICKLE.get(), modLocation("item/energy_sickle"));
+        generateFlatItemWithTexture(itemModels, ModelTemplates.FLAT_HANDHELD_ITEM, InstrumentusItems.ENERGIZED_KNIFE.get(), modLocation("item/energy_knife"));
+        generateFlatItemWithTexture(itemModels, ModelTemplates.FLAT_HANDHELD_ITEM, InstrumentusItems.ENERGIZED_SHEARS.get(), modLocation("item/energy_shears"));
+        generateFlatItemWithTexture(itemModels, ModelTemplates.FLAT_ITEM, InstrumentusItems.ENERGIZED_INGOT.get(), modLocation("item/energy_ingot"));
+        generateFlatItemWithTexture(itemModels, ModelTemplates.FLAT_HANDHELD_ITEM, InstrumentusItems.ENERGIZED_LIGHTNING_ROD.get(), modLocation("item/energy_lightning_rod"));
+        generateFlatItemWithTexture(itemModels, ModelTemplates.FLAT_ITEM, InstrumentusItems.ENERGIZED_EXCAVATOR.get(), modLocation("item/energy_excavator"));
+        blockModels.registerSimpleItemModel(energizedBlock, modLocation("block/energy_block"));
+
+        //Soulcopper
+        generateFlatItemWithTexture(itemModels, ModelTemplates.FLAT_HANDHELD_ITEM, InstrumentusItems.SOULCOPPER_PICKAXE.get(), modLocation("item/soulcopper_pickaxe"));
+        generateFlatItemWithTexture(itemModels, ModelTemplates.FLAT_ITEM, InstrumentusItems.SOULCOPPER_INGOT.get(), modLocation("item/soulcopper_ingot"));
+        generateFlatItemWithTexture(itemModels, ModelTemplates.FLAT_ITEM, InstrumentusItems.RAW_SOULCOPPER.get(), modLocation("item/raw_soulcopper"));
+        generateFlatItemWithTexture(itemModels, ModelTemplates.FLAT_ITEM, InstrumentusItems.COPPER_SOUL_CAMPFIRE_BLOCK_ITEM.get(), modLocation("item/copper_soul_campfire"));
+        generateFlatItemWithTexture(itemModels, ModelTemplates.FLAT_ITEM, InstrumentusItems.SOULCOPPER_TORCH_ITEM.get(), modLocation("block/copper_soul_torch"));
+        generateFlatItemWithTexture(itemModels, ModelTemplates.FLAT_ITEM, InstrumentusItems.SOULCOPPER_LANTERN_ITEM.get(), modLocation("item/copper_soul_lantern"));
+        generateFlatItemWithTexture(itemModels, ModelTemplates.FLAT_HANDHELD_ITEM, InstrumentusItems.SOULCOPPER_BURNER.get(), modLocation("item/soulcopper_burner"));
+        generateFlatItemWithTexture(itemModels, ModelTemplates.FLAT_ITEM, InstrumentusItems.BREEZE_ARMOR_BOOTS.get(), modLocation("item/breeze_boots"));
+        generateFlatItemWithTexture(itemModels, ModelTemplates.FLAT_ITEM, InstrumentusItems.SOULCOPPER_DOOR_ITEM.get(), modLocation("item/soulcopper_door"));
+        generateFlatItemWithTexture(itemModels, ModelTemplates.FLAT_ITEM, InstrumentusItems.PLANT_FIBER.get(), modLocation("item/plant_fiber"));
+        blockModels.registerSimpleItemModel(soulcopperBlock, modLocation("block/soulcopper_block"));
+        blockModels.registerSimpleItemModel(rawSoulcopperBlock, modLocation("block/raw_soulcopper_block"));
+        blockModels.registerSimpleItemModel(cutSoulcopper, modLocation("block/cut_soulcopper"));
+        blockModels.registerSimpleItemModel(soulcopperGrate, modLocation("block/soulcopper_grate"));
+        blockModels.registerSimpleItemModel(soulcopperTrapdoor, modLocation("block/soulcopper_trapdoor_bottom"));
+        blockModels.registerSimpleItemModel(chiseledSoulcopper, modLocation("block/chiseled_soulcopper"));
+        blockModels.registerSimpleItemModel(soulcopperBulb, modLocation("block/soulcopper_bulb"));
+
+        blockModels.registerSimpleItemModel(kiln, modLocation("block/kiln"));
     }
 
     private static void createStairs(BlockModelGenerators blockModels, ItemModelGenerators itemModels, Block stairs, TextureMapping texture) {
@@ -92,5 +131,9 @@ public class InstrumentusModelProvider extends ModelProvider {
 
         blockModels.blockStateOutput.accept(MultiVariantGenerator.multiVariant(block).with(PropertyDispatch.property(charge).generate((p) -> Variant.variant().with(VariantProperties.MODEL, aresourcelocation[p]))));
         itemModels.itemModelOutput.accept(Blocks.RESPAWN_ANCHOR.asItem(), ItemModelUtils.plainModel(aresourcelocation[0]));
+    }
+
+    private static void generateFlatItemWithTexture(ItemModelGenerators itemModels, ModelTemplate template, Item item, ResourceLocation texture) {
+        itemModels.itemModelOutput.accept(item, ItemModelUtils.plainModel(template.create(ModelLocationUtils.getModelLocation(item), TextureMapping.layer0(texture), itemModels.modelOutput)));
     }
 }

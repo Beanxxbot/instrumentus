@@ -21,9 +21,6 @@
 //    @Override
 //    protected void registerModels() {
 //        //Energized
-//        singleTexture(InstrumentusItems.CARBON_ROD.getId().getPath(), mcLoc("item/generated"), "layer0", modLoc("item/carbon_rod"));
-//        singleTexture(InstrumentusItems.ENERGIZED_PICKAXE.getId().getPath(), mcLoc("item/handheld"), "layer0", modLoc("item/energy_pickaxe"));
-//        singleTexture(InstrumentusItems.ENERGIZED_SHOVEL.getId().getPath(), mcLoc("item/handheld"), "layer0", modLoc("item/energy_shovel"));
 //        singleTexture(InstrumentusItems.ENERGIZED_AXE.getId().getPath(), mcLoc("item/handheld"), "layer0", modLoc("item/energy_axe"));
 //        singleTexture(InstrumentusItems.ENERGIZED_HOE.getId().getPath(), mcLoc("item/generated"), "layer0", modLoc("item/energy_hoe"));
 //        singleTexture(InstrumentusItems.ENERGIZED_PAXEL.getId().getPath(), mcLoc("item/handheld"), "layer0", modLoc("item/energy_paxel"));
