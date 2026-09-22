@@ -78,7 +78,7 @@ public class FiringRecipeCategory implements IRecipeCategory<KilnRecipe> {
 
     @Override
     public void createRecipeExtras(IRecipeExtrasBuilder builder, KilnRecipe recipe, IFocusGroup focuses) {
-        int cookTime = recipe.getCookingTime();
+        int cookTime = recipe.cookingTime();
         if (cookTime <= 0) {
             cookTime = regularCookTime;
         }
@@ -92,7 +92,7 @@ public class FiringRecipeCategory implements IRecipeCategory<KilnRecipe> {
     }
 
     protected void addExperience(IRecipeExtrasBuilder builder, KilnRecipe recipe) {
-        float experience = recipe.getExperience();
+        float experience = recipe.experience();
         if (experience > 0) {
             Component experienceString = Component.translatable("gui.jei.category.smelting.experience", experience);
             builder.addText(experienceString, getWidth() - 20, 10)
@@ -103,7 +103,7 @@ public class FiringRecipeCategory implements IRecipeCategory<KilnRecipe> {
     }
 
     protected void addCookTime(IRecipeExtrasBuilder builder, KilnRecipe recipe) {
-        int cookTime = recipe.getCookingTime();
+        int cookTime = recipe.cookingTime();
         if (cookTime <= 0) {
             cookTime = regularCookTime;
         }
