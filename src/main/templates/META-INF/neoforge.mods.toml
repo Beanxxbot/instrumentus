@@ -95,7 +95,7 @@ side="CLIENT"
 
 [[dependencies.${mod_id}]]
 modId="ponder"
-type="required"
+type="optional"
 versionRange="[0.8,)"
 ordering="AFTER"
 side="BOTH"
@@ -112,14 +112,14 @@ side="BOTH"
 [[dependencies.${mod_id}]]
 modId="jade"
 type="optional"
-versionRange="[15.0.0,16.0.0)"
+versionRange="[17.0.0,18.0.0)"
 ordering="NONE"
 side="BOTH"
 
 [[dependencies.${mod_id}]]
 modId="jei"
 type="optional"
-versionRange="[19.0.0,20.0.0)"
+versionRange="[20.0.0,21.0.0)"
 ordering="NONE"
 side="CLIENT"
 
