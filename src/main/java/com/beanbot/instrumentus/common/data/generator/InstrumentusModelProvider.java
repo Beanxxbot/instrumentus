@@ -3,7 +3,7 @@ package com.beanbot.instrumentus.common.data.generator;
 import com.beanbot.instrumentus.common.Instrumentus;
 import com.beanbot.instrumentus.common.blocks.InstrumentusBlocks;
 import com.beanbot.instrumentus.common.blocks.WindBlowerBlock;
-import com.beanbot.instrumentus.common.items.InstrumentusItems;
+import com.beanbot.instrumentus.common.items.*;
 import net.minecraft.client.data.models.BlockModelGenerators;
 import net.minecraft.client.data.models.ItemModelGenerators;
 import net.minecraft.client.data.models.ModelProvider;
@@ -11,6 +11,7 @@ import net.minecraft.client.data.models.blockstates.*;
 import net.minecraft.client.data.models.model.*;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.DiggerItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
@@ -102,6 +103,18 @@ public class InstrumentusModelProvider extends ModelProvider {
         blockModels.registerSimpleItemModel(soulcopperBulb, modLocation("block/soulcopper_bulb"));
 
         blockModels.registerSimpleItemModel(kiln, modLocation("block/kiln"));
+    }
+
+    private void registerTools(ItemModelGenerators itemModels) {
+        for (var tool : InstrumentusItems.ITEMS_REGISTRAR.getEntries()) {
+            if (tool.get() instanceof DiggerItem) {
+                itemModels.generateFlatItem(tool.get(), ModelTemplates.FLAT_HANDHELD_ITEM);
+            } else if (tool.get() instanceof InstrumentusShearsItem || tool.get() instanceof KnifeItem) {
+                itemModels.generateFlatItem(tool.get(), ModelTemplates.FLAT_ITEM);
+            } else if (tool.get() instanceof InstrumentusBrushItem || tool.get() instanceof EnergyBrushItem) {
+                itemModels.generateFlatItem(tool.get(), ModelTemplates.createItem("brush", TextureSlot.LAYER0));
+            }
+        }
     }
 
     private static void createStairs(BlockModelGenerators blockModels, ItemModelGenerators itemModels, Block stairs, TextureMapping texture) {
