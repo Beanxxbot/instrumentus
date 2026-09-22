@@ -4,6 +4,7 @@ import com.beanbot.instrumentus.common.Instrumentus;
 import com.beanbot.instrumentus.common.blocks.InstrumentusBlocks;
 import com.beanbot.instrumentus.common.blocks.WindBlowerBlock;
 import com.beanbot.instrumentus.common.items.*;
+import com.beanbot.instrumentus.common.items.interfaces.IEnergyItem;
 import net.minecraft.client.data.models.BlockModelGenerators;
 import net.minecraft.client.data.models.ItemModelGenerators;
 import net.minecraft.client.data.models.ModelProvider;
@@ -13,6 +14,7 @@ import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.DiggerItem;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.SwordItem;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
@@ -59,7 +61,6 @@ public class InstrumentusModelProvider extends ModelProvider {
         createSlab(blockModels, itemModels, cutSoulcopperSlab, cutSoulcopper, new TextureMapping().put(TextureSlot.ALL, TextureMapping.getBlockTexture(cutSoulcopper)));
 
         blockModels.createLantern(soulcopperLantern);
-        blockModels.registerSimpleFlatItemModel(soulcopperLantern);
 
         blockModels.createFurnace(kiln, TexturedModel.ORIENTABLE_ONLY_TOP);
         blockModels.createCampfires(copperSoulCampfire);
@@ -103,9 +104,9 @@ public class InstrumentusModelProvider extends ModelProvider {
 
     private void registerTools(ItemModelGenerators itemModels) {
         for (var tool : InstrumentusItems.ITEMS_REGISTRAR.getEntries()) {
-            if (tool.get() instanceof DiggerItem) {
+            if (tool.get() instanceof DiggerItem || tool.get() instanceof SwordItem && !(tool.get() instanceof IEnergyItem) && !(tool.get() instanceof SoulcopperPickaxeItem)) {
                 itemModels.generateFlatItem(tool.get(), ModelTemplates.FLAT_HANDHELD_ITEM);
-            } else if (tool.get() instanceof InstrumentusShearsItem || tool.get() instanceof KnifeItem) {
+            } else if ((tool.get() instanceof InstrumentusShearsItem || tool.get() instanceof KnifeItem) && !(tool.get() instanceof IEnergyItem)) {
                 itemModels.generateFlatItem(tool.get(), ModelTemplates.FLAT_ITEM);
             } else if (tool.get() instanceof InstrumentusBrushItem || tool.get() instanceof EnergyBrushItem) {
                 itemModels.generateFlatItem(tool.get(), ModelTemplates.createItem("brush", TextureSlot.LAYER0));
