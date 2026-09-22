@@ -10,6 +10,7 @@ import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.ItemRenderer;
 import net.minecraft.client.renderer.entity.RenderLayerParent;
 import net.minecraft.client.renderer.entity.layers.RenderLayer;
+import net.minecraft.client.renderer.entity.state.PlayerRenderState;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.ItemDisplayContext;
@@ -18,7 +19,7 @@ import net.minecraft.world.item.Items;
 
 import java.util.UUID;
 
-public class BadgeRenderLayer extends RenderLayer<AbstractClientPlayer, PlayerModel<AbstractClientPlayer>> {
+public class BadgeRenderLayer extends RenderLayer<PlayerRenderState, PlayerModel> {
     private final ItemRenderer itemRenderer = Minecraft.getInstance().getItemRenderer();
 
     public static final UUID[] BADGE_UUIDS = new UUID[]{
@@ -32,12 +33,13 @@ public class BadgeRenderLayer extends RenderLayer<AbstractClientPlayer, PlayerMo
             UUID.fromString("6f744695-c175-4b64-afa3-e854b210c295") /* KingAmerica - 7 */
             };
 
-    public BadgeRenderLayer(RenderLayerParent<AbstractClientPlayer, PlayerModel<AbstractClientPlayer>> renderer) {
+    public BadgeRenderLayer(RenderLayerParent<PlayerRenderState, PlayerModel> renderer) {
         super(renderer);
     }
 
     @Override
-    public void render(PoseStack poseStack, MultiBufferSource buffer, int packedLight, AbstractClientPlayer player, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch) {
+    public void render(PoseStack poseStack, MultiBufferSource buffer, int packedLight, PlayerRenderState renderState, float yRot, float xRot) {
+        AbstractClientPlayer player = (AbstractClientPlayer) Minecraft.getInstance().level.getEntity(renderState.id);
         if (shouldRenderBadge(player)) {
             poseStack.pushPose();
 
