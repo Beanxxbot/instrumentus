@@ -103,6 +103,8 @@ public class InstrumentusModelProvider extends ModelProvider {
         blockModels.registerSimpleItemModel(soulcopperBulb, modLocation("block/soulcopper_bulb"));
 
         blockModels.registerSimpleItemModel(kiln, modLocation("block/kiln"));
+
+        registerTools(itemModels);
     }
 
     private void registerTools(ItemModelGenerators itemModels) {
