@@ -26,8 +26,8 @@ import java.util.List;
 
 public class EnergyShearsItem extends InstrumentusShearsItem implements IItemLightningChargeable, IEnergyItem {
 
-    public EnergyShearsItem(Item.Properties properties) {
-        super(properties);
+    public EnergyShearsItem(ToolMaterial material, Item.Properties properties) {
+        super(material, properties);
     }
 
     @Override

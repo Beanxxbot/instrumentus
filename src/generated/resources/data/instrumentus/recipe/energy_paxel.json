@@ -13,18 +13,10 @@
   "category": "equipment",
   "group": "instrumentus",
   "key": {
-    "A": {
-      "item": "instrumentus:energy_axe"
-    },
-    "P": {
-      "item": "instrumentus:energy_pickaxe"
-    },
-    "S": {
-      "item": "instrumentus:carbon_rod"
-    },
-    "V": {
-      "item": "instrumentus:energy_shovel"
-    }
+    "A": "instrumentus:energy_axe",
+    "P": "instrumentus:energy_pickaxe",
+    "S": "instrumentus:carbon_rod",
+    "V": "instrumentus:energy_shovel"
   },
   "pattern": [
     "AVP",

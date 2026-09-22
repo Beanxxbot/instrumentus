@@ -9,15 +9,9 @@
   "category": "equipment",
   "group": "instrumentus",
   "key": {
-    "A": {
-      "item": "minecraft:iron_ingot"
-    },
-    "B": {
-      "item": "minecraft:iron_block"
-    },
-    "S": {
-      "item": "minecraft:stick"
-    }
+    "A": "minecraft:iron_ingot",
+    "B": "minecraft:iron_block",
+    "S": "minecraft:stick"
   },
   "pattern": [
     "ABA",

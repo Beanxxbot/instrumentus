@@ -10,15 +10,8 @@ import java.util.List;
 
 public class InstrumentusShearsItem extends ShearsItem {
 
-    public InstrumentusShearsItem(Item.Properties properties) {
-        super (properties);
-    }
-
-    private static Item.Properties generateItemProperties(ToolMaterial toolMaterial) {
-        if (toolMaterial == ToolMaterial.NETHERITE || toolMaterial == InstrumentusToolMaterials.ENERGIZED) {
-            new Item.Properties().stacksTo(1).durability(Math.toIntExact(Math.round(toolMaterial.durability() * 0.952))).component(DataComponents.TOOL, ShearsItem.createToolProperties()).fireResistant();
-        }
-        return new Item.Properties().stacksTo(1).durability(Math.toIntExact(Math.round(toolMaterial.durability() * 0.952))).component(DataComponents.TOOL, ShearsItem.createToolProperties());
+    public InstrumentusShearsItem(ToolMaterial material, Item.Properties properties) {
+        super (properties.durability(Math.toIntExact(Math.round(material.durability() * 0.952))).component(DataComponents.TOOL, ShearsItem.createToolProperties()));
     }
 
     @Override

@@ -9,18 +9,10 @@
   "category": "equipment",
   "group": "instrumentus",
   "key": {
-    "B": {
-      "item": "instrumentus:energy_block"
-    },
-    "C": {
-      "item": "instrumentus:carbon_rod"
-    },
-    "I": {
-      "item": "instrumentus:energy_ingot"
-    },
-    "R": {
-      "item": "minecraft:lightning_rod"
-    }
+    "B": "instrumentus:energy_block",
+    "C": "instrumentus:carbon_rod",
+    "I": "instrumentus:energy_ingot",
+    "R": "minecraft:lightning_rod"
   },
   "pattern": [
     " B ",

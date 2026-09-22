@@ -13,12 +13,8 @@
   "category": "equipment",
   "group": "instrumentus",
   "key": {
-    "I": {
-      "item": "minecraft:copper_block"
-    },
-    "S": {
-      "item": "minecraft:stick"
-    }
+    "I": "minecraft:copper_block",
+    "S": "minecraft:stick"
   },
   "pattern": [
     "I",

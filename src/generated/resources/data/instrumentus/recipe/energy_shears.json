@@ -13,9 +13,7 @@
   "category": "equipment",
   "group": "instrumentus",
   "key": {
-    "X": {
-      "item": "instrumentus:energy_ingot"
-    }
+    "X": "instrumentus:energy_ingot"
   },
   "pattern": [
     " X",

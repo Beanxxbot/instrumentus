@@ -9,9 +9,7 @@
   "category": "building",
   "group": "instrumentus",
   "key": {
-    "#": {
-      "item": "instrumentus:energy_ingot"
-    }
+    "#": "instrumentus:energy_ingot"
   },
   "pattern": [
     "###",

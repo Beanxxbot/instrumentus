@@ -9,15 +9,9 @@
   "category": "equipment",
   "group": "instrumentus",
   "key": {
-    "A": {
-      "tag": "minecraft:planks"
-    },
-    "B": {
-      "tag": "minecraft:logs"
-    },
-    "S": {
-      "item": "minecraft:stick"
-    }
+    "A": "#minecraft:planks",
+    "B": "#minecraft:logs",
+    "S": "minecraft:stick"
   },
   "pattern": [
     "ABA",

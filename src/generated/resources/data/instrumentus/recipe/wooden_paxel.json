@@ -9,18 +9,10 @@
   "category": "equipment",
   "group": "instrumentus",
   "key": {
-    "A": {
-      "item": "minecraft:wooden_axe"
-    },
-    "P": {
-      "item": "minecraft:wooden_pickaxe"
-    },
-    "S": {
-      "item": "minecraft:stick"
-    },
-    "V": {
-      "item": "minecraft:wooden_shovel"
-    }
+    "A": "minecraft:wooden_axe",
+    "P": "minecraft:wooden_pickaxe",
+    "S": "minecraft:stick",
+    "V": "minecraft:wooden_shovel"
   },
   "pattern": [
     "AVP",

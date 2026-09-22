@@ -88,7 +88,7 @@ side="BOTH"
 
 [[dependencies.${mod_id}]]
 modId="flywheel"
-type="required"
+type="optional"
 versionRange="${flywheel_version_range}"
 ordering="AFTER"
 side="CLIENT"

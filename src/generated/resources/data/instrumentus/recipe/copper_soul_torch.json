@@ -9,12 +9,8 @@
   "category": "building",
   "group": "instrumentus",
   "key": {
-    "S": {
-      "item": "minecraft:stick"
-    },
-    "X": {
-      "item": "instrumentus:raw_soulcopper"
-    }
+    "S": "minecraft:stick",
+    "X": "instrumentus:raw_soulcopper"
   },
   "pattern": [
     "X",

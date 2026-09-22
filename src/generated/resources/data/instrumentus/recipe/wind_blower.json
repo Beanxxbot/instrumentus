@@ -9,21 +9,11 @@
   "category": "misc",
   "group": "instrumentus",
   "key": {
-    "B": {
-      "item": "minecraft:breeze_rod"
-    },
-    "C": {
-      "item": "minecraft:waxed_cut_copper"
-    },
-    "D": {
-      "item": "minecraft:dispenser"
-    },
-    "S": {
-      "item": "minecraft:daylight_detector"
-    },
-    "T": {
-      "item": "minecraft:chiseled_tuff_bricks"
-    }
+    "B": "minecraft:breeze_rod",
+    "C": "minecraft:waxed_cut_copper",
+    "D": "minecraft:dispenser",
+    "S": "minecraft:daylight_detector",
+    "T": "minecraft:chiseled_tuff_bricks"
   },
   "pattern": [
     "TDT",

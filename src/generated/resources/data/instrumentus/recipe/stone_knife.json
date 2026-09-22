@@ -9,12 +9,8 @@
   "category": "equipment",
   "group": "instrumentus",
   "key": {
-    "S": {
-      "item": "minecraft:stick"
-    },
-    "X": {
-      "tag": "c:cobblestones"
-    }
+    "S": "minecraft:stick",
+    "X": "#c:cobblestones"
   },
   "pattern": [
     " XX",

@@ -9,12 +9,8 @@
   "category": "equipment",
   "group": "instrumentus",
   "key": {
-    "C": {
-      "item": "minecraft:coal"
-    },
-    "S": {
-      "item": "minecraft:stick"
-    }
+    "C": "minecraft:coal",
+    "S": "minecraft:stick"
   },
   "pattern": [
     "CCC",

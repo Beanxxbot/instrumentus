@@ -13,9 +13,7 @@
   "category": "equipment",
   "group": "instrumentus",
   "key": {
-    "X": {
-      "item": "minecraft:copper_ingot"
-    }
+    "X": "minecraft:copper_ingot"
   },
   "pattern": [
     " X",

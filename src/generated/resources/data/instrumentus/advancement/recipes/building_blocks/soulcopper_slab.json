@@ -11,7 +11,7 @@
       "conditions": {
         "items": [
           {
-            "items": "instrumentus:soulcopper_slab"
+            "items": "instrumentus:cut_soulcopper"
           }
         ]
       },
@@ -19,7 +19,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "instrumentus:chiseled_soulcopper"
+        "recipe": "instrumentus:soulcopper_slab"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -32,7 +32,7 @@
   ],
   "rewards": {
     "recipes": [
-      "instrumentus:chiseled_soulcopper"
+      "instrumentus:soulcopper_slab"
     ]
   }
 }

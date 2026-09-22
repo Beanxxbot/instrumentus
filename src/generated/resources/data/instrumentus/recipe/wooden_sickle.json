@@ -9,12 +9,8 @@
   "category": "equipment",
   "group": "instrumentus",
   "key": {
-    "S": {
-      "item": "minecraft:stick"
-    },
-    "X": {
-      "tag": "minecraft:planks"
-    }
+    "S": "minecraft:stick",
+    "X": "#minecraft:planks"
   },
   "pattern": [
     " X ",

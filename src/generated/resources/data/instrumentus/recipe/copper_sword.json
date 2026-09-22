@@ -9,12 +9,8 @@
   "category": "equipment",
   "group": "instrumentus",
   "key": {
-    "S": {
-      "item": "minecraft:stick"
-    },
-    "X": {
-      "item": "minecraft:copper_ingot"
-    }
+    "S": "minecraft:stick",
+    "X": "minecraft:copper_ingot"
   },
   "pattern": [
     "X",

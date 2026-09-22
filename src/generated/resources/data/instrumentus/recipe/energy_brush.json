@@ -13,15 +13,9 @@
   "category": "equipment",
   "group": "instrumentus",
   "key": {
-    "D": {
-      "item": "instrumentus:energy_ingot"
-    },
-    "F": {
-      "item": "minecraft:feather"
-    },
-    "S": {
-      "item": "instrumentus:carbon_rod"
-    }
+    "D": "instrumentus:energy_ingot",
+    "F": "minecraft:feather",
+    "S": "instrumentus:carbon_rod"
   },
   "pattern": [
     "F",

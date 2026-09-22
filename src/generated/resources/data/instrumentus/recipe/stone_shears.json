@@ -9,9 +9,7 @@
   "category": "equipment",
   "group": "instrumentus",
   "key": {
-    "X": {
-      "tag": "c:cobblestones"
-    }
+    "X": "#c:cobblestones"
   },
   "pattern": [
     " X",

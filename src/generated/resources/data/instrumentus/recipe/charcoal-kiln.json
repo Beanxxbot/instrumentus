@@ -3,9 +3,7 @@
   "category": "misc",
   "cookingtime": 100,
   "experience": 0.1,
-  "ingredient": {
-    "tag": "minecraft:logs_that_burn"
-  },
+  "ingredient": "#minecraft:logs_that_burn",
   "result": {
     "count": 1,
     "id": "minecraft:charcoal"

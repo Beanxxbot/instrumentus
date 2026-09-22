@@ -31,10 +31,6 @@ import java.util.function.Function;
 
 public class BreezeArmorItem extends ArmorItem {
 
-    private static final ExplosionDamageCalculator EXPLOSION_DAMAGE_CALCULATOR = new SimpleExplosionDamageCalculator(
-            true, false, Optional.of(0.7F), BuiltInRegistries.BLOCK.get(BlockTags.BLOCKS_WIND_CHARGE_EXPLOSIONS).map(Function.identity())
-    );
-
     public BreezeArmorItem(ArmorType pType, Item.Properties properties) {
         super(InstrumentusArmorMaterials.BREEZE_ARMOR_MATERIAL, pType, properties);
     }
@@ -56,6 +52,9 @@ public class BreezeArmorItem extends ArmorItem {
     }
 
     public void windJump(ItemStack stack, Player player, Level level) {
+        ExplosionDamageCalculator EXPLOSION_DAMAGE_CALCULATOR = new SimpleExplosionDamageCalculator(
+                true, false, Optional.of(0.7F), BuiltInRegistries.BLOCK.get(BlockTags.BLOCKS_WIND_CHARGE_EXPLOSIONS).map(Function.identity()));
+
         if (!player.onGround()) {
             player.getCooldowns().addCooldown(stack, 60);
             player.setIgnoreFallDamageFromCurrentImpulse(true);

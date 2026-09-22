@@ -11,7 +11,7 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "instrumentus:cut_soulcopper_slab"
+          "name": "instrumentus:soulcopper_slab"
         }
       ],
       "rolls": 1.0

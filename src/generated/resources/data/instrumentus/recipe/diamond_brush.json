@@ -9,15 +9,9 @@
   "category": "equipment",
   "group": "instrumentus",
   "key": {
-    "F": {
-      "item": "minecraft:feather"
-    },
-    "I": {
-      "item": "minecraft:diamond"
-    },
-    "S": {
-      "item": "minecraft:stick"
-    }
+    "F": "minecraft:feather",
+    "I": "minecraft:diamond",
+    "S": "minecraft:stick"
   },
   "pattern": [
     "F",

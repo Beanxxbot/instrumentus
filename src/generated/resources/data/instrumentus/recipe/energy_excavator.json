@@ -13,12 +13,8 @@
   "category": "equipment",
   "group": "instrumentus",
   "key": {
-    "I": {
-      "item": "instrumentus:energy_block"
-    },
-    "S": {
-      "item": "instrumentus:carbon_rod"
-    }
+    "I": "instrumentus:energy_block",
+    "S": "instrumentus:carbon_rod"
   },
   "pattern": [
     "I",

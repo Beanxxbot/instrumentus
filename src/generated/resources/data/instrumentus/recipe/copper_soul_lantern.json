@@ -9,12 +9,8 @@
   "category": "building",
   "group": "instrumentus",
   "key": {
-    "C": {
-      "item": "instrumentus:copper_soul_torch"
-    },
-    "X": {
-      "item": "minecraft:iron_nugget"
-    }
+    "C": "instrumentus:copper_soul_torch",
+    "X": "minecraft:iron_nugget"
   },
   "pattern": [
     "XXX",

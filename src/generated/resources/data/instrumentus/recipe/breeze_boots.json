@@ -9,15 +9,9 @@
   "category": "equipment",
   "group": "instrumentus",
   "key": {
-    "B": {
-      "item": "minecraft:diamond_boots"
-    },
-    "C": {
-      "item": "minecraft:wind_charge"
-    },
-    "R": {
-      "tag": "c:rods/breeze"
-    }
+    "B": "minecraft:diamond_boots",
+    "C": "minecraft:wind_charge",
+    "R": "#c:rods/breeze"
   },
   "pattern": [
     "R R",

@@ -9,18 +9,10 @@
   "category": "equipment",
   "group": "instrumentus",
   "key": {
-    "A": {
-      "item": "minecraft:golden_axe"
-    },
-    "P": {
-      "item": "minecraft:golden_pickaxe"
-    },
-    "S": {
-      "item": "minecraft:stick"
-    },
-    "V": {
-      "item": "minecraft:golden_shovel"
-    }
+    "A": "minecraft:golden_axe",
+    "P": "minecraft:golden_pickaxe",
+    "S": "minecraft:stick",
+    "V": "minecraft:golden_shovel"
   },
   "pattern": [
     "AVP",

@@ -9,12 +9,8 @@
   "category": "equipment",
   "group": "instrumentus",
   "key": {
-    "I": {
-      "tag": "minecraft:logs"
-    },
-    "S": {
-      "item": "minecraft:stick"
-    }
+    "I": "#minecraft:logs",
+    "S": "minecraft:stick"
   },
   "pattern": [
     "I",

@@ -6,9 +6,7 @@
     }
   ],
   "type": "minecraft:stonecutting",
-  "ingredient": {
-    "item": "instrumentus:soulcopper_block"
-  },
+  "ingredient": "instrumentus:soulcopper_block",
   "result": {
     "count": 4,
     "id": "instrumentus:soulcopper_grate"

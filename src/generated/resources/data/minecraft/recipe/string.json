@@ -9,9 +9,7 @@
   "category": "misc",
   "group": "instrumentus",
   "key": {
-    "X": {
-      "item": "instrumentus:plant_fiber"
-    }
+    "X": "instrumentus:plant_fiber"
   },
   "pattern": [
     " X ",

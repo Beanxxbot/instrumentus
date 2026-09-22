@@ -9,15 +9,9 @@
   "category": "building",
   "group": "instrumentus",
   "key": {
-    "C": {
-      "item": "minecraft:raw_copper_block"
-    },
-    "F": {
-      "item": "minecraft:soul_campfire"
-    },
-    "S": {
-      "item": "minecraft:stick"
-    }
+    "C": "minecraft:raw_copper_block",
+    "F": "minecraft:soul_campfire",
+    "S": "minecraft:stick"
   },
   "pattern": [
     " S ",

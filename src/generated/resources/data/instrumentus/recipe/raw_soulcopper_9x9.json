@@ -9,9 +9,7 @@
   "category": "building",
   "group": "instrumentus",
   "key": {
-    "#": {
-      "item": "instrumentus:raw_soulcopper"
-    }
+    "#": "instrumentus:raw_soulcopper"
   },
   "pattern": [
     "###",

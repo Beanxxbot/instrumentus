@@ -9,12 +9,8 @@
   "category": "equipment",
   "group": "instrumentus",
   "key": {
-    "S": {
-      "item": "instrumentus:carbon_rod"
-    },
-    "X": {
-      "item": "instrumentus:energy_ingot"
-    }
+    "S": "instrumentus:carbon_rod",
+    "X": "instrumentus:energy_ingot"
   },
   "pattern": [
     "XX",

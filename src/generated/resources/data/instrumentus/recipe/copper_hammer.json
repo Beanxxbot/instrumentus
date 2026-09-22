@@ -13,15 +13,9 @@
   "category": "equipment",
   "group": "instrumentus",
   "key": {
-    "A": {
-      "item": "minecraft:copper_ingot"
-    },
-    "B": {
-      "item": "minecraft:copper_block"
-    },
-    "S": {
-      "item": "minecraft:stick"
-    }
+    "A": "minecraft:copper_ingot",
+    "B": "minecraft:copper_block",
+    "S": "minecraft:stick"
   },
   "pattern": [
     "ABA",

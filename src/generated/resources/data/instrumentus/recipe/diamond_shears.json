@@ -9,9 +9,7 @@
   "category": "equipment",
   "group": "instrumentus",
   "key": {
-    "X": {
-      "item": "minecraft:diamond"
-    }
+    "X": "minecraft:diamond"
   },
   "pattern": [
     " X",

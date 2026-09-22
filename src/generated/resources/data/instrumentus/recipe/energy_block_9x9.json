@@ -9,9 +9,7 @@
   "category": "misc",
   "group": "instrumentus",
   "ingredients": [
-    {
-      "item": "instrumentus:energy_block"
-    }
+    "instrumentus:energy_block"
   ],
   "result": {
     "count": 9,

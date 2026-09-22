@@ -9,9 +9,7 @@
   "category": "equipment",
   "group": "instrumentus",
   "key": {
-    "X": {
-      "tag": "minecraft:planks"
-    }
+    "X": "#minecraft:planks"
   },
   "pattern": [
     " X",

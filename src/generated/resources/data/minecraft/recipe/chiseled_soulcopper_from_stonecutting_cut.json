@@ -6,9 +6,7 @@
     }
   ],
   "type": "minecraft:stonecutting",
-  "ingredient": {
-    "item": "instrumentus:cut_soulcopper"
-  },
+  "ingredient": "instrumentus:cut_soulcopper",
   "result": {
     "count": 1,
     "id": "instrumentus:chiseled_soulcopper"

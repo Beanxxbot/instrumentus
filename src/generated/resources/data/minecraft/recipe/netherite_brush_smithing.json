@@ -6,17 +6,11 @@
     }
   ],
   "type": "minecraft:smithing_transform",
-  "addition": {
-    "item": "minecraft:netherite_ingot"
-  },
-  "base": {
-    "item": "instrumentus:diamond_brush"
-  },
+  "addition": "minecraft:netherite_ingot",
+  "base": "instrumentus:diamond_brush",
   "result": {
     "count": 1,
     "id": "instrumentus:netherite_brush"
   },
-  "template": {
-    "item": "minecraft:netherite_upgrade_smithing_template"
-  }
+  "template": "minecraft:netherite_upgrade_smithing_template"
 }

@@ -20,15 +20,15 @@ public class InstrumentusItems {
     //Shears
 //    public static final DeferredHolder<Item, InstrumentusShearsItem> WOODEN_SHEARS = ITEMS_REGISTRAR.register("wooden_shears", () -> new InstrumentusShearsItem(ToolMaterial.WOOD));
     public static final DeferredHolder<Item, InstrumentusShearsItem> WOODEN_SHEARS = ITEMS_REGISTRAR
-        .registerItem("wooden_shears", InstrumentusShearsItem::new, generateShearsItemProperties(ToolMaterial.WOOD));
+        .registerItem("wooden_shears", properties -> new InstrumentusShearsItem(ToolMaterial.WOOD, properties), new Item.Properties().stacksTo(1));
     public static final DeferredHolder<Item, InstrumentusShearsItem> STONE_SHEARS = ITEMS_REGISTRAR
-        .registerItem("stone_shears", InstrumentusShearsItem::new, generateShearsItemProperties(ToolMaterial.STONE));
+            .registerItem("stone_shears", properties -> new InstrumentusShearsItem(ToolMaterial.STONE, properties), new Item.Properties().stacksTo(1));
     public static final DeferredHolder<Item, InstrumentusShearsItem> GOLDEN_SHEARS = ITEMS_REGISTRAR
-        .registerItem("golden_shears", InstrumentusShearsItem::new, generateShearsItemProperties(ToolMaterial.GOLD));
+            .registerItem("golden_shears", properties -> new InstrumentusShearsItem(ToolMaterial.GOLD, properties), new Item.Properties().stacksTo(1));
     public static final DeferredHolder<Item, InstrumentusShearsItem> DIAMOND_SHEARS = ITEMS_REGISTRAR
-        .registerItem("diamond_shears", InstrumentusShearsItem::new, generateShearsItemProperties(ToolMaterial.DIAMOND));
+            .registerItem("diamond_shears", properties -> new InstrumentusShearsItem(ToolMaterial.DIAMOND, properties), new Item.Properties().stacksTo(1));
     public static final DeferredHolder<Item, InstrumentusShearsItem> NETHERITE_SHEARS = ITEMS_REGISTRAR
-        .registerItem("netherite_shears", InstrumentusShearsItem::new, generateShearsItemProperties(ToolMaterial.NETHERITE));
+            .registerItem("netherite_shears", properties -> new InstrumentusShearsItem(ToolMaterial.NETHERITE, properties), new Item.Properties().stacksTo(1).fireResistant());
 
     //Sickles
     public static final DeferredHolder<Item, SickleItem> WOODEN_SICKLE = ITEMS_REGISTRAR
@@ -88,7 +88,7 @@ public class InstrumentusItems {
     public static final DeferredHolder<Item, EnergySickleItem> ENERGIZED_SICKLE = ITEMS_REGISTRAR
         .registerItem("energy_sickle", properties -> new EnergySickleItem(InstrumentusToolMaterials.ENERGIZED, properties), InstrumentusItemHelper.generateToolItemProperties(InstrumentusToolMaterials.ENERGIZED, 5.0f, -3.0f));
     public static final DeferredHolder<Item, EnergyShearsItem> ENERGIZED_SHEARS = ITEMS_REGISTRAR
-        .registerItem("energy_shears", EnergyShearsItem::new, InstrumentusItemHelper.generateShearsItemProperties(InstrumentusToolMaterials.ENERGIZED));
+        .registerItem("energy_shears",  properties -> new EnergyShearsItem(InstrumentusToolMaterials.ENERGIZED, properties), new Item.Properties().stacksTo(1).fireResistant());
     public static final DeferredHolder<Item, EnergyKnifeItem> ENERGIZED_KNIFE = ITEMS_REGISTRAR
         .registerItem("energy_knife", EnergyKnifeItem::new, InstrumentusItemHelper.generateKnifeItemProperties(InstrumentusToolMaterials.ENERGIZED, 1, -2.0f));
     public static final DeferredHolder<Item, Item> ENERGIZED_INGOT = ITEMS_REGISTRAR
@@ -172,7 +172,7 @@ public class InstrumentusItems {
     public static final DeferredHolder<Item, SickleItem> COPPER_SICKLE = ITEMS_REGISTRAR
         .registerItem("copper_sickle", properties -> new SickleItem(InstrumentusToolMaterials.COPPER, properties), InstrumentusItemHelper.generateToolItemProperties(InstrumentusToolMaterials.COPPER, 0, -1.9f));
     public static final DeferredHolder<Item, InstrumentusShearsItem> COPPER_SHEARS = ITEMS_REGISTRAR
-        .registerItem("copper_shears", InstrumentusShearsItem::new, generateShearsItemProperties(InstrumentusToolMaterials.COPPER));
+            .registerItem("copper_shears", properties -> new InstrumentusShearsItem(InstrumentusToolMaterials.COPPER, properties), new Item.Properties().stacksTo(1));
     public static final DeferredHolder<Item, KnifeItem> COPPER_KNIFE = ITEMS_REGISTRAR
         .registerItem("copper_knife", KnifeItem::new, InstrumentusItemHelper.generateKnifeItemProperties(InstrumentusToolMaterials.COPPER, 1, -2.0f));
     public static final DeferredHolder<Item, ExcavatorItem> COPPER_EXCAVATOR = ITEMS_REGISTRAR

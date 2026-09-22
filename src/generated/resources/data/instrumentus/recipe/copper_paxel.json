@@ -13,18 +13,10 @@
   "category": "equipment",
   "group": "instrumentus",
   "key": {
-    "A": {
-      "item": "instrumentus:copper_axe"
-    },
-    "P": {
-      "item": "instrumentus:copper_pickaxe"
-    },
-    "S": {
-      "item": "minecraft:stick"
-    },
-    "V": {
-      "item": "instrumentus:copper_shovel"
-    }
+    "A": "instrumentus:copper_axe",
+    "P": "instrumentus:copper_pickaxe",
+    "S": "minecraft:stick",
+    "V": "instrumentus:copper_shovel"
   },
   "pattern": [
     "AVP",

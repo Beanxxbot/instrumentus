@@ -9,15 +9,9 @@
   "category": "equipment",
   "group": "instrumentus",
   "key": {
-    "F": {
-      "item": "minecraft:feather"
-    },
-    "I": {
-      "item": "minecraft:gold_ingot"
-    },
-    "S": {
-      "item": "minecraft:stick"
-    }
+    "F": "minecraft:feather",
+    "I": "minecraft:gold_ingot",
+    "S": "minecraft:stick"
   },
   "pattern": [
     "F",

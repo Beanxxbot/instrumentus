@@ -9,12 +9,8 @@
   "category": "equipment",
   "group": "instrumentus",
   "key": {
-    "I": {
-      "item": "minecraft:gold_block"
-    },
-    "S": {
-      "item": "minecraft:stick"
-    }
+    "I": "minecraft:gold_block",
+    "S": "minecraft:stick"
   },
   "pattern": [
     "I",

@@ -1,11 +1,15 @@
 package com.beanbot.instrumentus.common.blocks;
 
 import com.beanbot.instrumentus.common.Instrumentus;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.properties.BlockSetType;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
+
+import java.util.Optional;
 
 import static com.beanbot.instrumentus.common.blocks.CopperSoulCampfireBlock.litBlockEmission;
 
@@ -24,7 +28,7 @@ public class InstrumentusBlocks {
     public static final DeferredHolder<Block, CopperSoulTorchBlock> SOULCOPPER_TORCH = BLOCKS_REGISTER
         .registerBlock("copper_soul_torch", CopperSoulTorchBlock::new, BlockBehaviour.Properties.ofFullCopy(Blocks.TORCH).noCollission().instabreak().lightLevel(e -> 15).sound(SoundType.WOOD)); //(SimpleParticleType)InstrumentusParticles.COPPER_SOUL_FIRE_FLAME_PARTICLE.get())
     public static final DeferredHolder<Block, CopperSoulWallTorchBlock> SOULCOPPER_WALL_TORCH = BLOCKS_REGISTER
-        .registerBlock("copper_soul_wall_torch", CopperSoulWallTorchBlock::new,  BlockBehaviour.Properties.ofFullCopy(Blocks.WALL_TORCH).noCollission().instabreak().lightLevel(e -> 15).sound(SoundType.WOOD).overrideLootTable(SOULCOPPER_TORCH.get().getLootTable())); //(SimpleParticleType)InstrumentusParticles.COPPER_SOUL_FIRE_FLAME_PARTICLE.get())
+        .registerBlock("copper_soul_wall_torch", CopperSoulWallTorchBlock::new,  BlockBehaviour.Properties.ofFullCopy(Blocks.WALL_TORCH).noCollission().instabreak().lightLevel(e -> 15).sound(SoundType.WOOD).overrideLootTable(Optional.of(ResourceKey.create(Registries.LOOT_TABLE,SOULCOPPER_TORCH.getId().withPrefix("blocks/"))))); //(SimpleParticleType)InstrumentusParticles.COPPER_SOUL_FIRE_FLAME_PARTICLE.get())
     public static final DeferredHolder<Block, LanternBlock> SOULCOPPER_LANTERN = BLOCKS_REGISTER
         .registerBlock("copper_soul_lantern", LanternBlock::new, BlockBehaviour.Properties.ofFullCopy(Blocks.LANTERN).requiresCorrectToolForDrops().strength(3.5f).sound(SoundType.LANTERN).lightLevel(e -> 15).noOcclusion());
     public static final DeferredHolder<Block, Block> CUT_SOULCOPPER = BLOCKS_REGISTER

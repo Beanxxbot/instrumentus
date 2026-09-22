@@ -9,12 +9,8 @@
   "category": "equipment",
   "group": "instrumentus",
   "key": {
-    "S": {
-      "item": "minecraft:stick"
-    },
-    "X": {
-      "item": "minecraft:diamond"
-    }
+    "S": "minecraft:stick",
+    "X": "minecraft:diamond"
   },
   "pattern": [
     " X ",

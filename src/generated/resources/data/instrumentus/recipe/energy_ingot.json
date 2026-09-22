@@ -9,18 +9,10 @@
   "category": "misc",
   "group": "instrumentus",
   "key": {
-    "D": {
-      "item": "minecraft:diamond"
-    },
-    "E": {
-      "item": "minecraft:emerald"
-    },
-    "G": {
-      "item": "minecraft:gold_ingot"
-    },
-    "Q": {
-      "item": "minecraft:quartz"
-    }
+    "D": "minecraft:diamond",
+    "E": "minecraft:emerald",
+    "G": "minecraft:gold_ingot",
+    "Q": "minecraft:quartz"
   },
   "pattern": [
     "QEQ",

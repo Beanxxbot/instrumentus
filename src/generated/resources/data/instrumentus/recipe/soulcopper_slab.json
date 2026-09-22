@@ -2,23 +2,20 @@
   "neoforge:conditions": [
     {
       "type": "instrumentus:config_feature_enabled",
-      "feature": "ENERGIZED"
+      "feature": "SOULCOPPER"
     }
   ],
   "type": "minecraft:crafting_shaped",
-  "category": "equipment",
+  "category": "building",
   "group": "instrumentus",
   "key": {
-    "S": "instrumentus:carbon_rod",
-    "X": "instrumentus:energy_ingot"
+    "S": "instrumentus:cut_soulcopper"
   },
   "pattern": [
-    "XX",
-    " S",
-    " S"
+    "SSS"
   ],
   "result": {
-    "count": 1,
-    "id": "instrumentus:energy_hoe"
+    "count": 3,
+    "id": "instrumentus:soulcopper_slab"
   }
 }

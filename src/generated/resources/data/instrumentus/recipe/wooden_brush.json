@@ -9,15 +9,9 @@
   "category": "equipment",
   "group": "instrumentus",
   "key": {
-    "F": {
-      "item": "minecraft:feather"
-    },
-    "I": {
-      "tag": "minecraft:planks"
-    },
-    "S": {
-      "item": "minecraft:stick"
-    }
+    "F": "minecraft:feather",
+    "I": "#minecraft:planks",
+    "S": "minecraft:stick"
   },
   "pattern": [
     "F",

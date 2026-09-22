@@ -9,18 +9,10 @@
   "category": "misc",
   "group": "instrumentus",
   "key": {
-    "B": {
-      "item": "minecraft:brick"
-    },
-    "F": {
-      "item": "minecraft:furnace"
-    },
-    "L": {
-      "item": "minecraft:bricks"
-    },
-    "S": {
-      "item": "minecraft:smooth_stone"
-    }
+    "B": "minecraft:brick",
+    "F": "minecraft:furnace",
+    "L": "minecraft:bricks",
+    "S": "minecraft:smooth_stone"
   },
   "pattern": [
     "BBB",

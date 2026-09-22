@@ -9,9 +9,7 @@
   "category": "misc",
   "group": "instrumentus",
   "ingredients": [
-    {
-      "item": "instrumentus:raw_soulcopper_block"
-    }
+    "instrumentus:raw_soulcopper_block"
   ],
   "result": {
     "count": 9,
