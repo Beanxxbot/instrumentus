@@ -35,7 +35,7 @@ public class KnifeItem extends Item {
     }
 
     public static Tool createToolProperties(ToolMaterial toolMaterial, float attackSpeedIn) {
-        return new Tool(List.of(), attackSpeedIn, 1);
+        return new Tool(List.of(Tool.Rule.minesAndDrops(HolderSet.direct(Block::builtInRegistryHolder, Blocks.SHORT_GRASS, Blocks.TALL_GRASS, Blocks.FERN, Blocks.LARGE_FERN), 1.0f)), attackSpeedIn, 1);
     }
 
     @Override

@@ -104,7 +104,7 @@ public class InstrumentusModelProvider extends ModelProvider {
 
     private void registerTools(ItemModelGenerators itemModels) {
         for (var tool : InstrumentusItems.ITEMS_REGISTRAR.getEntries()) {
-            if (tool.get() instanceof DiggerItem || tool.get() instanceof SwordItem && !(tool.get() instanceof IEnergyItem) && !(tool.get() instanceof SoulcopperPickaxeItem)) {
+            if ((tool.get() instanceof DiggerItem || tool.get() instanceof SwordItem) && !(tool.get() instanceof IEnergyItem) && !(tool.get() instanceof SoulcopperPickaxeItem)) {
                 itemModels.generateFlatItem(tool.get(), ModelTemplates.FLAT_HANDHELD_ITEM);
             } else if ((tool.get() instanceof InstrumentusShearsItem || tool.get() instanceof KnifeItem) && !(tool.get() instanceof IEnergyItem)) {
                 itemModels.generateFlatItem(tool.get(), ModelTemplates.FLAT_ITEM);
@@ -140,7 +140,7 @@ public class InstrumentusModelProvider extends ModelProvider {
         }
 
         blockModels.blockStateOutput.accept(MultiVariantGenerator.multiVariant(block).with(PropertyDispatch.property(charge).generate((p) -> Variant.variant().with(VariantProperties.MODEL, aresourcelocation[p]))));
-        itemModels.itemModelOutput.accept(Blocks.RESPAWN_ANCHOR.asItem(), ItemModelUtils.plainModel(aresourcelocation[0]));
+        itemModels.itemModelOutput.accept(block.asItem(), ItemModelUtils.plainModel(aresourcelocation[0]));
     }
 
     private static void generateFlatItemWithTexture(ItemModelGenerators itemModels, ModelTemplate template, Item item, ResourceLocation texture) {

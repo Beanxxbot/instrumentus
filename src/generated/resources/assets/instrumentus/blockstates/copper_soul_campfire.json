@@ -1,100 +1,34 @@
 {
   "variants": {
-    "facing=east,lit=false,signal_fire=false,waterlogged=false": {
+    "facing=east,lit=false": {
+      "model": "minecraft:block/campfire_off",
+      "y": 270
+    },
+    "facing=east,lit=true": {
+      "model": "instrumentus:block/copper_soul_campfire",
+      "y": 270
+    },
+    "facing=north,lit=false": {
+      "model": "minecraft:block/campfire_off",
+      "y": 180
+    },
+    "facing=north,lit=true": {
+      "model": "instrumentus:block/copper_soul_campfire",
+      "y": 180
+    },
+    "facing=south,lit=false": {
       "model": "minecraft:block/campfire_off"
     },
-    "facing=east,lit=false,signal_fire=false,waterlogged=true": {
-      "model": "minecraft:block/campfire_off"
-    },
-    "facing=east,lit=false,signal_fire=true,waterlogged=false": {
-      "model": "minecraft:block/campfire_off"
-    },
-    "facing=east,lit=false,signal_fire=true,waterlogged=true": {
-      "model": "minecraft:block/campfire_off"
-    },
-    "facing=east,lit=true,signal_fire=false,waterlogged=false": {
+    "facing=south,lit=true": {
       "model": "instrumentus:block/copper_soul_campfire"
     },
-    "facing=east,lit=true,signal_fire=false,waterlogged=true": {
-      "model": "instrumentus:block/copper_soul_campfire"
+    "facing=west,lit=false": {
+      "model": "minecraft:block/campfire_off",
+      "y": 90
     },
-    "facing=east,lit=true,signal_fire=true,waterlogged=false": {
-      "model": "instrumentus:block/copper_soul_campfire"
-    },
-    "facing=east,lit=true,signal_fire=true,waterlogged=true": {
-      "model": "instrumentus:block/copper_soul_campfire"
-    },
-    "facing=north,lit=false,signal_fire=false,waterlogged=false": {
-      "model": "minecraft:block/campfire_off"
-    },
-    "facing=north,lit=false,signal_fire=false,waterlogged=true": {
-      "model": "minecraft:block/campfire_off"
-    },
-    "facing=north,lit=false,signal_fire=true,waterlogged=false": {
-      "model": "minecraft:block/campfire_off"
-    },
-    "facing=north,lit=false,signal_fire=true,waterlogged=true": {
-      "model": "minecraft:block/campfire_off"
-    },
-    "facing=north,lit=true,signal_fire=false,waterlogged=false": {
-      "model": "instrumentus:block/copper_soul_campfire"
-    },
-    "facing=north,lit=true,signal_fire=false,waterlogged=true": {
-      "model": "instrumentus:block/copper_soul_campfire"
-    },
-    "facing=north,lit=true,signal_fire=true,waterlogged=false": {
-      "model": "instrumentus:block/copper_soul_campfire"
-    },
-    "facing=north,lit=true,signal_fire=true,waterlogged=true": {
-      "model": "instrumentus:block/copper_soul_campfire"
-    },
-    "facing=south,lit=false,signal_fire=false,waterlogged=false": {
-      "model": "minecraft:block/campfire_off"
-    },
-    "facing=south,lit=false,signal_fire=false,waterlogged=true": {
-      "model": "minecraft:block/campfire_off"
-    },
-    "facing=south,lit=false,signal_fire=true,waterlogged=false": {
-      "model": "minecraft:block/campfire_off"
-    },
-    "facing=south,lit=false,signal_fire=true,waterlogged=true": {
-      "model": "minecraft:block/campfire_off"
-    },
-    "facing=south,lit=true,signal_fire=false,waterlogged=false": {
-      "model": "instrumentus:block/copper_soul_campfire"
-    },
-    "facing=south,lit=true,signal_fire=false,waterlogged=true": {
-      "model": "instrumentus:block/copper_soul_campfire"
-    },
-    "facing=south,lit=true,signal_fire=true,waterlogged=false": {
-      "model": "instrumentus:block/copper_soul_campfire"
-    },
-    "facing=south,lit=true,signal_fire=true,waterlogged=true": {
-      "model": "instrumentus:block/copper_soul_campfire"
-    },
-    "facing=west,lit=false,signal_fire=false,waterlogged=false": {
-      "model": "minecraft:block/campfire_off"
-    },
-    "facing=west,lit=false,signal_fire=false,waterlogged=true": {
-      "model": "minecraft:block/campfire_off"
-    },
-    "facing=west,lit=false,signal_fire=true,waterlogged=false": {
-      "model": "minecraft:block/campfire_off"
-    },
-    "facing=west,lit=false,signal_fire=true,waterlogged=true": {
-      "model": "minecraft:block/campfire_off"
-    },
-    "facing=west,lit=true,signal_fire=false,waterlogged=false": {
-      "model": "instrumentus:block/copper_soul_campfire"
-    },
-    "facing=west,lit=true,signal_fire=false,waterlogged=true": {
-      "model": "instrumentus:block/copper_soul_campfire"
-    },
-    "facing=west,lit=true,signal_fire=true,waterlogged=false": {
-      "model": "instrumentus:block/copper_soul_campfire"
-    },
-    "facing=west,lit=true,signal_fire=true,waterlogged=true": {
-      "model": "instrumentus:block/copper_soul_campfire"
+    "facing=west,lit=true": {
+      "model": "instrumentus:block/copper_soul_campfire",
+      "y": 90
     }
   }
 }

@@ -33,6 +33,6 @@ public class KilnRecipe extends AbstractCookingRecipe {
 
     @Override
     protected Item furnaceIcon() {
-        return null;
+        return InstrumentusBlocks.KILN.get().asItem();
     }
 }

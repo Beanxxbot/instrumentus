@@ -42,7 +42,7 @@ public class InstrumentusJEIPlugin implements IModPlugin {
     @Override
     public void registerRecipes(IRecipeRegistration registration) {
         assert Minecraft.getInstance().level != null;
-        RecipeManager recipeManager = Minecraft.getInstance().level.getServer().getRecipeManager();
+        RecipeManager recipeManager = Minecraft.getInstance().getSingleplayerServer().getRecipeManager();
         List<CopperSoulCampfireRecipe> copperSoulCampfireRecipes = recipeManager.recipeMap().byType(InstrumentusRecipes.COPPER_SOUL_CAMPFIRE_COOKING_TYPE.get())
                 .stream().map(RecipeHolder::value).collect(Collectors.toList());
         List<KilnRecipe> firingRecipes = recipeManager.recipeMap().byType(InstrumentusRecipes.FIRING.get())

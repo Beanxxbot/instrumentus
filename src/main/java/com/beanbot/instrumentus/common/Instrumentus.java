@@ -1,6 +1,7 @@
 package com.beanbot.instrumentus.common;
 
 import com.beanbot.instrumentus.client.events.ToolRenderEvents;
+import com.beanbot.instrumentus.client.inventory.recipebook.InstrumentusRecipeBookCategories;
 import com.beanbot.instrumentus.common.data.attachments.InstrumentusDataAttachments;
 import com.beanbot.instrumentus.common.data.conditions.InstrumentusConditions;
 import com.beanbot.instrumentus.common.data.loot.functions.InstrumentusLootFunctions;
@@ -14,7 +15,6 @@ import com.beanbot.instrumentus.common.capability.EnergyItemstack;
 import com.beanbot.instrumentus.common.config.Config;
 import com.beanbot.instrumentus.common.events.EntityStruckByLightningEventHook;
 import com.beanbot.instrumentus.common.data.loot.InstrumentusLootModifiers;
-import com.beanbot.instrumentus.common.items.InstrumentusArmorMaterials;
 import com.beanbot.instrumentus.common.items.InstrumentusItems;
 import com.beanbot.instrumentus.common.creative.InstrumentusCreativeModeTab;
 import com.beanbot.instrumentus.common.creative.InstrumentusCreativeModeTabPopulate;
@@ -23,6 +23,8 @@ import com.beanbot.instrumentus.common.items.interfaces.IEnergyItem;
 import com.beanbot.instrumentus.common.network.PacketHandler;
 import com.beanbot.instrumentus.common.recipe.InstrumentusRecipes;
 //import net.createmod.ponder.foundation.PonderIndex;
+import net.minecraft.client.renderer.ItemBlockRenderTypes;
+import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderers;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.IEventBus;
@@ -76,6 +78,8 @@ public class Instrumentus {
 
         InstrumentusRecipes.register(instrumentusEventBus);
 
+        InstrumentusRecipeBookCategories.register(instrumentusEventBus);
+
         InstrumentusLootModifiers.register(instrumentusEventBus);
 
         InstrumentusDataComponents.COMPONENTS.register(instrumentusEventBus);
@@ -119,6 +123,11 @@ public class Instrumentus {
 
     private void setupClient(final FMLClientSetupEvent event) {
         BlockEntityRenderers.register(InstrumentusBlockEntities.COPPER_SOUL_CAMPFIRE_BLOCK_ENTITY.get(), CopperSoulCampfireRenderer::new);
+        ItemBlockRenderTypes.setRenderLayer(InstrumentusBlocks.COPPER_SOUL_CAMPFIRE.get(), RenderType.CUTOUT);
+        ItemBlockRenderTypes.setRenderLayer(InstrumentusBlocks.SOULCOPPER_DOOR.get(), RenderType.CUTOUT);
+        ItemBlockRenderTypes.setRenderLayer(InstrumentusBlocks.SOULCOPPER_TRAPDOOR.get(), RenderType.CUTOUT);
+        ItemBlockRenderTypes.setRenderLayer(InstrumentusBlocks.SOULCOPPER_LANTERN.get(), RenderType.CUTOUT);
+
 //        PonderIndex.addPlugin(new InstrumentusPonderPlugin());
         NeoForge.EVENT_BUS.register(ToolRenderEvents.class);
     }

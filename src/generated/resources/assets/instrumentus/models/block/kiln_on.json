@@ -1,8 +1,6 @@
 {
-  "parent": "minecraft:block/orientable_with_bottom",
-  "render_type": "minecraft:solid",
+  "parent": "minecraft:block/orientable",
   "textures": {
-    "bottom": "instrumentus:block/kiln_bottom",
     "front": "instrumentus:block/kiln_front_on",
     "side": "instrumentus:block/kiln_side",
     "top": "instrumentus:block/kiln_top"

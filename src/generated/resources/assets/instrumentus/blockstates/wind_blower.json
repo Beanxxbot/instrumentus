@@ -1,7 +1,7 @@
 {
   "variants": {
     "blower_charges=0": {
-      "model": "instrumentus:block/wind_blower"
+      "model": "instrumentus:block/wind_blower_0"
     },
     "blower_charges=1": {
       "model": "instrumentus:block/wind_blower_1"

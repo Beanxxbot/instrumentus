@@ -153,7 +153,13 @@ public class CopperSoulCampfireBlockEntity extends BlockEntity implements Cleara
     }
 
     public Optional<RecipeHolder<CopperSoulCampfireRecipe>> getCookableRecipe(ItemStack pStack) {
-        return this.items.stream().noneMatch(ItemStack::isEmpty) ? Optional.empty() : this.quickCheck.getRecipeFor(new SingleRecipeInput(pStack), (ServerLevel) this.level);
+        if(this.items.stream().noneMatch(ItemStack::isEmpty)){
+            return Optional.empty();
+        }
+        if (!(this.level instanceof ServerLevel serverLevel)) {
+            return Optional.empty();
+        }
+        return this.quickCheck.getRecipeFor(new SingleRecipeInput(pStack), serverLevel);
     }
 
     public boolean placeFood(@Nullable Entity pEntity, ItemStack pStack, int pCookTime) {
