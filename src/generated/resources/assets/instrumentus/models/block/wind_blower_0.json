@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/cube_bottom_top",
+  "textures": {
+    "bottom": "instrumentus:block/wind_blower_bottom",
+    "side": "instrumentus:block/wind_blower_side0",
+    "top": "instrumentus:block/wind_blower_top"
+  }
+}

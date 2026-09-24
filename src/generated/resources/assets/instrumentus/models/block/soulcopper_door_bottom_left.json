@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/door_bottom_left",
+  "textures": {
+    "bottom": "instrumentus:block/soulcopper_door_bottom",
+    "top": "instrumentus:block/soulcopper_door_top"
+  }
+}
